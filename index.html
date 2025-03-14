@@ -1,62 +1,138 @@
 <!DOCTYPE html>
-<html>
-<style>
-body, html {
-  height: 100%;
-  margin: 0;
-}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LeetCodee.com - Coming Soon! Your ultimate destination for LeetCode solutions in all supported languages.">
+  <title>LeetCodee.com - Coming Soon</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
 
-.bgimg {
-  background-image: url('/w3images/forestbridge.jpg');
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  color: white;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 25px;
-}
+    .container {
+      max-width: 600px;
+    }
 
-.topleft {
-  position: absolute;
-  top: 0;
-  left: 16px;
-}
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
 
-.bottomleft {
-  position: absolute;
-  bottom: 0;
-  left: 16px;
-}
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #cbd5e1;
+    }
 
-.middle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+    .countdown {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-around;
+      gap: 15px;
+    }
 
-hr {
-  margin: auto;
-  width: 40%;
-}
-</style>
+    .countdown div {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .countdown span {
+      display: block;
+      font-size: 1rem;
+      margin-top: 8px;
+      color: #94a3b8;
+    }
+
+    .email-box {
+      margin-top: 30px;
+    }
+
+    .email-box input[type="email"] {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      margin-right: 10px;
+      width: 60%;
+    }
+
+    .email-box button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #38bdf8;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .email-box button:hover {
+      background-color: #0ea5e9;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+  </style>
+</head>
 <body>
+  <div class="container">
+    <h1>🚀 LeetCodee.com</h1>
+    <p>Your ultimate hub for LeetCode solutions in all supported languages</p>
 
-<div class="bgimg">
-  <div class="topleft">
-    <p>Logo</p>
-  </div>
-  <div class="middle">
-    <h1>COMING SOON</h1>
-    <hr>
-    <p>few days left</p>
-  </div>
-  <div class="bottomleft">
-    <p>All Solutions at one place.</p>
-  </div>
-</div>
+    <div class="countdown">
+      <div><span id="days">00</span>Days</div>
+      <div><span id="hours">00</span>Hours</div>
+      <div><span id="minutes">00</span>Minutes</div>
+      <div><span id="seconds">00</span>Seconds</div>
+    </div>
 
+    <div class="email-box">
+      <input type="email" placeholder="Get launch updates" />
+      <button>Notify Me</button>
+    </div>
+
+    <footer>
+      &copy; 2025 LeetCodee.com. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // Set launch date
+    const launchDate = new Date("2025-05-01T00:00:00").getTime();
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = days.toString().padStart(2, '0');
+      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+      document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+
+      if (distance < 0) {
+        clearInterval(timer);
+        document.querySelector(".countdown").innerHTML = "🎉 We're Live Now!";
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
