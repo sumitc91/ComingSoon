@@ -1,0 +1,508 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bricks Falling When Hit - LeetCodee Solution</title>
+    <meta name="description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 803: Bricks Falling When Hit.  Includes detailed explanations and optimized code.">
+    <meta name="keywords" content="leetcode, leetcode solution, bricks falling when hit, algorithm, data structure, python, java, c++, javascript, c#, coding, programming, competitive programming, 803">
+    <meta property="og:title" content="Bricks Falling When Hit - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/bricks-falling-when-hit/">
+    <meta property="og:description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 803: Bricks Falling When Hit.  Includes detailed explanations and optimized code.">
+    <meta property="og:image" content="https://leetcodee.com/logo.png">  <!-- Replace with actual image URL -->
+    <link rel="canonical" href="https://leetcodee.com/problems/bricks-falling-when-hit/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Bricks Falling When Hit - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27", <!-- Replace with actual modification date -->
+      "description": "Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 803: Bricks Falling When Hit.  Includes detailed explanations and optimized code.",
+      "image": "https://leetcodee.com/logo.png",  <!-- Replace with actual image URL -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png"  <!-- Replace with actual image URL -->
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/bricks-falling-when-hit/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">803. Bricks Falling When Hit</h1>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an m x n binary grid, where each 1 represents a brick and 0 represents an empty space. A brick is stable if:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>It is directly connected to the top of the grid, or</li>
+                    <li>At least one other brick in its 4-way neighborhood is stable</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    You are also given an array hits, which is a sequence of erasures we want to apply. Each time we want to erase the brick at the location hits[i] = (rowi, coli). The brick on that location (if it exists) will disappear. Some other bricks may no longer be stable because of that erasure and will fall. Once a brick falls, it is immediately erased from the grid (i.e., it does not land on other stable bricks).
+                </p>
+                <p class="text-gray-700">
+                    Return an array result, where each result[i] represents the number of bricks that will fall after the ith erasure is applied.
+                </p>
+                <p class="text-gray-700 mt-4">
+                    Note that an erasure may refer to a location with no brick - if it does, no bricks drop.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,0,0,0],[1,1,1,0]], hits = [[1,0]]
+Output: [2]
+Explanation: When we erase the brick at (1, 0), the brick at (1, 1) and (1, 2) will drop. So we return 2.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,0,0,0],[1,1,0,0]], hits = [[1,1],[1,0]]
+Output: [0,0]
+Explanation: When we erase the brick at (1, 1), no bricks will drop. When we erase the brick at (1, 0), no bricks will drop.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>m == grid.length</li>
+                    <li>n == grid[i].length</li>
+                    <li>1 ≤ m, n ≤ 200</li>
+                    <li>grid[i][j] is 0 or 1</li>
+                    <li>1 ≤ hits.length ≤ 4 * 10^4</li>
+                    <li>hits[i].length == 2</li>
+                    <li>0 ≤ xi ≤ m - 1</li>
+                    <li>0 ≤ yi ≤ n - 1</li>
+                    <li>All (xi, yi) are unique</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def hitBricks(self, grid: List[List[int]], hits: List[List[int]]) -> List[int]:
+        m, n = len(grid), len(grid[0])
+        
+        # Copy grid and remove all hits
+        copy_grid = [row[:] for row in grid]
+        for i, j in hits:
+            copy_grid[i][j] = 0
+            
+        # Connect all bricks to top row (mark as 2)
+        def dfs(i: int, j: int) -> None:
+            if not (0 <= i < m and 0 <= j < n) or copy_grid[i][j] != 1:
+                return
+            copy_grid[i][j] = 2
+            for ni, nj in [(i+1,j), (i-1,j), (i,j+1), (i,j-1)]:
+                dfs(ni, nj)
+                
+        # Connect bricks to top
+        for j in range(n):
+            dfs(0, j)
+            
+        def is_connected(i: int, j: int) -> bool:
+            if i == 0:
+                return True
+            for ni, nj in [(i+1,j), (i-1,j), (i,j+1), (i,j-1)]:
+                if 0 <= ni < m and 0 <= nj < n and copy_grid[ni][nj] == 2:
+                    return True
+            return False
+            
+        # Add bricks back and count drops
+        result = []
+        for i in range(len(hits)-1, -1, -1):
+            x, y = hits[i]
+            if grid[x][y] == 0:
+                result.append(0)
+                continue
+                
+            prev_count = sum(row.count(2) for row in copy_grid)
+            if is_connected(x, y):
+                copy_grid[x][y] = 2
+                dfs(x, y)
+            else:
+                copy_grid[x][y] = 1
+                
+            curr_count = sum(row.count(2) for row in copy_grid)
+            result.append(max(0, curr_count - prev_count - 1))
+            
+        return result[::-1]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to mark connected components</li>
+                    <li>Works backwards from final state to initial state</li>
+                    <li>Time complexity: O(N * M * H) where H is number of hits</li>
+                    <li>Space complexity: O(N * M)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int m, n;
+    private int[][] directions = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+    
+    public int[] hitBricks(int[][] grid, int[][] hits) {
+        m = grid.length;
+        n = grid[0].length;
+        
+        // Copy grid and remove hits
+        int[][] copy = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            copy[i] = grid[i].clone();
+        }
+        for (int[] hit : hits) {
+            copy[hit[0]][hit[1]] = 0;
+        }
+        
+        // Mark connected components
+        for (int j = 0; j < n; j++) {
+            dfs(0, j, copy);
+        }
+        
+        int[] result = new int[hits.length];
+        // Add bricks back in reverse
+        for (int i = hits.length - 1; i >= 0; i--) {
+            int x = hits[i][0], y = hits[i][1];
+            if (grid[x][y] == 0) continue;
+            
+            int prev = countStable(copy);
+            if (isConnected(x, y, copy)) {
+                copy[x][y] = 2;
+                dfs(x, y, copy);
+            } else {
+                copy[x][y] = 1;
+            }
+            
+            int curr = countStable(copy);
+            result[i] = Math.max(0, curr - prev - 1);
+        }
+        
+        return result;
+    }
+    
+    private void dfs(int i, int j, int[][] grid) {
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != 1) return;
+        grid[i][j] = 2;
+        for (int[] dir : directions) {
+            dfs(i + dir[0], j + dir[1], grid);
+        }
+    }
+    
+    private boolean isConnected(int i, int j, int[][] grid) {
+        if (i == 0) return true;
+        for (int[] dir : directions) {
+            int ni = i + dir[0], nj = j + dir[1];
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private int countStable(int[][] grid) {
+        int count = 0;
+        for (int[] row : grid) {
+            for (int cell : row) {
+                if (cell == 2) count++;
+            }
+        }
+        return count;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    vector<vector<int>> dirs = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+    int m, n;
+    
+    void dfs(int i, int j, vector<vector<int>>& grid) {
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != 1) return;
+        grid[i][j] = 2;
+        for (const auto& dir : dirs) {
+            dfs(i + dir[0], j + dir[1], grid);
+        }
+    }
+    
+    bool isConnected(int i, int j, vector<vector<int>>& grid) {
+        if (i == 0) return true;
+        for (const auto& dir : dirs) {
+            int ni = i + dir[0], nj = j + dir[1];
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    int countStable(vector<vector<int>>& grid) {
+        int count = 0;
+        for (const auto& row : grid) {
+            count += count_if(row.begin(), row.end(), 
+                            [](int x) { return x == 2; });
+        }
+        return count;
+    }
+    
+public:
+    vector<int> hitBricks(vector<vector<int>>& grid, vector<vector<int>>& hits) {
+        m = grid.size();
+        n = grid[0].size();
+        
+        auto copy = grid;
+        for (const auto& hit : hits) {
+            copy[hit[0]][hit[1]] = 0;
+        }
+        
+        for (int j = 0; j < n; j++) {
+            dfs(0, j, copy);
+        }
+        
+        vector<int> result(hits.size());
+        for (int i = hits.size() - 1; i >= 0; i--) {
+            int x = hits[i][0], y = hits[i][1];
+            if (grid[x][y] == 0) continue;
+            
+            int prev = countStable(copy);
+            if (isConnected(x, y, copy)) {
+                copy[x][y] = 2;
+                dfs(x, y, copy);
+            } else {
+                copy[x][y] = 1;
+            }
+            
+            int curr = countStable(copy);
+            result[i] = max(0, curr - prev - 1);
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} grid
+ * @param {number[][]} hits
+ * @return {number[]}
+ */
+var hitBricks = function(grid, hits) {
+    const m = grid.length;
+    const n = grid[0].length;
+    const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
+    
+    // Copy grid and remove hits
+    const copy = grid.map(row => [...row]);
+    for (const [x, y] of hits) {
+        copy[x][y] = 0;
+    }
+    
+    function dfs(i, j) {
+        if (i < 0 || i >= m || j < 0 || j >= n || copy[i][j] !== 1) return;
+        copy[i][j] = 2;
+        for (const [dx, dy] of dirs) {
+            dfs(i + dx, j + dy);
+        }
+    }
+    
+    function isConnected(i, j) {
+        if (i === 0) return true;
+        for (const [dx, dy] of dirs) {
+            const ni = i + dx, nj = j + dy;
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n && copy[ni][nj] === 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function countStable() {
+        return copy.reduce((sum, row) => 
+            sum + row.reduce((count, cell) => count + (cell === 2 ? 1 : 0), 0), 0);
+    }
+    
+    // Mark connected components
+    for (let j = 0; j < n; j++) {
+        dfs(0, j);
+    }
+    
+    const result = new Array(hits.length).fill(0);
+    // Add bricks back in reverse
+    for (let i = hits.length - 1; i >= 0; i--) {
+        const [x, y] = hits[i];
+        if (grid[x][y] === 0) continue;
+        
+        const prev = countStable();
+        if (isConnected(x, y)) {
+            copy[x][y] = 2;
+            dfs(x, y);
+        } else {
+            copy[x][y] = 1;
+        }
+        
+        const curr = countStable();
+        result[i] = Math.max(0, curr - prev - 1);
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int m, n;
+    private int[][] directions = new int[][] {
+        new int[] {1,0}, new int[] {-1,0}, 
+        new int[] {0,1}, new int[] {0,-1}
+    };
+    
+    public int[] HitBricks(int[][] grid, int[][] hits) {
+        m = grid.Length;
+        n = grid[0].Length;
+        
+        // Copy grid and remove hits
+        int[][] copy = new int[m][];
+        for (int i = 0; i < m; i++) {
+            copy[i] = new int[n];
+            Array.Copy(grid[i], copy[i], n);
+        }
+        foreach (var hit in hits) {
+            copy[hit[0]][hit[1]] = 0;
+        }
+        
+        // Mark connected components
+        for (int j = 0; j < n; j++) {
+            DFS(0, j, copy);
+        }
+        
+        int[] result = new int[hits.Length];
+        // Add bricks back in reverse
+        for (int i = hits.Length - 1; i >= 0; i--) {
+            int x = hits[i][0], y = hits[i][1];
+            if (grid[x][y] == 0) continue;
+            
+            int prev = CountStable(copy);
+            if (IsConnected(x, y, copy)) {
+                copy[x][y] = 2;
+                DFS(x, y, copy);
+            } else {
+                copy[x][y] = 1;
+            }
+            
+            int curr = CountStable(copy);
+            result[i] = Math.Max(0, curr - prev - 1);
+        }
+        
+        return result;
+    }
+    
+    private void DFS(int i, int j, int[][] grid) {
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != 1) return;
+        grid[i][j] = 2;
+        foreach (var dir in directions) {
+            DFS(i + dir[0], j + dir[1], grid);
+        }
+    }
+    
+    private bool IsConnected(int i, int j, int[][] grid) {
+        if (i == 0) return true;
+        foreach (var dir in directions) {
+            int ni = i + dir[0], nj = j + dir[1];
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private int CountStable(int[][] grid) {
+        int count = 0;
+        foreach (var row in grid) {
+            foreach (var cell in row) {
+                if (cell == 2) count++;
+            }
+        }
+        return count;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to mark connected components</li>
+                    <li>Works backwards from final state to initial state</li>
+                    <li>Time complexity: O(N * M * H) where H is number of hits</li>
+                    <li>Space complexity: O(N * M)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

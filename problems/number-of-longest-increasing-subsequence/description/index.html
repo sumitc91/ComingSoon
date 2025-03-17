@@ -1,0 +1,347 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number of Longest Increasing Subsequence - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of longest increasing subsequences in a given integer array.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 673.">
+    <meta name="keywords" content="LeetCode, LeetCodee, algorithm, dynamic programming, longest increasing subsequence, LIS, number of LIS, Python, Java, C++, JavaScript, C#, solution, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/number-of-longest-increasing-subsequence/">
+    <meta property="og:title" content="Number of Longest Increasing Subsequence - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/number-of-longest-increasing-subsequence/">
+    <meta property="og:description" content="Find the number of longest increasing subsequences in a given integer array.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 673.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">673. Number of Longest Increasing Subsequence</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an integer array <code class="bg-gray-100 px-1 rounded">nums</code>, return <em>the number of longest increasing subsequences</em>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    <strong>Notice</strong> that the sequence has to be <strong>strictly</strong> increasing.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,3,5,4,7]
+Output: 2
+Explanation: The two longest increasing subsequences are [1, 3, 4, 7] and [1, 3, 5, 7].</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [2,2,2,2,2]
+Output: 5
+Explanation: The length of longest continuous increasing subsequence is 1, and there are 5 subsequences' length is 1, so output 5.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 2000</li>
+                    <li>-10<sup>6</sup> ≤ nums[i] ≤ 10<sup>6</sup></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findNumberOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        # lengths[i] stores the length of LIS ending at index i
+        lengths = [1] * n
+        # counts[i] stores the number of LIS ending at index i
+        counts = [1] * n
+        
+        for i in range(n):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    if lengths[j] + 1 > lengths[i]:
+                        lengths[i] = lengths[j] + 1
+                        counts[i] = counts[j]
+                    elif lengths[j] + 1 == lengths[i]:
+                        counts[i] += counts[j]
+        
+        max_len = max(lengths)
+        return sum(count for length, count in zip(lengths, counts) if length == max_len)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Binary Search):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def findNumberOfLIS(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+            
+        # dp[i] stores the minimum ending value of LIS of length i+1
+        dp = []
+        # count[i] stores the number of LIS of length i+1
+        count = []
+        
+        for num in nums:
+            # Find the position to insert num
+            left, right = 0, len(dp)
+            while left < right:
+                mid = (left + right) // 2
+                if dp[mid] >= num:
+                    right = mid
+                else:
+                    left = mid + 1
+            
+            if left == len(dp):
+                dp.append(num)
+                count.append(1)
+            else:
+                dp[left] = num
+                count[left] += 1
+        
+        return count[-1]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses dynamic programming with O(n²) time</li>
+                    <li>Second solution uses binary search with O(n log n) time</li>
+                    <li>Space complexity: O(n) for both solutions</li>
+                    <li>First solution is more intuitive but slower</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int findNumberOfLIS(int[] nums) {
+        int n = nums.length;
+        // lengths[i] stores the length of LIS ending at index i
+        int[] lengths = new int[n];
+        // counts[i] stores the number of LIS ending at index i
+        int[] counts = new int[n];
+        Arrays.fill(lengths, 1);
+        Arrays.fill(counts, 1);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    if (lengths[j] + 1 > lengths[i]) {
+                        lengths[i] = lengths[j] + 1;
+                        counts[i] = counts[j];
+                    } else if (lengths[j] + 1 == lengths[i]) {
+                        counts[i] += counts[j];
+                    }
+                }
+            }
+        }
+        
+        int maxLen = 0;
+        for (int len : lengths) {
+            maxLen = Math.max(maxLen, len);
+        }
+        
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            if (lengths[i] == maxLen) {
+                result += counts[i];
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int findNumberOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        // lengths[i] stores the length of LIS ending at index i
+        vector<int> lengths(n, 1);
+        // counts[i] stores the number of LIS ending at index i
+        vector<int> counts(n, 1);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    if (lengths[j] + 1 > lengths[i]) {
+                        lengths[i] = lengths[j] + 1;
+                        counts[i] = counts[j];
+                    } else if (lengths[j] + 1 == lengths[i]) {
+                        counts[i] += counts[j];
+                    }
+                }
+            }
+        }
+        
+        int maxLen = *max_element(lengths.begin(), lengths.end());
+        int result = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (lengths[i] == maxLen) {
+                result += counts[i];
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findNumberOfLIS = function(nums) {
+    const n = nums.length;
+    // lengths[i] stores the length of LIS ending at index i
+    const lengths = new Array(n).fill(1);
+    // counts[i] stores the number of LIS ending at index i
+    const counts = new Array(n).fill(1);
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < i; j++) {
+            if (nums[i] > nums[j]) {
+                if (lengths[j] + 1 > lengths[i]) {
+                    lengths[i] = lengths[j] + 1;
+                    counts[i] = counts[j];
+                } else if (lengths[j] + 1 === lengths[i]) {
+                    counts[i] += counts[j];
+                }
+            }
+        }
+    }
+    
+    const maxLen = Math.max(...lengths);
+    let result = 0;
+    
+    for (let i = 0; i < n; i++) {
+        if (lengths[i] === maxLen) {
+            result += counts[i];
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int FindNumberOfLIS(int[] nums) {
+        int n = nums.Length;
+        // lengths[i] stores the length of LIS ending at index i
+        int[] lengths = new int[n];
+        // counts[i] stores the number of LIS ending at index i
+        int[] counts = new int[n];
+        Array.Fill(lengths, 1);
+        Array.Fill(counts, 1);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    if (lengths[j] + 1 > lengths[i]) {
+                        lengths[i] = lengths[j] + 1;
+                        counts[i] = counts[j];
+                    } else if (lengths[j] + 1 == lengths[i]) {
+                        counts[i] += counts[j];
+                    }
+                }
+            }
+        }
+        
+        int maxLen = lengths.Max();
+        int result = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (lengths[i] == maxLen) {
+                result += counts[i];
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming to track lengths and counts</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(n)</li>
+                    <li>Handles edge cases like empty array and single element</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "673. Number of Longest Increasing Subsequence",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "dateModified": "2023-10-27",
+          "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "url": "https://leetcodee.com"
+          },
+          "description": "Find the number of longest increasing subsequences in a given integer array. Solutions in Python, Java, C++, JavaScript, and C#.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/number-of-longest-increasing-subsequence/"
+          },
+          "keywords": "LeetCode, algorithm, dynamic programming, longest increasing subsequence, LIS, Python, Java, C++, JavaScript, C#"
+        }
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

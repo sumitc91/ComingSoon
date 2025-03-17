@@ -1,0 +1,383 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximum Distance in Arrays - LeetCodee Solution</title>
+    <meta name="description" content="Find the maximum distance between two integers from different sorted arrays.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, maximum distance, arrays, algorithm, solution, python, java, cpp, javascript, csharp, coding, programming, tutorial">
+    <meta property="og:title" content="Maximum Distance in Arrays - LeetCodee Solution">
+    <meta property="og:description" content="Find the maximum distance between two integers from different sorted arrays. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/maximum-distance-in-arrays/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/maximum-distance-in-arrays/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">624. Maximum Distance in Arrays</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given <code class="bg-gray-100 px-1 rounded">m</code> arrays, where each array is sorted in ascending order.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You can pick up two integers from two different arrays (each array picks one) and calculate the distance. We define the distance between two integers <code class="bg-gray-100 px-1 rounded">a</code> and <code class="bg-gray-100 px-1 rounded">b</code> to be their absolute difference <code class="bg-gray-100 px-1 rounded">|a - b|</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the maximum distance.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="text-gray-700 mb-2">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">Input: arrays = [[1,2,3],
+         [4,5],
+         [1,2,3]]
+Output: 4
+Explanation: One way to reach the maximum distance 4 is to pick 1 in the first or third array and pick 5 in the second array.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="text-gray-700 mb-2">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">Input: arrays = [[1],
+         [1]]
+Output: 0</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">m == arrays.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">2 <= m <= 10⁵</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= arrays[i].length <= 500</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">-10⁴ <= arrays[i][j] <= 10⁴</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">arrays[i]</code> is sorted in ascending order.</li>
+                    <li>There will be at least two non-empty arrays.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def maxDistance(self, arrays: List[List[int]]) -> int:
+        result = 0
+        min_val = arrays[0][0]
+        max_val = arrays[0][-1]
+        
+        for i in range(1, len(arrays)):
+            curr_min = arrays[i][0]
+            curr_max = arrays[i][-1]
+            
+            # Try both combinations: current max - previous min and previous max - current min
+            result = max(result, abs(curr_max - min_val), abs(max_val - curr_min))
+            
+            # Update min and max for next iteration
+            min_val = min(min_val, curr_min)
+            max_val = max(max_val, curr_max)
+        
+        return result</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of arrays. We only need to look at the first and last elements of each array.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Explanation:</h4>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                        <li>Initialize min and max from first array</li>
+                        <li>For each subsequent array:
+                            <ul class="list-disc list-inside ml-8">
+                                <li>Calculate max distance using current array's min/max</li>
+                                <li>Update overall min and max values</li>
+                            </ul>
+                        </li>
+                        <li>Return the maximum distance found</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int maxDistance(List<List<Integer>> arrays) {
+        int result = 0;
+        int minVal = arrays.get(0).get(0);
+        int maxVal = arrays.get(0).get(arrays.get(0).size() - 1);
+        
+        for (int i = 1; i < arrays.size(); i++) {
+            List<Integer> curr = arrays.get(i);
+            int currMin = curr.get(0);
+            int currMax = curr.get(curr.size() - 1);
+            
+            result = Math.max(result,
+                     Math.max(Math.abs(currMax - minVal),
+                             Math.abs(maxVal - currMin)));
+            
+            minVal = Math.min(minVal, currMin);
+            maxVal = Math.max(maxVal, currMax);
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int maxDistance(vector<vector<int>>& arrays) {
+        int result = 0;
+        int minVal = arrays[0][0];
+        int maxVal = arrays[0].back();
+        
+        for (int i = 1; i < arrays.size(); i++) {
+            int currMin = arrays[i][0];
+            int currMax = arrays[i].back();
+            
+            result = max({result,
+                         abs(currMax - minVal),
+                         abs(maxVal - currMin)});
+            
+            minVal = min(minVal, currMin);
+            maxVal = max(maxVal, currMax);
+        }
+        
+        return result;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Two Passes:</h4>
+                    <pre class="language-cpp"><code>class Solution {
+public:
+    int maxDistance(vector<vector<int>>& arrays) {
+        // First pass: find global min and max
+        int globalMin = INT_MAX;
+        int globalMax = INT_MIN;
+        
+        for (const auto& arr : arrays) {
+            globalMin = min(globalMin, arr[0]);
+            globalMax = max(globalMax, arr.back());
+        }
+        
+        // Second pass: find max distance excluding current array
+        int result = 0;
+        for (const auto& arr : arrays) {
+            int currMin = arr[0];
+            int currMax = arr.back();
+            
+            // If current array has the global min, use second min
+            if (currMin == globalMin) {
+                result = max(result, globalMax - arr[0]);
+            }
+            // If current array has the global max, use second max
+            else if (currMax == globalMax) {
+                result = max(result, arr.back() - globalMin);
+            }
+            // Otherwise, we can use both global min and max
+            else {
+                result = max(result, max(globalMax - currMin,
+                                       currMax - globalMin));
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} arrays
+ * @return {number}
+ */
+var maxDistance = function(arrays) {
+    let result = 0;
+    let minVal = arrays[0][0];
+    let maxVal = arrays[0][arrays[0].length - 1];
+    
+    for (let i = 1; i < arrays.length; i++) {
+        const currMin = arrays[i][0];
+        const currMax = arrays[i][arrays[i].length - 1];
+        
+        result = Math.max(
+            result,
+            Math.abs(currMax - minVal),
+            Math.abs(maxVal - currMin)
+        );
+        
+        minVal = Math.min(minVal, currMin);
+        maxVal = Math.max(maxVal, currMax);
+    }
+    
+    return result;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Reduce:</h4>
+                    <pre class="language-javascript"><code>var maxDistance = function(arrays) {
+    const { min, max, result } = arrays.reduce(
+        ({ min, max, result }, curr, i) => {
+            if (i === 0) return { min: curr[0], max: curr[curr.length - 1], result: 0 };
+            
+            const newResult = Math.max(
+                result,
+                Math.abs(curr[curr.length - 1] - min),
+                Math.abs(max - curr[0])
+            );
+            
+            return {
+                min: Math.min(min, curr[0]),
+                max: Math.max(max, curr[curr.length - 1]),
+                result: newResult
+            };
+        },
+        { min: Infinity, max: -Infinity, result: 0 }
+    );
+    
+    return result;
+};</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>The iterative solution is more readable and maintainable</li>
+                        <li>The reduce solution is more functional but might be harder to understand</li>
+                        <li>Both solutions have the same time and space complexity</li>
+                        <li>The key is to maintain running min/max values while checking distances</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int MaxDistance(IList<IList<int>> arrays) {
+        int result = 0;
+        int minVal = arrays[0][0];
+        int maxVal = arrays[0][arrays[0].Count - 1];
+        
+        for (int i = 1; i < arrays.Count; i++) {
+            var curr = arrays[i];
+            int currMin = curr[0];
+            int currMax = curr[curr.Count - 1];
+            
+            result = Math.Max(result,
+                     Math.Max(Math.Abs(currMax - minVal),
+                             Math.Abs(maxVal - currMin)));
+            
+            minVal = Math.Min(minVal, currMin);
+            maxVal = Math.Max(maxVal, currMax);
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using LINQ:</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public int MaxDistance(IList<IList<int>> arrays) {
+        var result = arrays
+            .Select((arr, i) => new { Min = arr.First(), Max = arr.Last(), Index = i })
+            .Aggregate(
+                new { MaxDist = 0, MinSoFar = arrays[0][0], MaxSoFar = arrays[0].Last() },
+                (acc, curr) => {
+                    if (curr.Index == 0) return acc;
+                    
+                    var maxDist = Math.Max(acc.MaxDist,
+                                 Math.Max(Math.Abs(curr.Max - acc.MinSoFar),
+                                        Math.Abs(acc.MaxSoFar - curr.Min)));
+                    
+                    return new {
+                        MaxDist = maxDist,
+                        MinSoFar = Math.Min(acc.MinSoFar, curr.Min),
+                        MaxSoFar = Math.Max(acc.MaxSoFar, curr.Max)
+                    };
+                });
+        
+        return result.MaxDist;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution is more straightforward and easier to understand</li>
+                        <li>LINQ solution is more functional but might be harder to read</li>
+                        <li>Both solutions have O(n) time complexity</li>
+                        <li>LINQ solution creates more temporary objects but is more declarative</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "624. Maximum Distance in Arrays",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "dateModified": "2023-10-27",
+          "description": "Find the maximum distance between two integers from different sorted arrays. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+          "articleBody": "This article provides solutions to the LeetCode problem 624. Maximum Distance in Arrays.  Solutions are presented in Python, Java, C++, JavaScript, and C#.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/maximum-distance-in-arrays/"
+          }
+        }
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

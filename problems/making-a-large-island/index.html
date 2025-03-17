@@ -1,0 +1,481 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making a Large Island - LeetCodee Solution</title>
+    <meta name="description" content="Find the size of the largest island in a binary matrix after changing at most one 0 to 1.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, making a large island, algorithm, solution, python, java, cpp, javascript, c#, dfs, depth-first search, island problem, binary matrix">
+    <meta name="canonical" content="https://leetcodee.com/problems/making-a-large-island/">
+    <meta property="og:title" content="Making a Large Island - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/making-a-large-island/">
+    <meta property="og:description" content="Find the size of the largest island in a binary matrix after changing at most one 0 to 1.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:image" content="https://leetcodee.com/ogimage.jpg">  <!-- Replace with actual image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Making a Large Island - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee" // Replace with actual author name
+      },
+      "datePublished": "2024-02-29", // Replace with actual publication date
+      "dateModified": "2024-02-29", // Replace with actual modification date
+      "description": "Find the size of the largest island in a binary matrix after changing at most one 0 to 1.  Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "You are given an n x n binary matrix grid. You are allowed to change at most one 0 to be 1. Return the size of the largest island in grid after applying this operation. An island is a 4-directionally connected group of 1s.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/making-a-large-island/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">827. Making a Large Island</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an n x n binary matrix grid. You are allowed to change at most one 0 to be 1.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the size of the largest island in grid after applying this operation.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    An island is a 4-directionally connected group of 1s.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,0],[0,1]]
+Output: 3
+Explanation: Change one 0 to 1 and connect two islands.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,1],[1,0]]
+Output: 4
+Explanation: Change the 0 to 1 and make the island bigger, only one island with area = 4.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,1],[1,1]]
+Output: 4
+Explanation: Can't change any 0 to 1, only one island with area = 4.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == grid.length</li>
+                    <li>n == grid[i].length</li>
+                    <li>1 ≤ n ≤ 500</li>
+                    <li>grid[i][j] is either 0 or 1</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def largestIsland(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        
+        def dfs(i: int, j: int, index: int) -> int:
+            if not (0 <= i < n and 0 <= j < n) or grid[i][j] != 1:
+                return 0
+            grid[i][j] = index
+            return 1 + dfs(i+1, j, index) + dfs(i-1, j, index) + \
+                   dfs(i, j+1, index) + dfs(i, j-1, index)
+        
+        # Label each island with index starting from 2
+        # and store their areas
+        area = {}
+        index = 2
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    area[index] = dfs(i, j, index)
+                    index += 1
+        
+        # If no islands, changing one cell creates an island of size 1
+        if not area:
+            return 1
+        
+        # If no zeros, return size of largest island
+        if len(area) == 1 and area[2] == n * n:
+            return n * n
+        
+        # Try to connect islands by changing each 0 to 1
+        ans = max(area.values())
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == 0:
+                    # Get neighboring islands
+                    neighbors = set()
+                    for ni, nj in [(i+1,j), (i-1,j), (i,j+1), (i,j-1)]:
+                        if 0 <= ni < n and 0 <= nj < n and grid[ni][nj] > 1:
+                            neighbors.add(grid[ni][nj])
+                    # Calculate total area after connecting
+                    total = 1
+                    for index in neighbors:
+                        total += area[index]
+                    ans = max(ans, total)
+        
+        return ans</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to label and measure islands</li>
+                    <li>Tries changing each 0 to connect islands</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(n²)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int n;
+    private int[][] grid;
+    private Map<Integer, Integer> area;
+    
+    public int largestIsland(int[][] grid) {
+        this.n = grid.length;
+        this.grid = grid;
+        this.area = new HashMap<>();
+        
+        // Label each island with index starting from 2
+        int index = 2;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    area.put(index, dfs(i, j, index));
+                    index++;
+                }
+            }
+        }
+        
+        // If no islands, changing one cell creates an island of size 1
+        if (area.isEmpty()) {
+            return 1;
+        }
+        
+        // If no zeros, return size of largest island
+        if (area.size() == 1 && area.get(2) == n * n) {
+            return n * n;
+        }
+        
+        // Try to connect islands by changing each 0 to 1
+        int ans = area.values().stream().mapToInt(Integer::intValue).max().orElse(0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    Set<Integer> neighbors = new HashSet<>();
+                    for (int[] dir : new int[][]{{1,0}, {-1,0}, {0,1}, {0,-1}}) {
+                        int ni = i + dir[0], nj = j + dir[1];
+                        if (0 <= ni && ni < n && 0 <= nj && nj < n && grid[ni][nj] > 1) {
+                            neighbors.add(grid[ni][nj]);
+                        }
+                    }
+                    int total = 1;
+                    for (int idx : neighbors) {
+                        total += area.get(idx);
+                    }
+                    ans = Math.max(ans, total);
+                }
+            }
+        }
+        
+        return ans;
+    }
+    
+    private int dfs(int i, int j, int index) {
+        if (i < 0 || i >= n || j < 0 || j >= n || grid[i][j] != 1) {
+            return 0;
+        }
+        grid[i][j] = index;
+        return 1 + dfs(i+1, j, index) + dfs(i-1, j, index) +
+               dfs(i, j+1, index) + dfs(i, j-1, index);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int n;
+    vector<vector<int>>* grid;
+    unordered_map<int, int> area;
+    
+    int dfs(int i, int j, int index) {
+        if (i < 0 || i >= n || j < 0 || j >= n || (*grid)[i][j] != 1) {
+            return 0;
+        }
+        (*grid)[i][j] = index;
+        return 1 + dfs(i+1, j, index) + dfs(i-1, j, index) +
+               dfs(i, j+1, index) + dfs(i, j-1, index);
+    }
+    
+public:
+    int largestIsland(vector<vector<int>>& grid) {
+        this->n = grid.size();
+        this->grid = &grid;
+        
+        // Label each island with index starting from 2
+        int index = 2;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    area[index] = dfs(i, j, index);
+                    index++;
+                }
+            }
+        }
+        
+        // If no islands, changing one cell creates an island of size 1
+        if (area.empty()) {
+            return 1;
+        }
+        
+        // If no zeros, return size of largest island
+        if (area.size() == 1 && area[2] == n * n) {
+            return n * n;
+        }
+        
+        // Try to connect islands by changing each 0 to 1
+        int ans = 0;
+        for (const auto& p : area) {
+            ans = max(ans, p.second);
+        }
+        
+        vector<pair<int, int>> dirs = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    unordered_set<int> neighbors;
+                    for (const auto& dir : dirs) {
+                        int ni = i + dir.first, nj = j + dir.second;
+                        if (0 <= ni && ni < n && 0 <= nj && nj < n && grid[ni][nj] > 1) {
+                            neighbors.insert(grid[ni][nj]);
+                        }
+                    }
+                    int total = 1;
+                    for (int idx : neighbors) {
+                        total += area[idx];
+                    }
+                    ans = max(ans, total);
+                }
+            }
+        }
+        
+        return ans;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var largestIsland = function(grid) {
+    const n = grid.length;
+    const area = new Map();
+    
+    function dfs(i, j, index) {
+        if (i < 0 || i >= n || j < 0 || j >= n || grid[i][j] !== 1) {
+            return 0;
+        }
+        grid[i][j] = index;
+        return 1 + dfs(i+1, j, index) + dfs(i-1, j, index) +
+               dfs(i, j+1, index) + dfs(i, j-1, index);
+    }
+    
+    // Label each island with index starting from 2
+    let index = 2;
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j] === 1) {
+                area.set(index, dfs(i, j, index));
+                index++;
+            }
+        }
+    }
+    
+    // If no islands, changing one cell creates an island of size 1
+    if (area.size === 0) {
+        return 1;
+    }
+    
+    // If no zeros, return size of largest island
+    if (area.size === 1 && area.get(2) === n * n) {
+        return n * n;
+    }
+    
+    // Try to connect islands by changing each 0 to 1
+    let ans = Math.max(...area.values());
+    const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j] === 0) {
+                const neighbors = new Set();
+                for (const [di, dj] of dirs) {
+                    const ni = i + di, nj = j + dj;
+                    if (0 <= ni && ni < n && 0 <= nj && nj < n && grid[ni][nj] > 1) {
+                        neighbors.add(grid[ni][nj]);
+                    }
+                }
+                let total = 1;
+                for (const idx of neighbors) {
+                    total += area.get(idx);
+                }
+                ans = Math.max(ans, total);
+            }
+        }
+    }
+    
+    return ans;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int n;
+    private int[][] grid;
+    private Dictionary<int, int> area;
+    
+    public int LargestIsland(int[][] grid) {
+        this.n = grid.Length;
+        this.grid = grid;
+        this.area = new Dictionary<int, int>();
+        
+        // Label each island with index starting from 2
+        int index = 2;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    area[index] = DFS(i, j, index);
+                    index++;
+                }
+            }
+        }
+        
+        // If no islands, changing one cell creates an island of size 1
+        if (!area.Any()) {
+            return 1;
+        }
+        
+        // If no zeros, return size of largest island
+        if (area.Count == 1 && area[2] == n * n) {
+            return n * n;
+        }
+        
+        // Try to connect islands by changing each 0 to 1
+        int ans = area.Values.Max();
+        var dirs = new[] { (1,0), (-1,0), (0,1), (0,-1) };
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    var neighbors = new HashSet<int>();
+                    foreach (var (di, dj) in dirs) {
+                        int ni = i + di, nj = j + dj;
+                        if (0 <= ni && ni < n && 0 <= nj && nj < n && grid[ni][nj] > 1) {
+                            neighbors.Add(grid[ni][nj]);
+                        }
+                    }
+                    int total = 1;
+                    foreach (int idx in neighbors) {
+                        total += area[idx];
+                    }
+                    ans = Math.Max(ans, total);
+                }
+            }
+        }
+        
+        return ans;
+    }
+    
+    private int DFS(int i, int j, int index) {
+        if (i < 0 || i >= n || j < 0 || j >= n || grid[i][j] != 1) {
+            return 0;
+        }
+        grid[i][j] = index;
+        return 1 + DFS(i+1, j, index) + DFS(i-1, j, index) +
+               DFS(i, j+1, index) + DFS(i, j-1, index);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to label and measure islands</li>
+                    <li>Maintains dictionary of island areas</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(n²)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

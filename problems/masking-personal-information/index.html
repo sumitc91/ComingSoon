@@ -1,0 +1,273 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masking Personal Information - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the LeetCode Masking Personal Information problem with optimized solutions in Python, Java, C++, JavaScript, and C#.  Includes detailed explanations and examples.">
+    <meta name="keywords" content="leetcode, masking personal information, algorithm, solution, python, java, cpp, javascript, c#, coding, interview, programming">
+    <meta property="og:title" content="Masking Personal Information - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/masking-personal-information/">
+    <meta property="og:description" content="Learn how to solve the LeetCode Masking Personal Information problem with optimized solutions in Python, Java, C++, JavaScript, and C#.  Includes detailed explanations and examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/masking-personal-information/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Masking Personal Information - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Learn how to solve the LeetCode Masking Personal Information problem with optimized solutions in Python, Java, C++, JavaScript, and C#. Includes detailed explanations and examples.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/masking-personal-information/"
+      },
+      "articleSection": "LeetCode Solutions",
+      "keywords": "leetcode, masking personal information, algorithm, solution, python, java, cpp, javascript, c#, coding, interview, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">831. Masking Personal Information</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given a personal information string s, which may be an email address or a phone number.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the masked personal information using the following rules:
+                </p>
+                <p class="font-semibold mb-2">Email address:</p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>An email address is a string of the form "name@domain.com".</li>
+                    <li>The name must be converted to lowercase with its first and last letters remaining, and all letters in between replaced by 5 asterisks (*).</li>
+                    <li>For example, "Alice@leetcode.com" becomes "a*****e@leetcode.com".</li>
+                </ul>
+                <p class="font-semibold mb-2">Phone number:</p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>A phone number is a string of digits that may contain '+', '-', and '(' and ')'.</li>
+                    <li>Remove all non-digit characters and mask the last 10 digits as "***-***-XXXX".</li>
+                    <li>If the number has more than 10 digits, prefix the masked digits with "+<country_code>-".</li>
+                    <li>For example, "1(234)567-890" becomes "***-***-8901" and "+111 123 456 789" becomes "+111-***-***-7890".</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "LeetCode@LeetCode.com"
+Output: "l*****e@leetcode.com"
+Explanation: s is an email address.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "AB@qq.com"
+Output: "a*b@qq.com"
+Explanation: s is an email address. Note that even though "AB" is in uppercase, we still return a lowercase string.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "1(234)567-890"
+Output: "***-***-8901"
+Explanation: s is a phone number.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>s is either a valid email or a phone number.</li>
+                    <li>If s is an email: 8 ≤ s.length ≤ 40 and s consists of uppercase and lowercase English letters, digits, and '@', '.', and '-'.</li>
+                    <li>If s is a phone number: 10 ≤ s.length ≤ 20 and s consists of digits, spaces, and the characters '(', ')', '+', and '-'.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def maskPII(self, s: str) -> str:
+        if '@' in s:
+            # Email
+            s = s.lower()
+            name, domain = s.split('@')
+            return f"{name[0]}*****{name[-1]}@{domain}"
+        else:
+            # Phone number
+            digits = ''.join(c for c in s if c.isdigit())
+            if len(digits) == 10:
+                return f"***-***-{digits[-4:]}"
+            else:
+                return f"+{'*' * (len(digits)-10)}-***-***-{digits[-4:]}"</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Handles both email and phone number cases</li>
+                    <li>Uses string manipulation techniques</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String maskPII(String s) {
+        if (s.contains("@")) {
+            // Email
+            s = s.toLowerCase();
+            int atIndex = s.indexOf('@');
+            return s.charAt(0) + "*****" + s.charAt(atIndex - 1) + s.substring(atIndex);
+        } else {
+            // Phone number
+            String digits = s.replaceAll("\\D", "");
+            if (digits.length() == 10) {
+                return "***-***-" + digits.substring(digits.length() - 4);
+            } else {
+                return "+" + "*".repeat(digits.length() - 10) + "-***-***-" + 
+                       digits.substring(digits.length() - 4);
+            }
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string maskPII(string s) {
+        if (s.find('@') != string::npos) {
+            // Email
+            transform(s.begin(), s.end(), s.begin(), ::tolower);
+            int atIndex = s.find('@');
+            return s[0] + string("*****") + s[atIndex - 1] + s.substr(atIndex);
+        } else {
+            // Phone number
+            string digits;
+            for (char c : s) {
+                if (isdigit(c)) {
+                    digits += c;
+                }
+            }
+            if (digits.length() == 10) {
+                return "***-***-" + digits.substr(digits.length() - 4);
+            } else {
+                return "+" + string(digits.length() - 10, '*') + "-***-***-" + 
+                       digits.substr(digits.length() - 4);
+            }
+        }
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {string}
+ */
+var maskPII = function(s) {
+    if (s.includes('@')) {
+        // Email
+        s = s.toLowerCase();
+        const [name, domain] = s.split('@');
+        return `${name[0]}*****${name[name.length-1]}@${domain}`;
+    } else {
+        // Phone number
+        const digits = s.replace(/\D/g, '');
+        if (digits.length === 10) {
+            return `***-***-${digits.slice(-4)}`;
+        } else {
+            return `+${'*'.repeat(digits.length-10)}-***-***-${digits.slice(-4)}`;
+        }
+    }
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string MaskPII(string s) {
+        if (s.Contains('@')) {
+            // Email
+            s = s.ToLower();
+            int atIndex = s.IndexOf('@');
+            return $"{s[0]}*****{s[atIndex - 1]}{s.Substring(atIndex)}";
+        } else {
+            // Phone number
+            string digits = new string(s.Where(char.IsDigit).ToArray());
+            if (digits.Length == 10) {
+                return $"***-***-{digits.Substring(digits.Length - 4)}";
+            } else {
+                return $"+{new string('*', digits.Length - 10)}-***-***-{digits.Substring(digits.Length - 4)}";
+            }
+        }
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses string manipulation and LINQ</li>
+                    <li>Handles different formats efficiently</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

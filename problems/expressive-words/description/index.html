@@ -1,0 +1,411 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expressive Words - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of words that can be stretched to become a given string, where stretching involves repeating letters in groups. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, expressive words, solution, python, java, cpp, javascript, c#, algorithm, coding, programming">
+    <meta property="og:title" content="Expressive Words - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/expressive-words/">
+    <meta property="og:description" content="Find the number of words that can be stretched to become a given string, where stretching involves repeating letters in groups. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/expressive-words/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Expressive Words - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the number of words that can be stretched to become a given string, where stretching involves repeating letters in groups. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "articleBody": "Sometimes people repeat letters to represent extra feeling. For example:\n\n- \"hello\" -> \"heeellooo\" (\"e\" and \"o\" are repeated)\n- \"hi\" -> \"hiiii\" (\"i\" is repeated)\n\nIn these strings, we have groups of adjacent letters that are all the same character. For instance, \"h\", \"eee\", \"ll\", \"ooo\".\n\nWe call a group that has 3 or more characters of the same type an expressive group. Notice that \"ll\" is not an expressive group because it only has 2 characters.\n\nGiven a string s and an array of strings words, return the number of words[i] that can be stretched to become s. A word can be stretched to become s if all groups in s are expressive groups and the unstretched version of the word equals the stretched version ignoring character counts.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/expressive-words/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">809. Expressive Words</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Sometimes people repeat letters to represent extra feeling. For example:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>"hello" -> "heeellooo" ("e" and "o" are repeated)</li>
+                    <li>"hi" -> "hiiii" ("i" is repeated)</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    In these strings, we have groups of adjacent letters that are all the same character. For instance, "h", "eee", "ll", "ooo".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    We call a group that has 3 or more characters of the same type an expressive group. Notice that "ll" is not an expressive group because it only has 2 characters.
+                </p>
+                <p class="text-gray-700">
+                    Given a string s and an array of strings words, return the number of words[i] that can be stretched to become s. A word can be stretched to become s if all groups in s are expressive groups and the unstretched version of the word equals the stretched version ignoring character counts.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "heeellooo", words = ["hello", "hi", "helo"]
+Output: 1
+Explanation: 
+We can stretch "hello" into "heeellooo".
+We cannot stretch "hi" into "heeellooo".
+We cannot stretch "helo" into "heeellooo".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "zzzzzyyyyy", words = ["zzyy","zy","zyy"]
+Output: 1</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 100</li>
+                    <li>1 ≤ words.length ≤ 100</li>
+                    <li>1 ≤ words[i].length ≤ 100</li>
+                    <li>s and words[i] consist of lowercase English letters</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def expressiveWords(self, s: str, words: List[str]) -> int:
+        def get_groups(word):
+            groups = []
+            counts = []
+            prev = ''
+            count = 0
+            
+            for c in word:
+                if c != prev:
+                    if prev:
+                        groups.append(prev)
+                        counts.append(count)
+                    prev = c
+                    count = 1
+                else:
+                    count += 1
+            
+            groups.append(prev)
+            counts.append(count)
+            return groups, counts
+        
+        s_groups, s_counts = get_groups(s)
+        result = 0
+        
+        for word in words:
+            w_groups, w_counts = get_groups(word)
+            
+            if w_groups != s_groups:
+                continue
+                
+            is_stretchy = True
+            for i in range(len(w_counts)):
+                if s_counts[i] < w_counts[i] or (s_counts[i] < 3 and s_counts[i] != w_counts[i]):
+                    is_stretchy = False
+                    break
+                    
+            if is_stretchy:
+                result += 1
+                
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Groups consecutive characters and counts their occurrences</li>
+                    <li>Checks if word groups match s groups and if counts satisfy stretchy conditions</li>
+                    <li>Time complexity: O(N * M) where N is length of words and M is max length of a word</li>
+                    <li>Space complexity: O(M)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int expressiveWords(String s, String[] words) {
+        int result = 0;
+        
+        for (String word : words) {
+            if (isStretchy(s, word)) {
+                result++;
+            }
+        }
+        
+        return result;
+    }
+    
+    private boolean isStretchy(String s, String word) {
+        int i = 0, j = 0;
+        
+        while (i < s.length() && j < word.length()) {
+            if (s.charAt(i) != word.charAt(j)) {
+                return false;
+            }
+            
+            int s_count = getCount(s, i);
+            int w_count = getCount(word, j);
+            
+            if (s_count < w_count || (s_count < 3 && s_count != w_count)) {
+                return false;
+            }
+            
+            i += s_count;
+            j += w_count;
+        }
+        
+        return i == s.length() && j == word.length();
+    }
+    
+    private int getCount(String str, int start) {
+        int count = 0;
+        char c = str.charAt(start);
+        
+        while (start < str.length() && str.charAt(start) == c) {
+            count++;
+            start++;
+        }
+        
+        return count;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int expressiveWords(string s, vector<string>& words) {
+        int result = 0;
+        
+        for (const string& word : words) {
+            if (isStretchy(s, word)) {
+                result++;
+            }
+        }
+        
+        return result;
+    }
+    
+private:
+    bool isStretchy(const string& s, const string& word) {
+        int i = 0, j = 0;
+        
+        while (i < s.length() && j < word.length()) {
+            if (s[i] != word[j]) {
+                return false;
+            }
+            
+            int s_count = getCount(s, i);
+            int w_count = getCount(word, j);
+            
+            if (s_count < w_count || (s_count < 3 && s_count != w_count)) {
+                return false;
+            }
+            
+            i += s_count;
+            j += w_count;
+        }
+        
+        return i == s.length() && j == word.length();
+    }
+    
+    int getCount(const string& str, int start) {
+        int count = 0;
+        char c = str[start];
+        
+        while (start < str.length() && str[start] == c) {
+            count++;
+            start++;
+        }
+        
+        return count;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @param {string[]} words
+ * @return {number}
+ */
+var expressiveWords = function(s, words) {
+    const getGroups = (word) => {
+        const groups = [];
+        const counts = [];
+        let prev = '';
+        let count = 0;
+        
+        for (const c of word) {
+            if (c !== prev) {
+                if (prev) {
+                    groups.push(prev);
+                    counts.push(count);
+                }
+                prev = c;
+                count = 1;
+            } else {
+                count++;
+            }
+        }
+        
+        groups.push(prev);
+        counts.push(count);
+        return [groups, counts];
+    };
+    
+    const [s_groups, s_counts] = getGroups(s);
+    let result = 0;
+    
+    for (const word of words) {
+        const [w_groups, w_counts] = getGroups(word);
+        
+        if (w_groups.length !== s_groups.length) {
+            continue;
+        }
+        
+        let isStretchy = true;
+        for (let i = 0; i < w_groups.length; i++) {
+            if (w_groups[i] !== s_groups[i] || 
+                s_counts[i] < w_counts[i] || 
+                (s_counts[i] < 3 && s_counts[i] !== w_counts[i])) {
+                isStretchy = false;
+                break;
+            }
+        }
+        
+        if (isStretchy) {
+            result++;
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int ExpressiveWords(string s, string[] words) {
+        int result = 0;
+        
+        foreach (string word in words) {
+            if (IsStretchy(s, word)) {
+                result++;
+            }
+        }
+        
+        return result;
+    }
+    
+    private bool IsStretchy(string s, string word) {
+        int i = 0, j = 0;
+        
+        while (i < s.Length && j < word.Length) {
+            if (s[i] != word[j]) {
+                return false;
+            }
+            
+            int sCount = GetCount(s, i);
+            int wCount = GetCount(word, j);
+            
+            if (sCount < wCount || (sCount < 3 && sCount != wCount)) {
+                return false;
+            }
+            
+            i += sCount;
+            j += wCount;
+        }
+        
+        return i == s.Length && j == word.Length;
+    }
+    
+    private int GetCount(string str, int start) {
+        int count = 0;
+        char c = str[start];
+        
+        while (start < str.Length && str[start] == c) {
+            count++;
+            start++;
+        }
+        
+        return count;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses two-pointer approach to compare characters and their counts</li>
+                    <li>Checks if groups can be stretched according to the rules</li>
+                    <li>Time complexity: O(N * M) where N is length of words and M is max length of a word</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Degree of an Array - LeetCodee Solution</title>
+    <meta name="description" content="Find the smallest subarray with the same degree as the input array.  Includes optimized solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="LeetCode, Degree of an Array, Algorithm, Solution, Python, Java, C++, JavaScript, C#, Programming, Coding, Subarray, Array, Degree, Frequency">
+    <meta property="og:title" content="Degree of an Array - LeetCodee Solution">
+    <meta property="og:description" content="Find the smallest subarray with the same degree as the input array.  Includes optimized solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/degree-of-an-array/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/degree-of-an-array/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">697. Degree of an Array</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a non-empty array of non-negative integers <code class="bg-gray-100 px-1 rounded">nums</code>, the degree of this array is defined as the maximum frequency of any one of its elements.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Your task is to find the smallest possible length of a (contiguous) subarray of <code class="bg-gray-100 px-1 rounded">nums</code>, that has the same degree as <code class="bg-gray-100 px-1 rounded">nums</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,2,3,1]
+Output: 2
+Explanation: 
+The input array has a degree of 2 because both elements 1 and 2 appear twice.
+Of the subarrays that have the same degree:
+[1, 2, 2, 3, 1], [1, 2, 2, 3], [2, 2, 3, 1], [1, 2, 2], [2, 2, 3], [2, 2]
+The shortest length is 2.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,2,3,1,4,2]
+Output: 6
+Explanation: 
+The degree is 3 because the element 2 is repeated 3 times.
+So [2,2,3,1,4,2] is the shortest subarray, therefore returning 6.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>nums.length will be between 1 and 50,000</li>
+                    <li>nums[i] will be an integer between 0 and 49,999</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findShortestSubArray(self, nums: List[int]) -> int:
+        # Dictionary to store first occurrence, last occurrence, and count
+        num_info = {}
+        
+        for i, num in enumerate(nums):
+            if num in num_info:
+                num_info[num][0] += 1
+                num_info[num][2] = i
+            else:
+                # [count, first_index, last_index]
+                num_info[num] = [1, i, i]
+        
+        max_degree = 0
+        min_length = len(nums)
+        
+        # Find numbers with maximum degree and their subarray lengths
+        for count, first, last in num_info.values():
+            if count > max_degree:
+                max_degree = count
+                min_length = last - first + 1
+            elif count == max_degree:
+                min_length = min(min_length, last - first + 1)
+        
+        return min_length</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a dictionary to store count and position information</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(k) where k is the number of unique elements</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int findShortestSubArray(int[] nums) {
+        Map<Integer, int[]> map = new HashMap<>();
+        
+        for (int i = 0; i < nums.length; i++) {
+            if (!map.containsKey(nums[i])) {
+                // [count, first_index, last_index]
+                map.put(nums[i], new int[]{1, i, i});
+            } else {
+                int[] info = map.get(nums[i]);
+                info[0]++;
+                info[2] = i;
+            }
+        }
+        
+        int maxDegree = 0;
+        int minLength = nums.length;
+        
+        for (int[] info : map.values()) {
+            if (info[0] > maxDegree) {
+                maxDegree = info[0];
+                minLength = info[2] - info[1] + 1;
+            } else if (info[0] == maxDegree) {
+                minLength = Math.min(minLength, info[2] - info[1] + 1);
+            }
+        }
+        
+        return minLength;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int findShortestSubArray(vector<int>& nums) {
+        unordered_map<int, vector<int>> map;
+        
+        for (int i = 0; i < nums.size(); i++) {
+            if (map.find(nums[i]) == map.end()) {
+                // [count, first_index, last_index]
+                map[nums[i]] = {1, i, i};
+            } else {
+                map[nums[i]][0]++;
+                map[nums[i]][2] = i;
+            }
+        }
+        
+        int maxDegree = 0;
+        int minLength = nums.size();
+        
+        for (const auto& pair : map) {
+            const vector<int>& info = pair.second;
+            if (info[0] > maxDegree) {
+                maxDegree = info[0];
+                minLength = info[2] - info[1] + 1;
+            } else if (info[0] == maxDegree) {
+                minLength = min(minLength, info[2] - info[1] + 1);
+            }
+        }
+        
+        return minLength;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findShortestSubArray = function(nums) {
+    const map = new Map();
+    
+    for (let i = 0; i < nums.length; i++) {
+        if (!map.has(nums[i])) {
+            // [count, first_index, last_index]
+            map.set(nums[i], [1, i, i]);
+        } else {
+            const info = map.get(nums[i]);
+            info[0]++;
+            info[2] = i;
+        }
+    }
+    
+    let maxDegree = 0;
+    let minLength = nums.length;
+    
+    for (const [_, info] of map) {
+        if (info[0] > maxDegree) {
+            maxDegree = info[0];
+            minLength = info[2] - info[1] + 1;
+        } else if (info[0] === maxDegree) {
+            minLength = Math.min(minLength, info[2] - info[1] + 1);
+        }
+    }
+    
+    return minLength;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int FindShortestSubArray(int[] nums) {
+        Dictionary<int, int[]> dict = new Dictionary<int, int[]>();
+        
+        for (int i = 0; i < nums.Length; i++) {
+            if (!dict.ContainsKey(nums[i])) {
+                // [count, first_index, last_index]
+                dict[nums[i]] = new int[]{1, i, i};
+            } else {
+                int[] info = dict[nums[i]];
+                info[0]++;
+                info[2] = i;
+            }
+        }
+        
+        int maxDegree = 0;
+        int minLength = nums.Length;
+        
+        foreach (var info in dict.Values) {
+            if (info[0] > maxDegree) {
+                maxDegree = info[0];
+                minLength = info[2] - info[1] + 1;
+            } else if (info[0] == maxDegree) {
+                minLength = Math.Min(minLength, info[2] - info[1] + 1);
+            }
+        }
+        
+        return minLength;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a dictionary/map to store frequency and position information</li>
+                    <li>Tracks first and last occurrence of each number</li>
+                    <li>Time complexity: O(n) where n is the length of the array</li>
+                    <li>Space complexity: O(k) where k is the number of unique elements</li>
+                </ul>
+            </div>
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "697. Degree of an Array",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2023-10-27",
+  "description": "Find the smallest subarray with the same degree as the input array. Solutions in Python, Java, C++, JavaScript, and C#.",
+  "articleBody": "Given a non-empty array of non-negative integers `nums`, the degree of this array is defined as the maximum frequency of any one of its elements. Your task is to find the smallest possible length of a (contiguous) subarray of `nums`, that has the same degree as `nums`.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://leetcodee.com/problems/degree-of-an-array/"
+  }
+}
+    </script>
+</body>
+</html>

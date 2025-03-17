@@ -1,0 +1,401 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Range Module - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for Range Module problem.  Learn how to efficiently track and query ranges of numbers using Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="LeetCode, Range Module, algorithm, data structure, Python, Java, C++, JavaScript, C#, solution, coding, interview">
+    <meta property="og:title" content="Range Module - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/range-module/">
+    <meta property="og:description" content="LeetCodee solution for Range Module problem.  Learn how to efficiently track and query ranges of numbers using Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/range-module/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">715. Range Module</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A Range Module is a module that tracks ranges of numbers. Design a data structure that can efficiently query and update ranges.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement the <code class="bg-gray-100 px-1 rounded">RangeModule</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">RangeModule()</code> Initializes the object of the data structure</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void addRange(int left, int right)</code> Adds the half-open interval <code class="bg-gray-100 px-1 rounded">[left, right)</code>, tracking every real number in that interval. Adding an interval that partially overlaps with currently tracked numbers should add any numbers in the interval <code class="bg-gray-100 px-1 rounded">[left, right)</code> that are not already tracked</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean queryRange(int left, int right)</code> Returns <code class="bg-gray-100 px-1 rounded">true</code> if every real number in the interval <code class="bg-gray-100 px-1 rounded">[left, right)</code> is currently being tracked, and <code class="bg-gray-100 px-1 rounded">false</code> otherwise</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void removeRange(int left, int right)</code> Stops tracking every real number currently being tracked in the half-open interval <code class="bg-gray-100 px-1 rounded">[left, right)</code></li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["RangeModule", "addRange", "removeRange", "queryRange", "queryRange", "queryRange"]
+[[], [10, 20], [14, 16], [10, 14], [13, 15], [16, 17]]
+Output
+[null, null, null, true, false, true]
+
+Explanation
+RangeModule rangeModule = new RangeModule();
+rangeModule.addRange(10, 20); // [10, 20)
+rangeModule.removeRange(14, 16); // [10, 14) ∪ [16, 20)
+rangeModule.queryRange(10, 14); // return True, (Every number in [10, 14) is being tracked)
+rangeModule.queryRange(13, 15); // return False, (Numbers like 14, 14.03, 14.17 in [13, 15) are not being tracked)
+rangeModule.queryRange(16, 17); // return True, (The number 16 in [16, 17) is still being tracked, despite the remove operation)</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ left < right ≤ 10<sup>9</sup></li>
+                    <li>At most 10<sup>4</sup> calls will be made to addRange, queryRange, and removeRange</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class RangeModule:
+    def __init__(self):
+        self.ranges = []
+    
+    def addRange(self, left: int, right: int) -> None:
+        new_ranges = []
+        inserted = False
+        
+        for start, end in self.ranges:
+            if end < left:
+                new_ranges.append((start, end))
+            elif start > right:
+                if not inserted:
+                    new_ranges.append((left, right))
+                    inserted = True
+                new_ranges.append((start, end))
+            else:
+                left = min(left, start)
+                right = max(right, end)
+        
+        if not inserted:
+            new_ranges.append((left, right))
+            
+        self.ranges = new_ranges
+    
+    def queryRange(self, left: int, right: int) -> bool:
+        for start, end in self.ranges:
+            if start <= left and end >= right:
+                return True
+        return False
+    
+    def removeRange(self, left: int, right: int) -> None:
+        new_ranges = []
+        
+        for start, end in self.ranges:
+            if end <= left or start >= right:
+                newRanges.append((start, end))
+            else:
+                if start < left:
+                    new_ranges.append((start, left))
+                if end > right:
+                    new_ranges.append((right, end))
+        
+        self.ranges = new_ranges</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses sorted list of intervals to track ranges</li>
+                    <li>Time complexity: O(n) for addRange and removeRange, O(log n) for queryRange</li>
+                    <li>Space complexity: O(n) where n is the number of intervals</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class RangeModule {
+    private TreeMap<Integer, Integer> ranges;
+    
+    public RangeModule() {
+        ranges = new TreeMap<>();
+    }
+    
+    public void addRange(int left, int right) {
+        Integer start = ranges.floorKey(left);
+        Integer end = ranges.floorKey(right);
+        
+        if (start != null && ranges.get(start) >= left) {
+            left = start;
+        }
+        if (end != null && ranges.get(end) > right) {
+            right = ranges.get(end);
+        }
+        
+        ranges.subMap(left, right).clear();
+        ranges.put(left, right);
+    }
+    
+    public boolean queryRange(int left, int right) {
+        Integer start = ranges.floorKey(left);
+        return start != null && ranges.get(start) >= right;
+    }
+    
+    public void removeRange(int left, int right) {
+        Integer start = ranges.floorKey(left);
+        Integer end = ranges.floorKey(right);
+        
+        if (end != null && ranges.get(end) > right) {
+            ranges.put(right, ranges.get(end));
+        }
+        if (start != null && ranges.get(start) > left) {
+            ranges.put(start, left);
+        }
+        
+        ranges.subMap(left, right).clear();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class RangeModule {
+private:
+    map<int, int> ranges;
+    
+public:
+    RangeModule() {}
+    
+    void addRange(int left, int right) {
+        auto start = ranges.upper_bound(left);
+        auto end = ranges.upper_bound(right);
+        
+        if (start != ranges.begin()) {
+            start--;
+            if (start->second < left) {
+                start++;
+            }
+        }
+        
+        if (start != end) {
+            left = min(left, start->first);
+            right = max(right, (--end)->second);
+            ranges.erase(start, ++end);
+        }
+        
+        ranges[left] = right;
+    }
+    
+    bool queryRange(int left, int right) {
+        auto it = ranges.upper_bound(left);
+        return it != ranges.begin() && (--it)->second >= right;
+    }
+    
+    void removeRange(int left, int right) {
+        auto start = ranges.upper_bound(left);
+        auto end = ranges.upper_bound(right);
+        
+        if (start != ranges.begin()) {
+            start--;
+            if (start->second > left) {
+                ranges[start->first] = left;
+                if (start->second > right) {
+                    ranges[right] = start->second;
+                }
+            }
+        }
+        
+        ranges.erase(start, end);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>class RangeModule {
+    constructor() {
+        this.ranges = [];
+    }
+    
+    addRange(left, right) {
+        const newRanges = [];
+        let inserted = false;
+        
+        for (const [start, end] of this.ranges) {
+            if (end < left) {
+                newRanges.push([start, end]);
+            } else if (start > right) {
+                if (!inserted) {
+                    newRanges.push([left, right]);
+                    inserted = true;
+                }
+                newRanges.push([start, end]);
+            } else {
+                left = Math.min(left, start);
+                right = Math.max(right, end);
+            }
+        }
+        
+        if (!inserted) {
+            newRanges.push([left, right]);
+        }
+        
+        this.ranges = newRanges;
+    }
+    
+    queryRange(left, right) {
+        for (const [start, end] of this.ranges) {
+            if (start <= left && end >= right) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    removeRange(left, right) {
+        const newRanges = [];
+        
+        for (const [start, end] of this.ranges) {
+            if (end <= left || start >= right) {
+                newRanges.push([start, end]);
+            } else {
+                if (start < left) {
+                    newRanges.push([start, left]);
+                }
+                if (end > right) {
+                    newRanges.push([right, end]);
+                }
+            }
+        }
+        
+        this.ranges = newRanges;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class RangeModule {
+    private SortedDictionary<int, int> ranges;
+    
+    public RangeModule() {
+        ranges = new SortedDictionary<int, int>();
+    }
+    
+    public void AddRange(int left, int right) {
+        var start = ranges.Keys.Where(k => k <= left).LastOrDefault();
+        var end = ranges.Keys.Where(k => k <= right).LastOrDefault();
+        
+        if (start != 0 && ranges[start] >= left) {
+            left = start;
+        }
+        if (end != 0 && ranges[end] > right) {
+            right = ranges[end];
+        }
+        
+        var keysToRemove = ranges.Keys.Where(k => k >= left && k < right).ToList();
+        foreach (var key in keysToRemove) {
+            ranges.Remove(key);
+        }
+        
+        ranges[left] = right;
+    }
+    
+    public bool QueryRange(int left, int right) {
+        var start = ranges.Keys.Where(k => k <= left).LastOrDefault();
+        return start != 0 && ranges[start] >= right;
+    }
+    
+    public void RemoveRange(int left, int right) {
+        var start = ranges.Keys.Where(k => k <= left).LastOrDefault();
+        var end = ranges.Keys.Where(k => k <= right).LastOrDefault();
+        
+        if (end != 0 && ranges[end] > right) {
+            ranges[right] = ranges[end];
+        }
+        if (start != 0 && ranges[start] > left) {
+            ranges[start] = left;
+        }
+        
+        var keysToRemove = ranges.Keys.Where(k => k >= left && k < right).ToList();
+        foreach (var key in keysToRemove) {
+            ranges.Remove(key);
+        }
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses sorted data structure to track ranges</li>
+                    <li>Time complexity: O(log n) for all operations</li>
+                    <li>Space complexity: O(n) where n is the number of intervals</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "715. Range Module",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "url": "https://leetcodee.com"
+          },
+          "datePublished": "2023-10-27",
+          "description": "LeetCodee solution for Range Module problem. Learn how to efficiently track and query ranges of numbers using Python, Java, C++, JavaScript, and C#.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/range-module/"
+          }
+        }
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

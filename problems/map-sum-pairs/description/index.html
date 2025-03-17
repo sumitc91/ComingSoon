@@ -1,0 +1,363 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Sum Pairs - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the LeetCode Map Sum Pairs problem with detailed explanations and solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, mapsumpairs, algorithm, data structure, python, java, cpp, javascript, csharp, coding, solution, tutorial">
+    <link rel="canonical" href="https://leetcodee.com/problems/map-sum-pairs/">
+    <meta property="og:title" content="Map Sum Pairs - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/map-sum-pairs/">
+    <meta property="og:description" content="Learn how to solve the LeetCode Map Sum Pairs problem with detailed explanations and solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "677. Map Sum Pairs",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Design a map that allows you to do the following: Maps a string key to a given value. Returns the sum of all the values that have a key with a prefix equal to a given string.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/map-sum-pairs/"
+      },
+      "keywords": "leetcode, mapsumpairs, algorithm, data structure, python, java, cpp, javascript, csharp, coding, solution, tutorial"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">677. Map Sum Pairs</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Design a map that allows you to do the following:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Maps a string key to a given value.</li>
+                    <li>Returns the sum of all the values that have a key with a prefix equal to a given string.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Implement the <code class="bg-gray-100 px-1 rounded">MapSum</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">MapSum()</code> Initializes the MapSum object.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void insert(String key, int val)</code> Inserts the key-val pair into the map. If the key already existed, the original key-value pair will be overridden to the new one.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">int sum(String prefix)</code> Returns the sum of all the pairs' values whose key starts with the prefix.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["MapSum", "insert", "sum", "insert", "sum"]
+[[], ["apple", 3], ["ap"], ["app", 2], ["ap"]]
+Output
+[null, null, 3, null, 5]
+
+Explanation
+MapSum mapSum = new MapSum();
+mapSum.insert("apple", 3);  
+mapSum.sum("ap");           // return 3 (apple = 3)
+mapSum.insert("app", 2);    
+mapSum.sum("ap");           // return 5 (apple + app = 3 + 2 = 5)</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ key.length, prefix.length ≤ 50</li>
+                    <li>key and prefix consist of only lowercase English letters.</li>
+                    <li>1 ≤ val ≤ 1000</li>
+                    <li>At most 50 calls will be made to insert and sum.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class MapSum:
+    def __init__(self):
+        self.map = {}
+        self.prefix_map = {}
+        
+    def insert(self, key: str, val: int) -> None:
+        # If key exists, subtract its old value from all prefixes
+        if key in self.map:
+            old_val = self.map[key]
+            for i in range(len(key)):
+                prefix = key[:i+1]
+                self.prefix_map[prefix] = self.prefix_map.get(prefix, 0) - old_val
+        
+        # Add new value to all prefixes
+        for i in range(len(key)):
+            prefix = key[:i+1]
+            self.prefix_map[prefix] = self.prefix_map.get(prefix, 0) + val
+            
+        self.map[key] = val
+        
+    def sum(self, prefix: str) -> int:
+        return self.prefix_map.get(prefix, 0)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Trie):</h4>
+                    <pre class="language-python"><code>class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.val = 0
+        self.is_end = False
+        
+class MapSum:
+    def __init__(self):
+        self.root = TrieNode()
+        
+    def insert(self, key: str, val: int) -> None:
+        node = self.root
+        for char in key:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.val = val
+        node.is_end = True
+        
+    def sum(self, prefix: str) -> int:
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return 0
+            node = node.children[char]
+            
+        def dfs(node: TrieNode) -> int:
+            total = node.val
+            for child in node.children.values():
+                total += dfs(child)
+            return total
+            
+        return dfs(node)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses prefix map for O(1) sum operation</li>
+                    <li>Second solution uses Trie for better space efficiency</li>
+                    <li>Time complexity: O(k) for insert, O(1) for sum in first solution</li>
+                    <li>Space complexity: O(n*k) where n is number of keys and k is key length</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class MapSum {
+    private Map<String, Integer> map;
+    private Map<String, Integer> prefixMap;
+    
+    public MapSum() {
+        map = new HashMap<>();
+        prefixMap = new HashMap<>();
+    }
+    
+    public void insert(String key, int val) {
+        // If key exists, subtract its old value from all prefixes
+        if (map.containsKey(key)) {
+            int oldVal = map.get(key);
+            for (int i = 0; i < key.length(); i++) {
+                String prefix = key.substring(0, i + 1);
+                prefixMap.put(prefix, prefixMap.get(prefix) - oldVal);
+            }
+        }
+        
+        // Add new value to all prefixes
+        for (int i = 0; i < key.length(); i++) {
+            String prefix = key.substring(0, i + 1);
+            prefixMap.put(prefix, prefixMap.getOrDefault(prefix, 0) + val);
+        }
+        
+        map.put(key, val);
+    }
+    
+    public int sum(String prefix) {
+        return prefixMap.getOrDefault(prefix, 0);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class MapSum {
+private:
+    unordered_map<string, int> map;
+    unordered_map<string, int> prefixMap;
+    
+public:
+    MapSum() {}
+    
+    void insert(string key, int val) {
+        // If key exists, subtract its old value from all prefixes
+        if (map.count(key)) {
+            int oldVal = map[key];
+            for (int i = 0; i < key.length(); i++) {
+                string prefix = key.substr(0, i + 1);
+                prefixMap[prefix] -= oldVal;
+            }
+        }
+        
+        // Add new value to all prefixes
+        for (int i = 0; i < key.length(); i++) {
+            string prefix = key.substr(0, i + 1);
+            prefixMap[prefix] += val;
+        }
+        
+        map[key] = val;
+    }
+    
+    int sum(string prefix) {
+        return prefixMap[prefix];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>class MapSum {
+    constructor() {
+        this.map = new Map();
+        this.prefixMap = new Map();
+    }
+    
+    insert(key, val) {
+        // If key exists, subtract its old value from all prefixes
+        if (this.map.has(key)) {
+            const oldVal = this.map.get(key);
+            for (let i = 0; i < key.length; i++) {
+                const prefix = key.substring(0, i + 1);
+                this.prefixMap.set(prefix, (this.prefixMap.get(prefix) || 0) - oldVal);
+            }
+        }
+        
+        // Add new value to all prefixes
+        for (let i = 0; i < key.length; i++) {
+            const prefix = key.substring(0, i + 1);
+            this.prefixMap.set(prefix, (this.prefixMap.get(prefix) || 0) + val);
+        }
+        
+        this.map.set(key, val);
+    }
+    
+    sum(prefix) {
+        return this.prefixMap.get(prefix) || 0;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class MapSum {
+    private Dictionary<string, int> map;
+    private Dictionary<string, int> prefixMap;
+    
+    public MapSum() {
+        map = new Dictionary<string, int>();
+        prefixMap = new Dictionary<string, int>();
+    }
+    
+    public void Insert(string key, int val) {
+        // If key exists, subtract its old value from all prefixes
+        if (map.ContainsKey(key)) {
+            int oldVal = map[key];
+            for (int i = 0; i < key.Length; i++) {
+                string prefix = key.Substring(0, i + 1);
+                prefixMap[prefix] -= oldVal;
+            }
+        }
+        
+        // Add new value to all prefixes
+        for (int i = 0; i < key.Length; i++) {
+            string prefix = key.Substring(0, i + 1);
+            if (!prefixMap.ContainsKey(prefix)) {
+                prefixMap[prefix] = 0;
+            }
+            prefixMap[prefix] += val;
+        }
+        
+        map[key] = val;
+    }
+    
+    public int Sum(string prefix) {
+        return prefixMap.ContainsKey(prefix) ? prefixMap[prefix] : 0;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses two maps for efficient prefix sum calculation</li>
+                    <li>Time complexity: O(k) for insert, O(1) for sum</li>
+                    <li>Space complexity: O(n*k) where n is number of keys and k is key length</li>
+                    <li>Handles key updates by subtracting old value and adding new value</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

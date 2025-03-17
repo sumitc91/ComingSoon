@@ -1,0 +1,405 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Nodes Distance K in Binary Tree - LeetCodee Solution</title>
+    <meta name="description" content="Find all nodes in a binary tree that are a distance k from a given target node.  Optimized solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="LeetCode, binary tree, graph, BFS, distance k, algorithm, Python, Java, C++, JavaScript, C#, solution, coding, problem solving">
+    <meta property="og:title" content="All Nodes Distance K in Binary Tree - LeetCodee Solution">
+    <meta property="og:description" content="Find all nodes in a binary tree that are a distance k from a given target node.  Optimized solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/all-nodes-distance-k-in-binary-tree/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/all-nodes-distance-k-in-binary-tree/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "All Nodes Distance K in Binary Tree",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find all nodes in a binary tree that are a distance k from a given target node.  Optimized solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "keywords": "LeetCode, binary tree, graph, BFS, distance k, algorithm, Python, Java, C++, JavaScript, C#, solution, coding, problem solving",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/all-nodes-distance-k-in-binary-tree/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">863. All Nodes Distance K in Binary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the root of a binary tree, the value of a target node target, and an integer k, return an array of the values of all nodes that have a distance k from the target node.
+                </p>
+                <p class="text-gray-700">
+                    You can return the answer in any order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [3,5,1,6,2,0,8,null,null,7,4], target = 5, k = 2
+Output: [7,4,1]
+Explanation: The nodes that are a distance 2 from the target node (with value 5) have values 7, 4, and 1.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1], target = 1, k = 3
+Output: []</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 500]</li>
+                    <li>0 ≤ Node.val ≤ 500</li>
+                    <li>All the values Node.val are unique</li>
+                    <li>target is the value of one of the nodes in the tree</li>
+                    <li>0 ≤ k ≤ 1000</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
+        # Build graph representation
+        graph = defaultdict(list)
+        
+        def build_graph(node, parent):
+            if not node:
+                return
+            if parent:
+                graph[node.val].append(parent.val)
+                graph[parent.val].append(node.val)
+            build_graph(node.left, node)
+            build_graph(node.right, node)
+        
+        build_graph(root, None)
+        
+        # BFS to find nodes at distance k
+        queue = deque([(target.val, 0)])
+        visited = {target.val}
+        result = []
+        
+        while queue:
+            node_val, dist = queue.popleft()
+            
+            if dist == k:
+                result.append(node_val)
+            elif dist < k:
+                for neighbor in graph[node_val]:
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        queue.append((neighbor, dist + 1))
+        
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Converts tree to undirected graph for easier traversal</li>
+                    <li>Uses BFS to find nodes at distance k</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    Map<Integer, List<Integer>> graph;
+    
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        // Build graph representation
+        graph = new HashMap<>();
+        buildGraph(root, null);
+        
+        // BFS to find nodes at distance k
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{target.val, 0});
+        Set<Integer> visited = new HashSet<>();
+        visited.add(target.val);
+        List<Integer> result = new ArrayList<>();
+        
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int node = current[0], dist = current[1];
+            
+            if (dist == k) {
+                result.add(node);
+            } else if (dist < k) {
+                for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        queue.offer(new int[]{neighbor, dist + 1});
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    private void buildGraph(TreeNode node, TreeNode parent) {
+        if (node == null) return;
+        
+        if (!graph.containsKey(node.val)) {
+            graph.put(node.val, new ArrayList<>());
+        }
+        
+        if (parent != null) {
+            graph.get(node.val).add(parent.val);
+            if (!graph.containsKey(parent.val)) {
+                graph.put(parent.val, new ArrayList<>());
+            }
+            graph.get(parent.val).add(node.val);
+        }
+        
+        buildGraph(node.left, node);
+        buildGraph(node.right, node);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+    unordered_map<int, vector<int>> graph;
+    
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        // Build graph representation
+        buildGraph(root, nullptr);
+        
+        // BFS to find nodes at distance k
+        queue<pair<int, int>> q;
+        q.push({target->val, 0});
+        unordered_set<int> visited;
+        visited.insert(target->val);
+        vector<int> result;
+        
+        while (!q.empty()) {
+            auto [node, dist] = q.front();
+            q.pop();
+            
+            if (dist == k) {
+                result.push_back(node);
+            } else if (dist < k) {
+                for (int neighbor : graph[node]) {
+                    if (visited.find(neighbor) == visited.end()) {
+                        visited.insert(neighbor);
+                        q.push({neighbor, dist + 1});
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+private:
+    void buildGraph(TreeNode* node, TreeNode* parent) {
+        if (!node) return;
+        
+        if (parent) {
+            graph[node->val].push_back(parent->val);
+            graph[parent->val].push_back(node->val);
+        }
+        
+        buildGraph(node->left, node);
+        buildGraph(node->right, node);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @param {TreeNode} target
+ * @param {number} k
+ * @return {number[]}
+ */
+var distanceK = function(root, target, k) {
+    // Build graph representation
+    const graph = new Map();
+    
+    function buildGraph(node, parent) {
+        if (!node) return;
+        
+        if (!graph.has(node.val)) {
+            graph.set(node.val, []);
+        }
+        
+        if (parent) {
+            graph.get(node.val).push(parent.val);
+            if (!graph.has(parent.val)) {
+                graph.set(parent.val, []);
+            }
+            graph.get(parent.val).push(node.val);
+        }
+        
+        buildGraph(node.left, node);
+        buildGraph(node.right, node);
+    }
+    
+    buildGraph(root, null);
+    
+    // BFS to find nodes at distance k
+    const queue = [[target.val, 0]];
+    const visited = new Set([target.val]);
+    const result = [];
+    
+    while (queue.length) {
+        const [node, dist] = queue.shift();
+        
+        if (dist === k) {
+            result.push(node);
+        } else if (dist < k) {
+            for (const neighbor of graph.get(node) || []) {
+                if (!visited.has(neighbor)) {
+                    visited.add(neighbor);
+                    queue.push([neighbor, dist + 1]);
+                }
+            }
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private Dictionary<int, List<int>> graph;
+    
+    public IList<int> DistanceK(TreeNode root, TreeNode target, int k) {
+        // Build graph representation
+        graph = new Dictionary<int, List<int>>();
+        BuildGraph(root, null);
+        
+        // BFS to find nodes at distance k
+        var queue = new Queue<(int node, int dist)>();
+        queue.Enqueue((target.val, 0));
+        var visited = new HashSet<int> { target.val };
+        var result = new List<int>();
+        
+        while (queue.Count > 0) {
+            var (node, dist) = queue.Dequeue();
+            
+            if (dist == k) {
+                result.Add(node);
+            } else if (dist < k) {
+                if (graph.ContainsKey(node)) {
+                    foreach (var neighbor in graph[node]) {
+                        if (!visited.Contains(neighbor)) {
+                            visited.Add(neighbor);
+                            queue.Enqueue((neighbor, dist + 1));
+                        }
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    private void BuildGraph(TreeNode node, TreeNode parent) {
+        if (node == null) return;
+        
+        if (!graph.ContainsKey(node.val)) {
+            graph[node.val] = new List<int>();
+        }
+        
+        if (parent != null) {
+            graph[node.val].Add(parent.val);
+            if (!graph.ContainsKey(parent.val)) {
+                graph[parent.val] = new List<int>();
+            }
+            graph[parent.val].Add(node.val);
+        }
+        
+        BuildGraph(node.left, node);
+        BuildGraph(node.right, node);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Converts binary tree to undirected graph</li>
+                    <li>Uses BFS with distance tracking</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

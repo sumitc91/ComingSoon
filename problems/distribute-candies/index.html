@@ -1,0 +1,291 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribute Candies - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the LeetCode Distribute Candies problem with optimized Python, Java, C++, JavaScript, and C# solutions. Includes detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, distribute candies, algorithm, solution, python, java, c++, javascript, c#, coding, problem solving, data structures, time complexity, space complexity">
+    <meta property="og:title" content="Distribute Candies - LeetCodee Solution">
+    <meta property="og:description" content="Learn how to solve the LeetCode Distribute Candies problem with optimized Python, Java, C++, JavaScript, and C# solutions. Includes detailed explanations and time/space complexity analysis.">
+    <meta property="og:url" content="https://leetcodee.com/problems/distribute-candies/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/distribute-candies/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">575. Distribute Candies</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Alice has <code class="bg-gray-100 px-1 rounded">n</code> candies, where the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> candy is of type <code class="bg-gray-100 px-1 rounded">candyType[i]</code>. Alice noticed that she started to gain weight, so she visited a doctor.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The doctor advised Alice to only eat <code class="bg-gray-100 px-1 rounded">n / 2</code> of the candies she has (<code class="bg-gray-100 px-1 rounded">n</code> is always even). Alice likes her candies very much, and she wants to eat the maximum number of different types of candies while still following the doctor's advice.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given the integer array <code class="bg-gray-100 px-1 rounded">candyType</code> of length <code class="bg-gray-100 px-1 rounded">n</code>, return <em>the maximum number of different types of candies she can eat if she only eats </em><code class="bg-gray-100 px-1 rounded">n / 2</code><em> of them</em>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: candyType = [1,1,2,2,3,3]
+Output: 3
+Explanation: Alice can eat 6/2 = 3 candies. Since there are only 3 types, she can eat one of each type.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: candyType = [1,1,2,3]
+Output: 2
+Explanation: Alice can eat 4/2 = 2 candies. Whether she eats types [1,2], [1,3], or [2,3], she still can only eat 2 different types.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: candyType = [6,6,6,6]
+Output: 1
+Explanation: Alice can only eat 4/2 = 2 candies. Even though she can eat 2 candies, she only has 1 type.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">n == candyType.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">2 <= n <= 10⁴</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">n</code> is even</li>
+                    <li><code class="bg-gray-100 px-1 rounded">-10⁵ <= candyType[i] <= 10⁵</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def distributeCandies(self, candyType: List[int]) -> int:
+        unique_types = len(set(candyType))
+        max_allowed = len(candyType) // 2
+        
+        return min(unique_types, max_allowed)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of candyType array. Creating a set takes O(n) time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the set of unique candy types.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int distributeCandies(int[] candyType) {
+        Set<Integer> uniqueTypes = new HashSet<>();
+        for (int candy : candyType) {
+            uniqueTypes.add(candy);
+        }
+        
+        return Math.min(uniqueTypes.size(), candyType.length / 2);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of candyType array. Creating a HashSet takes O(n) time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the HashSet of unique candy types.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int distributeCandies(vector<int>& candyType) {
+        unordered_set<int> uniqueTypes(candyType.begin(), candyType.end());
+        return min(uniqueTypes.size(), candyType.size() / 2);
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of candyType vector. Creating an unordered_set takes O(n) time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the unordered_set of unique candy types.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} candyType
+ * @return {number}
+ */
+var distributeCandies = function(candyType) {
+    const uniqueTypes = new Set(candyType);
+    return Math.min(uniqueTypes.size, candyType.length / 2);
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of candyType array. Creating a Set takes O(n) time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the Set of unique candy types.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int DistributeCandies(int[] candyType) {
+        HashSet<int> uniqueTypes = new HashSet<int>(candyType);
+        return Math.Min(uniqueTypes.Count, candyType.Length / 2);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of candyType array. Creating a HashSet takes O(n) time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the HashSet of unique candy types.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses a set data structure to find unique candy types:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Set usage</li>
+                            <li>Maximum limit</li>
+                            <li>Unique counting</li>
+                            <li>Constraint handling</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Create set</li>
+                            <li>Count unique</li>
+                            <li>Calculate limit</li>
+                            <li>Return minimum</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Set creation</li>
+                        <li>Size calculation</li>
+                        <li>Division handling</li>
+                        <li>Minimum comparison</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Direct set creation</li>
+                        <li>Early termination</li>
+                        <li>Memory efficiency</li>
+                        <li>Single pass</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>All same type</li>
+                        <li>All different types</li>
+                        <li>Minimum length</li>
+                        <li>Maximum length</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "575. Distribute Candies",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-10-27",
+      "dateModified": "2024-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Learn how to solve the LeetCode Distribute Candies problem with optimized Python, Java, C++, JavaScript, and C# solutions. Includes detailed explanations and time/space complexity analysis.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/distribute-candies/"
+      },
+      "articleSection": "LeetCode Solutions",
+      "keywords": "leetcode, distribute candies, algorithm, solution, python, java, c++, javascript, c#, coding, problem solving, data structures, time complexity, space complexity"
+    }
+    </script>
+</body>
+</html>

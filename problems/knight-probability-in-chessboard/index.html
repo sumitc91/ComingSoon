@@ -1,0 +1,353 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight Probability in Chessboard - LeetCodee Solution</title>
+    <meta name="description" content="Find the probability that a knight on an n x n chessboard stays on the board after k moves.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, chessboard, knight, probability, algorithm, dynamic programming, python, java, c++, javascript, c#, solution, coding">
+    <link rel="canonical" href="https://leetcodee.com/problems/knight-probability-in-chessboard/">
+    <meta property="og:title" content="Knight Probability in Chessboard - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/knight-probability-in-chessboard/">
+    <meta property="og:description" content="Find the probability that a knight on an n x n chessboard stays on the board after k moves.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:image" content="https://leetcodee.com/logo.png">  <!-- Replace with your logo URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Knight Probability in Chessboard - LeetCodee Solution",
+      "image": "https://leetcodee.com/logo.png",  <!-- Replace with your logo URL -->
+      "datePublished": "2024-01-24",  <!-- Update with the actual publication date -->
+      "dateModified": "2024-01-24",  <!-- Update with the actual modification date -->
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find the probability that a knight on an n x n chessboard stays on the board after k moves.  Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "On an n x n chessboard, a knight starts at the cell (row, column) and attempts to make exactly k moves... [rest of the article content]"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">688. Knight Probability in Chessboard</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    On an <code class="bg-gray-100 px-1 rounded">n x n</code> chessboard, a knight starts at the cell <code class="bg-gray-100 px-1 rounded">(row, column)</code> and attempts to make exactly <code class="bg-gray-100 px-1 rounded">k</code> moves. The rows and columns are 0-indexed, so the top-left cell is <code class="bg-gray-100 px-1 rounded">(0, 0)</code>, and the bottom-right cell is <code class="bg-gray-100 px-1 rounded">(n - 1, n - 1)</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A knight has eight possible moves it can make, as illustrated below. Each move is two cells in a cardinal direction, then one cell in an orthogonal direction.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Each time the knight is going to move, it chooses one of eight possible moves uniformly at random (even if the piece would go off the chessboard) and moves there.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The knight continues moving until it has made exactly <code class="bg-gray-100 px-1 rounded">k</code> moves or has moved off the chessboard.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the probability that the knight remains on the board after it has stopped moving.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 3, k = 2, row = 0, column = 0
+Output: 0.06250
+Explanation: There are two moves (to (1,2), (2,1)) that will keep the knight on the board.
+From each of those positions, there are also two moves that will keep the knight on the board.
+The total probability the knight stays on the board is 0.0625.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 1, k = 0, row = 0, column = 0
+Output: 1.00000</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ n ≤ 25</li>
+                    <li>0 ≤ k ≤ 100</li>
+                    <li>0 ≤ row, column ≤ n - 1</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def knightProbability(self, n: int, k: int, row: int, column: int) -> float:
+        # All possible moves for the knight
+        moves = [(2,1), (2,-1), (-2,1), (-2,-1), 
+                (1,2), (1,-2), (-1,2), (-1,-2)]
+        
+        # Initialize dp array
+        dp = {}
+        
+        def dfs(r, c, moves_left):
+            # Base case: if knight moves off the board
+            if not (0 <= r < n and 0 <= c < n):
+                return 0
+            
+            # If no moves left, knight is on board
+            if moves_left == 0:
+                return 1
+            
+            # Check if state already computed
+            state = (r, c, moves_left)
+            if state in dp:
+                return dp[state]
+            
+            # Calculate probability for current position
+            probability = 0
+            for dr, dc in moves:
+                probability += dfs(r + dr, c + dc, moves_left - 1)
+            
+            # Divide by 8 as there are 8 possible moves
+            probability /= 8
+            dp[state] = probability
+            return probability
+        
+        return dfs(row, column, k)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with memoization</li>
+                    <li>DFS approach to explore all possible moves</li>
+                    <li>Caches results to avoid recalculating same states</li>
+                    <li>Time complexity: O(k * n^2)</li>
+                    <li>Space complexity: O(k * n^2)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private final int[][] moves = {{2,1}, {2,-1}, {-2,1}, {-2,-1},
+                                 {1,2}, {1,-2}, {-1,2}, {-1,-2}};
+    private double[][][] dp;
+    private int n;
+    
+    public double knightProbability(int n, int k, int row, int column) {
+        this.n = n;
+        dp = new double[n][n][k + 1];
+        return dfs(row, column, k);
+    }
+    
+    private double dfs(int r, int c, int movesLeft) {
+        // Base case: if knight moves off the board
+        if (r < 0 || r >= n || c < 0 || c >= n) return 0;
+        
+        // If no moves left, knight is on board
+        if (movesLeft == 0) return 1;
+        
+        // Check if state already computed
+        if (dp[r][c][movesLeft] != 0) return dp[r][c][movesLeft];
+        
+        // Calculate probability for current position
+        double probability = 0;
+        for (int[] move : moves) {
+            probability += dfs(r + move[0], c + move[1], movesLeft - 1);
+        }
+        
+        // Divide by 8 as there are 8 possible moves
+        probability /= 8;
+        dp[r][c][movesLeft] = probability;
+        return probability;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    vector<pair<int, int>> moves = {{2,1}, {2,-1}, {-2,1}, {-2,-1},
+                                   {1,2}, {1,-2}, {-1,2}, {-1,-2}};
+    vector<vector<vector<double>>> dp;
+    int n;
+    
+    double dfs(int r, int c, int movesLeft) {
+        // Base case: if knight moves off the board
+        if (r < 0 || r >= n || c < 0 || c >= n) return 0;
+        
+        // If no moves left, knight is on board
+        if (movesLeft == 0) return 1;
+        
+        // Check if state already computed
+        if (dp[r][c][movesLeft] != -1) return dp[r][c][movesLeft];
+        
+        // Calculate probability for current position
+        double probability = 0;
+        for (const auto& move : moves) {
+            probability += dfs(r + move.first, c + move.second, movesLeft - 1);
+        }
+        
+        // Divide by 8 as there are 8 possible moves
+        probability /= 8;
+        dp[r][c][movesLeft] = probability;
+        return probability;
+    }
+    
+public:
+    double knightProbability(int n, int k, int row, int column) {
+        this->n = n;
+        dp = vector<vector<vector<double>>>(n, vector<vector<double>>(n, vector<double>(k + 1, -1)));
+        return dfs(row, column, k);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ * @param {number} k
+ * @param {number} row
+ * @param {number} column
+ * @return {number}
+ */
+var knightProbability = function(n, k, row, column) {
+    const moves = [[2,1], [2,-1], [-2,1], [-2,-1],
+                  [1,2], [1,-2], [-1,2], [-1,-2]];
+    const dp = new Map();
+    
+    const dfs = (r, c, movesLeft) => {
+        // Base case: if knight moves off the board
+        if (r < 0 || r >= n || c < 0 || c >= n) return 0;
+        
+        // If no moves left, knight is on board
+        if (movesLeft === 0) return 1;
+        
+        // Check if state already computed
+        const state = `${r},${c},${movesLeft}`;
+        if (dp.has(state)) return dp.get(state);
+        
+        // Calculate probability for current position
+        let probability = 0;
+        for (const [dr, dc] of moves) {
+            probability += dfs(r + dr, c + dc, movesLeft - 1);
+        }
+        
+        // Divide by 8 as there are 8 possible moves
+        probability /= 8;
+        dp.set(state, probability);
+        return probability;
+    };
+    
+    return dfs(row, column, k);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private readonly int[,][] moves = new int[,][] {
+        {2,1}, {2,-1}, {-2,1}, {-2,-1},
+        {1,2}, {1,-2}, {-1,2}, {-1,-2}
+    };
+    private double[,,] dp;
+    private int n;
+    
+    public double KnightProbability(int n, int k, int row, int column) {
+        this.n = n;
+        dp = new double[n,n,k + 1];
+        return DFS(row, column, k);
+    }
+    
+    private double DFS(int r, int c, int movesLeft) {
+        // Base case: if knight moves off the board
+        if (r < 0 || r >= n || c < 0 || c >= n) return 0;
+        
+        // If no moves left, knight is on board
+        if (movesLeft == 0) return 1;
+        
+        // Check if state already computed
+        if (dp[r,c,movesLeft] != 0) return dp[r,c,movesLeft];
+        
+        // Calculate probability for current position
+        double probability = 0;
+        for (int i = 0; i < 8; i++) {
+            probability += DFS(r + moves[i,0], c + moves[i,1], movesLeft - 1);
+        }
+        
+        // Divide by 8 as there are 8 possible moves
+        probability /= 8;
+        dp[r,c,movesLeft] = probability;
+        return probability;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with memoization</li>
+                    <li>DFS approach to explore all possible moves</li>
+                    <li>3D array to cache results for each state</li>
+                    <li>Time complexity: O(k * n^2)</li>
+                    <li>Space complexity: O(k * n^2)</li>
+                    <li>Returns probability as a double value</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="YOUR_AD_SLOT"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

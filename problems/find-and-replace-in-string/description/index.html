@@ -1,0 +1,282 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find and Replace in String - LeetCodee Solution</title>
+    <meta name="description" content="Find and Replace in String LeetCode solution in Python, Java, C++, JavaScript and C#.  Detailed explanation and optimized code.">
+    <meta name="keywords" content="leetcode, find and replace in string, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/find-and-replace-in-string/">
+    <meta property="og:title" content="Find and Replace in String - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/find-and-replace-in-string/">
+    <meta property="og:description" content="Find and Replace in String LeetCode solution in Python, Java, C++, JavaScript and C#.  Detailed explanation and optimized code.">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Find and Replace in String - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find and Replace in String LeetCode solution in Python, Java, C++, JavaScript and C#.  Detailed explanation and optimized code.",
+      "articleBody": "You are given a 0-indexed string s that you must perform k replacement operations on. The replacement operations are given as three 0-indexed parallel arrays, indices, sources, and targets, all of length k. To complete the ith replacement operation: Check if the substring sources[i] occurs at index indices[i] in the original string s. If it does not occur, do nothing. Otherwise if it does occur, replace that substring with targets[i]. For example, if s = \"abcd\", indices[i] = 0, sources[i] = \"ab\", and targets[i] = \"eee\", then the result of this replacement will be \"eeecd\". All replacement operations must occur simultaneously, meaning the replacement operations should not affect the indexing of each other. The testcases will be generated such that the replacements will not overlap. Return the resulting string after performing all replacement operations on s.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/find-and-replace-in-string/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">833. Find and Replace in String</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given a 0-indexed string s that you must perform k replacement operations on. The replacement operations are given as three 0-indexed parallel arrays, indices, sources, and targets, all of length k.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    To complete the ith replacement operation:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Check if the substring sources[i] occurs at index indices[i] in the original string s.</li>
+                    <li>If it does not occur, do nothing.</li>
+                    <li>Otherwise if it does occur, replace that substring with targets[i].</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    For example, if s = "abcd", indices[i] = 0, sources[i] = "ab", and targets[i] = "eee", then the result of this replacement will be "eeecd".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    All replacement operations must occur simultaneously, meaning the replacement operations should not affect the indexing of each other. The testcases will be generated such that the replacements will not overlap.
+                </p>
+                <p class="text-gray-700">
+                    Return the resulting string after performing all replacement operations on s.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "abcd", indices = [0, 2], sources = ["ab","cd"], targets = ["eee","ffff"]
+Output: "eeeffff"
+Explanation:
+"ab" occurs at index 0 in "abcd", so we replace it with "eee".
+"cd" occurs at index 2 in "abcd", so we replace it with "ffff".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "abcd", indices = [0, 2], sources = ["ab","ec"], targets = ["eee","ffff"]
+Output: "eeecd"
+Explanation:
+"ab" occurs at index 0 in "abcd", so we replace it with "eee".
+"ec" does not occur at index 2 in "abcd", so we do nothing.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 1000</li>
+                    <li>k == indices.length == sources.length == targets.length</li>
+                    <li>1 ≤ k ≤ 100</li>
+                    <li>0 ≤ indices[i] < s.length</li>
+                    <li>1 ≤ sources[i].length, targets[i].length ≤ 50</li>
+                    <li>s consists of only lowercase English letters</li>
+                    <li>sources[i] and targets[i] consist of only lowercase English letters</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findReplaceString(self, s: str, indices: List[int], sources: List[str], targets: List[str]) -> str:
+        # Create a list of tuples (index, source, target) and sort by index in reverse order
+        operations = sorted(zip(indices, sources, targets), reverse=True)
+        
+        # Process each replacement from right to left
+        for i, src, tgt in operations:
+            if s[i:i+len(src)] == src:
+                s = s[:i] + tgt + s[i+len(src):]
+        
+        return s</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Processes replacements from right to left to avoid index shifting</li>
+                    <li>Uses string slicing for efficient substring operations</li>
+                    <li>Time complexity: O(nk), where n is the length of s and k is the number of operations</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String findReplaceString(String s, int[] indices, String[] sources, String[] targets) {
+        int n = indices.length;
+        // Create a list of operations sorted by index in descending order
+        List<int[]> ops = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            ops.add(new int[]{indices[i], i});
+        }
+        ops.sort((a, b) -> b[0] - a[0]);
+        
+        // Process each replacement from right to left
+        for (int[] op : ops) {
+            int i = op[0], j = op[1];
+            String src = sources[j];
+            String tgt = targets[j];
+            
+            if (s.substring(i, Math.min(i + src.length(), s.length())).equals(src)) {
+                s = s.substring(0, i) + tgt + s.substring(i + src.length());
+            }
+        }
+        
+        return s;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string findReplaceString(string s, vector<int>& indices, vector<string>& sources, vector<string>& targets) {
+        int n = indices.size();
+        vector<pair<int, int>> ops;
+        for (int i = 0; i < n; i++) {
+            ops.push_back({indices[i], i});
+        }
+        sort(ops.rbegin(), ops.rend());
+        
+        for (auto [idx, i] : ops) {
+            string& src = sources[i];
+            string& tgt = targets[i];
+            
+            if (s.substr(idx, src.length()) == src) {
+                s.replace(idx, src.length(), tgt);
+            }
+        }
+        
+        return s;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @param {number[]} indices
+ * @param {string[]} sources
+ * @param {string[]} targets
+ * @return {string}
+ */
+var findReplaceString = function(s, indices, sources, targets) {
+    // Create operations array with indices and sort in descending order
+    const ops = indices.map((idx, i) => [idx, i])
+                      .sort((a, b) => b[0] - a[0]);
+    
+    // Process each replacement from right to left
+    for (const [idx, i] of ops) {
+        const src = sources[i];
+        const tgt = targets[i];
+        
+        if (s.slice(idx, idx + src.length) === src) {
+            s = s.slice(0, idx) + tgt + s.slice(idx + src.length);
+        }
+    }
+    
+    return s;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string FindReplaceString(string s, int[] indices, string[] sources, string[] targets) {
+        int n = indices.Length;
+        var ops = new List<(int index, int i)>();
+        for (int i = 0; i < n; i++) {
+            ops.Add((indices[i], i));
+        }
+        ops.Sort((a, b) => b.index.CompareTo(a.index));
+        
+        foreach (var (idx, i) in ops) {
+            string src = sources[i];
+            string tgt = targets[i];
+            
+            if (idx + src.Length <= s.Length && 
+                s.Substring(idx, src.Length) == src) {
+                s = s.Substring(0, idx) + tgt + s.Substring(idx + src.Length);
+            }
+        }
+        
+        return s;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses tuples for operation tracking</li>
+                    <li>Processes replacements in descending order of indices</li>
+                    <li>Time complexity: O(nk)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

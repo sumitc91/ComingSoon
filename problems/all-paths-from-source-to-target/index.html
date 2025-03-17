@@ -1,0 +1,280 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Paths From Source to Target - LeetCodee Solution</title>
+    <meta name="description" content="Find all possible paths from node 0 to node n-1 in a directed acyclic graph (DAG). LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, leetcode solution, all paths from source to target, graph, DAG, directed acyclic graph, python, java, c++, javascript, c#, dfs, depth-first search, algorithm">
+    <meta name="canonical" content="https://leetcodee.com/problems/all-paths-from-source-to-target/">
+    <meta property="og:title" content="All Paths From Source to Target - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/all-paths-from-source-to-target/">
+    <meta property="og:description" content="Find all possible paths from node 0 to node n-1 in a directed acyclic graph (DAG). LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "797. All Paths From Source to Target",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find all possible paths from node 0 to node n-1 in a directed acyclic graph (DAG). LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/all-paths-from-source-to-target/"
+      },
+      "keywords": "leetcode, leetcode solution, all paths from source to target, graph, DAG, directed acyclic graph, python, java, c++, javascript, c#, dfs, depth-first search, algorithm"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">797. All Paths From Source to Target</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1 and return them in any order.
+                </p>
+                <p class="text-gray-700">
+                    The graph is given as follows: graph[i] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph[i][j]).
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: graph = [[1,2],[3],[3],[]]
+Output: [[0,1,3],[0,2,3]]
+Explanation: There are two paths: 0 -> 1 -> 3 and 0 -> 2 -> 3.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: graph = [[4,3,1],[3,2,4],[3],[4],[]]
+Output: [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == graph.length</li>
+                    <li>2 ≤ n ≤ 15</li>
+                    <li>0 ≤ graph[i][j] < n</li>
+                    <li>graph[i][j] != i (i.e., there will be no self-loops)</li>
+                    <li>All the elements of graph[i] are unique</li>
+                    <li>The input graph is guaranteed to be a DAG</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        def dfs(node: int, path: List[int]) -> None:
+            if node == target:
+                result.append(path[:])
+                return
+            
+            for next_node in graph[node]:
+                path.append(next_node)
+                dfs(next_node, path)
+                path.pop()
+        
+        target = len(graph) - 1
+        result = []
+        dfs(0, [0])
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to find all paths from source to target</li>
+                    <li>Maintains current path during traversal</li>
+                    <li>Time complexity: O(2^N * N) where N is the number of nodes</li>
+                    <li>Space complexity: O(N) for recursion stack</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private List<List<Integer>> result;
+    private int target;
+    private int[][] graph;
+    
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        result = new ArrayList<>();
+        target = graph.length - 1;
+        this.graph = graph;
+        
+        List<Integer> path = new ArrayList<>();
+        path.add(0);
+        dfs(0, path);
+        
+        return result;
+    }
+    
+    private void dfs(int node, List<Integer> path) {
+        if (node == target) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        
+        for (int nextNode : graph[node]) {
+            path.add(nextNode);
+            dfs(nextNode, path);
+            path.remove(path.size() - 1);
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    vector<vector<int>> result;
+    int target;
+    
+    void dfs(const vector<vector<int>>& graph, int node, vector<int>& path) {
+        if (node == target) {
+            result.push_back(path);
+            return;
+        }
+        
+        for (int nextNode : graph[node]) {
+            path.push_back(nextNode);
+            dfs(graph, nextNode, path);
+            path.pop_back();
+        }
+    }
+    
+public:
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        target = graph.size() - 1;
+        vector<int> path = {0};
+        dfs(graph, 0, path);
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function allPathsSourceTarget(graph) {
+    const target = graph.length - 1;
+    const result = [];
+    
+    function dfs(node, path) {
+        if (node === target) {
+            result.push([...path]);
+            return;
+        }
+        
+        for (const nextNode of graph[node]) {
+            path.push(nextNode);
+            dfs(nextNode, path);
+            path.pop();
+        }
+    }
+    
+    dfs(0, [0]);
+    return result;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private IList<IList<int>> result;
+    private int target;
+    private int[][] graph;
+    
+    public IList<IList<int>> AllPathsSourceTarget(int[][] graph) {
+        result = new List<IList<int>>();
+        target = graph.Length - 1;
+        this.graph = graph;
+        
+        var path = new List<int> { 0 };
+        DFS(0, path);
+        
+        return result;
+    }
+    
+    private void DFS(int node, List<int> path) {
+        if (node == target) {
+            result.Add(new List<int>(path));
+            return;
+        }
+        
+        foreach (int nextNode in graph[node]) {
+            path.Add(nextNode);
+            DFS(nextNode, path);
+            path.RemoveAt(path.Count - 1);
+        }
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to find all paths from source to target</li>
+                    <li>Maintains current path during traversal</li>
+                    <li>Time complexity: O(2^N * N) where N is the number of nodes</li>
+                    <li>Space complexity: O(N) for recursion stack</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

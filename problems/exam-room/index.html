@@ -1,0 +1,379 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Room - LeetCodee Solution</title>
+    <meta name="description" content="Solve the Exam Room problem on LeetCodee. Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta name="keywords" content="leetcode, exam room, algorithm, data structure, python, java, c++, javascript, c#, solution, coding, interview">
+    <meta property="og:title" content="Exam Room - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/exam-room/">
+    <meta property="og:description" content="Solve the Exam Room problem on LeetCodee. Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/exam-room/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "855. Exam Room",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "There is an exam room with n seats in a single row labeled from 0 to n - 1. When a student enters the room, they must sit in the seat that maximizes the distance to the closest person. If there are multiple such seats, they sit in the seat with the lowest number. If no one is in the room, then the student sits at seat number 0. Design a class that simulates the mentioned exam room's seat allocation system.",
+      "articleBody": "Problem Description: There is an exam room with n seats in a single row labeled from 0 to n - 1. When a student enters the room, they must sit in the seat that maximizes the distance to the closest person. If there are multiple such seats, they sit in the seat with the lowest number. If no one is in the room, then the student sits at seat number 0. Design a class that simulates the mentioned exam room's seat allocation system.  Examples, Constraints and Solutions in Python, Java, C++, JavaScript and C# are provided.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/exam-room/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">855. Exam Room</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There is an exam room with n seats in a single row labeled from 0 to n - 1.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    When a student enters the room, they must sit in the seat that maximizes the distance to the closest person. If there are multiple such seats, they sit in the seat with the lowest number. If no one is in the room, then the student sits at seat number 0.
+                </p>
+                <p class="text-gray-700">
+                    Design a class that simulates the mentioned exam room's seat allocation system.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["ExamRoom", "seat", "seat", "seat", "seat", "leave", "seat"]
+[[10], [], [], [], [], [4], []]
+Output
+[null, 0, 9, 4, 2, null, 5]
+
+Explanation
+ExamRoom examRoom = new ExamRoom(10);
+examRoom.seat(); // return 0, no one is in the room, then the student sits at seat number 0.
+examRoom.seat(); // return 9, the student sits at the last seat number 9.
+examRoom.seat(); // return 4, the student sits at the last seat number 4.
+examRoom.seat(); // return 2, the student sits at the last seat number 2.
+examRoom.leave(4); // the student in seat 4 leaves the room.
+examRoom.seat(); // return 5, the student sits at the last seat number 5.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ n ≤ 10⁹</li>
+                    <li>It is guaranteed that there are at least one empty seat when calling seat</li>
+                    <li>It is guaranteed that the student who leaves was sitting on the seat</li>
+                    <li>At most 10⁴ calls will be made to seat and leave</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class ExamRoom:
+    def __init__(self, n: int):
+        self.n = n
+        self.students = []
+
+    def seat(self) -> int:
+        if not self.students:
+            self.students.append(0)
+            return 0
+        
+        # Find the maximum gap
+        max_gap = self.students[0]  # Distance from start
+        pos = 0
+        
+        for i in range(1, len(self.students)):
+            gap = (self.students[i] - self.students[i-1]) // 2
+            if gap > max_gap:
+                max_gap = gap
+                pos = self.students[i-1] + gap
+        
+        # Check the gap from last student to end
+        if self.n - 1 - self.students[-1] > max_gap:
+            pos = self.n - 1
+        
+        # Insert the new position
+        bisect.insort(self.students, pos)
+        return pos
+
+    def leave(self, p: int) -> None:
+        self.students.remove(p)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses sorted list to maintain student positions</li>
+                    <li>Time complexity: O(n) for seat, O(n) for leave</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class ExamRoom {
+    private TreeSet<Integer> seats;
+    private int n;
+    
+    public ExamRoom(int n) {
+        this.n = n;
+        this.seats = new TreeSet<>();
+    }
+    
+    public int seat() {
+        if (seats.isEmpty()) {
+            seats.add(0);
+            return 0;
+        }
+        
+        int maxGap = seats.first();  // Distance from start
+        int pos = 0;
+        Integer prev = null;
+        
+        for (int curr : seats) {
+            if (prev != null) {
+                int gap = (curr - prev) / 2;
+                if (gap > maxGap) {
+                    maxGap = gap;
+                    pos = prev + gap;
+                }
+            }
+            prev = curr;
+        }
+        
+        // Check gap from last student to end
+        if (n - 1 - seats.last() > maxGap) {
+            pos = n - 1;
+        }
+        
+        seats.add(pos);
+        return pos;
+    }
+    
+    public void leave(int p) {
+        seats.remove(p);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class ExamRoom {
+private:
+    set<int> seats;
+    int n;
+    
+public:
+    ExamRoom(int n) {
+        this->n = n;
+    }
+    
+    int seat() {
+        if (seats.empty()) {
+            seats.insert(0);
+            return 0;
+        }
+        
+        int maxGap = *seats.begin();  // Distance from start
+        int pos = 0;
+        int prev = -1;
+        
+        for (int curr : seats) {
+            if (prev != -1) {
+                int gap = (curr - prev) / 2;
+                if (gap > maxGap) {
+                    maxGap = gap;
+                    pos = prev + gap;
+                }
+            }
+            prev = curr;
+        }
+        
+        // Check gap from last student to end
+        if (n - 1 - *seats.rbegin() > maxGap) {
+            pos = n - 1;
+        }
+        
+        seats.insert(pos);
+        return pos;
+    }
+    
+    void leave(int p) {
+        seats.erase(p);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ */
+class ExamRoom {
+    constructor(n) {
+        this.n = n;
+        this.students = [];
+    }
+    
+    /** 
+     * @return {number}
+     */
+    seat() {
+        if (this.students.length === 0) {
+            this.students.push(0);
+            return 0;
+        }
+        
+        let maxGap = this.students[0];  // Distance from start
+        let pos = 0;
+        
+        for (let i = 1; i < this.students.length; i++) {
+            const gap = Math.floor((this.students[i] - this.students[i-1]) / 2);
+            if (gap > maxGap) {
+                maxGap = gap;
+                pos = this.students[i-1] + gap;
+            }
+        }
+        
+        // Check gap from last student to end
+        if (this.n - 1 - this.students[this.students.length - 1] > maxGap) {
+            pos = this.n - 1;
+        }
+        
+        // Insert at correct position to maintain sorted order
+        let index = this.students.findIndex(x => x > pos);
+        if (index === -1) index = this.students.length;
+        this.students.splice(index, 0, pos);
+        
+        return pos;
+    }
+    
+    /** 
+     * @param {number} p
+     * @return {void}
+     */
+    leave(p) {
+        const index = this.students.indexOf(p);
+        if (index > -1) {
+            this.students.splice(index, 1);
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class ExamRoom {
+    private SortedSet<int> seats;
+    private int n;
+    
+    public ExamRoom(int n) {
+        this.n = n;
+        this.seats = new SortedSet<int>();
+    }
+    
+    public int Seat() {
+        if (seats.Count == 0) {
+            seats.Add(0);
+            return 0;
+        }
+        
+        int maxGap = seats.Min;  // Distance from start
+        int pos = 0;
+        int? prev = null;
+        
+        foreach (int curr in seats) {
+            if (prev.HasValue) {
+                int gap = (curr - prev.Value) / 2;
+                if (gap > maxGap) {
+                    maxGap = gap;
+                    pos = prev.Value + gap;
+                }
+            }
+            prev = curr;
+        }
+        
+        // Check gap from last student to end
+        if (n - 1 - seats.Max > maxGap) {
+            pos = n - 1;
+        }
+        
+        seats.Add(pos);
+        return pos;
+    }
+    
+    public void Leave(int p) {
+        seats.Remove(p);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses SortedSet for efficient seat management</li>
+                    <li>Time complexity: O(log n) for seat and leave</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="8389527370"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

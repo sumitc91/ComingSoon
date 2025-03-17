@@ -1,0 +1,377 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts Merge - LeetCodee Solution</title>
+    <meta name="description" content="Find the most efficient solution to LeetCode's Accounts Merge problem with detailed explanations and code examples in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, accounts merge, solution, python, java, cpp, javascript, c#, algorithm, graph, dfs, coding interview">
+    <meta property="og:title" content="Accounts Merge - LeetCodee Solution">
+    <meta property="og:description" content="Find the most efficient solution to LeetCode's Accounts Merge problem with detailed explanations and code examples in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/accounts-merge/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/accounts-merge/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">721. Accounts Merge</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a list of accounts where each element accounts[i] is a list of strings, where the first element accounts[i][0] is a name, and the rest of the elements are emails representing emails of the account.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Now, we would like to merge these accounts. Two accounts definitely belong to the same person if there is some common email to both accounts. Note that even if two accounts have the same name, they may belong to different people as people could have the same name. A person can have any number of accounts initially, but all of their accounts definitely have the same name.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    After merging the accounts, return the accounts in the following format: the first element of each account is the name, and the rest of the elements are emails in sorted order. The accounts themselves can be returned in any order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: accounts = [["John","johnsmith@mail.com","john_newyork@mail.com"],["John","johnsmith@mail.com","john00@mail.com"],["Mary","mary@mail.com"],["John","johnnybravo@mail.com"]]
+Output: [["John","john00@mail.com","john_newyork@mail.com","johnsmith@mail.com"],["John","johnnybravo@mail.com"],["Mary","mary@mail.com"]]
+Explanation:
+The first and second John's are the same person as they have the common email "johnsmith@mail.com".
+The third John and Mary are different people as none of their email addresses are used by other accounts.
+We could return these lists in any order, for example the answer [['Mary', 'mary@mail.com'], ['John', 'johnnybravo@mail.com'], 
+['John', 'john00@mail.com', 'john_newyork@mail.com', 'johnsmith@mail.com']] would still be accepted.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: accounts = [["Gabe","Gabe0@m.co","Gabe3@m.co","Gabe1@m.co"],["Kevin","Kevin3@m.co","Kevin5@m.co","Kevin0@m.co"],["Ethan","Ethan5@m.co","Ethan4@m.co","Ethan0@m.co"],["Hanzo","Hanzo3@m.co","Hanzo1@m.co","Hanzo0@m.co"],["Fern","Fern5@m.co","Fern1@m.co","Fern0@m.co"]]
+Output: [["Ethan","Ethan0@m.co","Ethan4@m.co","Ethan5@m.co"],["Gabe","Gabe0@m.co","Gabe1@m.co","Gabe3@m.co"],["Hanzo","Hanzo0@m.co","Hanzo1@m.co","Hanzo3@m.co"],["Kevin","Kevin0@m.co","Kevin3@m.co","Kevin5@m.co"],["Fern","Fern0@m.co","Fern1@m.co","Fern5@m.co"]]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ accounts.length ≤ 1000</li>
+                    <li>2 ≤ accounts[i].length ≤ 10</li>
+                    <li>1 ≤ accounts[i][j].length ≤ 30</li>
+                    <li>accounts[i][0] consists of English letters</li>
+                    <li>accounts[i][j] (for j > 0) is a valid email</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        # Create graph of emails
+        graph = defaultdict(set)
+        email_to_name = {}
+        
+        for account in accounts:
+            name = account[0]
+            for email in account[1:]:
+                graph[email].add(account[1])  # Connect to first email
+                graph[account[1]].add(email)  # Connect back
+                email_to_name[email] = name
+        
+        # DFS to find connected components
+        visited = set()
+        result = []
+        
+        for email in graph:
+            if email not in visited:
+                stack = [email]
+                visited.add(email)
+                emails = []
+                
+                while stack:
+                    node = stack.pop()
+                    emails.append(node)
+                    for neighbor in graph[node]:
+                        if neighbor not in visited:
+                            visited.add(neighbor)
+                            stack.append(neighbor)
+                
+                result.append([email_to_name[email]] + sorted(emails))
+        
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses graph representation and DFS to find connected components</li>
+                    <li>Time complexity: O(∑aᵢ log aᵢ) where aᵢ is the length of accounts[i]</li>
+                    <li>Space complexity: O(∑aᵢ)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        Map<String, Set<String>> graph = new HashMap<>();
+        Map<String, String> emailToName = new HashMap<>();
+        
+        for (List<String> account : accounts) {
+            String name = account.get(0);
+            for (int i = 1; i < account.size(); i++) {
+                String email = account.get(i);
+                graph.computeIfAbsent(email, k -> new HashSet<>()).add(account.get(1));
+                graph.computeIfAbsent(account.get(1), k -> new HashSet<>()).add(email);
+                emailToName.put(email, name);
+            }
+        }
+        
+        Set<String> visited = new HashSet<>();
+        List<List<String>> result = new ArrayList<>();
+        
+        for (String email : graph.keySet()) {
+            if (!visited.contains(email)) {
+                Stack<String> stack = new Stack<>();
+                stack.push(email);
+                visited.add(email);
+                List<String> emails = new ArrayList<>();
+                
+                while (!stack.isEmpty()) {
+                    String node = stack.pop();
+                    emails.add(node);
+                    for (String neighbor : graph.get(node)) {
+                        if (!visited.contains(neighbor)) {
+                            visited.add(neighbor);
+                            stack.push(neighbor);
+                        }
+                    }
+                }
+                
+                Collections.sort(emails);
+                emails.add(0, emailToName.get(email));
+                result.add(emails);
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        unordered_map<string, unordered_set<string>> graph;
+        unordered_map<string, string> emailToName;
+        
+        for (const auto& account : accounts) {
+            string name = account[0];
+            for (int i = 1; i < account.size(); i++) {
+                string email = account[i];
+                graph[email].insert(account[1]);
+                graph[account[1]].insert(email);
+                emailToName[email] = name;
+            }
+        }
+        
+        unordered_set<string> visited;
+        vector<vector<string>> result;
+        
+        for (const auto& [email, _] : graph) {
+            if (visited.find(email) == visited.end()) {
+                stack<string> st;
+                st.push(email);
+                visited.insert(email);
+                vector<string> emails;
+                
+                while (!st.empty()) {
+                    string node = st.top();
+                    st.pop();
+                    emails.push_back(node);
+                    for (const string& neighbor : graph[node]) {
+                        if (visited.find(neighbor) == visited.end()) {
+                            visited.insert(neighbor);
+                            st.push(neighbor);
+                        }
+                    }
+                }
+                
+                sort(emails.begin(), emails.end());
+                emails.insert(emails.begin(), emailToName[email]);
+                result.push_back(emails);
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[][]} accounts
+ * @return {string[][]}
+ */
+var accountsMerge = function(accounts) {
+    const graph = new Map();
+    const emailToName = new Map();
+    
+    for (const account of accounts) {
+        const name = account[0];
+        for (let i = 1; i < account.length; i++) {
+            const email = account[i];
+            if (!graph.has(email)) graph.set(email, new Set());
+            if (!graph.has(account[1])) graph.set(account[1], new Set());
+            graph.get(email).add(account[1]);
+            graph.get(account[1]).add(email);
+            emailToName.set(email, name);
+        }
+    }
+    
+    const visited = new Set();
+    const result = [];
+    
+    for (const [email, _] of graph) {
+        if (!visited.has(email)) {
+            const stack = [email];
+            visited.add(email);
+            const emails = [];
+            
+            while (stack.length > 0) {
+                const node = stack.pop();
+                emails.push(node);
+                for (const neighbor of graph.get(node)) {
+                    if (!visited.has(neighbor)) {
+                        visited.add(neighbor);
+                        stack.push(neighbor);
+                    }
+                }
+            }
+            
+            emails.sort();
+            emails.unshift(emailToName.get(email));
+            result.push(emails);
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<IList<string>> AccountsMerge(IList<IList<string>> accounts) {
+        var graph = new Dictionary<string, HashSet<string>>();
+        var emailToName = new Dictionary<string, string>();
+        
+        foreach (var account in accounts) {
+            string name = account[0];
+            for (int i = 1; i < account.Count; i++) {
+                string email = account[i];
+                if (!graph.ContainsKey(email)) graph[email] = new HashSet<string>();
+                if (!graph.ContainsKey(account[1])) graph[account[1]] = new HashSet<string>();
+                graph[email].Add(account[1]);
+                graph[account[1]].Add(email);
+                emailToName[email] = name;
+            }
+        }
+        
+        var visited = new HashSet<string>();
+        var result = new List<IList<string>>();
+        
+        foreach (var email in graph.Keys) {
+            if (!visited.Contains(email)) {
+                var stack = new Stack<string>();
+                stack.Push(email);
+                visited.Add(email);
+                var emails = new List<string>();
+                
+                while (stack.Count > 0) {
+                    string node = stack.Pop();
+                    emails.Add(node);
+                    foreach (var neighbor in graph[node]) {
+                        if (!visited.Contains(neighbor)) {
+                            visited.Add(neighbor);
+                            stack.Push(neighbor);
+                        }
+                    }
+                }
+                
+                emails.Sort();
+                emails.Insert(0, emailToName[email]);
+                result.Add(emails);
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses graph representation and DFS to find connected components</li>
+                    <li>Time complexity: O(∑aᵢ log aᵢ) where aᵢ is the length of accounts[i]</li>
+                    <li>Space complexity: O(∑aᵢ)</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "721. Accounts Merge",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "dateModified": "2023-10-27",
+          "description": "Find the most efficient solution to LeetCode's Accounts Merge problem with detailed explanations and code examples in Python, Java, C++, JavaScript, and C#.",
+          "articleBody": "Given a list of accounts where each element accounts[i] is a list of strings, where the first element accounts[i][0] is a name, and the rest of the elements are emails representing emails of the account.  Now, we would like to merge these accounts. Two accounts definitely belong to the same person if there is some common email to both accounts. Note that even if two accounts have the same name, they may belong to different people as people could have the same name. A person can have any number of accounts initially, but all of their accounts definitely have the same name. After merging the accounts, return the accounts in the following format: the first element of each account is the name, and the rest of the elements are emails in sorted order. The accounts themselves can be returned in any order.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/accounts-merge/"
+          }
+        }
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

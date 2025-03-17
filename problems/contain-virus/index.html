@@ -1,0 +1,641 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contain Virus - LeetCodee Solution</title>
+    <meta name="description" content="Solve the LeetCode problem 749. Contain Virus.  Find efficient Python, Java, C++, JavaScript, and C# solutions with detailed explanations and implementation notes.">
+    <meta name="keywords" content="LeetCode, Contain Virus, Algorithm, Solution, Python, Java, C++, JavaScript, C#, Coding, Programming, Data Structures, Graph, DFS">
+    <link rel="canonical" href="https://leetcodee.com/problems/contain-virus/">
+    <meta property="og:title" content="Contain Virus - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/contain-virus/">
+    <meta property="og:description" content="Solve the LeetCode problem 749. Contain Virus.  Find efficient Python, Java, C++, JavaScript, and C# solutions with detailed explanations and implementation notes.">
+    <meta property="og:image" content="https://leetcodee.com/logo.png">  <!-- Replace with actual logo URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "749. Contain Virus",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-08-24",  <!-- Replace with actual publication date -->
+      "dateModified": "2024-08-24",  <!-- Replace with actual modification date -->
+      "description": "Solve the LeetCode problem 749. Contain Virus.  Find efficient Python, Java, C++, JavaScript, and C# solutions with detailed explanations and implementation notes.",
+      "image": "https://leetcodee.com/logo.png",  <!-- Replace with actual image URL -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png"  <!-- Replace with actual logo URL -->
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/contain-virus/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">749. Contain Virus</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A virus is spreading rapidly, and your task is to quarantine the infected area by installing walls. The world is represented as an m x n binary grid isInfected, where isInfected[i][j] == 0 represents an uninfected cell, and isInfected[i][j] == 1 represents a cell contaminated with the virus. A wall (and only one wall) can be installed between any two 4-directionally adjacent cells, on the shared boundary.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Every night, the virus spreads to all neighboring cells in all four directions unless blocked by a wall. Resources are limited. Each day, you can install walls around only one region (i.e., the affected cells (connected 4-directionally) that share some boundary with the uninfected cells). The night after, the virus spreads to all neighboring cells in all four directions unless blocked by a wall.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the number of walls used to quarantine all the infected regions. If the world becomes fully infected, return the number of walls used.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: isInfected = [[0,1,0,0,0,0,0,1],[0,1,0,0,0,0,0,1],[0,0,0,0,0,0,0,1],[0,0,0,0,0,0,0,0]]
+Output: 10
+Explanation: There are 2 contaminated regions.
+On the first day, add 5 walls to quarantine the viral region on the left. The board after the virus spreads is:
+[[0,1,0,0,0,0,1,1],
+ [0,1,0,0,0,0,1,1],
+ [0,0,0,0,0,0,1,1],
+ [0,0,0,0,0,0,0,1]]
+On the second day, add 5 walls to quarantine the viral region on the right. The virus is fully contained.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: isInfected = [[1,1,1],[1,0,1],[1,1,1]]
+Output: 4
+Explanation: Even though there is only one cell saved, there are 4 walls built.
+Notice that walls are only built on the shared boundary of two different cells.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: isInfected = [[1,1,1,0,0,0,0,0,0],[1,0,1,0,1,1,1,1,1],[1,1,1,0,0,0,0,0,0]]
+Output: 13
+Explanation: The region on the left only builds two new walls on the first day.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>m == isInfected.length</li>
+                    <li>n == isInfected[i].length</li>
+                    <li>1 ≤ m, n ≤ 50</li>
+                    <li>isInfected[i][j] is either 0 or 1</li>
+                    <li>There is always at least one virus cell in the grid</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def containVirus(self, isInfected: List[List[int]]) -> int:
+        def find_regions():
+            regions = []
+            seen = set()
+            
+            def dfs(i, j, region, frontier):
+                if (i, j) in seen:
+                    return
+                seen.add((i, j))
+                region.add((i, j))
+                
+                for di, dj in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                    ni, nj = i + di, j + dj
+                    if 0 <= ni < m and 0 <= nj < n:
+                        if isInfected[ni][nj] == 1:
+                            dfs(ni, nj, region, frontier)
+                        elif isInfected[ni][nj] == 0:
+                            frontier.add((ni, nj))
+            
+            for i in range(m):
+                for j in range(n):
+                    if isInfected[i][j] == 1 and (i, j) not in seen:
+                        region = set()
+                        frontier = set()
+                        dfs(i, j, region, frontier)
+                        if frontier:
+                            regions.append((region, frontier))
+            
+            return regions
+        
+        def build_walls(region):
+            for i, j in region:
+                isInfected[i][j] = -1
+                for di, dj in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                    ni, nj = i + di, j + dj
+                    if 0 <= ni < m and 0 <= nj < n and isInfected[ni][nj] == 0:
+                        walls[0] += 1
+        
+        def spread_virus():
+            for i in range(m):
+                for j in range(n):
+                    if isInfected[i][j] == 1:
+                        for di, dj in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                            ni, nj = i + di, j + dj
+                            if 0 <= ni < m and 0 <= nj < n and isInfected[ni][nj] == 0:
+                                isInfected[ni][nj] = 1
+        
+        m, n = len(isInfected), len(isInfected[0])
+        walls = [0]
+        
+        while True:
+            regions = find_regions()
+            if not regions:
+                break
+                
+            # Find region with largest frontier
+            max_region = max(regions, key=lambda x: len(x[1]))
+            build_walls(max_region[0])
+            spread_virus()
+        
+        return walls[0]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to find infected regions and their frontiers</li>
+                    <li>Builds walls around the region with largest frontier each day</li>
+                    <li>Time complexity: O(m * n * days) where days is the number of days until virus is contained</li>
+                    <li>Space complexity: O(m * n) for storing regions and frontiers</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int m, n;
+    private int[] walls = new int[1];
+    
+    public int containVirus(int[][] isInfected) {
+        m = isInfected.length;
+        n = isInfected[0].length;
+        
+        while (true) {
+            List<Region> regions = findRegions(isInfected);
+            if (regions.isEmpty()) {
+                break;
+            }
+            
+            // Find region with largest frontier
+            Region maxRegion = regions.stream()
+                .max((a, b) -> a.frontier.size() - b.frontier.size())
+                .get();
+            
+            buildWalls(isInfected, maxRegion);
+            spreadVirus(isInfected);
+        }
+        
+        return walls[0];
+    }
+    
+    private List<Region> findRegions(int[][] isInfected) {
+        List<Region> regions = new ArrayList<>();
+        boolean[][] seen = new boolean[m][n];
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isInfected[i][j] == 1 && !seen[i][j]) {
+                    Region region = new Region();
+                    dfs(isInfected, i, j, seen, region);
+                    if (!region.frontier.isEmpty()) {
+                        regions.add(region);
+                    }
+                }
+            }
+        }
+        
+        return regions;
+    }
+    
+    private void dfs(int[][] isInfected, int i, int j, boolean[][] seen, Region region) {
+        if (seen[i][j]) {
+            return;
+        }
+        seen[i][j] = true;
+        region.infected.add(new int[]{i, j});
+        
+        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        for (int[] dir : dirs) {
+            int ni = i + dir[0];
+            int nj = j + dir[1];
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                if (isInfected[ni][nj] == 1) {
+                    dfs(isInfected, ni, nj, seen, region);
+                } else if (isInfected[ni][nj] == 0) {
+                    region.frontier.add(new int[]{ni, nj});
+                }
+            }
+        }
+    }
+    
+    private void buildWalls(int[][] isInfected, Region region) {
+        for (int[] cell : region.infected) {
+            isInfected[cell[0]][cell[1]] = -1;
+            int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+            for (int[] dir : dirs) {
+                int ni = cell[0] + dir[0];
+                int nj = cell[1] + dir[1];
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n && isInfected[ni][nj] == 0) {
+                    walls[0]++;
+                }
+            }
+        }
+    }
+    
+    private void spreadVirus(int[][] isInfected) {
+        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isInfected[i][j] == 1) {
+                    for (int[] dir : dirs) {
+                        int ni = i + dir[0];
+                        int nj = j + dir[1];
+                        if (ni >= 0 && ni < m && nj >= 0 && nj < n && isInfected[ni][nj] == 0) {
+                            isInfected[ni][nj] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private class Region {
+        List<int[]> infected = new ArrayList<>();
+        List<int[]> frontier = new ArrayList<>();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int m, n;
+    int walls = 0;
+    
+    struct Region {
+        vector<pair<int, int>> infected;
+        vector<pair<int, int>> frontier;
+    };
+    
+    void dfs(vector<vector<int>>& isInfected, int i, int j, vector<vector<bool>>& seen, Region& region) {
+        if (seen[i][j]) return;
+        seen[i][j] = true;
+        region.infected.emplace_back(i, j);
+        
+        vector<pair<int, int>> dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        for (const auto& dir : dirs) {
+            int ni = i + dir.first;
+            int nj = j + dir.second;
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                if (isInfected[ni][nj] == 1) {
+                    dfs(isInfected, ni, nj, seen, region);
+                } else if (isInfected[ni][nj] == 0) {
+                    region.frontier.emplace_back(ni, nj);
+                }
+            }
+        }
+    }
+    
+    vector<Region> findRegions(vector<vector<int>>& isInfected) {
+        vector<Region> regions;
+        vector<vector<bool>> seen(m, vector<bool>(n, false));
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isInfected[i][j] == 1 && !seen[i][j]) {
+                    Region region;
+                    dfs(isInfected, i, j, seen, region);
+                    if (!region.frontier.empty()) {
+                        regions.push_back(region);
+                    }
+                }
+            }
+        }
+        
+        return regions;
+    }
+    
+    void buildWalls(vector<vector<int>>& isInfected, const Region& region) {
+        for (const auto& cell : region.infected) {
+            isInfected[cell.first][cell.second] = -1;
+            vector<pair<int, int>> dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+            for (const auto& dir : dirs) {
+                int ni = cell.first + dir.first;
+                int nj = cell.second + dir.second;
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n && isInfected[ni][nj] == 0) {
+                    walls++;
+                }
+            }
+        }
+    }
+    
+    void spreadVirus(vector<vector<int>>& isInfected) {
+        vector<pair<int, int>> dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isInfected[i][j] == 1) {
+                    for (const auto& dir : dirs) {
+                        int ni = i + dir.first;
+                        int nj = j + dir.second;
+                        if (ni >= 0 && ni < m && nj >= 0 && nj < n && isInfected[ni][nj] == 0) {
+                            isInfected[ni][nj] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+public:
+    int containVirus(vector<vector<int>>& isInfected) {
+        m = isInfected.size();
+        n = isInfected[0].size();
+        
+        while (true) {
+            auto regions = findRegions(isInfected);
+            if (regions.empty()) break;
+            
+            // Find region with largest frontier
+            auto maxRegion = max_element(regions.begin(), regions.end(),
+                [](const Region& a, const Region& b) {
+                    return a.frontier.size() < b.frontier.size();
+                });
+            
+            buildWalls(isInfected, *maxRegion);
+            spreadVirus(isInfected);
+        }
+        
+        return walls;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function containVirus(isInfected) {
+    const m = isInfected.length;
+    const n = isInfected[0].length;
+    let walls = 0;
+    
+    function findRegions() {
+        const regions = [];
+        const seen = new Set();
+        
+        function dfs(i, j, region, frontier) {
+            const key = `${i},${j}`;
+            if (seen.has(key)) return;
+            seen.add(key);
+            region.push([i, j]);
+            
+            const dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+            for (const [di, dj] of dirs) {
+                const ni = i + di;
+                const nj = j + dj;
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                    if (isInfected[ni][nj] === 1) {
+                        dfs(ni, nj, region, frontier);
+                    } else if (isInfected[ni][nj] === 0) {
+                        frontier.push([ni, nj]);
+                    }
+                }
+            }
+        }
+        
+        for (let i = 0; i < m; i++) {
+            for (let j = 0; j < n; j++) {
+                if (isInfected[i][j] === 1) {
+                    const region = [];
+                    const frontier = [];
+                    dfs(i, j, region, frontier);
+                    if (frontier.length > 0) {
+                        regions.push({ region, frontier });
+                    }
+                }
+            }
+        }
+        
+        return regions;
+    }
+    
+    function buildWalls(region) {
+        for (const [i, j] of region) {
+            isInfected[i][j] = -1;
+            const dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+            for (const [di, dj] of dirs) {
+                const ni = i + di;
+                const nj = j + dj;
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n && isInfected[ni][nj] === 0) {
+                    walls++;
+                }
+            }
+        }
+    }
+    
+    function spreadVirus() {
+        const dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+        for (let i = 0; i < m; i++) {
+            for (let j = 0; j < n; j++) {
+                if (isInfected[i][j] === 1) {
+                    for (const [di, dj] of dirs) {
+                        const ni = i + di;
+                        const nj = j + dj;
+                        if (ni >= 0 && ni < m && nj >= 0 && nj < n && isInfected[ni][nj] === 0) {
+                            isInfected[ni][nj] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    while (true) {
+        const regions = findRegions();
+        if (regions.length === 0) break;
+        
+        // Find region with largest frontier
+        const maxRegion = regions.reduce((max, curr) => 
+            curr.frontier.length > max.frontier.length ? curr : max
+        );
+        
+        buildWalls(maxRegion.region);
+        spreadVirus();
+    }
+    
+    return walls;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int m, n;
+    private int walls = 0;
+    
+    private class Region {
+        public List<(int i, int j)> infected = new List<(int, int)>();
+        public List<(int i, int j)> frontier = new List<(int, int)>();
+    }
+    
+    private void Dfs(int[][] isInfected, int i, int j, HashSet<(int, int)> seen, Region region) {
+        if (seen.Contains((i, j))) return;
+        seen.Add((i, j));
+        region.infected.Add((i, j));
+        
+        var dirs = new[] { (0, 1), (1, 0), (0, -1), (-1, 0) };
+        foreach (var dir in dirs) {
+            int ni = i + dir.Item1;
+            int nj = j + dir.Item2;
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                if (isInfected[ni][nj] == 1) {
+                    Dfs(isInfected, ni, nj, seen, region);
+                }
+                else if (isInfected[ni][nj] == 0) {
+                    region.frontier.Add((ni, nj));
+                }
+            }
+        }
+    }
+    
+    private List<Region> FindRegions(int[][] isInfected) {
+        var regions = new List<Region>();
+        var seen = new HashSet<(int, int)>();
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isInfected[i][j] == 1 && !seen.Contains((i, j))) {
+                    var region = new Region();
+                    Dfs(isInfected, i, j, seen, region);
+                    if (region.frontier.Count > 0) {
+                        regions.Add(region);
+                    }
+                }
+            }
+        }
+        
+        return regions;
+    }
+    
+    private void BuildWalls(int[][] isInfected, Region region) {
+        foreach (var (i, j) in region.infected) {
+            isInfected[i][j] = -1;
+            var dirs = new[] { (0, 1), (1, 0), (0, -1), (-1, 0) };
+            foreach (var dir in dirs) {
+                int ni = i + dir.Item1;
+                int nj = j + dir.Item2;
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n && isInfected[ni][nj] == 0) {
+                    walls++;
+                }
+            }
+        }
+    }
+    
+    private void SpreadVirus(int[][] isInfected) {
+        var dirs = new[] { (0, 1), (1, 0), (0, -1), (-1, 0) };
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isInfected[i][j] == 1) {
+                    foreach (var dir in dirs) {
+                        int ni = i + dir.Item1;
+                        int nj = j + dir.Item2;
+                        if (ni >= 0 && ni < m && nj >= 0 && nj < n && isInfected[ni][nj] == 0) {
+                            isInfected[ni][nj] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public int ContainVirus(int[][] isInfected) {
+        m = isInfected.Length;
+        n = isInfected[0].Length;
+        
+        while (true) {
+            var regions = FindRegions(isInfected);
+            if (regions.Count == 0) break;
+            
+            // Find region with largest frontier
+            var maxRegion = regions.OrderByDescending(r => r.frontier.Count).First();
+            
+            BuildWalls(isInfected, maxRegion);
+            SpreadVirus(isInfected);
+        }
+        
+        return walls;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to find infected regions and their frontiers</li>
+                    <li>Builds walls around the region with largest frontier each day</li>
+                    <li>Time complexity: O(m * n * days) where days is the number of days until virus is contained</li>
+                    <li>Space complexity: O(m * n) for storing regions and frontiers</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

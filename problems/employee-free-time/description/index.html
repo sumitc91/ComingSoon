@@ -1,0 +1,306 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Free Time - LeetCodee Solution</title>
+    <meta name="description" content="Find the common free time for all employees given their working schedules.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, employee free time, algorithm, solution, python, java, cpp, javascript, c#, coding, interview, problem solving, data structures">
+    <meta property="og:title" content="Employee Free Time - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/employee-free-time/">
+    <meta property="og:description" content="Find the common free time for all employees given their working schedules.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/employee-free-time/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">759. Employee Free Time</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    We are given a list schedule of employees, which represents the working time for each employee.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Each employee has a list of non-overlapping Intervals, and these intervals are in sorted order.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the list of finite intervals representing common, positive-length free time for all employees, also in sorted order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: schedule = [[[1,2],[5,6]],[[1,3]],[[4,10]]]
+Output: [[3,4]]
+Explanation:
+There are a total of three employees, and all common
+free time intervals would be [-inf, 1], [3, 4], [10, inf].
+We discard any intervals that contain inf as they aren't finite.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: schedule = [[[1,3],[6,7]],[[2,4]],[[2,5],[9,12]]]
+Output: [[5,6],[7,9]]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ schedule.length ≤ 50</li>
+                    <li>0 ≤ schedule[i].length ≤ 50</li>
+                    <li>1 ≤ schedule[i][j].start < schedule[i][j].end ≤ 10^8</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def employeeFreeTime(self, schedule: List[List[List[int]]]) -> List[List[int]]:
+        # Flatten all intervals and sort by start time
+        intervals = []
+        for employee in schedule:
+            intervals.extend(employee)
+        intervals.sort(key=lambda x: x[0])
+        
+        # Merge overlapping intervals
+        merged = []
+        for interval in intervals:
+            if not merged or merged[-1][1] < interval[0]:
+                merged.append(interval)
+            else:
+                merged[-1][1] = max(merged[-1][1], interval[1])
+        
+        # Find gaps between merged intervals
+        result = []
+        for i in range(1, len(merged)):
+            if merged[i][0] > merged[i-1][1]:
+                result.append([merged[i-1][1], merged[i][0]])
+                
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Flattens all intervals from all employees into a single list</li>
+                    <li>Sorts intervals by start time</li>
+                    <li>Merges overlapping intervals</li>
+                    <li>Finds gaps between merged intervals to get free time</li>
+                    <li>Time complexity: O(n log n) where n is total number of intervals</li>
+                    <li>Space complexity: O(n) for storing merged intervals</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
+        // Flatten all intervals and sort by start time
+        List<Interval> intervals = new ArrayList<>();
+        for (List<Interval> employee : schedule) {
+            intervals.addAll(employee);
+        }
+        Collections.sort(intervals, (a, b) -> a.start - b.start);
+        
+        // Merge overlapping intervals
+        List<Interval> merged = new ArrayList<>();
+        for (Interval interval : intervals) {
+            if (merged.isEmpty() || merged.get(merged.size() - 1).end < interval.start) {
+                merged.add(interval);
+            } else {
+                merged.get(merged.size() - 1).end = Math.max(merged.get(merged.size() - 1).end, interval.end);
+            }
+        }
+        
+        // Find gaps between merged intervals
+        List<Interval> result = new ArrayList<>();
+        for (int i = 1; i < merged.size(); i++) {
+            if (merged.get(i).start > merged.get(i - 1).end) {
+                result.add(new Interval(merged.get(i - 1).end, merged.get(i).start));
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<Interval> employeeFreeTime(vector<vector<Interval>>& schedule) {
+        // Flatten all intervals and sort by start time
+        vector<Interval> intervals;
+        for (const auto& employee : schedule) {
+            intervals.insert(intervals.end(), employee.begin(), employee.end());
+        }
+        sort(intervals.begin(), intervals.end(), 
+            [](const Interval& a, const Interval& b) { return a.start < b.start; });
+        
+        // Merge overlapping intervals
+        vector<Interval> merged;
+        for (const auto& interval : intervals) {
+            if (merged.empty() || merged.back().end < interval.start) {
+                merged.push_back(interval);
+            } else {
+                merged.back().end = max(merged.back().end, interval.end);
+            }
+        }
+        
+        // Find gaps between merged intervals
+        vector<Interval> result;
+        for (int i = 1; i < merged.size(); i++) {
+            if (merged[i].start > merged[i-1].end) {
+                result.push_back(Interval(merged[i-1].end, merged[i].start));
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function employeeFreeTime(schedule) {
+    // Flatten all intervals and sort by start time
+    const intervals = schedule.flat().sort((a, b) => a.start - b.start);
+    
+    // Merge overlapping intervals
+    const merged = [];
+    for (const interval of intervals) {
+        if (merged.length === 0 || merged[merged.length - 1].end < interval.start) {
+            merged.push(interval);
+        } else {
+            merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, interval.end);
+        }
+    }
+    
+    // Find gaps between merged intervals
+    const result = [];
+    for (let i = 1; i < merged.length; i++) {
+        if (merged[i].start > merged[i-1].end) {
+            result.push({start: merged[i-1].end, end: merged[i].start});
+        }
+    }
+    
+    return result;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<Interval> EmployeeFreeTime(IList<IList<Interval>> schedule) {
+        // Flatten all intervals and sort by start time
+        var intervals = schedule.SelectMany(x => x).OrderBy(x => x.start).ToList();
+        
+        // Merge overlapping intervals
+        var merged = new List<Interval>();
+        foreach (var interval in intervals) {
+            if (merged.Count == 0 || merged[merged.Count - 1].end < interval.start) {
+                merged.Add(interval);
+            } else {
+                merged[merged.Count - 1].end = Math.Max(merged[merged.Count - 1].end, interval.end);
+            }
+        }
+        
+        // Find gaps between merged intervals
+        var result = new List<Interval>();
+        for (int i = 1; i < merged.Count; i++) {
+            if (merged[i].start > merged[i-1].end) {
+                result.Add(new Interval(merged[i-1].end, merged[i].start));
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Flattens all intervals from all employees into a single list</li>
+                    <li>Sorts intervals by start time</li>
+                    <li>Merges overlapping intervals</li>
+                    <li>Finds gaps between merged intervals to get free time</li>
+                    <li>Time complexity: O(n log n) where n is total number of intervals</li>
+                    <li>Space complexity: O(n) for storing merged intervals</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "759. Employee Free Time",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2023-10-27",
+  "dateModified": "2023-10-27",
+  "publisher": {
+    "@type": "Organization",
+    "name": "LeetCodee",
+    "url": "https://leetcodee.com"
+  },
+  "description": "Find the common free time for all employees given their working schedules.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://leetcodee.com/problems/employee-free-time/"
+  },
+  "keywords": "leetcode, employee free time, algorithm, solution, python, java, cpp, javascript, c#, coding, interview, problem solving, data structures"
+}
+</script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

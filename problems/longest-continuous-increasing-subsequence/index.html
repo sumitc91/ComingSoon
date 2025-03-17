@@ -1,0 +1,264 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longest Continuous Increasing Subsequence - LeetCodee Solution</title>
+    <meta name="description" content="Find the length of the longest continuous increasing subsequence in an array. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, longest continuous increasing subsequence, algorithm, solution, python, java, cpp, javascript, c#, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/longest-continuous-increasing-subsequence/">
+    <meta property="og:title" content="Longest Continuous Increasing Subsequence - LeetCodee Solution">
+    <meta property="og:description" content="Find the length of the longest continuous increasing subsequence in an array. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/longest-continuous-increasing-subsequence/">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Longest Continuous Increasing Subsequence - LeetCodee Solution",
+        "description": "Find the length of the longest continuous increasing subsequence in an array. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+        "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+        },
+        "datePublished": "2023-10-27",
+        "dateModified": "2023-10-27",
+        "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "url": "https://leetcodee.com"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/longest-continuous-increasing-subsequence/"
+        },
+        "keywords": "leetcode, longest continuous increasing subsequence, algorithm, solution, python, java, cpp, javascript, c#, coding, programming"
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">674. Longest Continuous Increasing Subsequence</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an unsorted array of integers <code class="bg-gray-100 px-1 rounded">nums</code>, return <em>the length of the longest continuous increasing subsequence</em> (i.e. subarray). The subsequence must be <strong>strictly</strong> increasing.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A <strong>continuous increasing subsequence</strong> is defined by two indices <code class="bg-gray-100 px-1 rounded">l</code> and <code class="bg-gray-100 px-1 rounded">r</code> (<code class="bg-gray-100 px-1 rounded">l < r</code>) such that it is <code class="bg-gray-100 px-1 rounded">[nums[l], nums[l + 1], ..., nums[r - 1], nums[r]]</code> and for each <code class="bg-gray-100 px-1 rounded">l ≤ i < r</code>, <code class="bg-gray-100 px-1 rounded">nums[i] < nums[i + 1]</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,3,5,4,7]
+Output: 3
+Explanation: The longest continuous increasing subsequence is [1,3,5] with length 3.
+Even though [1,3,5,7] is an increasing subsequence, it is not continuous as elements 5 and 7 are separated by element 4.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [2,2,2,2,2]
+Output: 1
+Explanation: The longest continuous increasing subsequence is [2] with length 1.
+Note that it must be strictly increasing.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 10<sup>4</sup></li>
+                    <li>-10<sup>9</sup> ≤ nums[i] ≤ 10<sup>9</sup></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findLengthOfLCIS(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+            
+        max_length = curr_length = 1
+        
+        for i in range(1, len(nums)):
+            if nums[i] > nums[i-1]:
+                curr_length += 1
+                max_length = max(max_length, curr_length)
+            else:
+                currLength = 1
+                
+        return max_length</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                    <li>Uses a single pass through the array</li>
+                    <li>Handles edge cases like empty array</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int findLengthOfLCIS(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        int maxLength = 1;
+        int currLength = 1;
+        
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i-1]) {
+                currLength++;
+                maxLength = Math.max(maxLength, currLength);
+            } else {
+                currLength = 1;
+            }
+        }
+        
+        return maxLength;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int findLengthOfLCIS(vector<int>& nums) {
+        if (nums.empty()) {
+            return 0;
+        }
+        
+        int maxLength = 1;
+        int currLength = 1;
+        
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] > nums[i-1]) {
+                currLength++;
+                maxLength = max(maxLength, currLength);
+            } else {
+                currLength = 1;
+            }
+        }
+        
+        return maxLength;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findLengthOfLCIS = function(nums) {
+    if (!nums || nums.length === 0) {
+        return 0;
+    }
+    
+    let maxLength = 1;
+    let currLength = 1;
+    
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] > nums[i-1]) {
+            currLength++;
+            maxLength = Math.max(maxLength, currLength);
+        } else {
+            currLength = 1;
+        }
+    }
+    
+    return maxLength;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int FindLengthOfLCIS(int[] nums) {
+        if (nums == null || nums.Length == 0) {
+            return 0;
+        }
+        
+        int maxLength = 1;
+        int currLength = 1;
+        
+        for (int i = 1; i < nums.Length; i++) {
+            if (nums[i] > nums[i-1]) {
+                currLength++;
+                maxLength = Math.Max(maxLength, currLength);
+            } else {
+                currLength = 1;
+            }
+        }
+        
+        return maxLength;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Simple one-pass solution</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                    <li>Handles null/empty input cases</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

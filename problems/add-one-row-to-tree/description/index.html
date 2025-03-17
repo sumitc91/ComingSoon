@@ -1,0 +1,479 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add One Row to Tree - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 623: Add One Row to Tree.  Includes detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, leetcode solution, add one row to tree, binary tree, tree traversal, dfs, bfs, python, java, cpp, javascript, c#, algorithm, data structure">
+    <link rel="canonical" href="https://leetcodee.com/problems/add-one-row-to-tree/">
+    <meta property="og:title" content="Add One Row to Tree - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/add-one-row-to-tree/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 623: Add One Row to Tree.  Includes detailed explanations and time/space complexity analysis.">
+    <meta property="og:image" content="https://leetcodee.com/images/leetcode-logo.png">  <!-- Replace with actual image URL -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">623. Add One Row to Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">root</code> of a binary tree and two integers <code class="bg-gray-100 px-1 rounded">val</code> and <code class="bg-gray-100 px-1 rounded">depth</code>, add a row of nodes with value <code class="bg-gray-100 px-1 rounded">val</code> at the given depth <code class="bg-gray-100 px-1 rounded">depth</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Note that the <code class="bg-gray-100 px-1 rounded">root</code> node is at depth 1.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The adding rule is:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Given the integer <code class="bg-gray-100 px-1 rounded">depth</code>, for each not null tree node <code class="bg-gray-100 px-1 rounded">cur</code> at the depth <code class="bg-gray-100 px-1 rounded">depth - 1</code>, create two tree nodes with value <code class="bg-gray-100 px-1 rounded">val</code> as <code class="bg-gray-100 px-1 rounded">cur</code>'s left subtree root and right subtree root.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">cur</code>'s original left subtree should be the left subtree of the new left subtree root.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">cur</code>'s original right subtree should be the right subtree of the new right subtree root.</li>
+                    <li>If <code class="bg-gray-100 px-1 rounded">depth == 1</code> that means there is no depth <code class="bg-gray-100 px-1 rounded">depth - 1</code> at all, then create a tree node with value <code class="bg-gray-100 px-1 rounded">val</code> as the new root of the whole original tree, and the original tree is the new root's left subtree.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="text-gray-700 mb-2">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">Input: root = [4,2,6,3,1,5], val = 1, depth = 2
+Output: [4,1,1,2,null,null,6,3,1,5]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="text-gray-700 mb-2">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">Input: root = [4,2,null,3,1], val = 1, depth = 3
+Output: [4,2,null,1,1,3,null,null,1]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range <code class="bg-gray-100 px-1 rounded">[1, 10⁴]</code></li>
+                    <li>The depth of the tree is in the range <code class="bg-gray-100 px-1 rounded">[1, 10⁴]</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">-100 <= Node.val <= 100</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">-10⁵ <= val <= 10⁵</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= depth <= the depth of tree + 1</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def addOneRow(self, root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNode]:
+        if depth == 1:
+            new_root = TreeNode(val)
+            new_root.left = root
+            return new_root
+        
+        def dfs(node: TreeNode, current_depth: int) -> None:
+            if not node:
+                return
+            
+            if current_depth == depth - 1:
+                # Store original left and right children
+                left = node.left
+                right = node.right
+                
+                # Create new nodes with value val
+                node.left = TreeNode(val)
+                node.right = TreeNode(val)
+                
+                # Connect original children
+                node.left.left = left
+                node.right.right = right
+            else:
+                dfs(node.left, current_depth + 1)
+                dfs(node.right, current_depth + 1)
+        
+        dfs(root, 1)
+        return root</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(N)</h4>
+                    <p class="text-gray-700">Where N is the number of nodes in the tree.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(H)</h4>
+                    <p class="text-gray-700">Where H is the height of the tree (recursion stack).</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Explanation:</h4>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                        <li>Handle special case when depth = 1</li>
+                        <li>Use DFS to traverse to the correct depth</li>
+                        <li>At target depth - 1, store original children</li>
+                        <li>Create new nodes and connect them properly</li>
+                        <li>Continue DFS for other branches</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public TreeNode addOneRow(TreeNode root, int val, int depth) {
+        if (depth == 1) {
+            TreeNode newRoot = new TreeNode(val);
+            newRoot.left = root;
+            return newRoot;
+        }
+        
+        dfs(root, val, depth, 1);
+        return root;
+    }
+    
+    private void dfs(TreeNode node, int val, int depth, int currentDepth) {
+        if (node == null) {
+            return;
+        }
+        
+        if (currentDepth == depth - 1) {
+            TreeNode left = node.left;
+            TreeNode right = node.right;
+            
+            node.left = new TreeNode(val);
+            node.right = new TreeNode(val);
+            
+            node.left.left = left;
+            node.right.right = right;
+        } else {
+            dfs(node.left, val, depth, currentDepth + 1);
+            dfs(node.right, val, depth, currentDepth + 1);
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using BFS:</h4>
+                    <pre class="language-java"><code>class Solution {
+    public TreeNode addOneRow(TreeNode root, int val, int depth) {
+        if (depth == 1) {
+            TreeNode newRoot = new TreeNode(val);
+            newRoot.left = root;
+            return newRoot;
+        }
+        
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int currentDepth = 1;
+        
+        while (currentDepth < depth - 1) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+            currentDepth++;
+        }
+        
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            TreeNode left = node.left;
+            TreeNode right = node.right;
+            
+            node.left = new TreeNode(val);
+            node.right = new TreeNode(val);
+            
+            node.left.left = left;
+            node.right.right = right;
+        }
+        
+        return root;
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+        if (depth == 1) {
+            TreeNode* newRoot = new TreeNode(val);
+            newRoot->left = root;
+            return newRoot;
+        }
+        
+        dfs(root, val, depth, 1);
+        return root;
+    }
+    
+private:
+    void dfs(TreeNode* node, int val, int depth, int currentDepth) {
+        if (!node) return;
+        
+        if (currentDepth == depth - 1) {
+            TreeNode* left = node->left;
+            TreeNode* right = node->right;
+            
+            node->left = new TreeNode(val);
+            node->right = new TreeNode(val);
+            
+            node->left->left = left;
+            node->right->right = right;
+        } else {
+            dfs(node->left, val, depth, currentDepth + 1);
+            dfs(node->right, val, depth, currentDepth + 1);
+        }
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @param {number} val
+ * @param {number} depth
+ * @return {TreeNode}
+ */
+var addOneRow = function(root, val, depth) {
+    if (depth === 1) {
+        const newRoot = new TreeNode(val);
+        newRoot.left = root;
+        return newRoot;
+    }
+    
+    function dfs(node, currentDepth) {
+        if (!node) return;
+        
+        if (currentDepth === depth - 1) {
+            const left = node.left;
+            const right = node.right;
+            
+            node.left = new TreeNode(val);
+            node.right = new TreeNode(val);
+            
+            node.left.left = left;
+            node.right.right = right;
+        } else {
+            dfs(node.left, currentDepth + 1);
+            dfs(node.right, currentDepth + 1);
+        }
+    }
+    
+    dfs(root, 1);
+    return root;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Queue:</h4>
+                    <pre class="language-javascript"><code>var addOneRow = function(root, val, depth) {
+    if (depth === 1) {
+        const newRoot = new TreeNode(val);
+        newRoot.left = root;
+        return newRoot;
+    }
+    
+    const queue = [root];
+    let currentDepth = 1;
+    
+    while (currentDepth < depth - 1) {
+        const size = queue.length;
+        for (let i = 0; i < size; i++) {
+            const node = queue.shift();
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+        currentDepth++;
+    }
+    
+    while (queue.length) {
+        const node = queue.shift();
+        const left = node.left;
+        const right = node.right;
+        
+        node.left = new TreeNode(val);
+        node.right = new TreeNode(val);
+        
+        node.left.left = left;
+        node.right.right = right;
+    }
+    
+    return root;
+};</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Comparison:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>DFS solution is more space-efficient for deep trees</li>
+                        <li>BFS solution might be more intuitive for level-based operations</li>
+                        <li>Both solutions have the same time complexity</li>
+                        <li>BFS uses more space for wide trees</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode AddOneRow(TreeNode root, int val, int depth) {
+        if (depth == 1) {
+            var newRoot = new TreeNode(val);
+            newRoot.left = root;
+            return newRoot;
+        }
+        
+        DFS(root, val, depth, 1);
+        return root;
+    }
+    
+    private void DFS(TreeNode node, int val, int depth, int currentDepth) {
+        if (node == null) {
+            return;
+        }
+        
+        if (currentDepth == depth - 1) {
+            TreeNode left = node.left;
+            TreeNode right = node.right;
+            
+            node.left = new TreeNode(val);
+            node.right = new TreeNode(val);
+            
+            node.left.left = left;
+            node.right.right = right;
+        } else {
+            DFS(node.left, val, depth, currentDepth + 1);
+            DFS(node.right, val, depth, currentDepth + 1);
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using BFS:</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public TreeNode AddOneRow(TreeNode root, int val, int depth) {
+        if (depth == 1) {
+            var newRoot = new TreeNode(val);
+            newRoot.left = root;
+            return newRoot;
+        }
+        
+        var queue = new Queue<TreeNode>();
+        queue.Enqueue(root);
+        int currentDepth = 1;
+        
+        while (currentDepth < depth - 1) {
+            int size = queue.Count;
+            for (int i = 0; i < size; i++) {
+                var node = queue.Dequeue();
+                if (node.left != null) queue.Enqueue(node.left);
+                if (node.right != null) queue.Enqueue(node.right);
+            }
+            currentDepth++;
+        }
+        
+        while (queue.Count > 0) {
+            var node = queue.Dequeue();
+            TreeNode left = node.left;
+            TreeNode right = node.right;
+            
+            node.left = new TreeNode(val);
+            node.right = new TreeNode(val);
+            
+            node.left.left = left;
+            node.right.right = right;
+        }
+        
+        return root;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>DFS solution is more space-efficient for deep trees</li>
+                        <li>BFS solution might be more intuitive for level-based operations</li>
+                        <li>Both solutions handle the special case of depth=1</li>
+                        <li>Time complexity is O(N) for both solutions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "623. Add One Row to Tree",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee" // Replace with actual author name if different
+      },
+      "datePublished": "2023-10-27", // Replace with actual publication date
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 623: Add One Row to Tree.  Includes detailed explanations and time/space complexity analysis.",
+      "image": "https://leetcodee.com/images/leetcode-logo.png", // Replace with actual image URL
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      }
+    }
+    </script>
+</body>
+</html>

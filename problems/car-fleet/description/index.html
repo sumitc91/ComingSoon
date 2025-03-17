@@ -1,0 +1,301 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Fleet - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of car fleets that will arrive at the destination. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, car fleet, algorithm, solution, python, java, cpp, javascript, c#, coding, programming, data structures">
+    <meta property="og:title" content="Car Fleet - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/car-fleet/">
+    <meta property="og:description" content="Find the number of car fleets that will arrive at the destination. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/car-fleet/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "853. Car Fleet",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the number of car fleets that will arrive at the destination.  Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "There are n cars going to the same destination along a one-lane road. The destination is target miles away. You are given two integer array position and speed, both of length n, where position[i] is the position of the ith car and speed[i] is the speed of the ith car (in miles per hour). A car can never pass another car ahead of it, but it can catch up to it and drive bumper to bumper at the same speed. The faster car will slow down to match the slower car's speed. The distance between these two cars is ignored (i.e., they are assumed to have the same position). A car fleet is some non-empty set of cars driving at the same position and same speed. Note that a single car is also a car fleet. If a car catches up to a car fleet right at the destination point, it will still be considered as one car fleet. Return the number of car fleets that will arrive at the destination."
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">853. Car Fleet</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There are n cars going to the same destination along a one-lane road. The destination is target miles away.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given two integer array position and speed, both of length n, where position[i] is the position of the ith car and speed[i] is the speed of the ith car (in miles per hour).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A car can never pass another car ahead of it, but it can catch up to it and drive bumper to bumper at the same speed. The faster car will slow down to match the slower car's speed. The distance between these two cars is ignored (i.e., they are assumed to have the same position).
+                </p>
+                <p class="text-gray-700">
+                    A car fleet is some non-empty set of cars driving at the same position and same speed. Note that a single car is also a car fleet.
+                    If a car catches up to a car fleet right at the destination point, it will still be considered as one car fleet.
+                    Return the number of car fleets that will arrive at the destination.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: target = 12, position = [10,8,0,5,3], speed = [2,4,1,1,3]
+Output: 3
+Explanation:
+The cars starting at 10 (speed 2) and 8 (speed 4) become a fleet, meeting at 12.
+The car starting at 0 does not catch up to any other car, so it is a fleet by itself.
+The cars starting at 5 (speed 1) and 3 (speed 3) become a fleet, meeting at 6.
+Note that no other cars meet these fleets before the destination, so the answer is 3.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: target = 10, position = [3], speed = [3]
+Output: 1
+Explanation: There is only one car, hence there is only one fleet.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: target = 100, position = [0,2,4], speed = [4,2,1]
+Output: 1
+Explanation: The cars starting at 0 (speed 4) and 2 (speed 2) become a fleet, meeting at 4.
+The fleet moves at speed 2. Then, the fleet (speed 2) and the car starting at 4 (speed 1) become one fleet, meeting at 6.
+The fleet moves at speed 1 until the destination.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == position.length == speed.length</li>
+                    <li>1 ≤ n ≤ 10⁵</li>
+                    <li>0 < target ≤ 10⁶</li>
+                    <li>0 ≤ position[i] < target</li>
+                    <li>All the values of position are unique</li>
+                    <li>0 < speed[i] ≤ 10⁶</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        # Create pairs of position and time to reach target
+        pairs = [(p, (target - p) / s) for p, s in zip(position, speed)]
+        # Sort by position in descending order
+        pairs.sort(reverse=True)
+        
+        stack = []
+        for _, time in pairs:
+            # If current car takes longer time than the car in front
+            # it will never catch up and form a new fleet
+            if not stack or time > stack[-1]:
+                stack.append(time)
+        
+        return len(stack)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses monotonic stack approach</li>
+                    <li>Time complexity: O(n log n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int carFleet(int target, int[] position, int[] speed) {
+        int n = position.length;
+        double[][] cars = new double[n][2];
+        
+        // Create array of [position, time to reach target]
+        for (int i = 0; i < n; i++) {
+            cars[i] = new double[] {position[i], (double)(target - position[i]) / speed[i]};
+        }
+        
+        // Sort by position in descending order
+        Arrays.sort(cars, (a, b) -> Double.compare(b[0], a[0]));
+        
+        int fleets = 0;
+        double slowest = 0;
+        
+        // Check each car from right to left
+        for (double[] car : cars) {
+            if (car[1] > slowest) {
+                slowest = car[1];
+                fleets++;
+            }
+        }
+        
+        return fleets;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int carFleet(int target, vector<int>& position, vector<int>& speed) {
+        int n = position.size();
+        vector<pair<int, double>> cars;
+        
+        // Create pairs of position and time to reach target
+        for (int i = 0; i < n; i++) {
+            double time = (double)(target - position[i]) / speed[i];
+            cars.push_back({position[i], time});
+        }
+        
+        // Sort by position in descending order
+        sort(cars.rbegin(), cars.rend());
+        
+        int fleets = 0;
+        double slowest = 0;
+        
+        for (const auto& car : cars) {
+            if (car.second > slowest) {
+                slowest = car.second;
+                fleets++;
+            }
+        }
+        
+        return fleets;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} target
+ * @param {number[]} position
+ * @param {number[]} speed
+ * @return {number}
+ */
+var carFleet = function(target, position, speed) {
+    const n = position.length;
+    const cars = [];
+    
+    // Create array of [position, time to reach target]
+    for (let i = 0; i < n; i++) {
+        cars.push([position[i], (target - position[i]) / speed[i]]);
+    }
+    
+    // Sort by position in descending order
+    cars.sort((a, b) => b[0] - a[0]);
+    
+    const stack = [];
+    for (const [_, time] of cars) {
+        if (!stack.length || time > stack[stack.length - 1]) {
+            stack.push(time);
+        }
+    }
+    
+    return stack.length;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int CarFleet(int target, int[] position, int[] speed) {
+        int n = position.Length;
+        (int pos, double time)[] cars = new (int pos, double time)[n];
+        
+        // Create array of position and time to reach target
+        for (int i = 0; i < n; i++) {
+            cars[i] = (position[i], (double)(target - position[i]) / speed[i]);
+        }
+        
+        // Sort by position in descending order
+        Array.Sort(cars, (a, b) => b.pos.CompareTo(a.pos));
+        
+        int fleets = 0;
+        double slowest = 0;
+        
+        foreach (var car in cars) {
+            if (car.time > slowest) {
+                slowest = car.time;
+                fleets++;
+            }
+        }
+        
+        return fleets;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses sorting and linear traversal</li>
+                    <li>Time complexity: O(n log n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+             <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

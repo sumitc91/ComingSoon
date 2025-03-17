@@ -1,0 +1,513 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Linked List - LeetCodee Solution</title>
+    <meta name="description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 707: Design Linked List.  Learn how to implement a linked list from scratch.">
+    <meta name="keywords" content="leetcode, linked list, data structures, algorithms, python, java, c++, javascript, c#, coding interview, solution, tutorial, design linked list, 707">
+    <link rel="canonical" href="https://leetcodee.com/problems/design-linked-list/">
+    <meta property="og:title" content="Design Linked List - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/design-linked-list/">
+    <meta property="og:description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 707: Design Linked List.  Learn how to implement a linked list from scratch.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "707. Design Linked List",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 707: Design Linked List. Learn how to implement a linked list from scratch.",
+      "keywords": "leetcode, linked list, data structures, algorithms, python, java, c++, javascript, c#, coding interview, solution, tutorial, design linked list, 707",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/design-linked-list/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">707. Design Linked List</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Design your implementation of the linked list. You can choose to use a singly or doubly linked list. A node in a singly linked list should have two attributes: <code class="bg-gray-100 px-1 rounded">val</code> and <code class="bg-gray-100 px-1 rounded">next</code>. A node in a doubly linked list should have three attributes: <code class="bg-gray-100 px-1 rounded">val</code>, <code class="bg-gray-100 px-1 rounded">prev</code>, and <code class="bg-gray-100 px-1 rounded">next</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement the <code class="bg-gray-100 px-1 rounded">MyLinkedList</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">MyLinkedList()</code> Initializes the <code class="bg-gray-100 px-1 rounded">MyLinkedList</code> object</li>
+                    <li><code class="bg-gray-100 px-1 rounded">int get(int index)</code> Get the value of the <code class="bg-gray-100 px-1 rounded">index<sup>th</sup></code> node in the linked list. If the index is invalid, return <code class="bg-gray-100 px-1 rounded">-1</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">void addAtHead(int val)</code> Add a node of value <code class="bg-gray-100 px-1 rounded">val</code> before the first element of the linked list. After the insertion, the new node will be the first node of the linked list</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void addAtTail(int val)</code> Append a node of value <code class="bg-gray-100 px-1 rounded">val</code> as the last element of the linked list</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void addAtIndex(int index, int val)</code> Add a node of value <code class="bg-gray-100 px-1 rounded">val</code> before the <code class="bg-gray-100 px-1 rounded">index<sup>th</sup></code> node in the linked list. If <code class="bg-gray-100 px-1 rounded">index</code> equals the length of the linked list, the node will be appended to the end of the linked list. If <code class="bg-gray-100 px-1 rounded">index</code> is greater than the length, the node will not be inserted</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void deleteAtIndex(int index)</code> Delete the <code class="bg-gray-100 px-1 rounded">index<sup>th</sup></code> node in the linked list, if the index is valid</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["MyLinkedList", "addAtHead", "addAtTail", "addAtIndex", "get", "deleteAtIndex", "get"]
+[[], [1], [3], [1, 2], [1], [1], [1]]
+Output
+[null, null, null, null, 2, null, 3]
+
+Explanation
+MyLinkedList myLinkedList = new MyLinkedList();
+myLinkedList.addAtHead(1);
+myLinkedList.addAtTail(3);
+myLinkedList.addAtIndex(1, 2);    // linked list becomes 1->2->3
+myLinkedList.get(1);              // return 2
+myLinkedList.deleteAtIndex(1);    // now the linked list is 1->3
+myLinkedList.get(1);              // return 3</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>0 ≤ index, val ≤ 10<sup>6</sup></li>
+                    <li>Please do not use the built-in LinkedList library</li>
+                    <li>At most 2000 calls will be made to get, addAtHead, addAtTail, addAtIndex and deleteAtIndex</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class MyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+    
+    def get(self, index: int) -> int:
+        if index < 0 or index >= self.size:
+            return -1
+        curr = self.head
+        for _ in range(index):
+            curr = curr.next
+        return curr.val
+    
+    def addAtHead(self, val: int) -> None:
+        self.addAtIndex(0, val)
+    
+    def addAtTail(self, val: int) -> None:
+        self.addAtIndex(self.size, val)
+    
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index > self.size:
+            return
+        if index <= 0:
+            new_node = ListNode(val, self.head)
+            self.head = new_node
+        else:
+            curr = self.head
+            for _ in range(index - 1):
+                curr = curr.next
+            new_node = ListNode(val, curr.next)
+            curr.next = new_node
+        self.size += 1
+    
+    def deleteAtIndex(self, index: int) -> None:
+        if index < 0 or index >= self.size:
+            return
+        if index == 0:
+            self.head = self.head.next
+        else:
+            curr = self.head
+            for _ in range(index - 1):
+                curr = curr.next
+            curr.next = curr.next.next
+        self.size -= 1</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses singly linked list implementation</li>
+                    <li>Maintains size for O(1) length checks</li>
+                    <li>Time complexity: O(n) for get, addAtIndex, deleteAtIndex; O(1) for addAtHead, addAtTail</li>
+                    <li>Space complexity: O(n) where n is the number of elements</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+class MyLinkedList {
+    private ListNode head;
+    private int size;
+    
+    public MyLinkedList() {
+        head = null;
+        size = 0;
+    }
+    
+    public int get(int index) {
+        if (index < 0 || index >= size) {
+            return -1;
+        }
+        ListNode curr = head;
+        for (int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+        return curr.val;
+    }
+    
+    public void addAtHead(int val) {
+        addAtIndex(0, val);
+    }
+    
+    public void addAtTail(int val) {
+        addAtIndex(size, val);
+    }
+    
+    public void addAtIndex(int index, int val) {
+        if (index > size) {
+            return;
+        }
+        ListNode newNode = new ListNode(val);
+        if (index <= 0) {
+            newNode.next = head;
+            head = newNode;
+        } else {
+            ListNode curr = head;
+            for (int i = 0; i < index - 1; i++) {
+                curr = curr.next;
+            }
+            newNode.next = curr.next;
+            curr.next = newNode;
+        }
+        size++;
+    }
+    
+    public void deleteAtIndex(int index) {
+        if (index < 0 || index >= size) {
+            return;
+        }
+        if (index == 0) {
+            head = head.next;
+        } else {
+            ListNode curr = head;
+            for (int i = 0; i < index - 1; i++) {
+                curr = curr.next;
+            }
+            curr.next = curr.next.next;
+        }
+        size--;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int val) : val(val), next(nullptr) {}
+};
+
+class MyLinkedList {
+private:
+    ListNode* head;
+    int size;
+    
+public:
+    MyLinkedList() : head(nullptr), size(0) {}
+    
+    int get(int index) {
+        if (index < 0 || index >= size) {
+            return -1;
+        }
+        ListNode* curr = head;
+        for (int i = 0; i < index; i++) {
+            curr = curr->next;
+        }
+        return curr->val;
+    }
+    
+    void addAtHead(int val) {
+        addAtIndex(0, val);
+    }
+    
+    void addAtTail(int val) {
+        addAtIndex(size, val);
+    }
+    
+    void addAtIndex(int index, int val) {
+        if (index > size) {
+            return;
+        }
+        ListNode* newNode = new ListNode(val);
+        if (index <= 0) {
+            newNode->next = head;
+            head = newNode;
+        } else {
+            ListNode* curr = head;
+            for (int i = 0; i < index - 1; i++) {
+                curr = curr->next;
+            }
+            newNode->next = curr->next;
+            curr->next = newNode;
+        }
+        size++;
+    }
+    
+    void deleteAtIndex(int index) {
+        if (index < 0 || index >= size) {
+            return;
+        }
+        if (index == 0) {
+            ListNode* temp = head;
+            head = head->next;
+            delete temp;
+        } else {
+            ListNode* curr = head;
+            for (int i = 0; i < index - 1; i++) {
+                curr = curr->next;
+            }
+            ListNode* temp = curr->next;
+            curr->next = curr->next->next;
+            delete temp;
+        }
+        size--;
+    }
+    
+    ~MyLinkedList() {
+        while (head) {
+            ListNode* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>class ListNode {
+    constructor(val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+class MyLinkedList {
+    constructor() {
+        this.head = null;
+        this.size = 0;
+    }
+    
+    get(index) {
+        if (index < 0 || index >= this.size) {
+            return -1;
+        }
+        let curr = this.head;
+        for (let i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+        return curr.val;
+    }
+    
+    addAtHead(val) {
+        this.addAtIndex(0, val);
+    }
+    
+    addAtTail(val) {
+        this.addAtIndex(this.size, val);
+    }
+    
+    addAtIndex(index, val) {
+        if (index > this.size) {
+            return;
+        }
+        const newNode = new ListNode(val);
+        if (index <= 0) {
+            newNode.next = this.head;
+            this.head = newNode;
+        } else {
+            let curr = this.head;
+            for (let i = 0; i < index - 1; i++) {
+                curr = curr.next;
+            }
+            newNode.next = curr.next;
+            curr.next = newNode;
+        }
+        this.size++;
+    }
+    
+    deleteAtIndex(index) {
+        if (index < 0 || index >= this.size) {
+            return;
+        }
+        if (index === 0) {
+            this.head = this.head.next;
+        } else {
+            let curr = this.head;
+            for (let i = 0; i < index - 1; i++) {
+                curr = curr.next;
+            }
+            curr.next = curr.next.next;
+        }
+        this.size--;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class ListNode {
+    public int val;
+    public ListNode next;
+    public ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+public class MyLinkedList {
+    private ListNode head;
+    private int size;
+    
+    public MyLinkedList() {
+        head = null;
+        size = 0;
+    }
+    
+    public int Get(int index) {
+        if (index < 0 || index >= size) {
+            return -1;
+        }
+        ListNode curr = head;
+        for (int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+        return curr.val;
+    }
+    
+    public void AddAtHead(int val) {
+        AddAtIndex(0, val);
+    }
+    
+    public void AddAtTail(int val) {
+        AddAtIndex(size, val);
+    }
+    
+    public void AddAtIndex(int index, int val) {
+        if (index > size) {
+            return;
+        }
+        ListNode newNode = new ListNode(val);
+        if (index <= 0) {
+            newNode.next = head;
+            head = newNode;
+        } else {
+            ListNode curr = head;
+            for (int i = 0; i < index - 1; i++) {
+                curr = curr.next;
+            }
+            newNode.next = curr.next;
+            curr.next = newNode;
+        }
+        size++;
+    }
+    
+    public void DeleteAtIndex(int index) {
+        if (index < 0 || index >= size) {
+            return;
+        }
+        if (index == 0) {
+            head = head.next;
+        } else {
+            ListNode curr = head;
+            for (int i = 0; i < index - 1; i++) {
+                curr = curr.next;
+            }
+            curr.next = curr.next.next;
+        }
+        size--;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses singly linked list implementation</li>
+                    <li>Maintains size for O(1) length checks</li>
+                    <li>Time complexity: O(n) for get, addAtIndex, deleteAtIndex; O(1) for addAtHead, addAtTail</li>
+                    <li>Space complexity: O(n) where n is the number of elements</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

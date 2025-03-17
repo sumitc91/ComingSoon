@@ -1,0 +1,410 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dota2 Senate - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Dota2 Senate problem on LeetCodee.  Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta name="keywords" content="LeetCode, Dota2 Senate, Algorithm, Solution, Python, Java, C++, JavaScript, C#, Coding, Programming, Competitive Programming">
+    <meta name="canonical" content="https://leetcodee.com/problems/dota2-senate/">
+    <meta property="og:title" content="Dota2 Senate - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/dota2-senate/">
+    <meta property="og:description" content="Learn how to solve the Dota2 Senate problem on LeetCodee.  Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "649. Dota2 Senate",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "In the world of Dota2, there are two parties: the Radiant and the Dire. The Dota2 senate consists of senators coming from two parties. Now the Senate wants to decide on a change in the Dota2 game. The voting for this change is a round-based procedure. In each round, each senator can exercise one of the two rights:",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/dota2-senate/"
+      },
+      "keywords": "LeetCode, Dota2 Senate, Algorithm, Solution, Python, Java, C++, JavaScript, C#, Coding, Programming, Competitive Programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">649. Dota2 Senate</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    In the world of Dota2, there are two parties: the Radiant and the Dire.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The Dota2 senate consists of senators coming from two parties. Now the Senate wants to decide on a change in the Dota2 game. The voting for this change is a round-based procedure. In each round, each senator can exercise one of the two rights:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Ban one senator's right: A senator can make another senator lose all his rights in this and all the following rounds.</li>
+                    <li>Announce the victory: If this senator found the senators who still have rights to vote are all from the same party, he can announce the victory and decide on the change in the game.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Given a string <code class="bg-gray-100 px-1 rounded">senate</code> representing each senator's party belonging. The character <code class="bg-gray-100 px-1 rounded">'R'</code> and <code class="bg-gray-100 px-1 rounded">'D'</code> represent the Radiant party and the Dire party. Then if there are <code class="bg-gray-100 px-1 rounded">n</code> senators, the size of the given string will be <code class="bg-gray-100 px-1 rounded">n</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The round-based procedure starts from the first senator to the last senator in the given order. This procedure will last until the end of voting. All the senators who have lost their rights will be skipped during the procedure.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Suppose every senator is smart enough and will play the best strategy for his own party. Predict which party will finally announce the victory and change the Dota2 game. The output should be <code class="bg-gray-100 px-1 rounded">"Radiant"</code> or <code class="bg-gray-100 px-1 rounded">"Dire"</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: senate = "RD"
+Output: "Radiant"
+Explanation: 
+The first senator comes from Radiant and he can just ban the next senator's right in round 1. 
+And the second senator can't exercise any rights anymore since his right has been banned. 
+And in round 2, the first senator can just announce the victory since he is the only guy in the senate who can vote.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: senate = "RDD"
+Output: "Dire"
+Explanation: 
+The first senator comes from Radiant and he can just ban the next senator's right in round 1. 
+And the second senator can't exercise any rights anymore since his right has been banned. 
+And the third senator comes from Dire and he can ban the first senator's right in round 1. 
+And in round 2, the third senator can just announce the victory since he is the only guy in the senate who can vote.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == senate.length</li>
+                    <li>1 ≤ n ≤ 10<sup>4</sup></li>
+                    <li>senate[i] is either 'R' or 'D'.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def predictPartyVictory(self, senate: str) -> str:
+        n = len(senate)
+        radiant = deque()
+        dire = deque()
+        
+        # Separate senators by party
+        for i, party in enumerate(senate):
+            if party == 'R':
+                radiant.append(i)
+            else:
+                dire.append(i)
+        
+        # Simulate the voting process
+        while radiant and dire:
+            r_index = radiant.popleft()
+            d_index = dire.popleft()
+            
+            # The senator with lower index bans the other
+            # The winning senator gets to vote again in the next round
+            if r_index < d_index:
+                radiant.append(r_index + n)
+            else:
+                dire.append(d_index + n)
+        
+        return "Radiant" if radiant else "Dire"</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Two Pointers):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def predictPartyVictory(self, senate: str) -> str:
+        n = len(senate)
+        banned = [False] * n
+        r_count = d_count = 0
+        r_bans = d_bans = 0
+        
+        # Count initial senators
+        for s in senate:
+            if s == 'R':
+                r_count += 1
+            else:
+                d_count += 1
+        
+        while r_count > 0 and d_count > 0:
+            for i in range(n):
+                if banned[i]:
+                    continue
+                    
+                if senate[i] == 'R':
+                    if d_bans > 0:
+                        d_bans -= 1
+                        banned[i] = True
+                        r_count -= 1
+                    else:
+                        r_bans += 1
+                else:
+                    if r_bans > 0:
+                        r_bans -= 1
+                        banned[i] = True
+                        d_count -= 1
+                    else:
+                        d_bans += 1
+        
+        return "Radiant" if r_count > 0 else "Dire"</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses queues for O(n) space and simpler logic</li>
+                    <li>Second solution uses array marking for O(n) space but more complex logic</li>
+                    <li>Both solutions have O(n) time complexity</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String predictPartyVictory(String senate) {
+        int n = senate.length();
+        Queue<Integer> radiant = new LinkedList<>();
+        Queue<Integer> dire = new LinkedList<>();
+        
+        // Separate senators by party
+        for (int i = 0; i < n; i++) {
+            if (senate.charAt(i) == 'R') {
+                radiant.offer(i);
+            } else {
+                dire.offer(i);
+            }
+        }
+        
+        // Simulate the voting process
+        while (!radiant.isEmpty() && !dire.isEmpty()) {
+            int r_index = radiant.poll();
+            int d_index = dire.poll();
+            
+            // The senator with lower index bans the other
+            // The winning senator gets to vote again in the next round
+            if (r_index < d_index) {
+                radiant.offer(r_index + n);
+            } else {
+                dire.offer(d_index + n);
+            }
+        }
+        
+        return radiant.isEmpty() ? "Dire" : "Radiant";
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        int n = senate.length();
+        queue<int> radiant, dire;
+        
+        // Separate senators by party
+        for (int i = 0; i < n; i++) {
+            if (senate[i] == 'R') {
+                radiant.push(i);
+            } else {
+                dire.push(i);
+            }
+        }
+        
+        // Simulate the voting process
+        while (!radiant.empty() && !dire.empty()) {
+            int r_index = radiant.front();
+            int d_index = dire.front();
+            radiant.pop();
+            dire.pop();
+            
+            // The senator with lower index bans the other
+            // The winning senator gets to vote again in the next round
+            if (r_index < d_index) {
+                radiant.push(r_index + n);
+            } else {
+                dire.push(d_index + n);
+            }
+        }
+        
+        return radiant.empty() ? "Dire" : "Radiant";
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} senate
+ * @return {string}
+ */
+var predictPartyVictory = function(senate) {
+    const n = senate.length;
+    const radiant = [];
+    const dire = [];
+    
+    // Separate senators by party
+    for (let i = 0; i < n; i++) {
+        if (senate[i] === 'R') {
+            radiant.push(i);
+        } else {
+            dire.push(i);
+        }
+    }
+    
+    // Simulate the voting process
+    while (radiant.length > 0 && dire.length > 0) {
+        const r_index = radiant.shift();
+        const d_index = dire.shift();
+        
+        // The senator with lower index bans the other
+        // The winning senator gets to vote again in the next round
+        if (r_index < d_index) {
+            radiant.push(r_index + n);
+        } else {
+            dire.push(d_index + n);
+        }
+    }
+    
+    return radiant.length > 0 ? "Radiant" : "Dire";
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string PredictPartyVictory(string senate) {
+        int n = senate.Length;
+        Queue<int> radiant = new Queue<int>();
+        Queue<int> dire = new Queue<int>();
+        
+        // Separate senators by party
+        for (int i = 0; i < n; i++) {
+            if (senate[i] == 'R') {
+                radiant.Enqueue(i);
+            } else {
+                dire.Enqueue(i);
+            }
+        }
+        
+        // Simulate the voting process
+        while (radiant.Count > 0 && dire.Count > 0) {
+            int r_index = radiant.Dequeue();
+            int d_index = dire.Dequeue();
+            
+            // The senator with lower index bans the other
+            // The winning senator gets to vote again in the next round
+            if (r_index < d_index) {
+                radiant.Enqueue(r_index + n);
+            } else {
+                dire.Enqueue(d_index + n);
+            }
+        }
+        
+        return radiant.Count > 0 ? "Radiant" : "Dire";
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using LINQ):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public string PredictPartyVictory(string senate) {
+        var radiant = senate.Select((c, i) => (c, i))
+                           .Where(x => x.c == 'R')
+                           .Select(x => x.i)
+                           .ToQueue();
+        var dire = senate.Select((c, i) => (c, i))
+                        .Where(x => x.c == 'D')
+                        .Select(x => x.i)
+                        .ToQueue();
+        
+        int n = senate.Length;
+        while (radiant.Count > 0 && dire.Count > 0) {
+            if (radiant.Dequeue() < dire.Dequeue()) {
+                radiant.Enqueue(radiant.Last() + n);
+            } else {
+                dire.Enqueue(dire.Last() + n);
+            }
+        }
+        
+        return radiant.Count > 0 ? "Radiant" : "Dire";
+    }
+}
+
+public static class Extensions {
+    public static Queue<T> ToQueue<T>(this IEnumerable<T> source) {
+        return new Queue<T>(source);
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses traditional queue approach</li>
+                        <li>Second solution uses LINQ for more functional style</li>
+                        <li>Both solutions have same time complexity of O(n)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

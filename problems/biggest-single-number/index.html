@@ -1,0 +1,237 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biggest Single Number - LeetCodee Solution</title>
+    <meta name="description" content="Find the largest number that appears only once in the MyNumbers table. LeetCodee solution with SQL queries for MySQL, PostgreSQL, Oracle, and MS SQL Server.">
+    <meta name="keywords" content="LeetCode, SQL, MySQL, PostgreSQL, Oracle, MS SQL Server, single number, largest number, database, solution, coding, programming">
+    <meta name="canonical" content="https://leetcodee.com/problems/biggest-single-number/">
+    <meta property="og:title" content="Biggest Single Number - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/biggest-single-number/">
+    <meta property="og:description" content="Find the largest number that appears only once in the MyNumbers table. LeetCodee solution with SQL queries for MySQL, PostgreSQL, Oracle, and MS SQL Server.">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Biggest Single Number - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the largest number that appears only once in the MyNumbers table. LeetCodee solution with SQL queries for MySQL, PostgreSQL, Oracle, and MS SQL Server.",
+      "keywords": "LeetCode, SQL, MySQL, PostgreSQL, Oracle, MS SQL Server, single number, largest number, database, solution, coding, programming",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/biggest-single-number/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">619. Biggest Single Number</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#mysql" class="ml-2 text-blue-600 hover:text-blue-800">MySQL</a>
+                <a href="#postgresql" class="ml-2 text-blue-600 hover:text-blue-800">PostgreSQL</a>
+                <a href="#oracle" class="ml-2 text-blue-600 hover:text-blue-800">Oracle</a>
+                <a href="#mssql" class="ml-2 text-blue-600 hover:text-blue-800">MS SQL Server</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Table: <code class="bg-gray-100 px-1 rounded">MyNumbers</code>
+                </p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| num         | int  |
++-------------+------+
+This table may contain duplicates (In other words, there is no primary key for this table in SQL).</pre>
+                <p class="text-gray-700 mb-4">
+                    A single number is a number that appeared only once in the <code class="bg-gray-100 px-1 rounded">MyNumbers</code> table.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Write a solution to report the largest single number. If there is no single number, report <code class="bg-gray-100 px-1 rounded">null</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example:</h2>
+                <p class="text-gray-700 mb-2">Input:</p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
+MyNumbers table:
++-----+
+| num |
++-----+
+| 8   |
+| 8   |
+| 3   |
+| 3   |
+| 1   |
+| 4   |
+| 5   |
+| 6   |
++-----+</pre>
+                <p class="text-gray-700 mb-2">Output:</p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
++-----+
+| num |
++-----+
+| 6   |
++-----+</pre>
+                <p class="text-gray-700">
+                    Explanation: The single numbers are 1, 4, 5, and 6. Since 6 is the largest single number, we return it.
+                </p>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- MySQL Solution -->
+            <div id="mysql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MySQL Solution</h3>
+                <pre class="language-sql"><code>SELECT MAX(num) as num
+FROM (
+    SELECT num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(*) = 1
+) as single_numbers;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of rows in the MyNumbers table.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(k)</h4>
+                    <p class="text-gray-700">Where k is the number of unique numbers in the table.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Explanation:</h4>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                        <li>The inner query groups the numbers and filters for those that appear only once (COUNT(*) = 1)</li>
+                        <li>The outer query finds the maximum value among these single numbers</li>
+                        <li>If no single numbers exist, MAX() will return null automatically</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- PostgreSQL Solution -->
+            <div id="postgresql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">PostgreSQL Solution</h3>
+                <pre class="language-sql"><code>SELECT MAX(num) as num
+FROM (
+    SELECT num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(*) = 1
+) as single_numbers;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Window Functions:</h4>
+                    <pre class="language-sql"><code>WITH numbered AS (
+    SELECT num, COUNT(*) OVER (PARTITION BY num) as cnt
+    FROM MyNumbers
+)
+SELECT MAX(CASE WHEN cnt = 1 THEN num END) as num
+FROM numbered;</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Explanation:</h4>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                        <li>The window function approach counts occurrences without using GROUP BY</li>
+                        <li>CASE statement filters for single numbers</li>
+                        <li>MAX aggregation returns the largest single number or null if none exist</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Oracle Solution -->
+            <div id="oracle" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Oracle Solution</h3>
+                <pre class="language-sql"><code>SELECT MAX(num) as num
+FROM (
+    SELECT num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(*) = 1
+);</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using FIRST/LAST:</h4>
+                    <pre class="language-sql"><code>SELECT MAX(CASE WHEN cnt = 1 THEN num END) as num
+FROM (
+    SELECT num, COUNT(*) as cnt
+    FROM MyNumbers
+    GROUP BY num
+);</code></pre>
+                </div>
+            </div>
+
+            <!-- MS SQL Server Solution -->
+            <div id="mssql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MS SQL Server Solution</h3>
+                <pre class="language-sql"><code>SELECT TOP 1 num
+FROM (
+    SELECT num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(*) = 1
+) as single_numbers
+ORDER BY num DESC;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using CTE:</h4>
+                    <pre class="language-sql"><code>WITH SingleNumbers AS (
+    SELECT num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(*) = 1
+)
+SELECT MAX(num) as num
+FROM SingleNumbers;</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Performance Considerations:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Both solutions will perform similarly for small to medium-sized datasets</li>
+                        <li>For large datasets, consider adding an index on the num column</li>
+                        <li>The CTE version might be more readable and maintainable</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-sql.min.js"></script>
+</body>
+</html>

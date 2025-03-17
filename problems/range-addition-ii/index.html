@@ -1,0 +1,313 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Range Addition II - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for Range Addition II problem.  Find the number of maximum integers in a matrix after performing given operations. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, range addition ii, solution, python, java, c++, javascript, c#, algorithm, matrix, operations, time complexity, space complexity, coding, interview">
+    <meta property="og:title" content="Range Addition II - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/range-addition-ii/">
+    <meta property="og:description" content="LeetCodee solution for Range Addition II problem.  Find the number of maximum integers in a matrix after performing given operations. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta property="og:image" content="https://assets.leetcode.com/uploads/2020/10/02/ex1.jpg">
+    <link rel="canonical" href="https://leetcodee.com/problems/range-addition-ii/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Range Addition II - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-08-02",
+      "dateModified": "2024-08-02",
+      "description": "LeetCodee solution for Range Addition II problem. Find the number of maximum integers in a matrix after performing given operations. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.",
+      "image": "https://assets.leetcode.com/uploads/2020/10/02/ex1.jpg",
+      "keywords": "leetcode, range addition ii, solution, python, java, c++, javascript, c#, algorithm, matrix, operations, time complexity, space complexity, coding, interview"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">598. Range Addition II</h1>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an <code class="bg-gray-100 px-1 rounded">m x n</code> matrix <code class="bg-gray-100 px-1 rounded">M</code> initialized with all <code class="bg-gray-100 px-1 rounded">0</code>'s and an array of operations <code class="bg-gray-100 px-1 rounded">ops</code>, where <code class="bg-gray-100 px-1 rounded">ops[i] = [ai, bi]</code> means <code class="bg-gray-100 px-1 rounded">M[x][y]</code> should be incremented by one for all <code class="bg-gray-100 px-1 rounded">0 <= x < ai</code> and <code class="bg-gray-100 px-1 rounded">0 <= y < bi</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Count and return the number of maximum integers in the matrix after performing all the operations.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <img src="https://assets.leetcode.com/uploads/2020/10/02/ex1.jpg" alt="Example 1" class="mb-4">
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: m = 3, n = 3, ops = [[2,2],[3,3]]
+Output: 4
+Explanation: The maximum integer in M is 2, and there are four of it in M. So return 4.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: m = 3, n = 3, ops = [[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3]]
+Output: 4</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: m = 3, n = 3, ops = []
+Output: 9</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= m, n <= 4 * 10<sup>4</sup></code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= ops.length <= 10<sup>4</sup></code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">ops[i].length == 2</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= ai <= m</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= bi <= n</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def maxCount(self, m: int, n: int, ops: List[List[int]]) -> int:
+        if not ops:
+            return m * n
+        
+        min_row = min(op[0] for op in ops)
+        min_col = min(op[1] for op in ops)
+        
+        return min_row * min_col</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(k)</h4>
+                    <p class="text-gray-700">Where k is the length of ops array.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">Only using a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int maxCount(int m, int n, int[][] ops) {
+        if (ops.length == 0) {
+            return m * n;
+        }
+        
+        int minRow = m;
+        int minCol = n;
+        for (int[] op : ops) {
+            minRow = Math.min(minRow, op[0]);
+            minCol = Math.min(minCol, op[1]);
+        }
+        
+        return minRow * minCol;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(k)</h4>
+                    <p class="text-gray-700">Where k is the length of ops array.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">Only using a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int maxCount(int m, int n, vector<vector<int>>& ops) {
+        if (ops.empty()) {
+            return m * n;
+        }
+        
+        int minRow = m;
+        int minCol = n;
+        for (const auto& op : ops) {
+            minRow = min(minRow, op[0]);
+            minCol = min(minCol, op[1]);
+        }
+        
+        return minRow * minCol;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(k)</h4>
+                    <p class="text-gray-700">Where k is the length of ops array.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">Only using a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} m
+ * @param {number} n
+ * @param {number[][]} ops
+ * @return {number}
+ */
+var maxCount = function(m, n, ops) {
+    if (ops.length === 0) {
+        return m * n;
+    }
+    
+    let minRow = m;
+    let minCol = n;
+    for (const [row, col] of ops) {
+        minRow = Math.min(minRow, row);
+        minCol = Math.min(minCol, col);
+    }
+    
+    return minRow * minCol;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(k)</h4>
+                    <p class="text-gray-700">Where k is the length of ops array.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">Only using a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int MaxCount(int m, int n, int[][] ops) {
+        if (ops.Length == 0) {
+            return m * n;
+        }
+        
+        int minRow = m;
+        int minCol = n;
+        foreach (var op in ops) {
+            minRow = Math.Min(minRow, op[0]);
+            minCol = Math.Min(minCol, op[1]);
+        }
+        
+        return minRow * minCol;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(k)</h4>
+                    <p class="text-gray-700">Where k is the length of ops array.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">Only using a constant amount of extra space.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses the observation that the maximum value will be in the overlapping region:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Overlapping regions</li>
+                            <li>Maximum values</li>
+                            <li>Minimum dimensions</li>
+                            <li>Empty operations</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Handle empty ops</li>
+                            <li>Find minimum row</li>
+                            <li>Find minimum column</li>
+                            <li>Calculate overlap</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Array iteration</li>
+                        <li>Minimum tracking</li>
+                        <li>Area calculation</li>
+                        <li>Edge case handling</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Early return</li>
+                        <li>Single pass</li>
+                        <li>No matrix needed</li>
+                        <li>Constant space</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Empty operations</li>
+                        <li>Single operation</li>
+                        <li>Maximum dimensions</li>
+                        <li>Equal dimensions</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

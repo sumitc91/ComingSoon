@@ -1,0 +1,380 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Election - LeetCodee Solution</title>
+    <meta name="description" content="Comprehensive solution to LeetCode's Online Election problem with explanations and code in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, online election, algorithm, solution, python, java, cpp, javascript, c#, coding, interview, competitive programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/online-election/">
+    <meta property="og:title" content="Online Election - LeetCodee Solution">
+    <meta property="og:description" content="Comprehensive solution to LeetCode's Online Election problem with explanations and code in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/online-election/">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Online Election - LeetCodee Solution",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Comprehensive solution to LeetCode's Online Election problem with explanations and code in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "You are given two integer arrays persons and times. In an election, the ith vote was cast for persons[i] at time times[i]. For each query at a time t, find the person that was leading the election at time t. Votes cast at time t will count towards our query. In the case of a tie, the most recent vote (among tied candidates) wins. Implement the TopVotedCandidate class: TopVotedCandidate(int[] persons, int[] times) Initializes the object with the persons and times arrays. int q(int t) Returns the number of the person that was leading the election at time t.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/online-election/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">911. Online Election</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given two integer arrays <code class="bg-gray-100 px-1 rounded">persons</code> and <code class="bg-gray-100 px-1 rounded">times</code>. In an election, the <code class="bg-gray-100 px-1 rounded">i</code>th vote was cast for <code class="bg-gray-100 px-1 rounded">persons[i]</code> at time <code class="bg-gray-100 px-1 rounded">times[i]</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For each query at a time <code class="bg-gray-100 px-1 rounded">t</code>, find the person that was leading the election at time <code class="bg-gray-100 px-1 rounded">t</code>. Votes cast at time <code class="bg-gray-100 px-1 rounded">t</code> will count towards our query. In the case of a tie, the most recent vote (among tied candidates) wins.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement the <code class="bg-gray-100 px-1 rounded">TopVotedCandidate</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">TopVotedCandidate(int[] persons, int[] times)</code> Initializes the object with the <code class="bg-gray-100 px-1 rounded">persons</code> and <code class="bg-gray-100 px-1 rounded">times</code> arrays.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">int q(int t)</code> Returns the number of the person that was leading the election at time <code class="bg-gray-100 px-1 rounded">t</code>.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input
+["TopVotedCandidate", "q", "q", "q", "q", "q", "q"]
+[[[0, 1, 1, 0, 0, 1, 0], [0, 5, 10, 15, 20, 25, 30]], [3], [12], [25], [15], [24], [8]]
+Output
+[null, 0, 1, 1, 0, 0, 1]
+
+Explanation
+At time 3, the votes are [0], and 0 is leading.
+At time 12, the votes are [0,1,1], and 1 is leading.
+At time 25, the votes are [0,1,1,0,0,1], and 1 is leading (as ties are won by most recent vote.)
+At time 15, the votes are [0,1,1,0], and 0 is leading (as ties are won by most recent vote.)
+At time 24, the votes are [0,1,1,0,0], and 0 is leading.
+At time 8, the votes are [0,1,1], and 1 is leading.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= persons.length <= 5000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">times.length == persons.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= persons[i] < persons.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= times[i] <= 10⁹</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">times</code> is sorted in a strictly increasing order.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">times[0] <= t <= 10⁹</code></li>
+                    <li>At most <code class="bg-gray-100 px-1 rounded">10⁴</code> calls will be made to <code class="bg-gray-100 px-1 rounded">q</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class TopVotedCandidate:
+    def __init__(self, persons: List[int], times: List[int]):
+        self.times = times
+        self.leading = []  # Store the leading person at each time
+        count = {}  # Count of votes for each person
+        max_count = 0  # Maximum number of votes
+        leader = -1  # Current leader
+        
+        for person in persons:
+            count[person] = count.get(person, 0) + 1
+            if count[person] >= max_count:
+                max_count = count[person]
+                leader = person
+            self.leading.append(leader)
+    
+    def q(self, t: int) -> int:
+        # Binary search to find the rightmost time <= t
+        left, right = 0, len(self.times) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if self.times[mid] <= t:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return self.leading[right]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n) for initialization, O(log n) for each query</h4>
+                    <p class="text-gray-700">Initialization takes O(n) time to process all votes. Each query uses binary search to find the appropriate time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the leading person at each time point.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class TopVotedCandidate {
+    private int[] times;
+    private int[] leading;
+    
+    public TopVotedCandidate(int[] persons, int[] times) {
+        this.times = times;
+        this.leading = new int[persons.length];
+        
+        Map<Integer, Integer> count = new HashMap<>();
+        int maxCount = 0;
+        int leader = -1;
+        
+        for (int i = 0; i < persons.length; i++) {
+            int person = persons[i];
+            count.put(person, count.getOrDefault(person, 0) + 1);
+            
+            if (count.get(person) >= maxCount) {
+                maxCount = count.get(person);
+                leader = person;
+            }
+            leading[i] = leader;
+        }
+    }
+    
+    public int q(int t) {
+        // Binary search to find the rightmost time <= t
+        int left = 0, right = times.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (times[mid] <= t) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return leading[right];
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n) for initialization, O(log n) for each query</h4>
+                    <p class="text-gray-700">Initialization takes O(n) time to process all votes. Each query uses binary search to find the appropriate time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the leading person at each time point.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class TopVotedCandidate {
+private:
+    vector<int> times;
+    vector<int> leading;
+    
+public:
+    TopVotedCandidate(vector<int>& persons, vector<int>& times) {
+        this->times = times;
+        this->leading.resize(persons.size());
+        
+        unordered_map<int, int> count;
+        int maxCount = 0;
+        int leader = -1;
+        
+        for (int i = 0; i < persons.size(); i++) {
+            int person = persons[i];
+            count[person]++;
+            
+            if (count[person] >= maxCount) {
+                maxCount = count[person];
+                leader = person;
+            }
+            leading[i] = leader;
+        }
+    }
+    
+    int q(int t) {
+        // Binary search to find the rightmost time <= t
+        int left = 0, right = times.size() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (times[mid] <= t) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return leading[right];
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n) for initialization, O(log n) for each query</h4>
+                    <p class="text-gray-700">Initialization takes O(n) time to process all votes. Each query uses binary search to find the appropriate time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the leading person at each time point.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} persons
+ * @param {number[]} times
+ */
+var TopVotedCandidate = function(persons, times) {
+    this.times = times;
+    this.leading = new Array(persons.length);
+    
+    const count = new Map();
+    let maxCount = 0;
+    let leader = -1;
+    
+    for (let i = 0; i < persons.length; i++) {
+        const person = persons[i];
+        count.set(person, (count.get(person) || 0) + 1);
+        
+        if (count.get(person) >= maxCount) {
+            maxCount = count.get(person);
+            leader = person;
+        }
+        this.leading[i] = leader;
+    }
+};
+
+/**
+ * @param {number} t
+ * @return {number}
+ */
+TopVotedCandidate.prototype.q = function(t) {
+    // Binary search to find the rightmost time <= t
+    let left = 0, right = this.times.length - 1;
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (this.times[mid] <= t) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return this.leading[right];
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n) for initialization, O(log n) for each query</h4>
+                    <p class="text-gray-700">Initialization takes O(n) time to process all votes. Each query uses binary search to find the appropriate time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the leading person at each time point.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class TopVotedCandidate {
+    private int[] times;
+    private int[] leading;
+    
+    public TopVotedCandidate(int[] persons, int[] times) {
+        this.times = times;
+        this.leading = new int[persons.Length];
+        
+        var count = new Dictionary<int, int>();
+        int maxCount = 0;
+        int leader = -1;
+        
+        for (int i = 0; i < persons.Length; i++) {
+            int person = persons[i];
+            if (!count.ContainsKey(person)) {
+                count[person] = 0;
+            }
+            count[person]++;
+            
+            if (count[person] >= maxCount) {
+                maxCount = count[person];
+                leader = person;
+            }
+            leading[i] = leader;
+        }
+    }
+    
+    public int Q(int t) {
+        // Binary search to find the rightmost time <= t
+        int left = 0, right = times.Length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (times[mid] <= t) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return leading[right];
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n) for initialization, O(log n) for each query</h4>
+                    <p class="text-gray-700">Initialization takes O(n) time to process all votes. Each query uses binary search to find the appropriate time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the leading person at each time point.</p>
+                </div>
+            </div>
+             <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

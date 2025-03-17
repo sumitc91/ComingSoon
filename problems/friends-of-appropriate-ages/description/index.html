@@ -1,0 +1,290 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends of Appropriate Ages - LeetCodee Solution</title>
+    <meta name="description" content="Find the total number of friend requests made based on age constraints. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="LeetCode, LeetCodee, Friends of Appropriate Ages, Algorithm, Solution, Python, Java, C++, JavaScript, C#, Coding, Programming, Problem Solving">
+    <meta property="og:title" content="Friends of Appropriate Ages - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/friends-of-appropriate-ages/">
+    <meta property="og:description" content="Find the total number of friend requests made based on age constraints. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/friends-of-appropriate-ages/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">825. Friends of Appropriate Ages</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There are n persons on a social media website. You are given an integer array ages where ages[i] is the age of the ith person.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A Person x will not send a friend request to a person y (x != y) if any of the following conditions is true:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>age[y] <= 0.5 * age[x] + 7</li>
+                    <li>age[y] > age[x]</li>
+                    <li>age[y] > 100 && age[x] < 100</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Otherwise, x will send a friend request to y.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the total number of friend requests made.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Note that if x sends a request to y, y will not necessarily send a request to x. Also, a person will not send a friend request to themselves.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ages = [16,16]
+Output: 2
+Explanation: 2 people friend request each other.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ages = [16,17,18]
+Output: 2
+Explanation: Friend requests are made 17 -> 16, 18 -> 17.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ages = [20,30,100,110,120]
+Output: 3
+Explanation: Friend requests are made 110 -> 100, 120 -> 110, 120 -> 100.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == ages.length</li>
+                    <li>1 ≤ n ≤ 2 * 10^4</li>
+                    <li>1 ≤ ages[i] ≤ 120</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def numFriendRequests(self, ages: List[int]) -> int:
+        def request(x: int, y: int) -> bool:
+            return not (y <= 0.5 * x + 7 or y > x or (y > 100 and x < 100))
+        
+        count = Counter(ages)
+        total = 0
+        
+        for x in count:
+            for y in count:
+                if request(x, y):
+                    if x == y:
+                        total += count[x] * (count[x] - 1)
+                    else:
+                        total += count[x] * count[y]
+                        
+        return total</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses Counter to count age frequencies</li>
+                    <li>Checks friend request conditions for each age pair</li>
+                    <li>Time complexity: O(n + k²) where k is unique ages</li>
+                    <li>Space complexity: O(k)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int numFriendRequests(int[] ages) {
+        int[] count = new int[121];
+        for (int age : ages) {
+            count[age]++;
+        }
+        
+        int total = 0;
+        for (int x = 1; x <= 120; x++) {
+            for (int y = 1; y <= 120; y++) {
+                if (x != y && count[x] > 0 && count[y] > 0) {
+                    if (!(y <= 0.5 * x + 7 || y > x || (y > 100 && x < 100))) {
+                        total += count[x] * count[y];
+                    }
+                } else if (x == y && count[x] > 1) {
+                    if (!(y <= 0.5 * x + 7)) {
+                        total += count[x] * (count[x] - 1);
+                    }
+                }
+            }
+        }
+        
+        return total;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+        vector<int> count(121);
+        for (int age : ages) {
+            count[age]++;
+        }
+        
+        int total = 0;
+        for (int x = 1; x <= 120; x++) {
+            for (int y = 1; y <= 120; y++) {
+                if (x != y && count[x] > 0 && count[y] > 0) {
+                    if (!(y <= 0.5 * x + 7 || y > x || (y > 100 && x < 100))) {
+                        total += count[x] * count[y];
+                    }
+                } else if (x == y && count[x] > 1) {
+                    if (!(y <= 0.5 * x + 7)) {
+                        total += count[x] * (count[x] - 1);
+                    }
+                }
+            }
+        }
+        
+        return total;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} ages
+ * @return {number}
+ */
+var numFriendRequests = function(ages) {
+    const count = new Array(121).fill(0);
+    for (const age of ages) {
+        count[age]++;
+    }
+    
+    let total = 0;
+    for (let x = 1; x <= 120; x++) {
+        for (let y = 1; y <= 120; y++) {
+            if (x !== y && count[x] > 0 && count[y] > 0) {
+                if (!(y <= 0.5 * x + 7 || y > x || (y > 100 && x < 100))) {
+                    total += count[x] * count[y];
+                }
+            } else if (x === y && count[x] > 1) {
+                if (!(y <= 0.5 * x + 7)) {
+                    total += count[x] * (count[x] - 1);
+                }
+            }
+        }
+    }
+    
+    return total;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int NumFriendRequests(int[] ages) {
+        var count = new int[121];
+        foreach (var age in ages) {
+            count[age]++;
+        }
+        
+        int total = 0;
+        for (int x = 1; x <= 120; x++) {
+            for (int y = 1; y <= 120; y++) {
+                if (x != y && count[x] > 0 && count[y] > 0) {
+                    if (!(y <= 0.5 * x + 7 || y > x || (y > 100 && x < 100))) {
+                        total += count[x] * count[y];
+                    }
+                } else if (x == y && count[x] > 1) {
+                    if (!(y <= 0.5 * x + 7)) {
+                        total += count[x] * (count[x] - 1);
+                    }
+                }
+            }
+        }
+        
+        return total;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses array for counting ages</li>
+                    <li>Optimizes by using age range constraints</li>
+                    <li>Time complexity: O(n + k²)</li>
+                    <li>Space complexity: O(k)</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "825. Friends of Appropriate Ages",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "description": "Find the total number of friend requests made based on age constraints. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+          "articleBody": "There are n persons on a social media website. You are given an integer array ages where ages[i] is the age of the ith person.  A Person x will not send a friend request to a person y (x != y) if any of the following conditions is true: age[y] <= 0.5 * age[x] + 7, age[y] > age[x], age[y] > 100 && age[x] < 100. Otherwise, x will send a friend request to y. Return the total number of friend requests made. Note that if x sends a request to y, y will not necessarily send a request to x. Also, a person will not send a friend request to themselves.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/friends-of-appropriate-ages/"
+          }
+        }
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

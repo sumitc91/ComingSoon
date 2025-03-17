@@ -1,0 +1,253 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape The Ghosts - LeetCodee Solution</title>
+    <meta name="description" content="Find the optimal solution to LeetCode's Escape The Ghosts problem with detailed explanations and code examples in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, escape the ghosts, solution, python, java, c++, javascript, c#, algorithm, coding, programming, tutorial">
+    <meta property="og:title" content="Escape The Ghosts - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/escape-the-ghosts/">
+    <meta property="og:description" content="Find the optimal solution to LeetCode's Escape The Ghosts problem with detailed explanations and code examples in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/escape-the-ghosts/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Escape The Ghosts - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the optimal solution to LeetCode's Escape The Ghosts problem with detailed explanations and code examples in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "You are playing a simplified Pacman game. You start at the point (0, 0), and your goal is to travel to the target: (target[0], target[1]). There are several ghosts on the map, the i-th ghost starts at (ghosts[i][0], ghosts[i][1]). Each turn, you and all ghosts simultaneously may move in one of 4 cardinal directions: north, east, west, or south, going from the previous point to a new point 1 unit of distance away. You escape if and only if you can reach the target before any ghost reaches you (for any given moves the ghosts may take.) If you reach any square (including the target) at the same time as a ghost, it doesn't count as an escape. Return true if and only if it is possible to escape.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/escape-the-ghosts/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">789. Escape The Ghosts</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are playing a simplified Pacman game. You start at the point (0, 0), and your goal is to travel to the target: (target[0], target[1]). There are several ghosts on the map, the i-th ghost starts at (ghosts[i][0], ghosts[i][1]).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Each turn, you and all ghosts simultaneously may move in one of 4 cardinal directions: north, east, west, or south, going from the previous point to a new point 1 unit of distance away.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You escape if and only if you can reach the target before any ghost reaches you (for any given moves the ghosts may take.) If you reach any square (including the target) at the same time as a ghost, it doesn't count as an escape.
+                </p>
+                <p class="text-gray-700">
+                    Return true if and only if it is possible to escape.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ghosts = [[1,0],[0,3]], target = [0,1]
+Output: true
+Explanation: You can reach the destination (0, 1) before any ghost reaches you.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ghosts = [[1,0]], target = [2,0]
+Output: false
+Explanation: You need to reach the destination (2, 0), but the ghost at (1, 0) lies between your destination and you.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ghosts = [[2,0]], target = [1,0]
+Output: false
+Explanation: The ghost can reach the target at the same time as you.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ ghosts.length ≤ 100</li>
+                    <li>ghosts[i].length == 2</li>
+                    <li>-10^4 ≤ ghosts[i][j] ≤ 10^4</li>
+                    <li>target.length == 2</li>
+                    <li>-10^4 ≤ target[j] ≤ 10^4</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def escapeGhosts(self, ghosts: List[List[int]], target: List[int]) -> bool:
+        def manhattan_distance(x1, y1, x2, y2):
+            return abs(x1 - x2) + abs(y1 - y2)
+            
+        # Calculate distance from player to target
+        player_distance = manhattan_distance(0, 0, target[0], target[1])
+        
+        # Check if any ghost can reach target before or at same time as player
+        for ghost in ghosts:
+            ghost_distance = manhattan_distance(ghost[0], ghost[1], target[0], target[1])
+            if ghost_distance <= player_distance:
+                return False
+                
+        return True</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses Manhattan distance to calculate shortest path</li>
+                    <li>Checks if any ghost can reach target before or at same time as player</li>
+                    <li>Time complexity: O(n) where n is number of ghosts</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean escapeGhosts(int[][] ghosts, int[] target) {
+        int playerDistance = manhattanDistance(0, 0, target[0], target[1]);
+        
+        for (int[] ghost : ghosts) {
+            int ghostDistance = manhattanDistance(ghost[0], ghost[1], target[0], target[1]);
+            if (ghostDistance <= playerDistance) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private int manhattanDistance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int manhattanDistance(int x1, int y1, int x2, int y2) {
+        return abs(x1 - x2) + abs(y1 - y2);
+    }
+    
+public:
+    bool escapeGhosts(vector<vector<int>>& ghosts, vector<int>& target) {
+        int playerDistance = manhattanDistance(0, 0, target[0], target[1]);
+        
+        for (const auto& ghost : ghosts) {
+            int ghostDistance = manhattanDistance(ghost[0], ghost[1], target[0], target[1]);
+            if (ghostDistance <= playerDistance) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function escapeGhosts(ghosts, target) {
+    function manhattanDistance(x1, y1, x2, y2) {
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
+    
+    const playerDistance = manhattanDistance(0, 0, target[0], target[1]);
+    
+    for (const ghost of ghosts) {
+        const ghostDistance = manhattanDistance(ghost[0], ghost[1], target[0], target[1]);
+        if (ghostDistance <= playerDistance) {
+            return false;
+        }
+    }
+    
+    return true;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool EscapeGhosts(int[][] ghosts, int[] target) {
+        int playerDistance = ManhattanDistance(0, 0, target[0], target[1]);
+        
+        foreach (var ghost in ghosts) {
+            int ghostDistance = ManhattanDistance(ghost[0], ghost[1], target[0], target[1]);
+            if (ghostDistance <= playerDistance) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private int ManhattanDistance(int x1, int y1, int x2, int y2) {
+        return Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses Manhattan distance to calculate shortest path</li>
+                    <li>Checks if any ghost can reach target before or at same time as player</li>
+                    <li>Time complexity: O(n) where n is number of ghosts</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

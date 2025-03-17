@@ -1,0 +1,295 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investments in 2016 - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for the Investments in 2016 problem. Find the sum of total investment values in 2016 for policyholders with duplicate tiv_2015 values and unique locations.">
+    <meta name="keywords" content="LeetCode, SQL, Investments in 2016, Database, Solution, MySQL, PostgreSQL, MS SQL Server, Oracle, Programming, Coding">
+    <link rel="canonical" href="https://leetcodee.com/problems/investments-in-2016/">
+    <meta property="og:title" content="Investments in 2016 - LeetCodee Solution">
+    <meta property="og:description" content="LeetCodee solution for the Investments in 2016 problem. Find the sum of total investment values in 2016 for policyholders with duplicate tiv_2015 values and unique locations.">
+    <meta property="og:url" content="https://leetcodee.com/problems/investments-in-2016/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Investments in 2016 - LeetCodee Solution",
+      "description": "LeetCodee solution for the Investments in 2016 problem. Find the sum of total investment values in 2016 for policyholders with duplicate tiv_2015 values and unique locations.",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-10-27",
+      "dateModified": "2024-10-27",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/investments-in-2016/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" //Replace with your logo URL
+        }
+      }
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">585. Investments in 2016</h1>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Table: <code class="bg-gray-100 px-1 rounded">Insurance</code>
+                </p>
+                <pre class="bg-gray-100 p-4 rounded mb-4"><code>+-------------+-------+
+| Column Name | Type  |
++-------------+-------+
+| pid         | int   |
+| tiv_2015    | float |
+| tiv_2016    | float |
+| lat         | float |
+| lon         | float |
++-------------+-------+
+pid is the primary key column for this table.
+Each row of this table contains information about one policy where:
+pid is the policyholder's policy ID.
+tiv_2015 is the total investment value in 2015 and tiv_2016 is the total investment value in 2016.
+lat is the latitude of the policy holder's city. It's guaranteed that lat is not NULL.
+lon is the longitude of the policy holder's city. It's guaranteed that lon is not NULL.</code></pre>
+
+                <p class="text-gray-700 mb-4">
+                    Write an SQL query to report the sum of all total investment values in 2016 <code class="bg-gray-100 px-1 rounded">tiv_2016</code>, for all policyholders who:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 ml-4 mb-4">
+                    <li>have the same <code class="bg-gray-100 px-1 rounded">tiv_2015</code> value as one or more other policyholders, and</li>
+                    <li>are not located in the same city as any other policyholder (i.e., the <code class="bg-gray-100 px-1 rounded">(lat, lon)</code> attribute pairs must be unique).</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Round <code class="bg-gray-100 px-1 rounded">tiv_2016</code> to <strong>two decimal places</strong>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The query result format is in the following example.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example:</h2>
+                <pre class="bg-gray-100 p-4 rounded mb-4"><code>Input: 
+Insurance table:
++-----+----------+----------+-----+-----+
+| pid | tiv_2015 | tiv_2016 | lat | lon |
++-----+----------+----------+-----+-----+
+| 1   | 10       | 5        | 10  | 10  |
+| 2   | 20       | 20       | 20  | 20  |
+| 3   | 10       | 30       | 20  | 20  |
+| 4   | 10       | 40       | 40  | 40  |
++-----+----------+----------+-----+-----+
+Output: 
++----------+
+| tiv_2016 |
++----------+
+| 45.00    |
++----------+
+Explanation: 
+The first record in the table, like the last record, meets both of the two criteria.
+The tiv_2015 value 10 is the same as the third and fourth records, and its location is unique.
+The second record does not meet any of the criteria. Its tiv_2015 is not like any other policyholders and its location is the same as the third record, which makes the third record fail, too.
+So, the result is the sum of tiv_2016 of the first and last record, which is 45.</code></pre>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- MySQL Solution -->
+            <div id="mysql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MySQL Solution</h3>
+                <pre class="language-sql"><code>SELECT ROUND(SUM(tiv_2016), 2) as tiv_2016
+FROM Insurance i1
+WHERE tiv_2015 IN (
+    SELECT tiv_2015
+    FROM Insurance i2
+    WHERE i2.pid != i1.pid
+)
+AND NOT EXISTS (
+    SELECT 1
+    FROM Insurance i3
+    WHERE i3.pid != i1.pid
+    AND i3.lat = i1.lat
+    AND i3.lon = i1.lon
+);</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution:</h4>
+                    <pre class="language-sql"><code>WITH DupTiv AS (
+    SELECT tiv_2015
+    FROM Insurance
+    GROUP BY tiv_2015
+    HAVING COUNT(*) > 1
+),
+UniqueLoc AS (
+    SELECT lat, lon
+    FROM Insurance
+    GROUP BY lat, lon
+    HAVING COUNT(*) = 1
+)
+SELECT ROUND(SUM(i.tiv_2016), 2) as tiv_2016
+FROM Insurance i
+JOIN DupTiv d ON i.tiv_2015 = d.tiv_2015
+JOIN UniqueLoc u ON i.lat = u.lat AND i.lon = u.lon;</code></pre>
+                </div>
+            </div>
+
+            <!-- PostgreSQL Solution -->
+            <div id="postgresql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">PostgreSQL Solution</h3>
+                <pre class="language-sql"><code>SELECT ROUND(SUM(tiv_2016)::numeric, 2) as tiv_2016
+FROM Insurance i1
+WHERE tiv_2015 IN (
+    SELECT tiv_2015
+    FROM Insurance i2
+    WHERE i2.pid != i1.pid
+)
+AND NOT EXISTS (
+    SELECT 1
+    FROM Insurance i3
+    WHERE i3.pid != i1.pid
+    AND i3.lat = i1.lat
+    AND i3.lon = i1.lon
+);</code></pre>
+            </div>
+
+            <!-- MS SQL Server Solution -->
+            <div id="mssql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MS SQL Server Solution</h3>
+                <pre class="language-sql"><code>SELECT CAST(ROUND(SUM(tiv_2016), 2) AS DECIMAL(10,2)) as tiv_2016
+FROM Insurance i1
+WHERE tiv_2015 IN (
+    SELECT tiv_2015
+    FROM Insurance i2
+    WHERE i2.pid != i1.pid
+)
+AND NOT EXISTS (
+    SELECT 1
+    FROM Insurance i3
+    WHERE i3.pid != i1.pid
+    AND i3.lat = i1.lat
+    AND i3.lon = i1.lon
+);</code></pre>
+            </div>
+
+            <!-- Oracle Solution -->
+            <div id="oracle" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Oracle Solution</h3>
+                <pre class="language-sql"><code>SELECT ROUND(SUM(tiv_2016), 2) as tiv_2016
+FROM Insurance i1
+WHERE tiv_2015 IN (
+    SELECT tiv_2015
+    FROM Insurance i2
+    WHERE i2.pid != i1.pid
+)
+AND NOT EXISTS (
+    SELECT 1
+    FROM Insurance i3
+    WHERE i3.pid != i1.pid
+    AND i3.lat = i1.lat
+    AND i3.lon = i1.lon
+);</code></pre>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses subqueries and EXISTS clause:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Duplicate tiv_2015</li>
+                            <li>Unique location</li>
+                            <li>Condition combination</li>
+                            <li>Result rounding</li>
+                        </ul>
+                    </li>
+                    <li>Query Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Check tiv_2015</li>
+                            <li>Verify location</li>
+                            <li>Sum tiv_2016</li>
+                            <li>Round result</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Subquery usage</li>
+                        <li>EXISTS clause</li>
+                        <li>Condition handling</li>
+                        <li>Result formatting</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Index usage</li>
+                        <li>Subquery efficiency</li>
+                        <li>Condition order</li>
+                        <li>Result aggregation</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>No duplicates</li>
+                        <li>All same location</li>
+                        <li>Empty table</li>
+                        <li>Single record</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

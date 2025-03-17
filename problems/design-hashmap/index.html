@@ -1,0 +1,385 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design HashMap - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to design a HashMap without using any built-in hash table libraries.  This LeetCodee solution provides Python, Java, C++, JavaScript, and C# implementations with detailed explanations and complexity analysis.">
+    <meta name="keywords" content="LeetCode, HashMap, Design HashMap, Data Structures, Algorithms, Python, Java, C++, JavaScript, C#, Coding, Solution, Tutorial">
+    <meta property="og:title" content="Design HashMap - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/design-hashmap/">
+    <meta property="og:description" content="Learn how to design a HashMap without using any built-in hash table libraries.  This LeetCodee solution provides Python, Java, C++, JavaScript, and C# implementations with detailed explanations and complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/design-hashmap/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Design HashMap - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Learn how to design a HashMap without using any built-in hash table libraries. This LeetCodee solution provides Python, Java, C++, JavaScript, and C# implementations with detailed explanations and complexity analysis.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/design-hashmap/"
+      },
+      "keywords": "LeetCode, HashMap, Design HashMap, Data Structures, Algorithms, Python, Java, C++, JavaScript, C#, Coding, Solution, Tutorial"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">706. Design HashMap</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Design a HashMap without using any built-in hash table libraries.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement <code class="bg-gray-100 px-1 rounded">MyHashMap</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">MyHashMap()</code> initializes an empty map</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void put(int key, int value)</code> inserts a (key, value) pair into the HashMap. If the key already exists in the map, update the corresponding value</li>
+                    <li><code class="bg-gray-100 px-1 rounded">int get(int key)</code> returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void remove(key)</code> removes the key and its corresponding value if the map contains the mapping for the key</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["MyHashMap", "put", "put", "get", "get", "put", "get", "remove", "get"]
+[[], [1, 1], [2, 2], [1], [3], [2, 1], [2], [2], [2]]
+Output
+[null, null, null, 1, -1, null, 1, null, -1]
+
+Explanation
+MyHashMap myHashMap = new MyHashMap();
+myHashMap.put(1, 1); // The map is now [[1,1]]
+myHashMap.put(2, 2); // The map is now [[1,1], [2,2]]
+myHashMap.get(1);    // return 1, The map is now [[1,1], [2,2]]
+myHashMap.get(3);    // return -1 (i.e., not found), The map is now [[1,1], [2,2]]
+myHashMap.put(2, 1); // The map is now [[1,1], [2,1]] (i.e., update the existing value)
+myHashMap.get(2);    // return 1, The map is now [[1,1], [2,1]]
+myHashMap.remove(2); // remove the mapping for 2, The map is now [[1,1]]
+myHashMap.get(2);    // return -1 (i.e., not found), The map is now [[1,1]]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>0 ≤ key, value ≤ 10<sup>6</sup></li>
+                    <li>At most 10<sup>4</sup> calls will be made to put, get, and remove</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class MyHashMap:
+    def __init__(self):
+        self.size = 1000
+        self.buckets = [[] for _ in range(self.size)]
+    
+    def _hash(self, key):
+        return key % self.size
+    
+    def put(self, key: int, value: int) -> None:
+        bucket = self.buckets[self._hash(key)]
+        for i, (k, v) in enumerate(bucket):
+            if k == key:
+                bucket[i] = (key, value)
+                return
+        bucket.append((key, value))
+    
+    def get(self, key: int) -> int:
+        bucket = self.buckets[self._hash(key)]
+        for k, v in bucket:
+            if k == key:
+                return v
+        return -1
+    
+    def remove(self, key: int) -> None:
+        bucket = self.buckets[self._hash(key)]
+        for i, (k, v) in enumerate(bucket):
+            if k == key:
+                bucket.pop(i)
+                return</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses chaining with lists for collision resolution</li>
+                    <li>Time complexity: O(1) average case, O(n) worst case</li>
+                    <li>Space complexity: O(n) where n is the number of elements</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class MyHashMap {
+    private static final int SIZE = 1000;
+    private List<Pair<Integer, Integer>>[] buckets;
+    
+    public MyHashMap() {
+        buckets = new List[SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            buckets[i] = new ArrayList<>();
+        }
+    }
+    
+    private int hash(int key) {
+        return key % SIZE;
+    }
+    
+    public void put(int key, int value) {
+        int index = hash(key);
+        List<Pair<Integer, Integer>> bucket = buckets[index];
+        
+        for (int i = 0; i < bucket.size(); i++) {
+            if (bucket.get(i).getKey() == key) {
+                bucket.set(i, new Pair<>(key, value));
+                return;
+            }
+        }
+        bucket.add(new Pair<>(key, value));
+    }
+    
+    public int get(int key) {
+        int index = hash(key);
+        List<Pair<Integer, Integer>> bucket = buckets[index];
+        
+        for (Pair<Integer, Integer> pair : bucket) {
+            if (pair.getKey() == key) {
+                return pair.getValue();
+            }
+        }
+        return -1;
+    }
+    
+    public void remove(int key) {
+        int index = hash(key);
+        List<Pair<Integer, Integer>> bucket = buckets[index];
+        
+        for (int i = 0; i < bucket.size(); i++) {
+            if (bucket.get(i).getKey() == key) {
+                bucket.remove(i);
+                return;
+            }
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class MyHashMap {
+private:
+    static const int SIZE = 1000;
+    vector<list<pair<int, int>>> buckets;
+    
+    int hash(int key) {
+        return key % SIZE;
+    }
+    
+public:
+    MyHashMap() : buckets(SIZE) {}
+    
+    void put(int key, int value) {
+        int index = hash(key);
+        auto& bucket = buckets[index];
+        
+        for (auto& [k, v] : bucket) {
+            if (k == key) {
+                v = value;
+                return;
+            }
+        }
+        bucket.push_back({key, value});
+    }
+    
+    int get(int key) {
+        int index = hash(key);
+        auto& bucket = buckets[index];
+        
+        for (const auto& [k, v] : bucket) {
+            if (k == key) {
+                return v;
+            }
+        }
+        return -1;
+    }
+    
+    void remove(int key) {
+        int index = hash(key);
+        auto& bucket = buckets[index];
+        
+        bucket.remove_if([key](const auto& pair) {
+            return pair.first == key;
+        });
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>class MyHashMap {
+    constructor() {
+        this.size = 1000;
+        this.buckets = Array(this.size).fill().map(() => []);
+    }
+    
+    hash(key) {
+        return key % this.size;
+    }
+    
+    put(key, value) {
+        const bucket = this.buckets[this.hash(key)];
+        const index = bucket.findIndex(([k]) => k === key);
+        if (index !== -1) {
+            bucket[index] = [key, value];
+        } else {
+            bucket.push([key, value]);
+        }
+    }
+    
+    get(key) {
+        const bucket = this.buckets[this.hash(key)];
+        const pair = bucket.find(([k]) => k === key);
+        return pair ? pair[1] : -1;
+    }
+    
+    remove(key) {
+        const bucket = this.buckets[this.hash(key)];
+        const index = bucket.findIndex(([k]) => k === key);
+        if (index !== -1) {
+            bucket.splice(index, 1);
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class MyHashMap {
+    private const int SIZE = 1000;
+    private List<(int key, int value)>[] buckets;
+    
+    public MyHashMap() {
+        buckets = new List<(int, int)>[SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            buckets[i] = new List<(int, int)>();
+        }
+    }
+    
+    private int Hash(int key) {
+        return key % SIZE;
+    }
+    
+    public void Put(int key, int value) {
+        int index = Hash(key);
+        var bucket = buckets[index];
+        
+        for (int i = 0; i < bucket.Count; i++) {
+            if (bucket[i].key == key) {
+                bucket[i] = (key, value);
+                return;
+            }
+        }
+        bucket.Add((key, value));
+    }
+    
+    public int Get(int key) {
+        int index = Hash(key);
+        var bucket = buckets[index];
+        
+        foreach (var (k, v) in bucket) {
+            if (k == key) {
+                return v;
+            }
+        }
+        return -1;
+    }
+    
+    public void Remove(int key) {
+        int index = Hash(key);
+        var bucket = buckets[index];
+        
+        for (int i = 0; i < bucket.Count; i++) {
+            if (bucket[i].key == key) {
+                bucket.RemoveAt(i);
+                return;
+            }
+        }
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses chaining with lists for collision resolution</li>
+                    <li>Stores key-value pairs in buckets</li>
+                    <li>Time complexity: O(1) average case, O(n) worst case</li>
+                    <li>Space complexity: O(n) where n is the number of elements</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="7397896777"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

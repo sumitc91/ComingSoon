@@ -1,0 +1,454 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number of Atoms - LeetCodee Solution</title>
+    <meta name="description" content="Find the count of each atom in a given chemical formula.  Learn how to solve this LeetCode problem with optimized Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="LeetCode, Number of Atoms, chemical formula, algorithm, Python, Java, C++, JavaScript, C#, solution, coding, programming">
+    <meta property="og:title" content="Number of Atoms - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/number-of-atoms/">
+    <meta property="og:description" content="Find the count of each atom in a given chemical formula.  Learn how to solve this LeetCode problem with optimized Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/number-of-atoms/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "726. Number of Atoms",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Given a chemical formula (given as a string), return the count of each atom.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/number-of-atoms/"
+      },
+      "keywords": "LeetCode, Number of Atoms, chemical formula, algorithm, Python, Java, C++, JavaScript, C#, solution, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">726. Number of Atoms</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a chemical formula (given as a string), return the count of each atom.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The atomic element always starts with an uppercase character, followed by zero or more lowercase letters, representing the name.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    1 or more digits representing that element's count may follow if the count is greater than 1. If the count is 1, no digits will follow.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, H2O and H2O2 are possible, but H1O2 is impossible.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Two formulas concatenated together produce another formula. For example, H2O2He3Mg4 is also a formula.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A formula placed in parentheses, and a count (optionally added) is also a formula. For example, (H2O2) and (H2O2)3 are formulas.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given a formula, return the count of all elements as a string in the following form: the first name (in sorted order), followed by its count (if that count is more than 1), followed by the second name (in sorted order), followed by its count (if that count is more than 1), and so on.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: formula = "H2O"
+Output: "H2O"
+Explanation: The count of elements are {'H': 2, 'O': 1}.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: formula = "Mg(OH)2"
+Output: "H2MgO2"
+Explanation: The count of elements are {'H': 2, 'Mg': 1, 'O': 2}.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: formula = "K4(ON(SO3)2)2"
+Output: "K4N2O14S4"
+Explanation: The count of elements are {'K': 4, 'N': 2, 'O': 14, 'S': 4}.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ formula.length ≤ 1000</li>
+                    <li>formula consists of English letters, digits, '(', and ')'</li>
+                    <li>formula is always valid</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def countOfAtoms(self, formula: str) -> str:
+        def parse(s: str, i: int) -> tuple[dict, int]:
+            counts = {}
+            while i < len(s):
+                if s[i] == '(':
+                    i += 1
+                    sub_counts, i = parse(s, i)
+                    i += 1  # Skip ')'
+                    multiplier = 0
+                    while i < len(s) and s[i].isdigit():
+                        multiplier = multiplier * 10 + int(s[i])
+                        i += 1
+                    multiplier = max(1, multiplier)
+                    for atom, count in sub_counts.items():
+                        counts[atom] = counts.get(atom, 0) + count * multiplier
+                elif s[i] == ')':
+                    return counts, i
+                else:
+                    atom = s[i]
+                    i += 1
+                    while i < len(s) and s[i].islower():
+                        atom += s[i]
+                        i += 1
+                    count = 0
+                    while i < len(s) and s[i].isdigit():
+                        count = count * 10 + int(s[i])
+                        i += 1
+                    counts[atom] = counts.get(atom, 0) + max(1, count)
+            return counts, i
+        
+        counts, _ = parse(formula, 0)
+        return ''.join(atom + (str(count) if count > 1 else '') 
+                      for atom, count in sorted(counts.items()))</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive parsing with stack-like approach</li>
+                    <li>Time complexity: O(n) where n is the length of formula</li>
+                    <li>Space complexity: O(n) for the recursion stack</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int i = 0;
+    
+    public String countOfAtoms(String formula) {
+        StringBuilder ans = new StringBuilder();
+        Map<String, Integer> counts = parse(formula);
+        
+        for (String name: counts.keySet()) {
+            ans.append(name);
+            int multiplicity = counts.get(name);
+            if (multiplicity > 1) {
+                ans.append(multiplicity);
+            }
+        }
+        
+        return ans.toString();
+    }
+    
+    private Map<String, Integer> parse(String formula) {
+        Map<String, Integer> counts = new TreeMap<>();
+        int N = formula.length();
+        
+        while (i < N && formula.charAt(i) != ')') {
+            if (formula.charAt(i) == '(') {
+                i++;
+                Map<String, Integer> subCounts = parse(formula);
+                int multiplicity = 1;
+                i++;
+                if (i < N && Character.isDigit(formula.charAt(i))) {
+                    multiplicity = 0;
+                    while (i < N && Character.isDigit(formula.charAt(i))) {
+                        multiplicity = multiplicity * 10 + (formula.charAt(i) - '0');
+                        i++;
+                    }
+                }
+                for (String name: subCounts.keySet()) {
+                    counts.put(name, counts.getOrDefault(name, 0) + subCounts.get(name) * multiplicity);
+                }
+            } else {
+                int iStart = i++;
+                while (i < N && Character.isLowerCase(formula.charAt(i))) {
+                    i++;
+                }
+                String name = formula.substring(iStart, i);
+                int multiplicity = 1;
+                if (i < N && Character.isDigit(formula.charAt(i))) {
+                    multiplicity = 0;
+                    while (i < N && Character.isDigit(formula.charAt(i))) {
+                        multiplicity = multiplicity * 10 + (formula.charAt(i) - '0');
+                        i++;
+                    }
+                }
+                counts.put(name, counts.getOrDefault(name, 0) + multiplicity);
+            }
+        }
+        
+        return counts;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int i = 0;
+    
+    map<string, int> parse(string& formula) {
+        map<string, int> counts;
+        int N = formula.length();
+        
+        while (i < N && formula[i] != ')') {
+            if (formula[i] == '(') {
+                i++;
+                map<string, int> subCounts = parse(formula);
+                i++;
+                int multiplicity = 1;
+                if (i < N && isdigit(formula[i])) {
+                    multiplicity = 0;
+                    while (i < N && isdigit(formula[i])) {
+                        multiplicity = multiplicity * 10 + (formula[i] - '0');
+                        i++;
+                    }
+                }
+                for (const auto& [name, count] : subCounts) {
+                    counts[name] += count * multiplicity;
+                }
+            } else {
+                int iStart = i++;
+                while (i < N && islower(formula[i])) {
+                    i++;
+                }
+                string name = formula.substr(iStart, i - iStart);
+                int multiplicity = 1;
+                if (i < N && isdigit(formula[i])) {
+                    multiplicity = 0;
+                    while (i < N && isdigit(formula[i])) {
+                        multiplicity = multiplicity * 10 + (formula[i] - '0');
+                        i++;
+                    }
+                }
+                counts[name] += multiplicity;
+            }
+        }
+        
+        return counts;
+    }
+    
+public:
+    string countOfAtoms(string formula) {
+        map<string, int> counts = parse(formula);
+        string ans;
+        
+        for (const auto& [name, count] : counts) {
+            ans += name;
+            if (count > 1) {
+                ans += to_string(count);
+            }
+        }
+        
+        return ans;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} formula
+ * @return {string}
+ */
+var countOfAtoms = function(formula) {
+    let i = 0;
+    
+    function parse() {
+        const counts = new Map();
+        const N = formula.length;
+        
+        while (i < N && formula[i] !== ')') {
+            if (formula[i] === '(') {
+                i++;
+                const subCounts = parse();
+                i++;
+                let multiplicity = 1;
+                if (i < N && /\d/.test(formula[i])) {
+                    multiplicity = 0;
+                    while (i < N && /\d/.test(formula[i])) {
+                        multiplicity = multiplicity * 10 + parseInt(formula[i]);
+                        i++;
+                    }
+                }
+                for (const [name, count] of subCounts) {
+                    counts.set(name, (counts.get(name) || 0) + count * multiplicity);
+                }
+            } else {
+                const iStart = i++;
+                while (i < N && /[a-z]/.test(formula[i])) {
+                    i++;
+                }
+                const name = formula.slice(iStart, i);
+                let multiplicity = 1;
+                if (i < N && /\d/.test(formula[i])) {
+                    multiplicity = 0;
+                    while (i < N && /\d/.test(formula[i])) {
+                        multiplicity = multiplicity * 10 + parseInt(formula[i]);
+                        i++;
+                    }
+                }
+                counts.set(name, (counts.get(name) || 0) + multiplicity);
+            }
+        }
+        
+        return counts;
+    }
+    
+    const counts = parse();
+    return Array.from(counts.entries())
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([name, count]) => name + (count > 1 ? count : ''))
+        .join('');
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int i = 0;
+    
+    public string CountOfAtoms(string formula) {
+        var counts = Parse(formula);
+        var sortedAtoms = counts.Keys.OrderBy(x => x);
+        var result = new StringBuilder();
+        
+        foreach (var atom in sortedAtoms) {
+            result.Append(atom);
+            if (counts[atom] > 1) {
+                result.Append(counts[atom]);
+            }
+        }
+        
+        return result.ToString();
+    }
+    
+    private Dictionary<string, int> Parse(string formula) {
+        var counts = new Dictionary<string, int>();
+        int N = formula.Length;
+        
+        while (i < N && formula[i] != ')') {
+            if (formula[i] == '(') {
+                i++;
+                var subCounts = Parse(formula);
+                i++;
+                int multiplicity = 1;
+                if (i < N && char.IsDigit(formula[i])) {
+                    multiplicity = 0;
+                    while (i < N && char.IsDigit(formula[i])) {
+                        multiplicity = multiplicity * 10 + (formula[i] - '0');
+                        i++;
+                    }
+                }
+                foreach (var kvp in subCounts) {
+                    if (!counts.ContainsKey(kvp.Key)) {
+                        counts[kvp.Key] = 0;
+                    }
+                    counts[kvp.Key] += kvp.Value * multiplicity;
+                }
+            } else {
+                int iStart = i++;
+                while (i < N && char.IsLower(formula[i])) {
+                    i++;
+                }
+                string name = formula.Substring(iStart, i - iStart);
+                int multiplicity = 1;
+                if (i < N && char.IsDigit(formula[i])) {
+                    multiplicity = 0;
+                    while (i < N && char.IsDigit(formula[i])) {
+                        multiplicity = multiplicity * 10 + (formula[i] - '0');
+                        i++;
+                    }
+                }
+                if (!counts.ContainsKey(name)) {
+                    counts[name] = 0;
+                }
+                counts[name] += multiplicity;
+            }
+        }
+        
+        return counts;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive parsing with stack-like approach</li>
+                    <li>Time complexity: O(n) where n is the length of formula</li>
+                    <li>Space complexity: O(n) for the recursion stack</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

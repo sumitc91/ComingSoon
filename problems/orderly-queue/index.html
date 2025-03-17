@@ -1,0 +1,281 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orderly Queue - LeetCodee Solution</title>
+    <meta name="description" content="Find the lexicographically smallest string after applying any number of moves where you can choose one of the first k letters and append it to the end.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, leetcodee, orderly queue, string manipulation, algorithm, solution, python, java, c++, javascript, csharp, coding, programming">
+    <meta property="og:title" content="Orderly Queue - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/orderly-queue/">
+    <meta property="og:description" content="Find the lexicographically smallest string after applying any number of moves where you can choose one of the first k letters and append it to the end.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/orderly-queue/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "899. Orderly Queue",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find the lexicographically smallest string after applying any number of moves where you can choose one of the first k letters and append it to the end. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/orderly-queue/"
+      },
+      "keywords": "leetcode, leetcodee, orderly queue, string manipulation, algorithm, solution, python, java, c++, javascript, csharp, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">899. Orderly Queue</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given a string <code class="bg-gray-100 px-1 rounded">s</code> and an integer <code class="bg-gray-100 px-1 rounded">k</code>. You can choose one of the first <code class="bg-gray-100 px-1 rounded">k</code> letters of <code class="bg-gray-100 px-1 rounded">s</code> and append it at the end of the string.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the lexicographically smallest string you could have after applying any number of moves.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "cba", k = 1
+Output: "acb"
+Explanation: 
+In the first move, we move the 1st character 'c' to the end, obtaining the string "bac".
+In the second move, we move the 1st character 'b' to the end, obtaining the final result "acb".</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "baaca", k = 3
+Output: "aaabc"
+Explanation: 
+In the first move, we move the 1st character 'b' to the end, obtaining the string "aacab".
+In the second move, we move the 3rd character 'c' to the end, obtaining the final result "aaabc".</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= k <= s.length <= 1000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">s</code> consist of lowercase English letters.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def orderlyQueue(self, s: str, k: int) -> str:
+        if k == 1:
+            # For k=1, we can only rotate the string
+            # Find the lexicographically smallest rotation
+            return min(s[i:] + s[:i] for i in range(len(s)))
+        else:
+            # For k>1, we can get any permutation
+            # Return the sorted string
+            return ''.join(sorted(s))</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²) for k=1, O(n log n) for k>1</h4>
+                    <p class="text-gray-700">For k=1, we need to check all possible rotations. For k>1, we just need to sort the string.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">To store the rotated strings or sorted characters.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String orderlyQueue(String s, int k) {
+        if (k == 1) {
+            // For k=1, find the lexicographically smallest rotation
+            String ans = s;
+            for (int i = 0; i < s.length(); i++) {
+                String temp = s.substring(i) + s.substring(0, i);
+                if (temp.compareTo(ans) < 0) {
+                    ans = temp;
+                }
+            }
+            return ans;
+        } else {
+            // For k>1, return the sorted string
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            return new String(chars);
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²) for k=1, O(n log n) for k>1</h4>
+                    <p class="text-gray-700">For k=1, we need to check all possible rotations. For k>1, we just need to sort the string.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">To store the rotated strings or sorted characters.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string orderlyQueue(string s, int k) {
+        if (k == 1) {
+            // For k=1, find the lexicographically smallest rotation
+            string ans = s;
+            for (int i = 0; i < s.length(); i++) {
+                string temp = s.substr(i) + s.substr(0, i);
+                if (temp < ans) {
+                    ans = temp;
+                }
+            }
+            return ans;
+        } else {
+            // For k>1, return the sorted string
+            sort(s.begin(), s.end());
+            return s;
+        }
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²) for k=1, O(n log n) for k>1</h4>
+                    <p class="text-gray-700">For k=1, we need to check all possible rotations. For k>1, we just need to sort the string.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">To store the rotated strings or sorted characters.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @param {number} k
+ * @return {string}
+ */
+var orderlyQueue = function(s, k) {
+    if (k === 1) {
+        // For k=1, find the lexicographically smallest rotation
+        let ans = s;
+        for (let i = 0; i < s.length; i++) {
+            const temp = s.slice(i) + s.slice(0, i);
+            if (temp < ans) {
+                ans = temp;
+            }
+        }
+        return ans;
+    } else {
+        // For k>1, return the sorted string
+        return s.split('').sort().join('');
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²) for k=1, O(n log n) for k>1</h4>
+                    <p class="text-gray-700">For k=1, we need to check all possible rotations. For k>1, we just need to sort the string.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">To store the rotated strings or sorted characters.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string OrderlyQueue(string s, int k) {
+        if (k == 1) {
+            // For k=1, find the lexicographically smallest rotation
+            string ans = s;
+            for (int i = 0; i < s.Length; i++) {
+                string temp = s.Substring(i) + s.Substring(0, i);
+                if (string.Compare(temp, ans) < 0) {
+                    ans = temp;
+                }
+            }
+            return ans;
+        } else {
+            // For k>1, return the sorted string
+            char[] chars = s.ToCharArray();
+            Array.Sort(chars);
+            return new string(chars);
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²) for k=1, O(n log n) for k>1</h4>
+                    <p class="text-gray-700">For k=1, we need to check all possible rotations. For k>1, we just need to sort the string.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">To store the rotated strings or sorted characters.</p>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,520 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find the Shortest Superstring - LeetCodee Solution</title>
+    <meta name="description" content="Find the shortest superstring that contains each string in words as a substring. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, shortest superstring, algorithm, solution, python, java, cpp, javascript, csharp, coding, programming">
+    <meta property="og:title" content="Find the Shortest Superstring - LeetCodee Solution">
+    <meta property="og:description" content="Find the shortest superstring that contains each string in words as a substring. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/find-the-shortest-superstring/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/find-the-shortest-superstring/">
+    <link rel="canonical" href="https://leetcodee.com/problems/find-the-shortest-superstring/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">943. Find the Shortest Superstring</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an array of strings words, return the smallest string that contains each string in words as a substring. If there are multiple valid strings of the smallest length, return any of them.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You may assume that no string in words is a substring of another string in words.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: words = ["alex","loves","leetcode"]
+Output: "alexlovesleetcode"
+Explanation: All permutations of "alex","loves","leetcode" would also be accepted.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: words = ["catg","ctaagt","gcta","ttca","atgcatc"]
+Output: "gctaagttcatgcatc"</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= words.length <= 12</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= words[i].length <= 20</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">words[i]</code> consists of lowercase English letters only.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">All the strings of words are unique.</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def shortestSuperstring(self, words: List[str]) -> str:
+        n = len(words)
+        # Precompute overlap between each pair of words
+        overlap = [[0] * n for _ in range(n)]
+        for i in range(n):
+            for j in range(n):
+                if i != j:
+                    for k in range(min(len(words[i]), len(words[j])), 0, -1):
+                        if words[i][-k:] == words[j][:k]:
+                            overlap[i][j] = k
+                            break
+        
+        # dp[mask][i] represents the minimum length of superstring
+        # that can be formed using words in mask ending with words[i]
+        dp = [[float('inf')] * n for _ in range(1 << n)]
+        parent = [[-1] * n for _ in range(1 << n)]
+        
+        # Initialize dp for single words
+        for i in range(n):
+            dp[1 << i][i] = len(words[i])
+        
+        # Fill dp table
+        for mask in range(1 << n):
+            for i in range(n):
+                if not (mask & (1 << i)):
+                    continue
+                prev_mask = mask ^ (1 << i)
+                for j in range(n):
+                    if prev_mask & (1 << j):
+                        if dp[prev_mask][j] + len(words[i]) - overlap[j][i] < dp[mask][i]:
+                            dp[mask][i] = dp[prev_mask][j] + len(words[i]) - overlap[j][i]
+                            parent[mask][i] = j
+        
+        # Reconstruct the superstring
+        mask = (1 << n) - 1
+        curr = min(range(n), key=lambda i: dp[mask][i])
+        path = []
+        
+        while curr != -1:
+            path.append(curr)
+            mask, curr = mask ^ (1 << curr), parent[mask][curr]
+        
+        path = path[::-1]
+        result = words[path[0]]
+        
+        for i in range(1, len(path)):
+            result += words[path[i]][overlap[path[i-1]][path[i]]:]
+            
+        return result</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2 * 2^n)</h4>
+                    <p class="text-gray-700">Where n is the number of words. We need to try all possible combinations of words.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * 2^n)</h4>
+                    <p class="text-gray-700">We need to store the dp table and parent table.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String shortestSuperstring(String[] words) {
+        int n = words.length;
+        // Precompute overlap between each pair of words
+        int[][] overlap = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    for (int k = Math.min(words[i].length(), words[j].length()); k > 0; k--) {
+                        if (words[i].substring(words[i].length() - k).equals(words[j].substring(0, k))) {
+                            overlap[i][j] = k;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // dp[mask][i] represents the minimum length of superstring
+        // that can be formed using words in mask ending with words[i]
+        int[][] dp = new int[1 << n][n];
+        int[][] parent = new int[1 << n][n];
+        
+        // Initialize dp for single words
+        for (int i = 0; i < n; i++) {
+            dp[1 << i][i] = words[i].length();
+        }
+        
+        // Fill dp table
+        for (int mask = 0; mask < (1 << n); mask++) {
+            for (int i = 0; i < n; i++) {
+                if ((mask & (1 << i)) == 0) continue;
+                int prevMask = mask ^ (1 << i);
+                for (int j = 0; j < n; j++) {
+                    if ((prevMask & (1 << j)) != 0) {
+                        int val = dp[prevMask][j] + words[i].length() - overlap[j][i];
+                        if (dp[mask][i] == 0 || val < dp[mask][i]) {
+                            dp[mask][i] = val;
+                            parent[mask][i] = j;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Reconstruct the superstring
+        int mask = (1 << n) - 1;
+        int curr = 0;
+        for (int i = 0; i < n; i++) {
+            if (dp[mask][i] < dp[mask][curr]) {
+                curr = i;
+            }
+        }
+        
+        List<Integer> path = new ArrayList<>();
+        while (curr != -1) {
+            path.add(curr);
+            int nextMask = mask ^ (1 << curr);
+            curr = parent[mask][curr];
+            mask = nextMask;
+        }
+        
+        Collections.reverse(path);
+        StringBuilder result = new StringBuilder(words[path.get(0)]);
+        
+        for (int i = 1; i < path.size(); i++) {
+            result.append(words[path.get(i)].substring(overlap[path.get(i-1)][path.get(i)]));
+        }
+        
+        return result.toString();
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2 * 2^n)</h4>
+                    <p class="text-gray-700">Where n is the number of words. We need to try all possible combinations of words.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * 2^n)</h4>
+                    <p class="text-gray-700">We need to store the dp table and parent table.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string shortestSuperstring(vector<string>& words) {
+        int n = words.size();
+        // Precompute overlap between each pair of words
+        vector<vector<int>> overlap(n, vector<int>(n));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    for (int k = min(words[i].length(), words[j].length()); k > 0; k--) {
+                        if (words[i].substr(words[i].length() - k) == words[j].substr(0, k)) {
+                            overlap[i][j] = k;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // dp[mask][i] represents the minimum length of superstring
+        // that can be formed using words in mask ending with words[i]
+        vector<vector<int>> dp(1 << n, vector<int>(n, INT_MAX));
+        vector<vector<int>> parent(1 << n, vector<int>(n, -1));
+        
+        // Initialize dp for single words
+        for (int i = 0; i < n; i++) {
+            dp[1 << i][i] = words[i].length();
+        }
+        
+        // Fill dp table
+        for (int mask = 0; mask < (1 << n); mask++) {
+            for (int i = 0; i < n; i++) {
+                if (!(mask & (1 << i))) continue;
+                int prevMask = mask ^ (1 << i);
+                for (int j = 0; j < n; j++) {
+                    if (prevMask & (1 << j)) {
+                        int val = dp[prevMask][j] + words[i].length() - overlap[j][i];
+                        if (val < dp[mask][i]) {
+                            dp[mask][i] = val;
+                            parent[mask][i] = j;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Reconstruct the superstring
+        int mask = (1 << n) - 1;
+        int curr = 0;
+        for (int i = 0; i < n; i++) {
+            if (dp[mask][i] < dp[mask][curr]) {
+                curr = i;
+            }
+        }
+        
+        vector<int> path;
+        while (curr != -1) {
+            path.push_back(curr);
+            int nextMask = mask ^ (1 << curr);
+            curr = parent[mask][curr];
+            mask = nextMask;
+        }
+        
+        reverse(path.begin(), path.end());
+        string result = words[path[0]];
+        
+        for (int i = 1; i < path.size(); i++) {
+            result += words[path[i]].substr(overlap[path[i-1]][path[i]]);
+        }
+        
+        return result;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2 * 2^n)</h4>
+                    <p class="text-gray-700">Where n is the number of words. We need to try all possible combinations of words.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * 2^n)</h4>
+                    <p class="text-gray-700">We need to store the dp table and parent table.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} words
+ * @return {string}
+ */
+var shortestSuperstring = function(words) {
+    const n = words.length;
+    // Precompute overlap between each pair of words
+    const overlap = Array(n).fill().map(() => Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (i !== j) {
+                for (let k = Math.min(words[i].length, words[j].length); k > 0; k--) {
+                    if (words[i].slice(-k) === words[j].slice(0, k)) {
+                        overlap[i][j] = k;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    // dp[mask][i] represents the minimum length of superstring
+    // that can be formed using words in mask ending with words[i]
+    const dp = Array(1 << n).fill().map(() => Array(n).fill(Infinity));
+    const parent = Array(1 << n).fill().map(() => Array(n).fill(-1));
+    
+    // Initialize dp for single words
+    for (let i = 0; i < n; i++) {
+        dp[1 << i][i] = words[i].length;
+    }
+    
+    // Fill dp table
+    for (let mask = 0; mask < (1 << n); mask++) {
+        for (let i = 0; i < n; i++) {
+            if (!(mask & (1 << i))) continue;
+            const prevMask = mask ^ (1 << i);
+            for (let j = 0; j < n; j++) {
+                if (prevMask & (1 << j)) {
+                    const val = dp[prevMask][j] + words[i].length - overlap[j][i];
+                    if (val < dp[mask][i]) {
+                        dp[mask][i] = val;
+                        parent[mask][i] = j;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Reconstruct the superstring
+    let mask = (1 << n) - 1;
+    let curr = 0;
+    for (let i = 0; i < n; i++) {
+        if (dp[mask][i] < dp[mask][curr]) {
+            curr = i;
+        }
+    }
+    
+    const path = [];
+    while (curr !== -1) {
+        path.push(curr);
+        const nextMask = mask ^ (1 << curr);
+        curr = parent[mask][curr];
+        mask = nextMask;
+    }
+    
+    path.reverse();
+    let result = words[path[0]];
+    
+    for (let i = 1; i < path.length; i++) {
+        result += words[path[i]].slice(overlap[path[i-1]][path[i]]);
+    }
+    
+    return result;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2 * 2^n)</h4>
+                    <p class="text-gray-700">Where n is the number of words. We need to try all possible combinations of words.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * 2^n)</h4>
+                    <p class="text-gray-700">We need to store the dp table and parent table.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string ShortestSuperstring(string[] words) {
+        int n = words.Length;
+        // Precompute overlap between each pair of words
+        int[,] overlap = new int[n, n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    for (int k = Math.Min(words[i].Length, words[j].Length); k > 0; k--) {
+                        if (words[i].Substring(words[i].Length - k) == words[j].Substring(0, k)) {
+                            overlap[i, j] = k;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // dp[mask][i] represents the minimum length of superstring
+        // that can be formed using words in mask ending with words[i]
+        int[,] dp = new int[1 << n, n];
+        int[,] parent = new int[1 << n, n];
+        
+        // Initialize dp for single words
+        for (int i = 0; i < n; i++) {
+            dp[1 << i, i] = words[i].Length;
+        }
+        
+        // Fill dp table
+        for (int mask = 0; mask < (1 << n); mask++) {
+            for (int i = 0; i < n; i++) {
+                if ((mask & (1 << i)) == 0) continue;
+                int prevMask = mask ^ (1 << i);
+                for (int j = 0; j < n; j++) {
+                    if ((prevMask & (1 << j)) != 0) {
+                        int val = dp[prevMask, j] + words[i].Length - overlap[j, i];
+                        if (dp[mask, i] == 0 || val < dp[mask, i]) {
+                            dp[mask, i] = val;
+                            parent[mask, i] = j;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Reconstruct the superstring
+        int currMask = (1 << n) - 1;
+        int curr = 0;
+        for (int i = 0; i < n; i++) {
+            if (dp[currMask, i] < dp[currMask, curr]) {
+                curr = i;
+            }
+        }
+        
+        var path = new List<int>();
+        while (curr != -1) {
+            path.Add(curr);
+            int nextMask = currMask ^ (1 << curr);
+            curr = parent[currMask, curr];
+            currMask = nextMask;
+        }
+        
+        path.Reverse();
+        var result = new StringBuilder(words[path[0]]);
+        
+        for (int i = 1; i < path.Count; i++) {
+            result.Append(words[path[i]].Substring(overlap[path[i-1], path[i]]));
+        }
+        
+        return result.ToString();
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2 * 2^n)</h4>
+                    <p class="text-gray-700">Where n is the number of words. We need to try all possible combinations of words.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * 2^n)</h4>
+                    <p class="text-gray-700">We need to store the dp table and parent table.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Find the Shortest Superstring - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-03-08",
+      "description": "Find the shortest superstring that contains each string in words as a substring. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/find-the-shortest-superstring/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      }
+    }
+    </script>
+</body>
+</html>

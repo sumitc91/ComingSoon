@@ -1,0 +1,298 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Game - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 682. Baseball Game.  Learn how to solve this coding challenge with detailed explanations and optimized code.">
+    <meta name="keywords" content="leetcode, leetcode solution, baseball game, algorithm, data structure, python, java, c++, javascript, c#, coding challenge, stack, coding interview">
+    <meta property="og:title" content="Baseball Game - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/baseball-game/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 682. Baseball Game.  Learn how to solve this coding challenge with detailed explanations and optimized code.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/baseball-game/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "682. Baseball Game",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 682. Baseball Game. Learn how to solve this coding challenge with detailed explanations and optimized code.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/baseball-game/"
+      },
+      "keywords": "leetcode, leetcode solution, baseball game, algorithm, data structure, python, java, c++, javascript, c#, coding challenge, stack, coding interview"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">682. Baseball Game</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are keeping score for a baseball game with strange rules. The game consists of several rounds, where the scores of past rounds may affect future rounds' scores.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    At the beginning of the game, you start with an empty record. You are given a list of strings <code class="bg-gray-100 px-1 rounded">ops</code>, where <code class="bg-gray-100 px-1 rounded">ops[i]</code> is the <code class="bg-gray-100 px-1 rounded">i</code>th operation you must apply to the record and is one of the following:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>An integer <code class="bg-gray-100 px-1 rounded">x</code> - Record a new score of <code class="bg-gray-100 px-1 rounded">x</code>.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">"+"</code> - Record a new score that is the sum of the previous two scores. It is guaranteed there will always be at least two previous scores.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">"D"</code> - Record a new score that is double the previous score. It is guaranteed there will always be a previous score.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">"C"</code> - Invalidate the previous score, removing it from the record. It is guaranteed there will always be a previous score.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Return the sum of all the scores on the record.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ops = ["5","2","C","D","+"]
+Output: 30
+Explanation:
+"5" - Add 5 to the record, record is now [5].
+"2" - Add 2 to the record, record is now [5, 2].
+"C" - Invalidate and remove the previous score, record is now [5].
+"D" - Add 2 * 5 = 10 to the record, record is now [5, 10].
+"+" - Add 5 + 10 = 15 to the record, record is now [5, 10, 15].
+The total sum is 5 + 10 + 15 = 30.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ops = ["5","-2","4","C","D","9","+","+"]
+Output: 27
+Explanation:
+"5" - Add 5 to the record, record is now [5].
+"-2" - Add -2 to the record, record is now [5, -2].
+"4" - Add 4 to the record, record is now [5, -2, 4].
+"C" - Invalidate and remove the previous score, record is now [5, -2].
+"D" - Add 2 * -2 = -4 to the record, record is now [5, -2, -4].
+"9" - Add 9 to the record, record is now [5, -2, -4, 9].
+"+" - Add -4 + 9 = 5 to the record, record is now [5, -2, -4, 9, 5].
+"+" - Add 9 + 5 = 14 to the record, record is now [5, -2, -4, 9, 5, 14].
+The total sum is 5 + -2 + -4 + 9 + 5 + 14 = 27.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: ops = ["1"]
+Output: 1</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ ops.length ≤ 1000</li>
+                    <li>ops[i] is "C", "D", "+", or a string representing an integer in the range [-3 * 10^4, 3 * 10^4]</li>
+                    <li>For operation "+", there will always be at least two previous scores on the record</li>
+                    <li>For operations "C" and "D", there will always be at least one previous score on the record</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def calPoints(self, ops: List[str]) -> int:
+        stack = []
+        
+        for op in ops:
+            if op == '+':
+                stack.append(stack[-1] + stack[-2])
+            elif op == 'D':
+                stack.append(2 * stack[-1])
+            elif op == 'C':
+                stack.pop()
+            else:
+                stack.append(int(op))
+                
+        return sum(stack)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses stack to keep track of scores</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                    <li>Handles all operations efficiently</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int calPoints(String[] ops) {
+        Stack<Integer> stack = new Stack<>();
+        
+        for (String op : ops) {
+            if (op.equals("+")) {
+                int top = stack.pop();
+                int newTop = top + stack.peek();
+                stack.push(top);
+                stack.push(newTop);
+            } else if (op.equals("D")) {
+                stack.push(2 * stack.peek());
+            } else if (op.equals("C")) {
+                stack.pop();
+            } else {
+                stack.push(Integer.parseInt(op));
+            }
+        }
+        
+        int sum = 0;
+        for (int score : stack) {
+            sum += score;
+        }
+        return sum;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int calPoints(vector<string>& ops) {
+        vector<int> stack;
+        
+        for (const string& op : ops) {
+            if (op == "+") {
+                stack.push_back(stack[stack.size()-1] + stack[stack.size()-2]);
+            } else if (op == "D") {
+                stack.push_back(2 * stack.back());
+            } else if (op == "C") {
+                stack.pop_back();
+            } else {
+                stack.push_back(stoi(op));
+            }
+        }
+        
+        return accumulate(stack.begin(), stack.end(), 0);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} ops
+ * @return {number}
+ */
+var calPoints = function(ops) {
+    const stack = [];
+    
+    for (const op of ops) {
+        if (op === '+') {
+            stack.push(stack[stack.length-1] + stack[stack.length-2]);
+        } else if (op === 'D') {
+            stack.push(2 * stack[stack.length-1]);
+        } else if (op === 'C') {
+            stack.pop();
+        } else {
+            stack.push(parseInt(op));
+        }
+    }
+    
+    return stack.reduce((sum, score) => sum + score, 0);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int CalPoints(string[] ops) {
+        var stack = new List<int>();
+        
+        foreach (string op in ops) {
+            if (op == "+") {
+                stack.Add(stack[stack.Count-1] + stack[stack.Count-2]);
+            } else if (op == "D") {
+                stack.Add(2 * stack[stack.Count-1]);
+            } else if (op == "C") {
+                stack.RemoveAt(stack.Count-1);
+            } else {
+                stack.Add(int.Parse(op));
+            }
+        }
+        
+        return stack.Sum();
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses stack/list to keep track of scores</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                    <li>Handles all operations efficiently</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

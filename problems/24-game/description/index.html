@@ -1,0 +1,433 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24 Game - LeetCodee Solution</title>
+    <meta name="description" content="Solve the 24 Game problem on LeetCodee. Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta name="keywords" content="leetcode, 24 game, solution, python, java, c++, javascript, c#, algorithm, coding, problem solving">
+    <meta property="og:title" content="24 Game - LeetCodee Solution">
+    <meta property="og:description" content="Solve the 24 Game problem on LeetCodee. Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta property="og:url" content="https://leetcodee.com/problems/24-game/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/24-game/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "679. 24 Game",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "You are given an integer array cards of length 4. You have four cards, each containing a number in the range [1, 9]. You should arrange the numbers on these cards in a mathematical expression using the operators ['+', '-', '*', '/'] and the parentheses '(' and ')' to get the value 24.",
+      "keywords": "leetcode, 24 game, solution, python, java, c++, javascript, c#, algorithm, coding, problem solving"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">679. 24 Game</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array <code class="bg-gray-100 px-1 rounded">cards</code> of length <code class="bg-gray-100 px-1 rounded">4</code>. You have four cards, each containing a number in the range <code class="bg-gray-100 px-1 rounded">[1, 9]</code>. You should arrange the numbers on these cards in a mathematical expression using the operators <code class="bg-gray-100 px-1 rounded">['+', '-', '*', '/']</code> and the parentheses <code class="bg-gray-100 px-1 rounded">'('</code> and <code class="bg-gray-100 px-1 rounded">')'</code> to get the value 24.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are restricted to the following rules:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>The division operator <code class="bg-gray-100 px-1 rounded">'/'</code> represents real division, not integer division.</li>
+                    <li>Every operation between numbers should be in floating-point arithmetic.</li>
+                    <li>You cannot use the unary negation operator <code class="bg-gray-100 px-1 rounded">'-'</code>.</li>
+                    <li>You cannot concatenate numbers together, for example, if the cards are <code class="bg-gray-100 px-1 rounded">[1,2,1,2]</code>, you cannot write this as <code class="bg-gray-100 px-1 rounded">"12 + 12"</code>.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: cards = [4,1,8,7]
+Output: true
+Explanation: (8-4) * (7-1) = 24</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: cards = [1,2,1,2]
+Output: false</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>cards.length == 4</li>
+                    <li>1 ≤ cards[i] ≤ 9</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def judgePoint24(self, cards: List[int]) -> bool:
+        def solve(nums):
+            if len(nums) == 1:
+                return abs(nums[0] - 24) < 1e-10
+            
+            for i in range(len(nums)):
+                for j in range(i + 1, len(nums)):
+                    a, b = nums[i], nums[j]
+                    remaining = nums[:i] + nums[i+1:j] + nums[j+1:]
+                    
+                    for op in ['+', '-', '*', '/']:
+                        if op == '+':
+                            remaining.append(a + b)
+                        elif op == '-':
+                            remaining.append(a - b)
+                        elif op == '*':
+                            remaining.append(a * b)
+                        elif op == '/':
+                            if abs(b) < 1e-10:
+                                continue
+                            remaining.append(a / b)
+                            
+                        if solve(remaining):
+                            return True
+                        remaining.pop()
+                        
+                    # Try b op a
+                    for op in ['+', '-', '*', '/']:
+                        if op == '+':
+                            remaining.append(b + a)
+                        elif op == '-':
+                            remaining.append(b - a)
+                        elif op == '*':
+                            remaining.append(b * a)
+                        elif op == '/':
+                            if abs(a) < 1e-10:
+                                continue
+                            remaining.append(b / a)
+                            
+                        if solve(remaining):
+                            return True
+                        remaining.pop()
+            
+            return False
+            
+        return solve(cards)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive backtracking to try all possible combinations</li>
+                    <li>Handles floating-point arithmetic with epsilon comparison</li>
+                    <li>Time complexity: O(1) since input size is fixed</li>
+                    <li>Space complexity: O(1) for recursion stack</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean judgePoint24(int[] cards) {
+        List<Double> nums = new ArrayList<>();
+        for (int card : cards) {
+            nums.add((double) card);
+        }
+        return solve(nums);
+    }
+    
+    private boolean solve(List<Double> nums) {
+        if (nums.size() == 1) {
+            return Math.abs(nums.get(0) - 24) < 1e-10;
+        }
+        
+        for (int i = 0; i < nums.size(); i++) {
+            for (int j = i + 1; j < nums.size(); j++) {
+                double a = nums.get(i);
+                double b = nums.get(j);
+                List<Double> remaining = new ArrayList<>();
+                
+                for (int k = 0; k < nums.size(); k++) {
+                    if (k != i && k != j) {
+                        remaining.add(nums.get(k));
+                    }
+                }
+                
+                // Try a op b
+                for (char op : new char[]{'+', '-', '*', '/'}) {
+                    if (op == '/' && Math.abs(b) < 1e-10) continue;
+                    double result = 0;
+                    switch (op) {
+                        case '+': result = a + b; break;
+                        case '-': result = a - b; break;
+                        case '*': result = a * b; break;
+                        case '/': result = a / b; break;
+                    }
+                    remaining.add(result);
+                    if (solve(remaining)) return true;
+                    remaining.remove(remaining.size() - 1);
+                }
+                
+                // Try b op a
+                for (char op : new char[]{'+', '-', '*', '/'}) {
+                    if (op == '/' && Math.abs(a) < 1e-10) continue;
+                    double result = 0;
+                    switch (op) {
+                        case '+': result = b + a; break;
+                        case '-': result = b - a; break;
+                        case '*': result = b * a; break;
+                        case '/': result = b / a; break;
+                    }
+                    remaining.add(result);
+                    if (solve(remaining)) return true;
+                    remaining.remove(remaining.size() - 1);
+                }
+            }
+        }
+        return false;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool judgePoint24(vector<int>& cards) {
+        vector<double> nums;
+        for (int card : cards) {
+            nums.push_back(static_cast<double>(card));
+        }
+        return solve(nums);
+    }
+    
+private:
+    bool solve(vector<double>& nums) {
+        if (nums.size() == 1) {
+            return abs(nums[0] - 24) < 1e-10;
+        }
+        
+        for (int i = 0; i < nums.size(); i++) {
+            for (int j = i + 1; j < nums.size(); j++) {
+                double a = nums[i];
+                double b = nums[j];
+                vector<double> remaining;
+                
+                for (int k = 0; k < nums.size(); k++) {
+                    if (k != i && k != j) {
+                        remaining.push_back(nums[k]);
+                    }
+                }
+                
+                // Try a op b
+                for (char op : {'+', '-', '*', '/'}) {
+                    if (op == '/' && abs(b) < 1e-10) continue;
+                    double result = 0;
+                    switch (op) {
+                        case '+': result = a + b; break;
+                        case '-': result = a - b; break;
+                        case '*': result = a * b; break;
+                        case '/': result = a / b; break;
+                    }
+                    remaining.push_back(result);
+                    if (solve(remaining)) return true;
+                    remaining.pop_back();
+                }
+                
+                // Try b op a
+                for (char op : {'+', '-', '*', '/'}) {
+                    if (op == '/' && abs(a) < 1e-10) continue;
+                    double result = 0;
+                    switch (op) {
+                        case '+': result = b + a; break;
+                        case '-': result = b - a; break;
+                        case '*': result = b * a; break;
+                        case '/': result = b / a; break;
+                    }
+                    remaining.push_back(result);
+                    if (solve(remaining)) return true;
+                    remaining.pop_back();
+                }
+            }
+        }
+        return false;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} cards
+ * @return {boolean}
+ */
+var judgePoint24 = function(cards) {
+    function solve(nums) {
+        if (nums.length === 1) {
+            return Math.abs(nums[0] - 24) < 1e-10;
+        }
+        
+        for (let i = 0; i < nums.length; i++) {
+            for (let j = i + 1; j < nums.length; j++) {
+                const a = nums[i];
+                const b = nums[j];
+                const remaining = nums.filter((_, k) => k !== i && k !== j);
+                
+                // Try a op b
+                for (const op of ['+', '-', '*', '/']) {
+                    if (op === '/' && Math.abs(b) < 1e-10) continue;
+                    let result;
+                    switch (op) {
+                        case '+': result = a + b; break;
+                        case '-': result = a - b; break;
+                        case '*': result = a * b; break;
+                        case '/': result = a / b; break;
+                    }
+                    remaining.push(result);
+                    if (solve(remaining)) return true;
+                    remaining.pop();
+                }
+                
+                // Try b op a
+                for (const op of ['+', '-', '*', '/']) {
+                    if (op === '/' && Math.abs(a) < 1e-10) continue;
+                    let result;
+                    switch (op) {
+                        case '+': result = b + a; break;
+                        case '-': result = b - a; break;
+                        case '*': result = b * a; break;
+                        case '/': result = b / a; break;
+                    }
+                    remaining.push(result);
+                    if (solve(remaining)) return true;
+                    remaining.pop();
+                }
+            }
+        }
+        return false;
+    }
+    
+    return solve(cards.map(card => Number(card)));
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool JudgePoint24(int[] cards) {
+        var nums = cards.Select(c => (double)c).ToList();
+        return Solve(nums);
+    }
+    
+    private bool Solve(List<double> nums) {
+        if (nums.Count == 1) {
+            return Math.Abs(nums[0] - 24) < 1e-10;
+        }
+        
+        for (int i = 0; i < nums.Count; i++) {
+            for (int j = i + 1; j < nums.Count; j++) {
+                double a = nums[i];
+                double b = nums[j];
+                var remaining = nums.Where((_, k) => k != i && k != j).ToList();
+                
+                // Try a op b
+                foreach (char op in new[] { '+', '-', '*', '/' }) {
+                    if (op == '/' && Math.Abs(b) < 1e-10) continue;
+                    double result = 0;
+                    switch (op) {
+                        case '+': result = a + b; break;
+                        case '-': result = a - b; break;
+                        case '*': result = a * b; break;
+                        case '/': result = a / b; break;
+                    }
+                    remaining.Add(result);
+                    if (Solve(remaining)) return true;
+                    remaining.RemoveAt(remaining.Count - 1);
+                }
+                
+                // Try b op a
+                foreach (char op in new[] { '+', '-', '*', '/' }) {
+                    if (op == '/' && Math.Abs(a) < 1e-10) continue;
+                    double result = 0;
+                    switch (op) {
+                        case '+': result = b + a; break;
+                        case '-': result = b - a; break;
+                        case '*': result = b * a; break;
+                        case '/': result = b / a; break;
+                    }
+                    remaining.Add(result);
+                    if (Solve(remaining)) return true;
+                    remaining.RemoveAt(remaining.Count - 1);
+                }
+            }
+        }
+        return false;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive backtracking to try all possible combinations</li>
+                    <li>Handles floating-point arithmetic with epsilon comparison</li>
+                    <li>Time complexity: O(1) since input size is fixed</li>
+                    <li>Space complexity: O(1) for recursion stack</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

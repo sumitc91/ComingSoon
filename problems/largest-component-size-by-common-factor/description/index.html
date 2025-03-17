@@ -1,0 +1,487 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Largest Component Size by Common Factor - LeetCodee Solution</title>
+    <meta name="description" content="Find the size of the largest connected component in a graph where nodes are integers and edges exist between nodes sharing a common factor greater than 1.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, largest component size, common factor, graph, algorithm, solution, python, java, c++, javascript, c#, union-find, prime factorization">
+    <meta property="og:title" content="Largest Component Size by Common Factor - LeetCodee Solution">
+    <meta property="og:description" content="Find the size of the largest connected component in a graph where nodes are integers and edges exist between nodes sharing a common factor greater than 1.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/largest-component-size-by-common-factor/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/largest-component-size-by-common-factor/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">952. Largest Component Size by Common Factor</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array of unique positive integers nums. Consider the following graph:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>There are nums.length nodes, labeled nums[0] to nums[nums.length - 1],</li>
+                    <li>There is an undirected edge between nums[i] and nums[j] if nums[i] and nums[j] share a common factor greater than 1.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Return the size of the largest connected component in the graph.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: nums = [4,6,15,35]
+Output: 4</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: nums = [20,50,9,63]
+Output: 2</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: nums = [2,3,6,7,4,12,21,39]
+Output: 8</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= nums.length <= 2 * 10^4</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= nums[i] <= 10^5</code></li>
+                    <li>All the values of nums are unique.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def largestComponentSize(self, nums: List[int]) -> int:
+        def find(x):
+            if x != parent[x]:
+                parent[x] = find(parent[x])
+            return parent[x]
+        
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px != py:
+                parent[px] = py
+                size[py] += size[px]
+        
+        def get_prime_factors(n):
+            factors = set()
+            d = 2
+            while n > 1:
+                while n % d == 0:
+                    factors.add(d)
+                    n //= d
+                d += 1
+                if d * d > n:
+                    if n > 1:
+                        factors.add(n)
+                    break
+            return factors
+        
+        # Initialize Union-Find data structure
+        parent = {}
+        size = {}
+        for num in nums:
+            parent[num] = num
+            size[num] = 1
+        
+        # For each number, connect it with its prime factors
+        for num in nums:
+            factors = get_prime_factors(num)
+            for factor in factors:
+                if factor in parent:
+                    union(num, factor)
+                else:
+                    parent[factor] = factor
+                    size[factor] = 1
+                    union(num, factor)
+        
+        # Find the largest component
+        return max(size.values())</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(N * sqrt(M))</h4>
+                    <p class="text-gray-700">Where N is the length of nums and M is the maximum value in nums. For each number, we need to find its prime factors.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(N + M)</h4>
+                    <p class="text-gray-700">We need to store the Union-Find data structure for both numbers and their prime factors.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private Map<Integer, Integer> parent = new HashMap<>();
+    private Map<Integer, Integer> size = new HashMap<>();
+    
+    public int largestComponentSize(int[] nums) {
+        for (int num : nums) {
+            parent.put(num, num);
+            size.put(num, 1);
+        }
+        
+        for (int num : nums) {
+            Set<Integer> factors = getPrimeFactors(num);
+            for (int factor : factors) {
+                if (parent.containsKey(factor)) {
+                    union(num, factor);
+                } else {
+                    parent.put(factor, factor);
+                    size.put(factor, 1);
+                    union(num, factor);
+                }
+            }
+        }
+        
+        return size.values().stream().mapToInt(Integer::intValue).max().getAsInt();
+    }
+    
+    private int find(int x) {
+        if (x != parent.get(x)) {
+            parent.put(x, find(parent.get(x)));
+        }
+        return parent.get(x);
+    }
+    
+    private void union(int x, int y) {
+        int px = find(x);
+        int py = find(y);
+        if (px != py) {
+            parent.put(px, py);
+            size.put(py, size.get(py) + size.get(px));
+        }
+    }
+    
+    private Set<Integer> getPrimeFactors(int n) {
+        Set<Integer> factors = new HashSet<>();
+        int d = 2;
+        while (n > 1) {
+            while (n % d == 0) {
+                factors.add(d);
+                n /= d;
+            }
+            d++;
+            if (d * d > n) {
+                if (n > 1) {
+                    factors.add(n);
+                }
+                break;
+            }
+        }
+        return factors;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(N * sqrt(M))</h4>
+                    <p class="text-gray-700">Where N is the length of nums and M is the maximum value in nums. For each number, we need to find its prime factors.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(N + M)</h4>
+                    <p class="text-gray-700">We need to store the Union-Find data structure for both numbers and their prime factors.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int largestComponentSize(vector<int>& nums) {
+        unordered_map<int, int> parent;
+        unordered_map<int, int> size;
+        
+        for (int num : nums) {
+            parent[num] = num;
+            size[num] = 1;
+        }
+        
+        for (int num : nums) {
+            unordered_set<int> factors = getPrimeFactors(num);
+            for (int factor : factors) {
+                if (parent.find(factor) != parent.end()) {
+                    union_set(num, factor, parent, size);
+                } else {
+                    parent[factor] = factor;
+                    size[factor] = 1;
+                    union_set(num, factor, parent, size);
+                }
+            }
+        }
+        
+        int maxSize = 0;
+        for (const auto& p : size) {
+            maxSize = max(maxSize, p.second);
+        }
+        return maxSize;
+    }
+    
+private:
+    int find(int x, unordered_map<int, int>& parent) {
+        if (x != parent[x]) {
+            parent[x] = find(parent[x], parent);
+        }
+        return parent[x];
+    }
+    
+    void union_set(int x, int y, unordered_map<int, int>& parent, unordered_map<int, int>& size) {
+        int px = find(x, parent);
+        int py = find(y, parent);
+        if (px != py) {
+            parent[px] = py;
+            size[py] += size[px];
+        }
+    }
+    
+    unordered_set<int> getPrimeFactors(int n) {
+        unordered_set<int> factors;
+        int d = 2;
+        while (n > 1) {
+            while (n % d == 0) {
+                factors.insert(d);
+                n /= d;
+            }
+            d++;
+            if (d * d > n) {
+                if (n > 1) {
+                    factors.insert(n);
+                }
+                break;
+            }
+        }
+        return factors;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(N * sqrt(M))</h4>
+                    <p class="text-gray-700">Where N is the length of nums and M is the maximum value in nums. For each number, we need to find its prime factors.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(N + M)</h4>
+                    <p class="text-gray-700">We need to store the Union-Find data structure for both numbers and their prime factors.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var largestComponentSize = function(nums) {
+    const parent = new Map();
+    const size = new Map();
+    
+    function find(x) {
+        if (x !== parent.get(x)) {
+            parent.set(x, find(parent.get(x)));
+        }
+        return parent.get(x);
+    }
+    
+    function union(x, y) {
+        const px = find(x);
+        const py = find(y);
+        if (px !== py) {
+            parent.set(px, py);
+            size.set(py, size.get(py) + size.get(px));
+        }
+    }
+    
+    function getPrimeFactors(n) {
+        const factors = new Set();
+        let d = 2;
+        while (n > 1) {
+            while (n % d === 0) {
+                factors.add(d);
+                n /= d;
+            }
+            d++;
+            if (d * d > n) {
+                if (n > 1) {
+                    factors.add(n);
+                }
+                break;
+            }
+        }
+        return factors;
+    }
+    
+    for (const num of nums) {
+        parent.set(num, num);
+        size.set(num, 1);
+    }
+    
+    for (const num of nums) {
+        const factors = getPrimeFactors(num);
+        for (const factor of factors) {
+            if (parent.has(factor)) {
+                union(num, factor);
+            } else {
+                parent.set(factor, factor);
+                size.set(factor, 1);
+                union(num, factor);
+            }
+        }
+    }
+    
+    return Math.max(...size.values());
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(N * sqrt(M))</h4>
+                    <p class="text-gray-700">Where N is the length of nums and M is the maximum value in nums. For each number, we need to find its prime factors.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(N + M)</h4>
+                    <p class="text-gray-700">We need to store the Union-Find data structure for both numbers and their prime factors.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private Dictionary<int, int> parent = new Dictionary<int, int>();
+    private Dictionary<int, int> size = new Dictionary<int, int>();
+    
+    public int LargestComponentSize(int[] nums) {
+        foreach (int num in nums) {
+            parent[num] = num;
+            size[num] = 1;
+        }
+        
+        foreach (int num in nums) {
+            var factors = GetPrimeFactors(num);
+            foreach (int factor in factors) {
+                if (parent.ContainsKey(factor)) {
+                    Union(num, factor);
+                } else {
+                    parent[factor] = factor;
+                    size[factor] = 1;
+                    Union(num, factor);
+                }
+            }
+        }
+        
+        return size.Values.Max();
+    }
+    
+    private int Find(int x) {
+        if (x != parent[x]) {
+            parent[x] = Find(parent[x]);
+        }
+        return parent[x];
+    }
+    
+    private void Union(int x, int y) {
+        int px = Find(x);
+        int py = Find(y);
+        if (px != py) {
+            parent[px] = py;
+            size[py] += size[px];
+        }
+    }
+    
+    private HashSet<int> GetPrimeFactors(int n) {
+        var factors = new HashSet<int>();
+        int d = 2;
+        while (n > 1) {
+            while (n % d == 0) {
+                factors.Add(d);
+                n /= d;
+            }
+            d++;
+            if (d * d > n) {
+                if (n > 1) {
+                    factors.Add(n);
+                }
+                break;
+            }
+        }
+        return factors;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(N * sqrt(M))</h4>
+                    <p class="text-gray-700">Where N is the length of nums and M is the maximum value in nums. For each number, we need to find its prime factors.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(N + M)</h4>
+                    <p class="text-gray-700">We need to store the Union-Find data structure for both numbers and their prime factors.</p>
+                </div>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "952. Largest Component Size by Common Factor",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "dateModified": "2023-10-27",
+          "description": "Find the size of the largest connected component in a graph where nodes are integers and edges exist between nodes sharing a common factor greater than 1. Solutions in Python, Java, C++, JavaScript, and C#.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "url": "https://leetcodee.com"
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/largest-component-size-by-common-factor/"
+          },
+          "wordCount": 800
+        }
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

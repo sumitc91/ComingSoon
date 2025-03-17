@@ -1,0 +1,343 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete and Earn - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Delete and Earn problem on LeetCodee.  Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and implementation notes.">
+    <meta name="keywords" content="leetcode, delete and earn, algorithm, solution, python, java, c++, javascript, c#, dynamic programming, coding interview">
+    <meta property="og:title" content="Delete and Earn - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/delete-and-earn/">
+    <meta property="og:description" content="Learn how to solve the Delete and Earn problem on LeetCodee.  Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and implementation notes.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/delete-and-earn/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "740. Delete and Earn",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Learn how to solve the Delete and Earn problem on LeetCodee. Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and implementation notes.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/delete-and-earn/"
+      },
+      "articleSection": "Algorithms",
+      "keywords": "leetcode, delete and earn, algorithm, solution, python, java, c++, javascript, c#, dynamic programming, coding interview"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">740. Delete and Earn</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array nums. You want to maximize the number of points you get by performing the following operation any number of times:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Pick any nums[i] and delete it to earn nums[i] points. Afterwards, you must delete every element equal to nums[i] - 1 and every element equal to nums[i] + 1.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Return the maximum number of points you can earn by applying the above operation some number of times.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [3,4,2]
+Output: 6
+Explanation: You can perform the following operations:
+- Delete 4 to earn 4 points. Consequently, 3 is also deleted. nums = [2].
+- Delete 2 to earn 2 points. nums = [].
+You earn a total of 6 points.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [2,2,3,3,3,4]
+Output: 9
+Explanation: You can perform the following operations:
+- Delete a 3 to earn 3 points. All 2's and 4's are also deleted. nums = [3,3].
+- Delete a 3 again to earn 3 points. nums = [3].
+- Delete a 3 once more to earn 3 points. nums = [].
+You earn a total of 9 points.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 2 * 10^4</li>
+                    <li>1 ≤ nums[i] ≤ 10^4</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def deleteAndEarn(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+            
+        # Count frequency of each number
+        freq = {}
+        for num in nums:
+            freq[num] = freq.get(num, 0) + 1
+            
+        # Get unique numbers and sort them
+        unique_nums = sorted(freq.keys())
+        
+        # Initialize dp array
+        dp = [0] * (len(unique_nums) + 1)
+        dp[1] = unique_nums[0] * freq[unique_nums[0]]
+        
+        # Fill dp array
+        for i in range(2, len(unique_nums) + 1):
+            curr_num = unique_nums[i-1]
+            prev_num = unique_nums[i-2]
+            
+            if curr_num - prev_num == 1:
+                dp[i] = max(dp[i-1], dp[i-2] + curr_num * freq[curr_num])
+            else:
+                dp[i] = dp[i-1] + curr_num * freq[curr_num]
+                
+        return dp[-1]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming to solve the problem</li>
+                    <li>Time complexity: O(n log n) where n is the length of nums array</li>
+                    <li>Space complexity: O(n) for storing frequencies and dp array</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int deleteAndEarn(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        
+        // Count frequency of each number
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : nums) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+        }
+        
+        // Get unique numbers and sort them
+        List<Integer> uniqueNums = new ArrayList<>(freq.keySet());
+        Collections.sort(uniqueNums);
+        
+        // Initialize dp array
+        int[] dp = new int[uniqueNums.size() + 1];
+        dp[1] = uniqueNums.get(0) * freq.get(uniqueNums.get(0));
+        
+        // Fill dp array
+        for (int i = 2; i <= uniqueNums.size(); i++) {
+            int currNum = uniqueNums.get(i-1);
+            int prevNum = uniqueNums.get(i-2);
+            
+            if (currNum - prevNum == 1) {
+                dp[i] = Math.max(dp[i-1], dp[i-2] + currNum * freq.get(currNum));
+            } else {
+                dp[i] = dp[i-1] + currNum * freq.get(currNum);
+            }
+        }
+        
+        return dp[uniqueNums.size()];
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int deleteAndEarn(vector<int>& nums) {
+        if (nums.empty()) {
+            return 0;
+        }
+        
+        // Count frequency of each number
+        unordered_map<int, int> freq;
+        for (int num : nums) {
+            freq[num]++;
+        }
+        
+        // Get unique numbers and sort them
+        vector<int> uniqueNums;
+        for (const auto& pair : freq) {
+            uniqueNums.push_back(pair.first);
+        }
+        sort(uniqueNums.begin(), uniqueNums.end());
+        
+        // Initialize dp array
+        vector<int> dp(uniqueNums.size() + 1, 0);
+        dp[1] = uniqueNums[0] * freq[uniqueNums[0]];
+        
+        // Fill dp array
+        for (int i = 2; i <= uniqueNums.size(); i++) {
+            int currNum = uniqueNums[i-1];
+            int prevNum = uniqueNums[i-2];
+            
+            if (currNum - prevNum == 1) {
+                dp[i] = max(dp[i-1], dp[i-2] + currNum * freq[currNum]);
+            } else {
+                dp[i] = dp[i-1] + currNum * freq[currNum];
+            }
+        }
+        
+        return dp[uniqueNums.size()];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function deleteAndEarn(nums) {
+    if (nums.length === 0) {
+        return 0;
+    }
+    
+    // Count frequency of each number
+    const freq = {};
+    for (const num of nums) {
+        freq[num] = (freq[num] || 0) + 1;
+    }
+    
+    // Get unique numbers and sort them
+    const uniqueNums = Object.keys(freq).map(Number).sort((a, b) => a - b);
+    
+    // Initialize dp array
+    const dp = new Array(uniqueNums.length + 1).fill(0);
+    dp[1] = uniqueNums[0] * freq[uniqueNums[0]];
+    
+    // Fill dp array
+    for (let i = 2; i <= uniqueNums.length; i++) {
+        const currNum = uniqueNums[i-1];
+        const prevNum = uniqueNums[i-2];
+        
+        if (currNum - prevNum === 1) {
+            dp[i] = Math.max(dp[i-1], dp[i-2] + currNum * freq[currNum]);
+        } else {
+            dp[i] = dp[i-1] + currNum * freq[currNum];
+        }
+    }
+    
+    return dp[uniqueNums.length];
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int DeleteAndEarn(int[] nums) {
+        if (nums.Length == 0) {
+            return 0;
+        }
+        
+        // Count frequency of each number
+        Dictionary<int, int> freq = new Dictionary<int, int>();
+        foreach (int num in nums) {
+            if (freq.ContainsKey(num)) {
+                freq[num]++;
+            } else {
+                freq[num] = 1;
+            }
+        }
+        
+        // Get unique numbers and sort them
+        List<int> uniqueNums = freq.Keys.ToList();
+        uniqueNums.Sort();
+        
+        // Initialize dp array
+        int[] dp = new int[uniqueNums.Count + 1];
+        dp[1] = uniqueNums[0] * freq[uniqueNums[0]];
+        
+        // Fill dp array
+        for (int i = 2; i <= uniqueNums.Count; i++) {
+            int currNum = uniqueNums[i-1];
+            int prevNum = uniqueNums[i-2];
+            
+            if (currNum - prevNum == 1) {
+                dp[i] = Math.Max(dp[i-1], dp[i-2] + currNum * freq[currNum]);
+            } else {
+                dp[i] = dp[i-1] + currNum * freq[currNum];
+            }
+        }
+        
+        return dp[uniqueNums.Count];
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming to solve the problem</li>
+                    <li>Time complexity: O(n log n) where n is the length of nums array</li>
+                    <li>Space complexity: O(n) for storing frequencies and dp array</li>
+                </ul>
+            </div>
+             <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

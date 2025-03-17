@@ -1,0 +1,329 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cousins in Binary Tree - LeetCodee Solution</title>
+    <meta name="description" content="Find the solution to LeetCode problem 993: Cousins in Binary Tree.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and complexity analysis.">
+    <meta name="keywords" content="leetcode, solution, cousins in binary tree, binary tree, algorithm, data structure, python, java, c++, javascript, c#, coding, programming">
+    <meta property="og:title" content="Cousins in Binary Tree - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/cousins-in-binary-tree/">
+    <meta property="og:description" content="Find the solution to LeetCode problem 993: Cousins in Binary Tree.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and complexity analysis.">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/cousins-in-binary-tree/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">993. Cousins in Binary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">root</code> of a binary tree with unique values and the values of two different nodes of the tree <code class="bg-gray-100 px-1 rounded">x</code> and <code class="bg-gray-100 px-1 rounded">y</code>, return <code class="bg-gray-100 px-1 rounded">true</code> if the nodes corresponding to the values <code class="bg-gray-100 px-1 rounded">x</code> and <code class="bg-gray-100 px-1 rounded">y</code> in the tree are cousins, or <code class="bg-gray-100 px-1 rounded">false</code> otherwise.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Two nodes of a binary tree are cousins if they have the same depth with different parents.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Note that in a binary tree, the root node is at the depth <code class="bg-gray-100 px-1 rounded">0</code>, and children of each depth <code class="bg-gray-100 px-1 rounded">k</code> node are at the depth <code class="bg-gray-100 px-1 rounded">k + 1</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,2,3,4], x = 4, y = 3
+Output: false</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,2,3,null,4,null,5], x = 5, y = 4
+Output: true</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,2,3,null,4], x = 2, y = 3
+Output: false</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range <code class="bg-gray-100 px-1 rounded">[2, 100]</code>.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= Node.val <= 100</code></li>
+                    <li>Each node has a unique value.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">x != y</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">x</code> and <code class="bg-gray-100 px-1 rounded">y</code> are existent in the tree.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def isCousins(self, root: Optional[TreeNode], x: int, y: int) -> bool:
+        def find(node, target, parent=None, depth=0):
+            if not node:
+                return None
+            if node.val == target:
+                return (parent, depth)
+            return find(node.left, target, node, depth + 1) or find(node.right, target, node, depth + 1)
+            
+        x_info = find(root, x)
+        y_info = find(root, y)
+        
+        if not x_info or not y_info:
+            return False
+            
+        x_parent, x_depth = x_info
+        y_parent, y_depth = y_info
+        
+        return x_depth == y_depth and x_parent != y_parent</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the tree to find both nodes.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The recursion stack can go up to the height of the tree.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private TreeNode xParent = null;
+    private TreeNode yParent = null;
+    private int xDepth = -1;
+    private int yDepth = -1;
+    
+    public boolean isCousins(TreeNode root, int x, int y) {
+        findNodes(root, x, y, null, 0);
+        return xDepth == yDepth && xParent != yParent;
+    }
+    
+    private void findNodes(TreeNode node, int x, int y, TreeNode parent, int depth) {
+        if (node == null) {
+            return;
+        }
+        
+        if (node.val == x) {
+            xParent = parent;
+            xDepth = depth;
+        } else if (node.val == y) {
+            yParent = parent;
+            yDepth = depth;
+        }
+        
+        findNodes(node.left, x, y, node, depth + 1);
+        findNodes(node.right, x, y, node, depth + 1);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the tree to find both nodes.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The recursion stack can go up to the height of the tree.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    TreeNode* xParent = nullptr;
+    TreeNode* yParent = nullptr;
+    int xDepth = -1;
+    int yDepth = -1;
+    
+    void findNodes(TreeNode* node, int x, int y, TreeNode* parent, int depth) {
+        if (!node) {
+            return;
+        }
+        
+        if (node->val == x) {
+            xParent = parent;
+            xDepth = depth;
+        } else if (node->val == y) {
+            yParent = parent;
+            yDepth = depth;
+        }
+        
+        findNodes(node->left, x, y, node, depth + 1);
+        findNodes(node->right, x, y, node, depth + 1);
+    }
+    
+public:
+    bool isCousins(TreeNode* root, int x, int y) {
+        findNodes(root, x, y, nullptr, 0);
+        return xDepth == yDepth && xParent != yParent;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the tree to find both nodes.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The recursion stack can go up to the height of the tree.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @param {number} x
+ * @param {number} y
+ * @return {boolean}
+ */
+var isCousins = function(root, x, y) {
+    let xParent = null;
+    let yParent = null;
+    let xDepth = -1;
+    let yDepth = -1;
+    
+    function findNodes(node, parent, depth) {
+        if (!node) return;
+        
+        if (node.val === x) {
+            xParent = parent;
+            xDepth = depth;
+        } else if (node.val === y) {
+            yParent = parent;
+            yDepth = depth;
+        }
+        
+        findNodes(node.left, node, depth + 1);
+        findNodes(node.right, node, depth + 1);
+    }
+    
+    findNodes(root, null, 0);
+    return xDepth === yDepth && xParent !== yParent;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the tree to find both nodes.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The recursion stack can go up to the height of the tree.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private TreeNode xParent = null;
+    private TreeNode yParent = null;
+    private int xDepth = -1;
+    private int yDepth = -1;
+    
+    public bool IsCousins(TreeNode root, int x, int y) {
+        FindNodes(root, x, y, null, 0);
+        return xDepth == yDepth && xParent != yParent;
+    }
+    
+    private void FindNodes(TreeNode node, int x, int y, TreeNode parent, int depth) {
+        if (node == null) {
+            return;
+        }
+        
+        if (node.val == x) {
+            xParent = parent;
+            xDepth = depth;
+        } else if (node.val == y) {
+            yParent = parent;
+            yDepth = depth;
+        }
+        
+        FindNodes(node.left, x, y, node, depth + 1);
+        FindNodes(node.right, x, y, node, depth + 1);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the tree to find both nodes.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The recursion stack can go up to the height of the tree.</p>
+                </div>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "993. Cousins in Binary Tree",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the solution to LeetCode problem 993: Cousins in Binary Tree.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and complexity analysis.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/cousins-in-binary-tree/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      }
+    }
+    </script>
+</body>
+</html>

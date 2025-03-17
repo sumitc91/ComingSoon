@@ -1,0 +1,254 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Champagne Tower - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions and explanations for the LeetCode Champagne Tower problem.  Learn how to solve this dynamic programming challenge using Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, champagne tower, algorithm, dynamic programming, python, java, cpp, javascript, c#, solution, coding, tutorial">
+    <meta name="canonical" content="https://leetcodee.com/problems/champagne-tower/">
+    <meta property="og:title" content="Champagne Tower - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/champagne-tower/">
+    <meta property="og:description" content="Efficient solutions and explanations for the LeetCode Champagne Tower problem.  Learn how to solve this dynamic programming challenge using Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:image" content="https://leetcodee.com/og-image.jpg">  <!-- Replace with actual image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "799. Champagne Tower",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Update with actual publication date -->
+      "dateModified": "2023-10-27",  <!-- Update with actual modification date -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Efficient solutions and explanations for the LeetCode Champagne Tower problem.  Learn how to solve this dynamic programming challenge using Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "We stack glasses in a pyramid, where the first row has 1 glass, the second row has 2 glasses, and so on until the 100th row. Each glass holds one cup of champagne.  [Problem Description and solutions follow...]",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/champagne-tower/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">799. Champagne Tower</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    We stack glasses in a pyramid, where the first row has 1 glass, the second row has 2 glasses, and so on until the 100th row. Each glass holds one cup of champagne.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Then, some champagne is poured into the first glass at the top. When the topmost glass is full, any excess liquid poured will fall equally to the glass immediately to the left and right of it. When those glasses become full, any excess champagne will fall equally to the left and right of those glasses, and so on. (A glass at the bottom row has no glass to its left or right.)
+                </p>
+                <p class="text-gray-700">
+                    For example, after one cup of champagne is poured, the top most glass is full. After two cups of champagne are poured, the two glasses on the second row are half full. After three cups of champagne are poured, those two cups become full - there are 3 full glasses total now. After four cups of champagne are poured, the third row has the middle glass half full, and the two outside glasses are a quarter full.
+                </p>
+                <p class="text-gray-700 mt-4">
+                    Now after pouring some non-negative integer cups of champagne, return how full the jth glass in the ith row is (both i and j are 0-indexed).
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: poured = 1, query_row = 1, query_glass = 1
+Output: 0.00000
+Explanation: We poured 1 cup of champagne to the top glass of the tower (which is indexed as (0, 0)). There will be no excess liquid so all the glasses under the top glass will remain empty.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: poured = 2, query_row = 1, query_glass = 1
+Output: 0.50000
+Explanation: We poured 2 cups of champagne to the top glass of the tower (which is indexed as (0, 0)). There is one cup of excess liquid. The glass indexed as (1, 0) and the glass indexed as (1, 1) will share the excess liquid equally, and each will get half cup of champagne.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>0 ≤ poured ≤ 10^9</li>
+                    <li>0 ≤ query_glass ≤ query_row < 100</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def champagneTower(self, poured: int, query_row: int, query_glass: int) -> float:
+        tower = [[0.0] * k for k in range(1, query_row + 2)]
+        tower[0][0] = poured
+        
+        for row in range(query_row):
+            for glass in range(row + 1):
+                excess = (tower[row][glass] - 1.0) / 2.0
+                if excess > 0:
+                    tower[row + 1][glass] += excess
+                    tower[row + 1][glass + 1] += excess
+        
+        return min(1.0, tower[query_row][query_glass])</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Simulates pouring champagne level by level</li>
+                    <li>Uses 2D array to track amount in each glass</li>
+                    <li>Time complexity: O(R^2) where R is query_row</li>
+                    <li>Space complexity: O(R^2)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public double champagneTower(int poured, int query_row, int query_glass) {
+        double[][] tower = new double[query_row + 1][query_row + 1];
+        tower[0][0] = poured;
+        
+        for (int row = 0; row < query_row; row++) {
+            for (int glass = 0; glass <= row; glass++) {
+                double excess = (tower[row][glass] - 1.0) / 2.0;
+                if (excess > 0) {
+                    tower[row + 1][glass] += excess;
+                    tower[row + 1][glass + 1] += excess;
+                }
+            }
+        }
+        
+        return Math.min(1.0, tower[query_row][query_glass]);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    double champagneTower(int poured, int query_row, int query_glass) {
+        vector<vector<double>> tower(query_row + 1, vector<double>(query_row + 1));
+        tower[0][0] = poured;
+        
+        for (int row = 0; row < query_row; row++) {
+            for (int glass = 0; glass <= row; glass++) {
+                double excess = (tower[row][glass] - 1.0) / 2.0;
+                if (excess > 0) {
+                    tower[row + 1][glass] += excess;
+                    tower[row + 1][glass + 1] += excess;
+                }
+            }
+        }
+        
+        return min(1.0, tower[query_row][query_glass]);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function champagneTower(poured, query_row, query_glass) {
+    const tower = Array(query_row + 1).fill().map((_, i) => Array(i + 1).fill(0));
+    tower[0][0] = poured;
+    
+    for (let row = 0; row < query_row; row++) {
+        for (let glass = 0; glass <= row; glass++) {
+            const excess = (tower[row][glass] - 1) / 2;
+            if (excess > 0) {
+                tower[row + 1][glass] += excess;
+                tower[row + 1][glass + 1] += excess;
+            }
+        }
+    }
+    
+    return Math.min(1, tower[query_row][query_glass]);
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public double ChampagneTower(int poured, int query_row, int query_glass) {
+        double[][] tower = new double[query_row + 1][];
+        for (int i = 0; i <= query_row; i++) {
+            tower[i] = new double[i + 1];
+        }
+        tower[0][0] = poured;
+        
+        for (int row = 0; row < query_row; row++) {
+            for (int glass = 0; glass <= row; glass++) {
+                double excess = (tower[row][glass] - 1.0) / 2.0;
+                if (excess > 0) {
+                    tower[row + 1][glass] += excess;
+                    tower[row + 1][glass + 1] += excess;
+                }
+            }
+        }
+        
+        return Math.Min(1.0, tower[query_row][query_glass]);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Simulates pouring champagne level by level</li>
+                    <li>Uses 2D array to track amount in each glass</li>
+                    <li>Time complexity: O(R^2) where R is query_row</li>
+                    <li>Space complexity: O(R^2)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

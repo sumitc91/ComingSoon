@@ -1,0 +1,348 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Car - LeetCodee Solution</title>
+    <meta name="description" content="Find the shortest sequence of instructions to reach a target position in a race car game.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, race car, algorithm, solution, python, java, c++, javascript, csharp, coding, programming, competitive programming, shortest path, bfs">
+    <meta property="og:title" content="Race Car - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/race-car/">
+    <meta property="og:description" content="Find the shortest sequence of instructions to reach a target position in a race car game.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/race-car/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "818. Race Car",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" // Replace with actual logo URL
+        }
+      },
+      "description": "Find the shortest sequence of instructions to reach a target position in a race car game. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/race-car/"
+      },
+      "wordCount": 500 //Approximate word count
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">818. Race Car</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Your car starts at position 0 and speed +1 on an infinite number line. Your car can go into negative positions. Your car drives automatically according to a sequence of instructions 'A' (accelerate) and 'R' (reverse):
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>When you get an instruction 'A', your car does the following:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>position += speed</li>
+                            <li>speed *= 2</li>
+                        </ul>
+                    </li>
+                    <li>When you get an instruction 'R', your car does the following:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>If your speed is positive then speed = -1</li>
+                            <li>Otherwise speed = 1</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Given a target position target, return the length of the shortest sequence of instructions to get there.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: target = 3
+Output: 3
+Explanation: 
+The shortest instruction sequence is "AAR".
+Position: 0 -> 1 -> 3 -> 3
+Speed: 1 -> 2 -> 4 -> -1</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: target = 6
+Output: 5
+Explanation: 
+The shortest instruction sequence is "AAARA".
+Position: 0 -> 1 -> 3 -> 7 -> 7 -> 6
+Speed: 1 -> 2 -> 4 -> 8 -> -1 -> 1</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ target ≤ 10^4</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def racecar(self, target: int) -> int:
+        queue = deque([(0, 1, 0)])  # position, speed, steps
+        visited = set([(0, 1)])
+        
+        while queue:
+            pos, speed, steps = queue.popleft()
+            
+            # Try accelerate
+            new_pos = pos + speed
+            new_speed = speed * 2
+            if (new_pos, new_speed) not in visited and abs(new_pos - target) < target:
+                if new_pos == target:
+                    return steps + 1
+                queue.append((new_pos, new_speed, steps + 1))
+                visited.add((new_pos, new_speed))
+            
+            # Try reverse
+            new_speed = -1 if speed > 0 else 1
+            if (pos, new_speed) not in visited and abs(pos - target) < target:
+                queue.append((pos, new_speed, steps + 1))
+                visited.add((pos, new_speed))
+        
+        return -1</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses BFS to find shortest sequence of instructions</li>
+                    <li>Maintains visited set to avoid cycles</li>
+                    <li>Time complexity: O(T log T) where T is target</li>
+                    <li>Space complexity: O(T log T)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int racecar(int target) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{0, 1, 0});  // position, speed, steps
+        Set<String> visited = new HashSet<>();
+        visited.add("0,1");
+        
+        while (!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            int pos = curr[0], speed = curr[1], steps = curr[2];
+            
+            // Try accelerate
+            int newPos = pos + speed;
+            int newSpeed = speed * 2;
+            String key = newPos + "," + newSpeed;
+            if (!visited.contains(key) && Math.abs(newPos - target) < target) {
+                if (newPos == target) {
+                    return steps + 1;
+                }
+                queue.offer(new int[]{newPos, newSpeed, steps + 1});
+                visited.add(key);
+            }
+            
+            // Try reverse
+            newSpeed = speed > 0 ? -1 : 1;
+            key = pos + "," + newSpeed;
+            if (!visited.contains(key) && Math.abs(pos - target) < target) {
+                queue.offer(new int[]{pos, newSpeed, steps + 1});
+                visited.add(key);
+            }
+        }
+        
+        return -1;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int racecar(int target) {
+        queue<vector<int>> q;
+        q.push({0, 1, 0});  // position, speed, steps
+        set<pair<int, int>> visited;
+        visited.insert({0, 1});
+        
+        while (!q.empty()) {
+            auto curr = q.front();
+            q.pop();
+            int pos = curr[0], speed = curr[1], steps = curr[2];
+            
+            // Try accelerate
+            int newPos = pos + speed;
+            int newSpeed = speed * 2;
+            if (visited.find({newPos, newSpeed}) == visited.end() && abs(newPos - target) < target) {
+                if (newPos == target) {
+                    return steps + 1;
+                }
+                q.push({newPos, newSpeed, steps + 1});
+                visited.insert({newPos, newSpeed});
+            }
+            
+            // Try reverse
+            newSpeed = speed > 0 ? -1 : 1;
+            if (visited.find({pos, newSpeed}) == visited.end() && abs(pos - target) < target) {
+                q.push({pos, newSpeed, steps + 1});
+                visited.insert({pos, newSpeed});
+            }
+        }
+        
+        return -1;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} target
+ * @return {number}
+ */
+var racecar = function(target) {
+    const queue = [[0, 1, 0]];  // position, speed, steps
+    const visited = new Set(['0,1']);
+    
+    while (queue.length) {
+        const [pos, speed, steps] = queue.shift();
+        
+        // Try accelerate
+        let newPos = pos + speed;
+        let newSpeed = speed * 2;
+        let key = `${newPos},${newSpeed}`;
+        if (!visited.has(key) && Math.abs(newPos - target) < target) {
+            if (newPos === target) {
+                return steps + 1;
+            }
+            queue.push([newPos, newSpeed, steps + 1]);
+            visited.add(key);
+        }
+        
+        // Try reverse
+        newSpeed = speed > 0 ? -1 : 1;
+        key = `${pos},${newSpeed}`;
+        if (!visited.has(key) && Math.abs(pos - target) < target) {
+            queue.push([pos, newSpeed, steps + 1]);
+            visited.add(key);
+        }
+    }
+    
+    return -1;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int Racecar(int target) {
+        var queue = new Queue<(int pos, int speed, int steps)>();
+        queue.Enqueue((0, 1, 0));
+        var visited = new HashSet<string>();
+        visited.Add("0,1");
+        
+        while (queue.Count > 0) {
+            var (pos, speed, steps) = queue.Dequeue();
+            
+            // Try accelerate
+            int newPos = pos + speed;
+            int newSpeed = speed * 2;
+            string key = $"{newPos},{newSpeed}";
+            if (!visited.Contains(key) && Math.Abs(newPos - target) < target) {
+                if (newPos == target) {
+                    return steps + 1;
+                }
+                queue.Enqueue((newPos, newSpeed, steps + 1));
+                visited.Add(key);
+            }
+            
+            // Try reverse
+            newSpeed = speed > 0 ? -1 : 1;
+            key = $"{pos},{newSpeed}";
+            if (!visited.Contains(key) && Math.Abs(pos - target) < target) {
+                queue.Enqueue((pos, newSpeed, steps + 1));
+                visited.Add(key);
+            }
+        }
+        
+        return -1;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses BFS with queue to find shortest path</li>
+                    <li>Maintains visited set to prevent cycles</li>
+                    <li>Time complexity: O(T log T)</li>
+                    <li>Space complexity: O(T log T)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

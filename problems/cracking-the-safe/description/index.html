@@ -1,0 +1,356 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cracking the Safe - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum length string to unlock a safe with a k-digit password.  Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="leetcode, cracking the safe, algorithm, solution, python, java, cpp, javascript, c#, coding, programming, data structures">
+    <meta property="og:title" content="Cracking the Safe - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/cracking-the-safe/">
+    <meta property="og:description" content="Find the minimum length string to unlock a safe with a k-digit password.  Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/cracking-the-safe/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Cracking the Safe - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the minimum length string to unlock a safe with a k-digit password.  Includes Python, Java, C++, JavaScript, and C# solutions.",
+      "articleBody": "There is a safe protected by a password. The password is a sequence of n digits where each digit can be in the range [0, k - 1]. The safe has a peculiar characteristic: as soon as you enter a sequence of k digits that matches the password, the safe will open. For example, assuming the password is \"345\", I can open it when I type \"012345\", but I cannot enter either \"01234\" or \"0123456\". Return any string of minimum length that will unlock the safe at some point.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/cracking-the-safe/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">753. Cracking the Safe</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There is a safe protected by a password. The password is a sequence of n digits where each digit can be in the range [0, k - 1].
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The safe has a peculiar characteristic: as soon as you enter a sequence of k digits that matches the password, the safe will open. For example, assuming the password is "345", I can open it when I type "012345", but I cannot enter either "01234" or "0123456".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return any string of minimum length that will unlock the safe at some point.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 1, k = 2
+Output: "10"
+Explanation: The password is a single digit, so enter each digit, "01" would also unlock the safe.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 2, k = 2
+Output: "01100"
+Explanation: "01100" will unlock the safe. "01100", "10011", and "11001" would also unlock the safe.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ n ≤ 4</li>
+                    <li>1 ≤ k ≤ 10</li>
+                    <li>k^n will be in the range [1, 4096]</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def crackSafe(self, n: int, k: int) -> str:
+        def dfs(node: str) -> bool:
+            if len(seen) == total:
+                return True
+                
+            for i in range(k):
+                next_node = node[1:] + str(i)
+                if next_node not in seen:
+                    seen.add(next_node)
+                    result.append(str(i))
+                    if dfs(next_node):
+                        return True
+                    result.pop()
+                    seen.remove(next_node)
+            return False
+        
+        # Initialize
+        seen = set()
+        result = []
+        total = k ** n
+        
+        # Start with n zeros
+        start = "0" * n
+        seen.add(start)
+        result = list(start)
+        
+        # DFS to find the sequence
+        dfs(start)
+        
+        return "".join(result)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to find a de Bruijn sequence</li>
+                    <li>Each node represents a sequence of n-1 digits</li>
+                    <li>Time complexity: O(k^n)</li>
+                    <li>Space complexity: O(k^n) for storing seen states</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private Set<String> seen;
+    private StringBuilder result;
+    private int total;
+    
+    public String crackSafe(int n, int k) {
+        seen = new HashSet<>();
+        result = new StringBuilder();
+        total = (int) Math.pow(k, n);
+        
+        // Start with n zeros
+        String start = "0".repeat(n);
+        seen.add(start);
+        result.append(start);
+        
+        // DFS to find the sequence
+        dfs(start, k);
+        
+        return result.toString();
+    }
+    
+    private boolean dfs(String node, int k) {
+        if (seen.size() == total) {
+            return true;
+        }
+        
+        for (int i = 0; i < k; i++) {
+            String next = node.substring(1) + i;
+            if (!seen.contains(next)) {
+                seen.add(next);
+                result.append(i);
+                if (dfs(next, k)) {
+                    return true;
+                }
+                result.setLength(result.length() - 1);
+                seen.remove(next);
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    unordered_set<string> seen;
+    string result;
+    int total;
+    
+    bool dfs(const string& node, int k) {
+        if (seen.size() == total) {
+            return true;
+        }
+        
+        for (int i = 0; i < k; i++) {
+            string next = node.substr(1) + to_string(i);
+            if (seen.count(next) == 0) {
+                seen.insert(next);
+                result += to_string(i);
+                if (dfs(next, k)) {
+                    return true;
+                }
+                result.pop_back();
+                seen.erase(next);
+            }
+        }
+        
+        return false;
+    }
+    
+public:
+    string crackSafe(int n, int k) {
+        total = pow(k, n);
+        
+        // Start with n zeros
+        string start(n, '0');
+        seen.insert(start);
+        result = start;
+        
+        // DFS to find the sequence
+        dfs(start, k);
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function crackSafe(n, k) {
+    const seen = new Set();
+    let result = '';
+    const total = Math.pow(k, n);
+    
+    function dfs(node) {
+        if (seen.size === total) {
+            return true;
+        }
+        
+        for (let i = 0; i < k; i++) {
+            const next = node.slice(1) + i;
+            if (!seen.has(next)) {
+                seen.add(next);
+                result += i;
+                if (dfs(next)) {
+                    return true;
+                }
+                result = result.slice(0, -1);
+                seen.delete(next);
+            }
+        }
+        
+        return false;
+    }
+    
+    // Start with n zeros
+    const start = '0'.repeat(n);
+    seen.add(start);
+    result = start;
+    
+    // DFS to find the sequence
+    dfs(start);
+    
+    return result;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private HashSet<string> seen;
+    private StringBuilder result;
+    private int total;
+    
+    public string CrackSafe(int n, int k) {
+        seen = new HashSet<string>();
+        result = new StringBuilder();
+        total = (int)Math.Pow(k, n);
+        
+        // Start with n zeros
+        string start = new string('0', n);
+        seen.Add(start);
+        result.Append(start);
+        
+        // DFS to find the sequence
+        Dfs(start, k);
+        
+        return result.ToString();
+    }
+    
+    private bool Dfs(string node, int k) {
+        if (seen.Count == total) {
+            return true;
+        }
+        
+        for (int i = 0; i < k; i++) {
+            string next = node.Substring(1) + i;
+            if (!seen.Contains(next)) {
+                seen.Add(next);
+                result.Append(i);
+                if (Dfs(next, k)) {
+                    return true;
+                }
+                result.Length--;
+                seen.Remove(next);
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to find a de Bruijn sequence</li>
+                    <li>Each node represents a sequence of n-1 digits</li>
+                    <li>Time complexity: O(k^n)</li>
+                    <li>Space complexity: O(k^n) for storing seen states</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

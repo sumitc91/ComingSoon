@@ -1,0 +1,387 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Duplicate Subtrees - LeetCodee Solution</title>
+    <meta name="description" content="Find Duplicate Subtrees LeetCode solution in Python, Java, C++, JavaScript, and C#.  Optimized for speed and readability.  Includes detailed explanations and example code.">
+    <meta name="keywords" content="leetcode, find duplicate subtrees, binary tree, algorithm, data structure, python, java, c++, javascript, c#, solution, coding, interview">
+    <meta property="og:title" content="Find Duplicate Subtrees - LeetCodee Solution">
+    <meta property="og:description" content="Find Duplicate Subtrees LeetCode solution in Python, Java, C++, JavaScript, and C#.  Optimized for speed and readability.  Includes detailed explanations and example code.">
+    <meta property="og:url" content="https://leetcodee.com/problems/find-duplicate-subtrees/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/find-duplicate-subtrees/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">652. Find Duplicate Subtrees</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">root</code> of a binary tree, return all <strong>duplicate subtrees</strong>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For each kind of duplicate subtrees, you only need to return the root node of any <strong>one</strong> of them.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Two trees are <strong>duplicate</strong> if they have the <strong>same structure</strong> with the <strong>same node values</strong>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,2,3,4,null,2,4,null,null,4]
+Output: [[2,4],[4]]
+Explanation: 
+The duplicate subtrees are:
+- The subtree rooted at node with value 2 (shown in blue)
+- The subtree rooted at node with value 4 (shown in red)</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [2,1,1]
+Output: [[1]]
+Explanation: The duplicate subtree is the subtree rooted at node with value 1.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [2,2,2,3,null,3,null]
+Output: [[2,3],[3]]
+Explanation: 
+The duplicate subtrees are:
+- The subtree rooted at node with value 2 (shown in blue)
+- The subtree rooted at node with value 3 (shown in red)</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 5000]</li>
+                    <li>-200 ≤ Node.val ≤ 200</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findDuplicateSubtrees(self, root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
+        def serialize(node, subtrees):
+            if not node:
+                return "#"
+            
+            # Create a unique string representation of the subtree
+            serialized = f"{node.val},{serialize(node.left, subtrees)},{serialize(node.right, subtrees)}"
+            
+            # Count occurrences of this subtree
+            if serialized in subtrees:
+                subtrees[serialized][1] += 1
+            else:
+                subtrees[serialized] = [node, 1]
+            
+            return serialized
+        
+        # Map to store serialized subtrees and their count
+        subtrees = {}
+        serialize(root, subtrees)
+        
+        # Return roots of subtrees that appear more than once
+        return [node for node, count in subtrees.values() if count > 1]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Tuple Serialization):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def findDuplicateSubtrees(self, root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
+        def tuplify(node, seen, duplicates):
+            if not node:
+                return None
+            
+            # Create a tuple representation of the subtree
+            tup = (node.val, 
+                   tuplify(node.left, seen, duplicates),
+                   tuplify(node.right, seen, duplicates))
+            
+            # Check if we've seen this subtree before
+            if tup in seen:
+                if seen[tup] == 1:  # First duplicate
+                    duplicates.append(node)
+                seen[tup] += 1
+            else:
+                seen[tup] = 1
+            
+            return tup
+        
+        seen = {}
+        duplicates = []
+        tuplify(root, seen, duplicates)
+        return duplicates</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses string serialization with O(n) space</li>
+                    <li>Second solution uses tuple serialization which can be more efficient</li>
+                    <li>Both solutions have O(n) time complexity where n is number of nodes</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    Map<String, Integer> count;
+    List<TreeNode> result;
+    
+    public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+        count = new HashMap<>();
+        result = new ArrayList<>();
+        serialize(root);
+        return result;
+    }
+    
+    private String serialize(TreeNode node) {
+        if (node == null) {
+            return "#";
+        }
+        
+        // Create a unique string representation of the subtree
+        String serialized = node.val + "," + 
+                          serialize(node.left) + "," + 
+                          serialize(node.right);
+        
+        // Update count and add to result if it's a duplicate
+        count.put(serialized, count.getOrDefault(serialized, 0) + 1);
+        if (count.get(serialized) == 2) {
+            result.add(node);
+        }
+        
+        return serialized;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+    unordered_map<string, pair<TreeNode*, int>> subtrees;
+    
+    string serialize(TreeNode* node) {
+        if (!node) {
+            return "#";
+        }
+        
+        // Create a unique string representation of the subtree
+        string serialized = to_string(node->val) + "," + 
+                          serialize(node->left) + "," + 
+                          serialize(node->right);
+        
+        // Update count and store node reference
+        if (subtrees.count(serialized)) {
+            subtrees[serialized].second++;
+        } else {
+            subtrees[serialized] = {node, 1};
+        }
+        
+        return serialized;
+    }
+    
+public:
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        serialize(root);
+        
+        vector<TreeNode*> result;
+        for (const auto& [_, pair] : subtrees) {
+            if (pair.second > 1) {
+                result.push_back(pair.first);
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @return {TreeNode[]}
+ */
+var findDuplicateSubtrees = function(root) {
+    const subtrees = new Map();
+    const result = [];
+    
+    function serialize(node) {
+        if (!node) {
+            return '#';
+        }
+        
+        // Create a unique string representation of the subtree
+        const serialized = `${node.val},${serialize(node.left)},${serialize(node.right)}`;
+        
+        // Update count and add to result if it's a duplicate
+        const count = subtrees.get(serialized) || 0;
+        if (count === 1) {
+            result.push(node);
+        }
+        subtrees.set(serialized, count + 1);
+        
+        return serialized;
+    }
+    
+    serialize(root);
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private Dictionary<string, (TreeNode Node, int Count)> subtrees;
+    
+    public IList<TreeNode> FindDuplicateSubtrees(TreeNode root) {
+        subtrees = new Dictionary<string, (TreeNode, int)>();
+        Serialize(root);
+        
+        return subtrees.Values
+                      .Where(x => x.Count > 1)
+                      .Select(x => x.Node)
+                      .ToList();
+    }
+    
+    private string Serialize(TreeNode node) {
+        if (node == null) {
+            return "#";
+        }
+        
+        // Create a unique string representation of the subtree
+        string serialized = $"{node.val},{Serialize(node.left)},{Serialize(node.right)}";
+        
+        // Update count and store node reference
+        if (subtrees.ContainsKey(serialized)) {
+            var (existingNode, count) = subtrees[serialized];
+            subtrees[serialized] = (existingNode, count + 1);
+        } else {
+            subtrees[serialized] = (node, 1);
+        }
+        
+        return serialized;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Tuple Serialization):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    private Dictionary<(int Val, string Left, string Right), (TreeNode Node, int Count)> subtrees;
+    
+    public IList<TreeNode> FindDuplicateSubtrees(TreeNode root) {
+        subtrees = new Dictionary<(int, string, string), (TreeNode, int)>();
+        SerializeAsTuple(root);
+        
+        return subtrees.Values
+                      .Where(x => x.Count > 1)
+                      .Select(x => x.Node)
+                      .ToList();
+    }
+    
+    private (int Val, string Left, string Right) SerializeAsTuple(TreeNode node) {
+        if (node == null) {
+            return (0, "#", "#");
+        }
+        
+        var tuple = (node.val, 
+                    SerializeAsTuple(node.left).ToString(),
+                    SerializeAsTuple(node.right).ToString());
+        
+        if (subtrees.ContainsKey(tuple)) {
+            var (existingNode, count) = subtrees[tuple];
+            subtrees[tuple] = (existingNode, count + 1);
+        } else {
+            subtrees[tuple] = (node, 1);
+        }
+        
+        return tuple;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses string serialization for simplicity</li>
+                        <li>Second solution uses tuple serialization for better type safety</li>
+                        <li>Both solutions handle edge cases and maintain O(n) complexity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "652. Find Duplicate Subtrees",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find Duplicate Subtrees LeetCode solution in Python, Java, C++, JavaScript, and C#.  Optimized for speed and readability.  Includes detailed explanations and example code.",
+      "articleBody": "Given the root of a binary tree, return all duplicate subtrees. For each kind of duplicate subtrees, you only need to return the root node of any one of them. Two trees are duplicate if they have the same structure with the same node values.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/find-duplicate-subtrees/"
+      }
+    }
+    </script>
+</body>
+</html>

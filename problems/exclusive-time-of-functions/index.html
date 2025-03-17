@@ -1,0 +1,510 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive Time of Functions - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions and explanations for LeetCode problem 636: Exclusive Time of Functions.  Includes Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, leetcode solution, exclusive time of functions, algorithm, data structures, python, java, cpp, javascript, csharp, programming, coding, problem 636">
+    <meta property="og:title" content="Exclusive Time of Functions - LeetCodee Solution">
+    <meta property="og:description" content="Efficient solutions and explanations for LeetCode problem 636: Exclusive Time of Functions.  Includes Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/exclusive-time-of-functions/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/exclusive-time-of-functions/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">636. Exclusive Time of Functions</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    On a single-threaded CPU, we execute a program containing n functions. Each function has a unique ID between <code class="bg-gray-100 px-1 rounded">0</code> and <code class="bg-gray-100 px-1 rounded">n-1</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Function calls are stored in a call stack: when a function call starts, its ID is pushed onto the stack, and when a function call ends, its ID is popped off the stack. The function whose ID is at the top of the stack is the current function being executed. Each time a function starts or ends, we write a log with the ID, whether it started or ended, and the timestamp.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given a list <code class="bg-gray-100 px-1 rounded">logs</code>, where <code class="bg-gray-100 px-1 rounded">logs[i]</code> represents the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> log message formatted as a string <code class="bg-gray-100 px-1 rounded">"{function_id}:{"start" | "end"}:{timestamp}"</code>. For example, <code class="bg-gray-100 px-1 rounded">"0:start:3"</code> means a function call with function ID 0 started at the beginning of timestamp 3, and <code class="bg-gray-100 px-1 rounded">"1:end:2"</code> means a function call with function ID 1 ended at the end of timestamp 2.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the exclusive time of each function in an array, where the value at the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> index represents the exclusive time for the function with ID <code class="bg-gray-100 px-1 rounded">i</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The exclusive time of a function is the sum of execution times for all function calls in the program. Note that this does not include any time spent in nested calls.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 2, logs = ["0:start:0","1:start:2","1:end:5","0:end:6"]
+Output: [3,4]
+Explanation:
+Function 0 starts at the beginning of time 0, then it executes 2 for units of time and reaches the end of time 1.
+Function 1 starts at the beginning of time 2, executes for 4 units of time, and ends at the end of time 5.
+Function 0 resumes execution at the beginning of time 6 and executes for 1 unit of time.
+So function 0 spends 2 + 1 = 3 units of total time executing, and function 1 spends 4 units of total time executing.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 1, logs = ["0:start:0","0:start:2","0:end:5","0:start:6","0:end:6","0:end:7"]
+Output: [8]
+Explanation:
+Function 0 starts at the beginning of time 0, executes for 2 units of time, and recursively calls itself.
+Function 0 (recursive call) starts at the beginning of time 2, executes for 4 units of time, and ends at the end of time 5.
+Function 0 (initial call) resumes execution then immediately calls itself again at the beginning of time 6.
+Function 0 (2nd recursive call) starts at the beginning of time 6 and executes for 1 unit of time.
+Function 0 (initial call) resumes execution at the beginning of time 7 and executes for 1 unit of time.
+So function 0 spends 2 + 1 + 1 = 4 units of total time executing.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ n ≤ 100</li>
+                    <li>1 ≤ logs.length ≤ 500</li>
+                    <li>0 ≤ function_id < n</li>
+                    <li>0 ≤ timestamp ≤ 10<sup>9</sup></li>
+                    <li>No two start events will happen at the same timestamp</li>
+                    <li>No two end events will happen at the same timestamp</li>
+                    <li>Each function has an "end" log for each "start" log</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
+        result = [0] * n
+        stack = []  # (id, start_time)
+        
+        for log in logs:
+            func_id, action, timestamp = log.split(':')
+            func_id, timestamp = int(func_id), int(timestamp)
+            
+            if action == 'start':
+                if stack:
+                    # Add time to the previous function
+                    prev_id, prev_start = stack[-1]
+                    result[prev_id] += timestamp - prev_start
+                stack.append([func_id, timestamp])
+            else:
+                # End of function
+                _, start_time = stack.pop()
+                # Add time to current function (inclusive of end timestamp)
+                result[func_id] += timestamp - start_time + 1
+                if stack:
+                    # Update start time for previous function
+                    stack[-1][1] = timestamp + 1
+                    
+        return result</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Class):</h4>
+                    <pre class="language-python"><code>class Log:
+    def __init__(self, log: str):
+        func_id, action, timestamp = log.split(':')
+        self.id = int(func_id)
+        self.is_start = action == 'start'
+        self.timestamp = int(timestamp)
+
+class Solution:
+    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
+        result = [0] * n
+        stack = []  # Stack of function IDs
+        
+        logs = [Log(log) for log in logs]
+        
+        for log in logs:
+            if log.is_start:
+                if stack:
+                    result[stack[-1]] += log.timestamp - prev_time
+                stack.append(log.id)
+                prev_time = log.timestamp
+            else:
+                result[stack.pop()] += log.timestamp - prev_time + 1
+                prev_time = log.timestamp + 1
+                
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses simple stack approach: O(n) time, O(n) space</li>
+                    <li>Second solution uses class for better organization</li>
+                    <li>Both handle nested function calls correctly</li>
+                    <li>Careful handling of inclusive end timestamps</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int[] exclusiveTime(int n, List<String> logs) {
+        int[] result = new int[n];
+        Stack<Integer[]> stack = new Stack<>();  // [id, startTime]
+        
+        for (String log : logs) {
+            String[] parts = log.split(":");
+            int id = Integer.parseInt(parts[0]);
+            String action = parts[1];
+            int timestamp = Integer.parseInt(parts[2]);
+            
+            if (action.equals("start")) {
+                if (!stack.isEmpty()) {
+                    Integer[] prev = stack.peek();
+                    result[prev[0]] += timestamp - prev[1];
+                }
+                stack.push(new Integer[]{id, timestamp});
+            } else {
+                Integer[] current = stack.pop();
+                result[id] += timestamp - current[1] + 1;
+                if (!stack.isEmpty()) {
+                    stack.peek()[1] = timestamp + 1;
+                }
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Record):</h4>
+                    <pre class="language-java"><code>class Solution {
+    private record Log(int id, boolean isStart, int timestamp) {
+        static Log parse(String log) {
+            String[] parts = log.split(":");
+            return new Log(
+                Integer.parseInt(parts[0]),
+                parts[1].equals("start"),
+                Integer.parseInt(parts[2])
+            );
+        }
+    }
+    
+    public int[] exclusiveTime(int n, List<String> logs) {
+        int[] result = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        int prevTime = 0;
+        
+        for (String logStr : logs) {
+            Log log = Log.parse(logStr);
+            
+            if (log.isStart) {
+                if (!stack.isEmpty()) {
+                    result[stack.peek()] += log.timestamp - prevTime;
+                }
+                stack.push(log.id);
+                prevTime = log.timestamp;
+            } else {
+                result[stack.pop()] += log.timestamp - prevTime + 1;
+                prevTime = log.timestamp + 1;
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<int> exclusiveTime(int n, vector<string>& logs) {
+        vector<int> result(n, 0);
+        stack<pair<int, int>> st;  // {id, start_time}
+        
+        for (const string& log : logs) {
+            stringstream ss(log);
+            string idStr, action, timeStr;
+            getline(ss, idStr, ':');
+            getline(ss, action, ':');
+            getline(ss, timeStr, ':');
+            
+            int id = stoi(idStr);
+            int timestamp = stoi(timeStr);
+            
+            if (action == "start") {
+                if (!st.empty()) {
+                    auto [prev_id, prev_start] = st.top();
+                    result[prev_id] += timestamp - prev_start;
+                }
+                st.push({id, timestamp});
+            } else {
+                auto [curr_id, start_time] = st.top();
+                st.pop();
+                result[id] += timestamp - start_time + 1;
+                if (!st.empty()) {
+                    st.top().second = timestamp + 1;
+                }
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Struct):</h4>
+                    <pre class="language-cpp"><code>class Solution {
+    struct Log {
+        int id;
+        bool is_start;
+        int timestamp;
+        
+        Log(const string& log) {
+            stringstream ss(log);
+            string id_str, action, time_str;
+            getline(ss, id_str, ':');
+            getline(ss, action, ':');
+            getline(ss, time_str, ':');
+            
+            id = stoi(id_str);
+            is_start = action == "start";
+            timestamp = stoi(time_str);
+        }
+    };
+    
+public:
+    vector<int> exclusiveTime(int n, vector<string>& logs) {
+        vector<int> result(n, 0);
+        stack<int> st;
+        int prev_time = 0;
+        
+        for (const string& log_str : logs) {
+            Log log(log_str);
+            
+            if (log.is_start) {
+                if (!st.empty()) {
+                    result[st.top()] += log.timestamp - prev_time;
+                }
+                st.push(log.id);
+                prev_time = log.timestamp;
+            } else {
+                result[st.top()] += log.timestamp - prev_time + 1;
+                st.pop();
+                prev_time = log.timestamp + 1;
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ * @param {string[]} logs
+ * @return {number[]}
+ */
+var exclusiveTime = function(n, logs) {
+    const result = new Array(n).fill(0);
+    const stack = [];  // [id, startTime]
+    
+    for (const log of logs) {
+        const [id, action, timestamp] = log.split(':');
+        const funcId = parseInt(id);
+        const time = parseInt(timestamp);
+        
+        if (action === 'start') {
+            if (stack.length > 0) {
+                const [prevId, prevStart] = stack[stack.length - 1];
+                result[prevId] += time - prevStart;
+            }
+            stack.push([funcId, time]);
+        } else {
+            const [currId, startTime] = stack.pop();
+            result[funcId] += time - startTime + 1;
+            if (stack.length > 0) {
+                stack[stack.length - 1][1] = time + 1;
+            }
+        }
+    }
+    
+    return result;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Class):</h4>
+                    <pre class="language-javascript"><code>class Log {
+    constructor(log) {
+        const [id, action, timestamp] = log.split(':');
+        this.id = parseInt(id);
+        this.isStart = action === 'start';
+        this.timestamp = parseInt(timestamp);
+    }
+}
+
+/**
+ * @param {number} n
+ * @param {string[]} logs
+ * @return {number[]}
+ */
+var exclusiveTime = function(n, logs) {
+    const result = new Array(n).fill(0);
+    const stack = [];
+    let prevTime = 0;
+    
+    logs = logs.map(log => new Log(log));
+    
+    for (const log of logs) {
+        if (log.isStart) {
+            if (stack.length > 0) {
+                result[stack[stack.length - 1]] += log.timestamp - prevTime;
+            }
+            stack.push(log.id);
+            prevTime = log.timestamp;
+        } else {
+            result[stack.pop()] += log.timestamp - prevTime + 1;
+            prevTime = log.timestamp + 1;
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int[] ExclusiveTime(int n, IList<string> logs) {
+        var result = new int[n];
+        var stack = new Stack<(int id, int startTime)>();
+        
+        foreach (var log in logs) {
+            var parts = log.Split(':');
+            var id = int.Parse(parts[0]);
+            var action = parts[1];
+            var timestamp = int.Parse(parts[2]);
+            
+            if (action == "start") {
+                if (stack.Count > 0) {
+                    var (prevId, prevStart) = stack.Peek();
+                    result[prevId] += timestamp - prevStart;
+                }
+                stack.Push((id, timestamp));
+            } else {
+                var (currId, startTime) = stack.Pop();
+                result[id] += timestamp - startTime + 1;
+                if (stack.Count > 0) {
+                    var prev = stack.Pop();
+                    stack.Push((prev.id, timestamp + 1));
+                }
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Record:</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    private record Log(int Id, bool IsStart, int Timestamp) {
+        public static Log Parse(string log) {
+            var parts = log.Split(':');
+            return new Log(
+                int.Parse(parts[0]),
+                parts[1] == "start",
+                int.Parse(parts[2])
+            );
+        }
+    }
+    
+    public int[] ExclusiveTime(int n, IList<string> logs) {
+        var result = new int[n];
+        var stack = new Stack<int>();
+        var prevTime = 0;
+        
+        var parsedLogs = logs.Select(Log.Parse);
+        
+        foreach (var log in parsedLogs) {
+            if (log.IsStart) {
+                if (stack.Count > 0) {
+                    result[stack.Peek()] += log.Timestamp - prevTime;
+                }
+                stack.Push(log.Id);
+                prevTime = log.Timestamp;
+            } else {
+                result[stack.Pop()] += log.Timestamp - prevTime + 1;
+                prevTime = log.Timestamp + 1;
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Both solutions use stack to track function calls</li>
+                        <li>Record type provides cleaner parsing and organization</li>
+                        <li>Careful handling of inclusive timestamps</li>
+                        <li>Time complexity is O(n) where n is number of logs</li>
+                    </ul>
+                </div>
+            </div>
+            <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "636. Exclusive Time of Functions",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2023-10-27",
+  "description": "Efficient solutions and explanations for LeetCode problem 636: Exclusive Time of Functions. Includes Python, Java, C++, JavaScript, and C# code examples.",
+  "articleBody": "On a single-threaded CPU, we execute a program containing n functions. Each function has a unique ID between 0 and n-1. Function calls are stored in a call stack: when a function call starts, its ID is pushed onto the stack, and when a function call ends, its ID is popped off the stack. The function whose ID is at the top of the stack is the current function being executed. Each time a function starts or ends, we write a log with the ID, whether it started or ended, and the timestamp. You are given a list logs, where logs[i] represents the ith log message formatted as a string \"{function_id}:{start | end}:{timestamp}\".  Return the exclusive time of each function in an array, where the value at the ith index represents the exclusive time for the function with ID i. The exclusive time of a function is the sum of execution times for all function calls in the program. Note that this does not include any time spent in nested calls.",
+  "keywords": "leetcode, leetcode solution, exclusive time of functions, algorithm, data structures, python, java, cpp, javascript, csharp, programming, coding, problem 636"
+}
+</script>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

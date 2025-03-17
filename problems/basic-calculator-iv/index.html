@@ -1,0 +1,773 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator IV - LeetCodee Solution</title>
+    <meta name="description" content="Solve the Basic Calculator IV problem on LeetCodee. Find detailed Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta name="keywords" content="LeetCode, Basic Calculator IV, Python, Java, C++, JavaScript, C#, solution, algorithm, coding, problem solving">
+    <meta property="og:title" content="Basic Calculator IV - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/basic-calculator-iv/">
+    <meta property="og:description" content="Solve the Basic Calculator IV problem on LeetCodee. Find detailed Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/basic-calculator-iv/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">770. Basic Calculator IV</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an expression such as expression = "e + 8 - a + 5" and an evaluation map such as {"e": 1} (given in terms of evalvars = ["e"] and evalints = [1]), return a list of strings representing all possible ways to group the numbers and variables to evaluate the expression.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Each answer should be formatted as a string with the same number of terms as the original expression, with each term being a single variable or a single number.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: expression = "e + 8 - a + 5", evalvars = ["e"], evalints = [1]
+Output: ["-1*a","14"]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: expression = "e - 8 + temperature - pressure", evalvars = ["e", "temperature"], evalints = [1, 12]
+Output: ["-1*pressure","5"]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ expression.length ≤ 250</li>
+                    <li>expression consists of lowercase English letters, digits, '+', '-', '*', '(', ')', ' ' (spaces)</li>
+                    <li>expression does not contain any leading or trailing spaces</li>
+                    <li>All the tokens in expression are separated by a single space</li>
+                    <li>0 ≤ evalvars.length ≤ 100</li>
+                    <li>1 ≤ evalvars[i].length ≤ 20</li>
+                    <li>evalvars[i] consists of lowercase English letters</li>
+                    <li>evalints.length == evalvars.length</li>
+                    <li>-100 ≤ evalints[i] ≤ 100</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def basicCalculatorIV(self, expression: str, evalvars: List[str], evalints: List[int]) -> List[str]:
+        # Create evaluation map
+        eval_map = dict(zip(evalvars, evalints))
+        
+        def evaluate(expr):
+            if not expr:
+                return {}
+            if expr[0] != '(':
+                # Handle single term
+                if expr[0].isdigit():
+                    return {'': int(expr)}
+                if expr[0].isalpha():
+                    return {expr: 1}
+                return {}
+            
+            # Find matching parenthesis
+            count = 1
+            i = 1
+            while i < len(expr) and count > 0:
+                if expr[i] == '(':
+                    count += 1
+                elif expr[i] == ')':
+                    count -= 1
+                i += 1
+            
+            # Evaluate inner expression
+            inner = evaluate(expr[1:i-1])
+            if i == len(expr):
+                return inner
+            
+            # Handle operator
+            op = expr[i]
+            rest = evaluate(expr[i+1:])
+            
+            if op == '+':
+                return add(inner, rest)
+            elif op == '-':
+                return subtract(inner, rest)
+            else:
+                return multiply(inner, rest)
+        
+        def add(d1, d2):
+            result = d1.copy()
+            for k, v in d2.items():
+                result[k] = result.get(k, 0) + v
+            return result
+        
+        def subtract(d1, d2):
+            result = d1.copy()
+            for k, v in d2.items():
+                result[k] = result.get(k, 0) - v
+            return result
+        
+        def multiply(d1, d2):
+            result = {}
+            for k1, v1 in d1.items():
+                for k2, v2 in d2.items():
+                    k = multiply_terms(k1, k2)
+                    result[k] = result.get(k, 0) + v1 * v2
+            return result
+        
+        def multiply_terms(t1, t2):
+            if not t1:
+                return t2
+            if not t2:
+                return t1
+            terms = sorted((t1 + '*' + t2).split('*'))
+            return '*'.join(terms)
+        
+        # Evaluate expression
+        result = evaluate(expression)
+        
+        # Format result
+        formatted = []
+        for term in sorted(result.keys(), key=lambda x: (-len(x.split('*')), x)):
+            if result[term] != 0:
+                if not term:
+                    formatted.append(str(result[term]))
+                else:
+                    formatted.append(f"{result[term]}*{term}")
+        
+        return formatted</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive descent parsing to evaluate the expression</li>
+                    <li>Maintains a dictionary to track terms and their coefficients</li>
+                    <li>Handles addition, subtraction, and multiplication of terms</li>
+                    <li>Time complexity: O(n^2) where n is length of expression</li>
+                    <li>Space complexity: O(n) for storing intermediate results</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<String> basicCalculatorIV(String expression, String[] evalvars, int[] evalints) {
+        // Create evaluation map
+        Map<String, Integer> evalMap = new HashMap<>();
+        for (int i = 0; i < evalvars.length; i++) {
+            evalMap.put(evalvars[i], evalints[i]);
+        }
+        
+        // Parse and evaluate expression
+        Map<String, Integer> result = evaluate(expression, evalMap);
+        
+        // Format result
+        List<String> formatted = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : result.entrySet()) {
+            if (entry.getValue() != 0) {
+                String term = entry.getKey();
+                if (term.isEmpty()) {
+                    formatted.add(String.valueOf(entry.getValue()));
+                } else {
+                    formatted.add(entry.getValue() + "*" + term);
+                }
+            }
+        }
+        
+        // Sort by number of variables (descending) and lexicographically
+        Collections.sort(formatted, (a, b) -> {
+            int countA = a.split("\\*").length;
+            int countB = b.split("\\*").length;
+            if (countA != countB) {
+                return countB - countA;
+            }
+            return a.compareTo(b);
+        });
+        
+        return formatted;
+    }
+    
+    private Map<String, Integer> evaluate(String expr, Map<String, Integer> evalMap) {
+        Map<String, Integer> result = new HashMap<>();
+        if (expr == null || expr.isEmpty()) {
+            return result;
+        }
+        
+        // Handle single term
+        if (!expr.contains("(")) {
+            if (Character.isDigit(expr.charAt(0))) {
+                result.put("", Integer.parseInt(expr));
+            } else if (Character.isLetter(expr.charAt(0))) {
+                result.put(expr, 1);
+            }
+            return result;
+        }
+        
+        // Find matching parenthesis
+        int i = 0;
+        while (i < expr.length() && expr.charAt(i) != '(') {
+            i++;
+        }
+        
+        int j = i + 1;
+        int count = 1;
+        while (j < expr.length() && count > 0) {
+            if (expr.charAt(j) == '(') {
+                count++;
+            } else if (expr.charAt(j) == ')') {
+                count--;
+            }
+            j++;
+        }
+        
+        // Evaluate inner expression
+        Map<String, Integer> inner = evaluate(expr.substring(i + 1, j - 1), evalMap);
+        
+        // Handle operator
+        if (j < expr.length()) {
+            char op = expr.charAt(j);
+            Map<String, Integer> rest = evaluate(expr.substring(j + 1), evalMap);
+            
+            if (op == '+') {
+                result = add(inner, rest);
+            } else if (op == '-') {
+                result = subtract(inner, rest);
+            } else if (op == '*') {
+                result = multiply(inner, rest);
+            }
+        } else {
+            result = inner;
+        }
+        
+        return result;
+    }
+    
+    private Map<String, Integer> add(Map<String, Integer> d1, Map<String, Integer> d2) {
+        Map<String, Integer> result = new HashMap<>(d1);
+        for (Map.Entry<String, Integer> entry : d2.entrySet()) {
+            result.merge(entry.getKey(), entry.getValue(), Integer::sum);
+        }
+        return result;
+    }
+    
+    private Map<String, Integer> subtract(Map<String, Integer> d1, Map<String, Integer> d2) {
+        Map<String, Integer> result = new HashMap<>(d1);
+        for (Map.Entry<String, Integer> entry : d2.entrySet()) {
+            result.merge(entry.getKey(), -entry.getValue(), Integer::sum);
+        }
+        return result;
+    }
+    
+    private Map<String, Integer> multiply(Map<String, Integer> d1, Map<String, Integer> d2) {
+        Map<String, Integer> result = new HashMap<>();
+        for (Map.Entry<String, Integer> e1 : d1.entrySet()) {
+            for (Map.Entry<String, Integer> e2 : d2.entrySet()) {
+                String term = multiplyTerms(e1.getKey(), e2.getKey());
+                result.merge(term, e1.getValue() * e2.getValue(), Integer::sum);
+            }
+        }
+        return result;
+    }
+    
+    private String multiplyTerms(String t1, String t2) {
+        if (t1.isEmpty()) return t2;
+        if (t2.isEmpty()) return t1;
+        String[] terms = (t1 + "*" + t2).split("\\*");
+        Arrays.sort(terms);
+        return String.join("*", terms);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<string> basicCalculatorIV(string expression, vector<string>& evalvars, vector<int>& evalints) {
+        // Create evaluation map
+        unordered_map<string, int> evalMap;
+        for (int i = 0; i < evalvars.size(); i++) {
+            evalMap[evalvars[i]] = evalints[i];
+        }
+        
+        // Parse and evaluate expression
+        unordered_map<string, int> result = evaluate(expression, evalMap);
+        
+        // Format result
+        vector<string> formatted;
+        for (const auto& entry : result) {
+            if (entry.second != 0) {
+                string term = entry.first;
+                if (term.empty()) {
+                    formatted.push_back(to_string(entry.second));
+                } else {
+                    formatted.push_back(to_string(entry.second) + "*" + term);
+                }
+            }
+        }
+        
+        // Sort by number of variables (descending) and lexicographically
+        sort(formatted.begin(), formatted.end(), [](const string& a, const string& b) {
+            int countA = count(a.begin(), a.end(), '*') + 1;
+            int countB = count(b.begin(), b.end(), '*') + 1;
+            if (countA != countB) {
+                return countA > countB;
+            }
+            return a < b;
+        });
+        
+        return formatted;
+    }
+    
+private:
+    unordered_map<string, int> evaluate(const string& expr, const unordered_map<string, int>& evalMap) {
+        unordered_map<string, int> result;
+        if (expr.empty()) {
+            return result;
+        }
+        
+        // Handle single term
+        if (expr.find('(') == string::npos) {
+            if (isdigit(expr[0])) {
+                result[""] = stoi(expr);
+            } else if (isalpha(expr[0])) {
+                result[expr] = 1;
+            }
+            return result;
+        }
+        
+        // Find matching parenthesis
+        int i = 0;
+        while (i < expr.length() && expr[i] != '(') {
+            i++;
+        }
+        
+        int j = i + 1;
+        int count = 1;
+        while (j < expr.length() && count > 0) {
+            if (expr[j] == '(') {
+                count++;
+            } else if (expr[j] == ')') {
+                count--;
+            }
+            j++;
+        }
+        
+        // Evaluate inner expression
+        unordered_map<string, int> inner = evaluate(expr.substr(i + 1, j - i - 2), evalMap);
+        
+        // Handle operator
+        if (j < expr.length()) {
+            char op = expr[j];
+            unordered_map<string, int> rest = evaluate(expr.substr(j + 1), evalMap);
+            
+            if (op == '+') {
+                result = add(inner, rest);
+            } else if (op == '-') {
+                result = subtract(inner, rest);
+            } else if (op == '*') {
+                result = multiply(inner, rest);
+            }
+        } else {
+            result = inner;
+        }
+        
+        return result;
+    }
+    
+    unordered_map<string, int> add(const unordered_map<string, int>& d1, const unordered_map<string, int>& d2) {
+        unordered_map<string, int> result = d1;
+        for (const auto& entry : d2) {
+            result[entry.first] += entry.second;
+        }
+        return result;
+    }
+    
+    unordered_map<string, int> subtract(const unordered_map<string, int>& d1, const unordered_map<string, int>& d2) {
+        unordered_map<string, int> result = d1;
+        for (const auto& entry : d2) {
+            result[entry.first] -= entry.second;
+        }
+        return result;
+    }
+    
+    unordered_map<string, int> multiply(const unordered_map<string, int>& d1, const unordered_map<string, int>& d2) {
+        unordered_map<string, int> result;
+        for (const auto& e1 : d1) {
+            for (const auto& e2 : d2) {
+                string term = multiplyTerms(e1.first, e2.first);
+                result[term] += e1.second * e2.second;
+            }
+        }
+        return result;
+    }
+    
+    string multiplyTerms(const string& t1, const string& t2) {
+        if (t1.empty()) return t2;
+        if (t2.empty()) return t1;
+        vector<string> terms;
+        string term;
+        istringstream iss(t1 + "*" + t2);
+        while (getline(iss, term, '*')) {
+            terms.push_back(term);
+        }
+        sort(terms.begin(), terms.end());
+        string result;
+        for (int i = 0; i < terms.size(); i++) {
+            if (i > 0) result += "*";
+            result += terms[i];
+        }
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function basicCalculatorIV(expression, evalvars, evalints) {
+    // Create evaluation map
+    const evalMap = new Map();
+    for (let i = 0; i < evalvars.length; i++) {
+        evalMap.set(evalvars[i], evalints[i]);
+    }
+    
+    function evaluate(expr) {
+        const result = new Map();
+        if (!expr) {
+            return result;
+        }
+        
+        // Handle single term
+        if (!expr.includes('(')) {
+            if (/^\d+$/.test(expr)) {
+                result.set('', parseInt(expr));
+            } else if (/^[a-z]+$/.test(expr)) {
+                result.set(expr, 1);
+            }
+            return result;
+        }
+        
+        // Find matching parenthesis
+        let i = 0;
+        while (i < expr.length && expr[i] !== '(') {
+            i++;
+        }
+        
+        let j = i + 1;
+        let count = 1;
+        while (j < expr.length && count > 0) {
+            if (expr[j] === '(') {
+                count++;
+            } else if (expr[j] === ')') {
+                count--;
+            }
+            j++;
+        }
+        
+        // Evaluate inner expression
+        const inner = evaluate(expr.substring(i + 1, j - 1));
+        
+        // Handle operator
+        if (j < expr.length) {
+            const op = expr[j];
+            const rest = evaluate(expr.substring(j + 1));
+            
+            if (op === '+') {
+                return add(inner, rest);
+            } else if (op === '-') {
+                return subtract(inner, rest);
+            } else if (op === '*') {
+                return multiply(inner, rest);
+            }
+        }
+        
+        return inner;
+    }
+    
+    function add(d1, d2) {
+        const result = new Map(d1);
+        for (const [k, v] of d2) {
+            result.set(k, (result.get(k) || 0) + v);
+        }
+        return result;
+    }
+    
+    function subtract(d1, d2) {
+        const result = new Map(d1);
+        for (const [k, v] of d2) {
+            result.set(k, (result.get(k) || 0) - v);
+        }
+        return result;
+    }
+    
+    function multiply(d1, d2) {
+        const result = new Map();
+        for (const [k1, v1] of d1) {
+            for (const [k2, v2] of d2) {
+                const term = multiplyTerms(k1, k2);
+                result.set(term, (result.get(term) || 0) + v1 * v2);
+            }
+        }
+        return result;
+    }
+    
+    function multiplyTerms(t1, t2) {
+        if (!t1) return t2;
+        if (!t2) return t1;
+        const terms = (t1 + '*' + t2).split('*').sort();
+        return terms.join('*');
+    }
+    
+    // Evaluate expression
+    const result = evaluate(expression);
+    
+    // Format result
+    const formatted = [];
+    for (const [term, coeff] of result) {
+        if (coeff !== 0) {
+            if (!term) {
+                formatted.push(coeff.toString());
+            } else {
+                formatted.push(`${coeff}*${term}`);
+            }
+        }
+    }
+    
+    // Sort by number of variables (descending) and lexicographically
+    formatted.sort((a, b) => {
+        const countA = (a.match(/\*/g) || []).length + 1;
+        const countB = (b.match(/\*/g) || []).length + 1;
+        if (countA !== countB) {
+            return countB - countA;
+        }
+        return a.localeCompare(b);
+    });
+    
+    return formatted;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<string> BasicCalculatorIV(string expression, string[] evalvars, int[] evalints) {
+        // Create evaluation map
+        var evalMap = new Dictionary<string, int>();
+        for (int i = 0; i < evalvars.Length; i++) {
+            evalMap[evalvars[i]] = evalints[i];
+        }
+        
+        // Parse and evaluate expression
+        var result = Evaluate(expression, evalMap);
+        
+        // Format result
+        var formatted = new List<string>();
+        foreach (var entry in result) {
+            if (entry.Value != 0) {
+                if (string.IsNullOrEmpty(entry.Key)) {
+                    formatted.Add(entry.Value.ToString());
+                } else {
+                    formatted.Add($"{entry.Value}*{entry.Key}");
+                }
+            }
+        }
+        
+        // Sort by number of variables (descending) and lexicographically
+        formatted.Sort((a, b) => {
+            int countA = a.Count(c => c == '*') + 1;
+            int countB = b.Count(c => c == '*') + 1;
+            if (countA != countB) {
+                return countB - countA;
+            }
+            return string.Compare(a, b);
+        });
+        
+        return formatted;
+    }
+    
+    private Dictionary<string, int> Evaluate(string expr, Dictionary<string, int> evalMap) {
+        var result = new Dictionary<string, int>();
+        if (string.IsNullOrEmpty(expr)) {
+            return result;
+        }
+        
+        // Handle single term
+        if (!expr.Contains("(")) {
+            if (int.TryParse(expr, out int num)) {
+                result[""] = num;
+            } else if (expr.All(char.IsLetter)) {
+                result[expr] = 1;
+            }
+            return result;
+        }
+        
+        // Find matching parenthesis
+        int i = 0;
+        while (i < expr.Length && expr[i] != '(') {
+            i++;
+        }
+        
+        int j = i + 1;
+        int count = 1;
+        while (j < expr.Length && count > 0) {
+            if (expr[j] == '(') {
+                count++;
+            } else if (expr[j] == ')') {
+                count--;
+            }
+            j++;
+        }
+        
+        // Evaluate inner expression
+        var inner = Evaluate(expr.Substring(i + 1, j - i - 2), evalMap);
+        
+        // Handle operator
+        if (j < expr.Length) {
+            char op = expr[j];
+            var rest = Evaluate(expr.Substring(j + 1), evalMap);
+            
+            if (op == '+') {
+                result = Add(inner, rest);
+            } else if (op == '-') {
+                result = Subtract(inner, rest);
+            } else if (op == '*') {
+                result = Multiply(inner, rest);
+            }
+        } else {
+            result = inner;
+        }
+        
+        return result;
+    }
+    
+    private Dictionary<string, int> Add(Dictionary<string, int> d1, Dictionary<string, int> d2) {
+        var result = new Dictionary<string, int>(d1);
+        foreach (var entry in d2) {
+            if (result.ContainsKey(entry.Key)) {
+                result[entry.Key] += entry.Value;
+            } else {
+                result[entry.Key] = entry.Value;
+            }
+        }
+        return result;
+    }
+    
+    private Dictionary<string, int> Subtract(Dictionary<string, int> d1, Dictionary<string, int> d2) {
+        var result = new Dictionary<string, int>(d1);
+        foreach (var entry in d2) {
+            if (result.ContainsKey(entry.Key)) {
+                result[entry.Key] -= entry.Value;
+            } else {
+                result[entry.Key] = -entry.Value;
+            }
+        }
+        return result;
+    }
+    
+    private Dictionary<string, int> Multiply(Dictionary<string, int> d1, Dictionary<string, int> d2) {
+        var result = new Dictionary<string, int>();
+        foreach (var e1 in d1) {
+            foreach (var e2 in d2) {
+                string term = MultiplyTerms(e1.Key, e2.Key);
+                if (result.ContainsKey(term)) {
+                    result[term] += e1.Value * e2.Value;
+                } else {
+                    result[term] = e1.Value * e2.Value;
+                }
+            }
+        }
+        return result;
+    }
+    
+    private string MultiplyTerms(string t1, string t2) {
+        if (string.IsNullOrEmpty(t1)) return t2;
+        if (string.IsNullOrEmpty(t2)) return t1;
+        var terms = (t1 + "*" + t2).Split('*').OrderBy(t => t).ToArray();
+        return string.Join("*", terms);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive descent parsing to evaluate the expression</li>
+                    <li>Maintains a dictionary to track terms and their coefficients</li>
+                    <li>Handles addition, subtraction, and multiplication of terms</li>
+                    <li>Time complexity: O(n^2) where n is length of expression</li>
+                    <li>Space complexity: O(n) for storing intermediate results</li>
+                </ul>
+            </div>
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Basic Calculator IV - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Solve the Basic Calculator IV problem on LeetCodee. Find detailed Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.",
+      "articleBody": "Given an expression such as expression = \"e + 8 - a + 5\" and an evaluation map such as {\"e\": 1} (given in terms of evalvars = [\"e\"] and evalints = [1]), return a list of strings representing all possible ways to group the numbers and variables to evaluate the expression. Each answer should be formatted as a string with the same number of terms as the original expression, with each term being a single variable or a single number.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/basic-calculator-iv/"
+      }
+    }
+    </script>
+</body>
+</html>

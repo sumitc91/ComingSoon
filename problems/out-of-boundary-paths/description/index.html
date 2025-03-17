@@ -1,0 +1,407 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Out of Boundary Paths - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of paths to move a ball out of a grid boundary with at most maxMove moves.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, solution, out of boundary paths, dynamic programming, memoization, python, java, cpp, javascript, csharp, algorithm, coding, interview">
+    <meta property="og:title" content="Out of Boundary Paths - LeetCodee Solution">
+    <meta property="og:description" content="Find the number of paths to move a ball out of a grid boundary with at most maxMove moves. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/out-of-boundary-paths/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/out-of-boundary-paths/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">576. Out of Boundary Paths</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There is an <code class="bg-gray-100 px-1 rounded">m x n</code> grid with a ball. The ball is initially at the position <code class="bg-gray-100 px-1 rounded">[startRow, startColumn]</code>. You are allowed to move the ball to one of the four adjacent cells in the grid (possibly out of the grid crossing the grid boundary). You can apply <strong>at most</strong> <code class="bg-gray-100 px-1 rounded">maxMove</code> moves to the ball.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given the five integers <code class="bg-gray-100 px-1 rounded">m</code>, <code class="bg-gray-100 px-1 rounded">n</code>, <code class="bg-gray-100 px-1 rounded">maxMove</code>, <code class="bg-gray-100 px-1 rounded">startRow</code>, <code class="bg-gray-100 px-1 rounded">startColumn</code>, return the number of paths to move the ball out of the grid boundary. Since the answer can be very large, return it <strong>modulo</strong> <code class="bg-gray-100 px-1 rounded">10⁹ + 7</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: m = 2, n = 2, maxMove = 2, startRow = 0, startColumn = 0
+Output: 6</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: m = 1, n = 3, maxMove = 3, startRow = 0, startColumn = 1
+Output: 12</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= m, n <= 50</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= maxMove <= 50</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= startRow < m</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= startColumn < n</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findPaths(self, m: int, n: int, maxMove: int, startRow: int, startColumn: int) -> int:
+        MOD = 10**9 + 7
+        dp = {}
+        
+        def dfs(moves, row, col):
+            if row < 0 or row >= m or col < 0 or col >= n:
+                return 1
+            if moves == 0:
+                return 0
+            
+            key = (moves, row, col)
+            if key in dp:
+                return dp[key]
+            
+            paths = 0
+            for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                paths = (paths + dfs(moves - 1, row + dx, col + dy)) % MOD
+            
+            dp[key] = paths
+            return paths
+        
+        return dfs(maxMove, startRow, startColumn)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">Each state is computed once and memoized.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">For storing the memoization dictionary.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private final int MOD = 1000000007;
+    private Long[][][] dp;
+    
+    public int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        dp = new Long[maxMove + 1][m][n];
+        return (int)dfs(maxMove, startRow, startColumn, m, n);
+    }
+    
+    private long dfs(int moves, int row, int col, int m, int n) {
+        if (row < 0 || row >= m || col < 0 || col >= n) {
+            return 1;
+        }
+        if (moves == 0) {
+            return 0;
+        }
+        
+        if (dp[moves][row][col] != null) {
+            return dp[moves][row][col];
+        }
+        
+        long paths = 0;
+        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        
+        for (int[] dir : dirs) {
+            paths = (paths + dfs(moves - 1, row + dir[0], col + dir[1], m, n)) % MOD;
+        }
+        
+        dp[moves][row][col] = paths;
+        return paths;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">Each state is computed once and memoized.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">For storing the 3D memoization array.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    const int MOD = 1e9 + 7;
+    vector<vector<vector<int>>> dp;
+    
+    int dfs(int moves, int row, int col, int m, int n) {
+        if (row < 0 || row >= m || col < 0 || col >= n) {
+            return 1;
+        }
+        if (moves == 0) {
+            return 0;
+        }
+        
+        if (dp[moves][row][col] != -1) {
+            return dp[moves][row][col];
+        }
+        
+        long paths = 0;
+        vector<pair<int, int>> dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        
+        for (const auto& [dx, dy] : dirs) {
+            paths = (paths + dfs(moves - 1, row + dx, col + dy, m, n)) % MOD;
+        }
+        
+        return dp[moves][row][col] = paths;
+    }
+    
+public:
+    int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        dp = vector<vector<vector<int>>>(maxMove + 1, 
+            vector<vector<int>>(m, vector<int>(n, -1)));
+        return dfs(maxMove, startRow, startColumn, m, n);
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">Each state is computed once and memoized.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">For storing the 3D memoization vector.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} m
+ * @param {number} n
+ * @param {number} maxMove
+ * @param {number} startRow
+ * @param {number} startColumn
+ * @return {number}
+ */
+var findPaths = function(m, n, maxMove, startRow, startColumn) {
+    const MOD = 1e9 + 7;
+    const dp = new Map();
+    
+    function dfs(moves, row, col) {
+        if (row < 0 || row >= m || col < 0 || col >= n) {
+            return 1;
+        }
+        if (moves === 0) {
+            return 0;
+        }
+        
+        const key = `${moves},${row},${col}`;
+        if (dp.has(key)) {
+            return dp.get(key);
+        }
+        
+        let paths = 0;
+        const dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+        
+        for (const [dx, dy] of dirs) {
+            paths = (paths + dfs(moves - 1, row + dx, col + dy)) % MOD;
+        }
+        
+        dp.set(key, paths);
+        return paths;
+    }
+    
+    return dfs(maxMove, startRow, startColumn);
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">Each state is computed once and memoized.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">For storing the memoization map.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private const int MOD = 1000000007;
+    private long[,,] dp;
+    
+    public int FindPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        dp = new long[maxMove + 1, m, n];
+        for (int moves = 0; moves <= maxMove; moves++) {
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    dp[moves, i, j] = -1;
+                }
+            }
+        }
+        return (int)DFS(maxMove, startRow, startColumn, m, n);
+    }
+    
+    private long DFS(int moves, int row, int col, int m, int n) {
+        if (row < 0 || row >= m || col < 0 || col >= n) {
+            return 1;
+        }
+        if (moves == 0) {
+            return 0;
+        }
+        
+        if (dp[moves, row, col] != -1) {
+            return dp[moves, row, col];
+        }
+        
+        long paths = 0;
+        int[,] dirs = new int[,] {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        
+        for (int i = 0; i < 4; i++) {
+            paths = (paths + DFS(moves - 1, row + dirs[i, 0], col + dirs[i, 1], m, n)) % MOD;
+        }
+        
+        dp[moves, row, col] = paths;
+        return paths;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">Each state is computed once and memoized.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n * maxMove)</h4>
+                    <p class="text-gray-700">For storing the 3D memoization array.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses dynamic programming with memoization:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>State definition</li>
+                            <li>Boundary checking</li>
+                            <li>Path counting</li>
+                            <li>Modulo arithmetic</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>DFS traversal</li>
+                            <li>State memoization</li>
+                            <li>Path accumulation</li>
+                            <li>Boundary handling</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Memoization structure</li>
+                        <li>Direction arrays</li>
+                        <li>Recursive calls</li>
+                        <li>State management</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>State reuse</li>
+                        <li>Early termination</li>
+                        <li>Memory efficiency</li>
+                        <li>Modulo handling</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Zero moves</li>
+                        <li>Single cell</li>
+                        <li>Maximum moves</li>
+                        <li>Corner positions</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "576. Out of Boundary Paths",
+      "image": "",
+      "datePublished": "2024-10-27",
+      "dateModified": "2024-10-27",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find the number of paths to move a ball out of a grid boundary with at most maxMove moves. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/out-of-boundary-paths/"
+      }
+    }
+    </script>
+</body>
+</html>

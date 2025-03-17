@@ -1,0 +1,369 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combination Sum III - LeetCodee</title>
+    <meta name="description" content="Detailed solution explanation for LeetCode problem 216: Combination Sum III. Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="LeetCode, Combination Sum III, Algorithm, Backtracking, Python, Java, C++, JavaScript, C#, Solution, Explanation, Coding, Interview">
+    <meta name="canonical" content="https://leetcodee.com/problems/combination-sum-iii/">
+    <meta property="og:title" content="Combination Sum III - LeetCodee"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="https://leetcodee.com/problems/combination-sum-iii/"/>
+    <meta property="og:description" content="Detailed solution explanation for LeetCode problem 216: Combination Sum III. Solutions in Python, Java, C++, JavaScript, and C#."/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Combination Sum III - LeetCodee",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Detailed solution explanation for LeetCode problem 216: Combination Sum III. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "Find all valid combinations of k numbers that sum up to n such that the following conditions are true:\n\nOnly numbers 1 through 9 are used.\nEach number is used at most once.\n\nReturn a list of all possible valid combinations. The list must not contain the same combination twice, and the combinations may be returned in any order.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/combination-sum-iii/"
+      }
+    }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            margin: 0;
+            color: #ffa116;
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .medium { background-color: #FFB800; color: #1a1a1a; }
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .solution-nav {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+        .solution-nav a {
+            margin-right: 15px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .solution-nav a:hover {
+            text-decoration: underline;
+        }
+        .solution {
+            margin-top: 20px;
+        }
+        .complexity {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>216. Combination Sum III</h1>
+        <span class="difficulty medium">Medium</span>
+    </header>
+
+    <div class="content">
+        <h2>Problem Description</h2>
+        <p>Find all valid combinations of <code>k</code> numbers that sum up to <code>n</code> such that the following conditions are true:</p>
+        <ul>
+            <li>Only numbers <code>1</code> through <code>9</code> are used.</li>
+            <li>Each number is used <strong>at most once</strong>.</li>
+        </ul>
+        <p>Return <em>a list of all possible valid combinations</em>. The list must not contain the same combination twice, and the combinations may be returned in any order.</p>
+
+        <h3>Examples</h3>
+        <pre>
+Example 1:
+Input: k = 3, n = 7
+Output: [[1,2,4]]
+Explanation:
+1 + 2 + 4 = 7
+There are no other valid combinations.
+
+Example 2:
+Input: k = 3, n = 9
+Output: [[1,2,6],[1,3,5],[2,3,4]]
+Explanation:
+1 + 2 + 6 = 9
+1 + 3 + 5 = 9
+2 + 3 + 4 = 9
+There are no other valid combinations.
+
+Example 3:
+Input: k = 4, n = 1
+Output: []
+Explanation: There are no valid combinations.</pre>
+
+        <div class="solution-nav">
+            Jump to Solution:
+            <a href="#python">Python</a>
+            <a href="#java">Java</a>
+            <a href="#cpp">C++</a>
+            <a href="#javascript">JavaScript</a>
+            <a href="#csharp">C#</a>
+        </div>
+
+        <div class="solution" id="python">
+            <h3>Python Solution</h3>
+            <pre><code class="language-python">
+def combinationSum3(k: int, n: int) -> List[List[int]]:
+    def backtrack(start: int, target: int, path: List[int]) -> None:
+        if len(path) == k:
+            if target == 0:
+                result.append(path[:])
+            return
+        
+        for i in range(start, 10):
+            if i > target:
+                break
+            path.append(i)
+            backtrack(i + 1, target - i, path)
+            path.pop()
+    
+    result = []
+    backtrack(1, n, [])
+    return result</code></pre>
+        </div>
+
+        <div class="solution" id="java">
+            <h3>Java Solution</h3>
+            <pre><code class="language-java">
+class Solution {
+    private List<List<Integer>> result = new ArrayList<>();
+    
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        backtrack(k, n, 1, new ArrayList<>());
+        return result;
+    }
+    
+    private void backtrack(int k, int target, int start, List<Integer> path) {
+        if (path.size() == k) {
+            if (target == 0) {
+                result.add(new ArrayList<>(path));
+            }
+            return;
+        }
+        
+        for (int i = start; i <= 9; i++) {
+            if (i > target) {
+                break;
+            }
+            path.add(i);
+            backtrack(k, target - i, i + 1, path);
+            path.remove(path.size() - 1);
+        }
+    }
+}</code></pre>
+        </div>
+
+        <div class="solution" id="cpp">
+            <h3>C++ Solution</h3>
+            <pre><code class="language-cpp">
+class Solution {
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> result;
+        vector<int> path;
+        backtrack(k, n, 1, path, result);
+        return result;
+    }
+    
+private:
+    void backtrack(int k, int target, int start, vector<int>& path, 
+                  vector<vector<int>>& result) {
+        if (path.size() == k) {
+            if (target == 0) {
+                result.push_back(path);
+            }
+            return;
+        }
+        
+        for (int i = start; i <= 9; i++) {
+            if (i > target) {
+                break;
+            }
+            path.push_back(i);
+            backtrack(k, target - i, i + 1, path, result);
+            path.pop_back();
+        }
+    }
+};</code></pre>
+        </div>
+
+        <div class="solution" id="javascript">
+            <h3>JavaScript Solution</h3>
+            <pre><code class="language-javascript">
+/**
+ * @param {number} k
+ * @param {number} n
+ * @return {number[][]}
+ */
+var combinationSum3 = function(k, n) {
+    const result = [];
+    
+    const backtrack = (start, target, path) => {
+        if (path.length === k) {
+            if (target === 0) {
+                result.push([...path]);
+            }
+            return;
+        }
+        
+        for (let i = start; i <= 9; i++) {
+            if (i > target) {
+                break;
+            }
+            path.push(i);
+            backtrack(i + 1, target - i, path);
+            path.pop();
+        }
+    };
+    
+    backtrack(1, n, []);
+    return result;
+};</code></pre>
+        </div>
+
+        <div class="solution" id="csharp">
+            <h3>C# Solution</h3>
+            <pre><code class="language-csharp">
+public class Solution {
+    private IList<IList<int>> result = new List<IList<int>>();
+    
+    public IList<IList<int>> CombinationSum3(int k, int n) {
+        Backtrack(k, n, 1, new List<int>());
+        return result;
+    }
+    
+    private void Backtrack(int k, int target, int start, List<int> path) {
+        if (path.Count == k) {
+            if (target == 0) {
+                result.Add(new List<int>(path));
+            }
+            return;
+        }
+        
+        for (int i = start; i <= 9; i++) {
+            if (i > target) {
+                break;
+            }
+            path.Add(i);
+            Backtrack(k, target - i, i + 1, path);
+            path.RemoveAt(path.Count - 1);
+        }
+    }
+}</code></pre>
+        </div>
+
+        <div class="complexity">
+            <h3>Complexity Analysis</h3>
+            <ul>
+                <li><strong>Time Complexity:</strong> O(C(9,k)) where C(n,k) is the binomial coefficient</li>
+                <li><strong>Space Complexity:</strong> O(k) for the recursion stack</li>
+            </ul>
+        </div>
+
+        <div class="explanation">
+            <h3>Solution Explanation</h3>
+            <p>This problem is solved using backtracking:</p>
+            <ul>
+                <li>Key Concepts:
+                    <ul>
+                        <li>Backtracking algorithm</li>
+                        <li>Path tracking</li>
+                        <li>Sum constraint</li>
+                        <li>Length constraint</li>
+                    </ul>
+                </li>
+                <li>Algorithm Steps:
+                    <ul>
+                        <li>Start from number 1</li>
+                        <li>Try each valid number</li>
+                        <li>Track current path</li>
+                        <li>Check constraints</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Key Points</h4>
+            <ul>
+                <li>Path management</li>
+                <li>Sum tracking</li>
+                <li>Early termination</li>
+                <li>Duplicate avoidance</li>
+            </ul>
+
+            <h4>Optimization Tips</h4>
+            <ul>
+                <li>Break when number too large</li>
+                <li>Skip invalid paths</li>
+                <li>Efficient path copying</li>
+                <li>Memory management</li>
+            </ul>
+
+            <h4>Edge Cases</h4>
+            <ul>
+                <li>k = 0</li>
+                <li>n = 0</li>
+                <li>k > 9</li>
+                <li>n too large/small</li>
+            </ul>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+</body>
+</html>

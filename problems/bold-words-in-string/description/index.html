@@ -1,0 +1,344 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bold Words in String - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Bold Words in String problem on LeetCodee. Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta name="keywords" content="leetcode, leetcodee, bold words in string, algorithm, solution, python, java, c++, javascript, c#, coding, programming, tutorial">
+    <meta name="canonical" content="https://leetcodee.com/problems/bold-words-in-string/">
+    <meta property="og:title" content="Bold Words in String - LeetCodee Solution">
+    <meta property="og:description" content="Learn how to solve the Bold Words in String problem on LeetCodee. Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta property="og:url" content="https://leetcodee.com/problems/bold-words-in-string/">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Bold Words in String - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Learn how to solve the Bold Words in String problem on LeetCodee. Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations.",
+      "articleBody": "Given a set of keywords words and a string S, make all appearances of any keyword in S bold. Any letters between <b> and </b> tags become bold. The returned string should use the least number of tags possible, and the tags should form a valid combination. For example, given that words = [\"ab\", \"bc\"] and S = \"aabcd\", we should return \"a<b>abc</b>d\". Note that returning \"a<b>a<b>b</b>c</b>d\" would use more tags than necessary.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/bold-words-in-string/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">758. Bold Words in String</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a set of keywords words and a string S, make all appearances of any keyword in S bold. Any letters between <b> and </b> tags become bold.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The returned string should use the least number of tags possible, and the tags should form a valid combination.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, given that words = ["ab", "bc"] and S = "aabcd", we should return "a<b>abc</b>d". Note that returning "a<b>a<b>b</b>c</b>d" would use more tags than necessary.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: words = ["ab","bc"], S = "aabcd"
+Output: "a<b>abc</b>d"
+Explanation: Note that returning "a<b>a<b>b</b>c</b>d" would use more tags than necessary.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: words = ["b","dee","a"], S = "bdaaee"
+Output: "<b>b</b>d<b>aa</b>e<b>e</b>"</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>words has length in range [0, 50]</li>
+                    <li>words[i] has length in range [1, 10]</li>
+                    <li>S has length in range [0, 500]</li>
+                    <li>All characters in words[i] and S are lowercase letters</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def boldWords(self, words: List[str], S: str) -> str:
+        # Create a set of words for O(1) lookup
+        word_set = set(words)
+        n = len(S)
+        # Mark positions where we need to add bold tags
+        bold = [False] * n
+        
+        # For each position, check if any word starts here
+        for i in range(n):
+            for j in range(i, n):
+                if S[i:j+1] in word_set:
+                    # Mark all positions in this word as bold
+                    for k in range(i, j+1):
+                        bold[k] = True
+        
+        # Build the result string
+        result = []
+        i = 0
+        while i < n:
+            if bold[i]:
+                result.append("<b>")
+                while i < n and bold[i]:
+                    result.append(S[i])
+                    i += 1
+                result.append("</b>")
+            else:
+                result.append(S[i])
+                i += 1
+                
+        return "".join(result)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a boolean array to mark positions that need bold tags</li>
+                    <li>Checks all possible substrings starting at each position</li>
+                    <li>Builds result string by adding bold tags around marked positions</li>
+                    <li>Time complexity: O(n^2 * w) where n is length of S and w is number of words</li>
+                    <li>Space complexity: O(n) for the boolean array</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String boldWords(String[] words, String S) {
+        // Create a set of words for O(1) lookup
+        Set<String> wordSet = new HashSet<>(Arrays.asList(words));
+        int n = S.length();
+        // Mark positions where we need to add bold tags
+        boolean[] bold = new boolean[n];
+        
+        // For each position, check if any word starts here
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (wordSet.contains(S.substring(i, j + 1))) {
+                    // Mark all positions in this word as bold
+                    for (int k = i; k <= j; k++) {
+                        bold[k] = true;
+                    }
+                }
+            }
+        }
+        
+        // Build the result string
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+        while (i < n) {
+            if (bold[i]) {
+                result.append("<b>");
+                while (i < n && bold[i]) {
+                    result.append(S.charAt(i));
+                    i++;
+                }
+                result.append("</b>");
+            } else {
+                result.append(S.charAt(i));
+                i++;
+            }
+        }
+        
+        return result.toString();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string boldWords(vector<string>& words, string S) {
+        // Create a set of words for O(1) lookup
+        unordered_set<string> wordSet(words.begin(), words.end());
+        int n = S.length();
+        // Mark positions where we need to add bold tags
+        vector<bool> bold(n, false);
+        
+        // For each position, check if any word starts here
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (wordSet.count(S.substr(i, j - i + 1))) {
+                    // Mark all positions in this word as bold
+                    for (int k = i; k <= j; k++) {
+                        bold[k] = true;
+                    }
+                }
+            }
+        }
+        
+        // Build the result string
+        string result;
+        int i = 0;
+        while (i < n) {
+            if (bold[i]) {
+                result += "<b>";
+                while (i < n && bold[i]) {
+                    result += S[i];
+                    i++;
+                }
+                result += "</b>";
+            } else {
+                result += S[i];
+                i++;
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function boldWords(words, S) {
+    // Create a set of words for O(1) lookup
+    const wordSet = new Set(words);
+    const n = S.length;
+    // Mark positions where we need to add bold tags
+    const bold = new Array(n).fill(false);
+    
+    // For each position, check if any word starts here
+    for (let i = 0; i < n; i++) {
+        for (let j = i; j < n; j++) {
+            if (wordSet.has(S.substring(i, j + 1))) {
+                // Mark all positions in this word as bold
+                for (let k = i; k <= j; k++) {
+                    bold[k] = true;
+                }
+            }
+        }
+    }
+    
+    // Build the result string
+    let result = '';
+    let i = 0;
+    while (i < n) {
+        if (bold[i]) {
+            result += '<b>';
+            while (i < n && bold[i]) {
+                result += S[i];
+                i++;
+            }
+            result += '</b>';
+        } else {
+            result += S[i];
+            i++;
+        }
+    }
+    
+    return result;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string BoldWords(string[] words, string S) {
+        // Create a set of words for O(1) lookup
+        var wordSet = new HashSet<string>(words);
+        int n = S.Length;
+        // Mark positions where we need to add bold tags
+        bool[] bold = new bool[n];
+        
+        // For each position, check if any word starts here
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (wordSet.Contains(S.Substring(i, j - i + 1))) {
+                    // Mark all positions in this word as bold
+                    for (int k = i; k <= j; k++) {
+                        bold[k] = true;
+                    }
+                }
+            }
+        }
+        
+        // Build the result string
+        var result = new StringBuilder();
+        int pos = 0;
+        while (pos < n) {
+            if (bold[pos]) {
+                result.Append("<b>");
+                while (pos < n && bold[pos]) {
+                    result.Append(S[pos]);
+                    pos++;
+                }
+                result.Append("</b>");
+            } else {
+                result.Append(S[pos]);
+                pos++;
+            }
+        }
+        
+        return result.ToString();
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a boolean array to mark positions that need bold tags</li>
+                    <li>Checks all possible substrings starting at each position</li>
+                    <li>Builds result string by adding bold tags around marked positions</li>
+                    <li>Time complexity: O(n^2 * w) where n is length of S and w is number of words</li>
+                    <li>Space complexity: O(n) for the boolean array</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

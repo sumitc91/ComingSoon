@@ -1,0 +1,340 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profitable Schemes - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of profitable schemes that can be chosen given constraints on profit and group members.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta name="keywords" content="leetcode, profitable schemes, dynamic programming, python, java, c++, javascript, c#, algorithm, solution, coding, interview">
+    <meta property="og:title" content="Profitable Schemes - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/profitable-schemes/">
+    <meta property="og:description" content="Find the number of profitable schemes that can be chosen given constraints on profit and group members. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/profitable-schemes/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Profitable Schemes - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the number of profitable schemes that can be chosen given constraints on profit and group members. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.",
+      "articleBody": "There is a group of n members, and a list of various crimes they could commit. The i<sup>th</sup> crime generates a profit[i] and requires group[i] members to participate in it. If a member participates in one crime, that member can't participate in another crime. Let's call a profitable scheme any subset of these crimes that generates at least minProfit profit, and the total number of members participating in that subset of crimes is at most n. Return the number of schemes that can be chosen. Since the answer may be very large, return it modulo 10⁹ + 7.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/profitable-schemes/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">879. Profitable Schemes</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There is a group of n members, and a list of various crimes they could commit. The i<sup>th</sup> crime generates a profit[i] and requires group[i] members to participate in it.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If a member participates in one crime, that member can't participate in another crime.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Let's call a profitable scheme any subset of these crimes that generates at least minProfit profit, and the total number of members participating in that subset of crimes is at most n.
+                </p>
+                <p class="text-gray-700">
+                    Return the number of schemes that can be chosen. Since the answer may be very large, return it modulo 10⁹ + 7.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 5, minProfit = 3, group = [2,2], profit = [2,3]
+Output: 2
+Explanation: To make a profit of at least 3, the group could either commit crimes 0 and 1, or just crime 1.
+In total, there are 2 schemes.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 10, minProfit = 5, group = [2,3,5], profit = [6,7,8]
+Output: 7
+Explanation: To make a profit of at least 5, the group could commit any crimes, as long as they commit one.
+There are 7 possible schemes: (0), (1), (2), (0,1), (0,2), (1,2), and (0,1,2).</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ n ≤ 100</li>
+                    <li>0 ≤ minProfit ≤ 100</li>
+                    <li>1 ≤ group.length ≤ 100</li>
+                    <li>1 ≤ group[i] ≤ 100</li>
+                    <li>profit.length == group.length</li>
+                    <li>0 ≤ profit[i] ≤ 100</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def profitableSchemes(self, n: int, minProfit: int, group: List[int], profit: List[int]) -> int:
+        MOD = 10**9 + 7
+        length = len(group)
+        
+        # dp[k][i][j] represents the number of schemes using first k crimes
+        # with i members and at least j profit
+        dp = [[[0] * (minProfit + 1) for _ in range(n + 1)] for _ in range(length + 1)]
+        dp[0][0][0] = 1
+        
+        for k in range(1, length + 1):
+            members_needed = group[k-1]
+            profit_gained = profit[k-1]
+            
+            for i in range(n + 1):
+                for j in range(minProfit + 1):
+                    # Don't commit this crime
+                    dp[k][i][j] = dp[k-1][i][j]
+                    
+                    # Commit this crime if we have enough members
+                    if i >= members_needed:
+                        dp[k][i][j] += dp[k-1][i-members_needed][max(0, j-profit_gained)]
+                    
+                    dp[k][i][j] %= MOD
+        
+        return sum(dp[length][i][minProfit] for i in range(n + 1)) % MOD</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses 3D dynamic programming</li>
+                    <li>Time complexity: O(length * n * minProfit)</li>
+                    <li>Space complexity: O(length * n * minProfit)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
+        final int MOD = 1_000_000_007;
+        int length = group.length;
+        
+        // dp[k][i][j] represents the number of schemes using first k crimes
+        // with i members and at least j profit
+        int[][][] dp = new int[length + 1][n + 1][minProfit + 1];
+        dp[0][0][0] = 1;
+        
+        for (int k = 1; k <= length; k++) {
+            int members = group[k-1];
+            int earn = profit[k-1];
+            
+            for (int i = 0; i <= n; i++) {
+                for (int j = 0; j <= minProfit; j++) {
+                    // Don't commit this crime
+                    dp[k][i][j] = dp[k-1][i][j];
+                    
+                    // Commit this crime if we have enough members
+                    if (i >= members) {
+                        dp[k][i][j] = (dp[k][i][j] + dp[k-1][i-members][Math.max(0, j-earn)]) % MOD;
+                    }
+                }
+            }
+        }
+        
+        int sum = 0;
+        for (int i = 0; i <= n; i++) {
+            sum = (sum + dp[length][i][minProfit]) % MOD;
+        }
+        return sum;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int profitableSchemes(int n, int minProfit, vector<int>& group, vector<int>& profit) {
+        const int MOD = 1e9 + 7;
+        int length = group.size();
+        
+        // dp[k][i][j] represents the number of schemes using first k crimes
+        // with i members and at least j profit
+        vector<vector<vector<int>>> dp(length + 1, 
+            vector<vector<int>>(n + 1, vector<int>(minProfit + 1, 0)));
+        dp[0][0][0] = 1;
+        
+        for (int k = 1; k <= length; k++) {
+            int members = group[k-1];
+            int earn = profit[k-1];
+            
+            for (int i = 0; i <= n; i++) {
+                for (int j = 0; j <= minProfit; j++) {
+                    // Don't commit this crime
+                    dp[k][i][j] = dp[k-1][i][j];
+                    
+                    // Commit this crime if we have enough members
+                    if (i >= members) {
+                        dp[k][i][j] = (dp[k][i][j] + dp[k-1][i-members][max(0, j-earn)]) % MOD;
+                    }
+                }
+            }
+        }
+        
+        int sum = 0;
+        for (int i = 0; i <= n; i++) {
+            sum = (sum + dp[length][i][minProfit]) % MOD;
+        }
+        return sum;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ * @param {number} minProfit
+ * @param {number[]} group
+ * @param {number[]} profit
+ * @return {number}
+ */
+var profitableSchemes = function(n, minProfit, group, profit) {
+    const MOD = 1e9 + 7;
+    const length = group.length;
+    
+    // dp[k][i][j] represents the number of schemes using first k crimes
+    // with i members and at least j profit
+    const dp = Array(length + 1).fill().map(() => 
+        Array(n + 1).fill().map(() => 
+            Array(minProfit + 1).fill(0)
+        )
+    );
+    dp[0][0][0] = 1;
+    
+    for (let k = 1; k <= length; k++) {
+        const members = group[k-1];
+        const earn = profit[k-1];
+        
+        for (let i = 0; i <= n; i++) {
+            for (let j = 0; j <= minProfit; j++) {
+                // Don't commit this crime
+                dp[k][i][j] = dp[k-1][i][j];
+                
+                // Commit this crime if we have enough members
+                if (i >= members) {
+                    dp[k][i][j] = (dp[k][i][j] + dp[k-1][i-members][Math.max(0, j-earn)]) % MOD;
+                }
+            }
+        }
+    }
+    
+    let sum = 0;
+    for (let i = 0; i <= n; i++) {
+        sum = (sum + dp[length][i][minProfit]) % MOD;
+    }
+    return sum;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int ProfitableSchemes(int n, int minProfit, int[] group, int[] profit) {
+        const int MOD = 1_000_000_007;
+        int length = group.Length;
+        
+        // dp[k][i][j] represents the number of schemes using first k crimes
+        // with i members and at least j profit
+        int[,,] dp = new int[length + 1, n + 1, minProfit + 1];
+        dp[0,0,0] = 1;
+        
+        for (int k = 1; k <= length; k++) {
+            int members = group[k-1];
+            int earn = profit[k-1];
+            
+            for (int i = 0; i <= n; i++) {
+                for (int j = 0; j <= minProfit; j++) {
+                    // Don't commit this crime
+                    dp[k,i,j] = dp[k-1,i,j];
+                    
+                    // Commit this crime if we have enough members
+                    if (i >= members) {
+                        dp[k,i,j] = (dp[k,i,j] + dp[k-1,i-members,Math.Max(0, j-earn)]) % MOD;
+                    }
+                }
+            }
+        }
+        
+        int sum = 0;
+        for (int i = 0; i <= n; i++) {
+            sum = (sum + dp[length,i,minProfit]) % MOD;
+        }
+        return sum;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses 3D dynamic programming</li>
+                    <li>Handles modulo arithmetic for large numbers</li>
+                    <li>Optimizes state transitions</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kth Largest Element in a Stream - LeetCodee Solution</title>
+    <meta name="description" content="Find the kth largest element in a stream.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, kth largest element, stream, algorithm, data structure, heap, priority queue, python, java, cpp, javascript, c#, solution, coding, interview">
+    <meta property="og:title" content="Kth Largest Element in a Stream - LeetCodee Solution">
+    <meta property="og:description" content="Find the kth largest element in a stream.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/kth-largest-element-in-a-stream/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/kth-largest-element-in-a-stream/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">703. Kth Largest Element in a Stream</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Design a class to find the <code class="bg-gray-100 px-1 rounded">k<sup>th</sup></code> largest element in a stream. Note that it is the <code class="bg-gray-100 px-1 rounded">k<sup>th</sup></code> largest element in the sorted order, not the <code class="bg-gray-100 px-1 rounded">k<sup>th</sup></code> distinct element.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement <code class="bg-gray-100 px-1 rounded">KthLargest</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">KthLargest(int k, int[] nums)</code> Initializes the object with the integer <code class="bg-gray-100 px-1 rounded">k</code> and the stream of integers <code class="bg-gray-100 px-1 rounded">nums</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">int add(int val)</code> Appends the integer <code class="bg-gray-100 px-1 rounded">val</code> to the stream and returns the element representing the <code class="bg-gray-100 px-1 rounded">k<sup>th</sup></code> largest element in the stream</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["KthLargest", "add", "add", "add", "add", "add"]
+[[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]
+Output
+[null, 4, 5, 5, 8, 8]
+
+Explanation
+KthLargest kthLargest = new KthLargest(3, [4, 5, 8, 2]);
+kthLargest.add(3);   // return 4
+kthLargest.add(5);   // return 5
+kthLargest.add(10);  // return 5
+kthLargest.add(9);   // return 8
+kthLargest.add(4);   // return 8</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ k ≤ 10<sup>4</sup></li>
+                    <li>0 ≤ nums.length ≤ 10<sup>4</sup></li>
+                    <li>-10<sup>4</sup> ≤ nums[i] ≤ 10<sup>4</sup></li>
+                    <li>-10<sup>4</sup> ≤ val ≤ 10<sup>4</sup></li>
+                    <li>At most 10<sup>4</sup> calls will be made to add</li>
+                    <li>It is guaranteed that there will be at least k elements in the array when you search for the k<sup>th</sup> element</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class KthLargest:
+    def __init__(self, k: int, nums: List[int]):
+        self.k = k
+        self.heap = []
+        for num in nums:
+            self.add(num)
+
+    def add(self, val: int) -> int:
+        heapq.heappush(self.heap, val)
+        if len(self.heap) > self.k:
+            heapq.heappop(self.heap)
+        return self.heap[0]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses min heap to maintain k largest elements</li>
+                    <li>Time complexity: O(log k) for add operation</li>
+                    <li>Space complexity: O(k) to store the heap</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class KthLargest {
+    private final int k;
+    private final PriorityQueue<Integer> heap;
+    
+    public KthLargest(int k, int[] nums) {
+        this.k = k;
+        heap = new PriorityQueue<>();
+        for (int num : nums) {
+            add(num);
+        }
+    }
+    
+    public int add(int val) {
+        heap.offer(val);
+        if (heap.size() > k) {
+            heap.poll();
+        }
+        return heap.peek();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class KthLargest {
+private:
+    int k;
+    priority_queue<int, vector<int>, greater<int>> heap;
+    
+public:
+    KthLargest(int k, vector<int>& nums) {
+        this->k = k;
+        for (int num : nums) {
+            add(num);
+        }
+    }
+    
+    int add(int val) {
+        heap.push(val);
+        if (heap.size() > k) {
+            heap.pop();
+        }
+        return heap.top();
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} k
+ * @param {number[]} nums
+ */
+var KthLargest = function(k, nums) {
+    this.k = k;
+    this.heap = new MinPriorityQueue();
+    nums.forEach(num => this.add(num));
+};
+
+/** 
+ * @param {number} val
+ * @return {number}
+ */
+KthLargest.prototype.add = function(val) {
+    this.heap.enqueue(val);
+    if (this.heap.size() > this.k) {
+        this.heap.dequeue();
+    }
+    return this.heap.front().element;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class KthLargest {
+    private readonly int k;
+    private readonly PriorityQueue<int, int> heap;
+    
+    public KthLargest(int k, int[] nums) {
+        this.k = k;
+        heap = new PriorityQueue<int, int>();
+        foreach (int num in nums) {
+            Add(num);
+        }
+    }
+    
+    public int Add(int val) {
+        heap.Enqueue(val, val);
+        if (heap.Count > k) {
+            heap.Dequeue();
+        }
+        return heap.Peek();
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses min heap (priority queue) to maintain k largest elements</li>
+                    <li>Heap size is kept at k elements</li>
+                    <li>Time complexity: O(log k) for add operation</li>
+                    <li>Space complexity: O(k) to store the heap</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              "headline": "703. Kth Largest Element in a Stream",
+              "author": {
+                "@type": "Person",
+                "name": "LeetCodee"
+              },
+              "datePublished": "2023-10-27",
+              "dateModified": "2023-10-27",
+              "description": "Find the kth largest element in a stream.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+              "publisher": {
+                "@type": "Organization",
+                "name": "LeetCodee",
+                "url": "https://leetcodee.com"
+              },
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://leetcodee.com/problems/kth-largest-element-in-a-stream/"
+              },
+              "keywords": "leetcode, kth largest element, stream, algorithm, data structure, heap, priority queue, python, java, cpp, javascript, c#, solution, coding, interview"
+            }
+            </script>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

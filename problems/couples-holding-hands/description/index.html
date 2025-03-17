@@ -1,0 +1,309 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couples Holding Hands - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum number of swaps to seat couples together.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, couples holding hands, algorithm, solution, python, java, c++, javascript, c#, coding, interview, data structures">
+    <meta property="og:title" content="Couples Holding Hands - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/couples-holding-hands/">
+    <meta property="og:description" content="Find the minimum number of swaps to seat couples together.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/couples-holding-hands/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "765. Couples Holding Hands",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the minimum number of swaps to seat couples together. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/couples-holding-hands/"
+      },
+      "keywords": "leetcode, couples holding hands, algorithm, solution, python, java, c++, javascript, c#, coding, interview, data structures"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">765. Couples Holding Hands</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There are n couples sitting in 2n seats arranged in a row and want to hold hands. The people and seats are represented by an integer array row where row[i] is the ID of the person sitting in the ith seat. The couples are numbered in order, the first couple being (0, 1), the second couple being (2, 3), and so on with the last couple being (2n - 2, 2n - 1).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the minimum number of swaps so that every couple is sitting side by side. A swap consists of choosing any two people, then they stand up and switch seats.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: row = [0,2,1,3]
+Output: 1
+Explanation: We only need to swap the second (row[1]) and third (row[2]) person.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: row = [3,2,0,1]
+Output: 0
+Explanation: All couples are already seated side by side.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>2n == row.length</li>
+                    <li>2 ≤ n ≤ 30</li>
+                    <li>n is even</li>
+                    <li>0 ≤ row[i] < 2n</li>
+                    <li>All the elements of row are unique</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def minSwapsCouples(self, row: List[int]) -> int:
+        # Create a map to store the position of each person
+        pos = {x: i for i, x in enumerate(row)}
+        swaps = 0
+        
+        # For each couple
+        for i in range(0, len(row), 2):
+            x = row[i]
+            # Find the partner of x
+            y = x + 1 if x % 2 == 0 else x - 1
+            
+            # If partner is not next to x, swap
+            if row[i + 1] != y:
+                swaps += 1
+                # Swap y with the person next to x
+                pos[row[i + 1]], pos[y] = pos[y], pos[row[i + 1]]
+                row[pos[y]], row[pos[row[i + 1]]] = row[pos[row[i + 1]]], row[pos[y]]
+                
+        return swaps</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a hash map to track positions of people</li>
+                    <li>For each couple, checks if they are sitting together</li>
+                    <li>If not, swaps the partner with the person next to x</li>
+                    <li>Time complexity: O(n) where n is length of row</li>
+                    <li>Space complexity: O(n) for the position map</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int minSwapsCouples(int[] row) {
+        // Create a map to store the position of each person
+        Map<Integer, Integer> pos = new HashMap<>();
+        for (int i = 0; i < row.length; i++) {
+            pos.put(row[i], i);
+        }
+        
+        int swaps = 0;
+        
+        // For each couple
+        for (int i = 0; i < row.length; i += 2) {
+            int x = row[i];
+            // Find the partner of x
+            int y = x % 2 == 0 ? x + 1 : x - 1;
+            
+            // If partner is not next to x, swap
+            if (row[i + 1] != y) {
+                swaps++;
+                // Swap y with the person next to x
+                int temp = row[i + 1];
+                row[i + 1] = y;
+                row[pos.get(y)] = temp;
+                pos.put(temp, pos.get(y));
+                pos.put(y, i + 1);
+            }
+        }
+        
+        return swaps;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int minSwapsCouples(vector<int>& row) {
+        // Create a map to store the position of each person
+        unordered_map<int, int> pos;
+        for (int i = 0; i < row.size(); i++) {
+            pos[row[i]] = i;
+        }
+        
+        int swaps = 0;
+        
+        // For each couple
+        for (int i = 0; i < row.size(); i += 2) {
+            int x = row[i];
+            // Find the partner of x
+            int y = x % 2 == 0 ? x + 1 : x - 1;
+            
+            // If partner is not next to x, swap
+            if (row[i + 1] != y) {
+                swaps++;
+                // Swap y with the person next to x
+                int temp = row[i + 1];
+                row[i + 1] = y;
+                row[pos[y]] = temp;
+                pos[temp] = pos[y];
+                pos[y] = i + 1;
+            }
+        }
+        
+        return swaps;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function minSwapsCouples(row) {
+    // Create a map to store the position of each person
+    const pos = new Map();
+    for (let i = 0; i < row.length; i++) {
+        pos.set(row[i], i);
+    }
+    
+    let swaps = 0;
+    
+    // For each couple
+    for (let i = 0; i < row.length; i += 2) {
+        const x = row[i];
+        // Find the partner of x
+        const y = x % 2 === 0 ? x + 1 : x - 1;
+        
+        // If partner is not next to x, swap
+        if (row[i + 1] !== y) {
+            swaps++;
+            // Swap y with the person next to x
+            const temp = row[i + 1];
+            row[i + 1] = y;
+            row[pos.get(y)] = temp;
+            pos.set(temp, pos.get(y));
+            pos.set(y, i + 1);
+        }
+    }
+    
+    return swaps;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int MinSwapsCouples(int[] row) {
+        // Create a dictionary to store the position of each person
+        var pos = new Dictionary<int, int>();
+        for (int i = 0; i < row.Length; i++) {
+            pos[row[i]] = i;
+        }
+        
+        int swaps = 0;
+        
+        // For each couple
+        for (int i = 0; i < row.Length; i += 2) {
+            int x = row[i];
+            // Find the partner of x
+            int y = x % 2 == 0 ? x + 1 : x - 1;
+            
+            // If partner is not next to x, swap
+            if (row[i + 1] != y) {
+                swaps++;
+                // Swap y with the person next to x
+                int temp = row[i + 1];
+                row[i + 1] = y;
+                row[pos[y]] = temp;
+                pos[temp] = pos[y];
+                pos[y] = i + 1;
+            }
+        }
+        
+        return swaps;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a hash map to track positions of people</li>
+                    <li>For each couple, checks if they are sitting together</li>
+                    <li>If not, swaps the partner with the person next to x</li>
+                    <li>Time complexity: O(n) where n is length of row</li>
+                    <li>Space complexity: O(n) for the position map</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-1068871795581451"
+                data-ad-slot="1234567890"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

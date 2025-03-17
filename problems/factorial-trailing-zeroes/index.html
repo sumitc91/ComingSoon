@@ -1,0 +1,265 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorial Trailing Zeroes - LeetCodee</title>
+    <meta name="description" content="Detailed solution explanation for LeetCode problem 172: Factorial Trailing Zeroes. Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="LeetCode, Factorial Trailing Zeroes, Algorithm, Solution, Python, Java, C++, JavaScript, C#, Coding, Programming, Tutorial, Explanation">
+    <meta name="canonical" content="https://leetcodee.com/problems/factorial-trailing-zeroes/">
+    <meta property="og:title" content="Factorial Trailing Zeroes - LeetCodee"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="https://leetcodee.com/problems/factorial-trailing-zeroes/"/>
+    <meta property="og:description" content="Detailed solution explanation for LeetCode problem 172: Factorial Trailing Zeroes. Solutions in Python, Java, C++, JavaScript, and C#."/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Factorial Trailing Zeroes",
+        "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+        },
+        "datePublished": "2023-10-27",
+        "description": "Detailed solution explanation for LeetCode problem 172: Factorial Trailing Zeroes. Solutions in Python, Java, C++, JavaScript, and C#.",
+        "keywords": "LeetCode, Factorial Trailing Zeroes, Algorithm, Solution, Python, Java, C++, JavaScript, C#, Coding, Programming, Tutorial, Explanation"
+    }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            margin: 0;
+            color: #ffa116;
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .medium { background-color: #FFB800; color: #1a1a1a; }
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .solution-nav {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+        .solution-nav a {
+            margin-right: 15px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .solution-nav a:hover {
+            text-decoration: underline;
+        }
+        .solution {
+            margin-top: 20px;
+        }
+        .complexity {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>172. Factorial Trailing Zeroes</h1>
+        <span class="difficulty medium">Medium</span>
+    </header>
+
+    <div class="content">
+        <h2>Problem Description</h2>
+        <p>Given an integer <code>n</code>, return <em>the number of trailing zeroes in <code>n!</code></em>.</p>
+        <p>Note that <code>n! = n * (n - 1) * (n - 2) * ... * 3 * 2 * 1</code>.</p>
+
+        <h3>Examples</h3>
+        <pre>
+Example 1:
+Input: n = 3
+Output: 0
+Explanation: 3! = 6, no trailing zero.
+
+Example 2:
+Input: n = 5
+Output: 1
+Explanation: 5! = 120, one trailing zero.
+
+Example 3:
+Input: n = 0
+Output: 0</pre>
+
+        <div class="solution-nav">
+            Jump to Solution:
+            <a href="#python">Python</a>
+            <a href="#java">Java</a>
+            <a href="#cpp">C++</a>
+            <a href="#javascript">JavaScript</a>
+            <a href="#csharp">C#</a>
+        </div>
+
+        <div class="solution" id="python">
+            <h3>Python Solution</h3>
+            <pre><code>
+def trailingZeroes(n: int) -> int:
+    count = 0
+    i = 5
+    
+    while i <= n:
+        count += n // i
+        i *= 5
+    
+    return count</code></pre>
+        </div>
+
+        <div class="solution" id="java">
+            <h3>Java Solution</h3>
+            <pre><code>
+class Solution {
+    public int trailingZeroes(int n) {
+        int count = 0;
+        
+        for (long i = 5; i <= n; i *= 5) {
+            count += n / i;
+        }
+        
+        return count;
+    }
+}</code></pre>
+        </div>
+
+        <div class="solution" id="cpp">
+            <h3>C++ Solution</h3>
+            <pre><code>
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int count = 0;
+        
+        for (long i = 5; i <= n; i *= 5) {
+            count += n / i;
+        }
+        
+        return count;
+    }
+};</code></pre>
+        </div>
+
+        <div class="solution" id="javascript">
+            <h3>JavaScript Solution</h3>
+            <pre><code>
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var trailingZeroes = function(n) {
+    let count = 0;
+    
+    for (let i = 5; i <= n; i *= 5) {
+        count += Math.floor(n / i);
+    }
+    
+    return count;
+};</code></pre>
+        </div>
+
+        <div class="solution" id="csharp">
+            <h3>C# Solution</h3>
+            <pre><code>
+public class Solution {
+    public int TrailingZeroes(int n) {
+        int count = 0;
+        
+        for (long i = 5; i <= n; i *= 5) {
+            count += n / (int)i;
+        }
+        
+        return count;
+    }
+}</code></pre>
+        </div>
+
+        <div class="complexity">
+            <h3>Complexity Analysis</h3>
+            <ul>
+                <li><strong>Time Complexity:</strong> O(log n) as we divide n by 5 in each iteration</li>
+                <li><strong>Space Complexity:</strong> O(1) as we only use a counter variable</li>
+            </ul>
+        </div>
+
+        <div class="explanation">
+            <h3>Solution Explanation</h3>
+            <p>This solution counts factors of 5:</p>
+            <ul>
+                <li>Key concept:
+                    <ul>
+                        <li>Factor counting</li>
+                        <li>Powers of 5</li>
+                        <li>Trailing zeros</li>
+                    </ul>
+                </li>
+                <li>Algorithm steps:
+                    <ul>
+                        <li>Count factors of 5</li>
+                        <li>Handle powers of 5</li>
+                        <li>Accumulate count</li>
+                        <li>Return result</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Key points:</p>
+            <ul>
+                <li>Logarithmic time</li>
+                <li>Constant space</li>
+                <li>No factorial needed</li>
+                <li>Handle overflow</li>
+            </ul>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+</body>
+</html>

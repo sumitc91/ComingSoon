@@ -1,0 +1,276 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Trees with Factors - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 823: Binary Trees with Factors. Includes detailed explanations and implementation notes.">
+    <meta name="keywords" content="leetcode, leetcode solution, binary trees with factors, dynamic programming, python, java, c++, javascript, c#, algorithm, data structure, coding interview">
+    <meta property="og:title" content="Binary Trees with Factors - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/binary-trees-with-factors/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 823: Binary Trees with Factors. Includes detailed explanations and implementation notes.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/binary-trees-with-factors/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Binary Trees with Factors - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 823: Binary Trees with Factors. Includes detailed explanations and implementation notes.",
+      "keywords": "leetcode, leetcode solution, binary trees with factors, dynamic programming, python, java, c++, javascript, c#, algorithm, data structure, coding interview"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">823. Binary Trees with Factors</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an array of unique integers arr, where each integer arr[i] is strictly greater than 1.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    We make a binary tree using these integers, and each number may be used for any number of times. Each non-leaf node's value should be equal to the product of the values of its children.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the number of binary trees we can make. The answer may be too large so return the answer modulo 10^9 + 7.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: arr = [2,4]
+Output: 3
+Explanation: We can make these trees: [2], [4], [4, 2, 2]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: arr = [2,4,5,10]
+Output: 7
+Explanation: We can make these trees: [2], [4], [5], [10], [4, 2, 2], [10, 2, 5], [10, 5, 2]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ arr.length ≤ 1000</li>
+                    <li>2 ≤ arr[i] ≤ 10^9</li>
+                    <li>All the values of arr are unique</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def numFactoredBinaryTrees(self, arr: List[int]) -> int:
+        MOD = 10**9 + 7
+        arr.sort()
+        dp = {}
+        
+        for i, num in enumerate(arr):
+            dp[num] = 1  # Tree with single node
+            for j in range(i):
+                if num % arr[j] == 0:  # arr[j] can be left child
+                    right = num // arr[j]
+                    if right in dp:  # If right child exists in array
+                        dp[num] = (dp[num] + dp[arr[j]] * dp[right]) % MOD
+                        
+        return sum(dp.values()) % MOD</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming to build trees bottom-up</li>
+                    <li>Sorts array to process smaller numbers first</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int numFactoredBinaryTrees(int[] arr) {
+        int MOD = 1_000_000_007;
+        Arrays.sort(arr);
+        Map<Integer, Long> dp = new HashMap<>();
+        
+        for (int i = 0; i < arr.length; i++) {
+            dp.put(arr[i], 1L);  // Tree with single node
+            for (int j = 0; j < i; j++) {
+                if (arr[i] % arr[j] == 0) {  // arr[j] can be left child
+                    int right = arr[i] / arr[j];
+                    if (dp.containsKey(right)) {  // If right child exists
+                        long ways = dp.get(arr[j]) * dp.get(right) % MOD;
+                        dp.put(arr[i], (dp.get(arr[i]) + ways) % MOD);
+                    }
+                }
+            }
+        }
+        
+        long sum = 0;
+        for (long ways : dp.values()) {
+            sum = (sum + ways) % MOD;
+        }
+        return (int) sum;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int numFactoredBinaryTrees(vector<int>& arr) {
+        const int MOD = 1e9 + 7;
+        sort(arr.begin(), arr.end());
+        unordered_map<int, long> dp;
+        
+        for (int i = 0; i < arr.size(); i++) {
+            dp[arr[i]] = 1;  // Tree with single node
+            for (int j = 0; j < i; j++) {
+                if (arr[i] % arr[j] == 0) {  // arr[j] can be left child
+                    int right = arr[i] / arr[j];
+                    if (dp.count(right)) {  // If right child exists
+                        dp[arr[i]] = (dp[arr[i]] + dp[arr[j]] * dp[right]) % MOD;
+                    }
+                }
+            }
+        }
+        
+        long sum = 0;
+        for (const auto& pair : dp) {
+            sum = (sum + pair.second) % MOD;
+        }
+        return sum;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+var numFactoredBinaryTrees = function(arr) {
+    const MOD = 1e9 + 7;
+    arr.sort((a, b) => a - b);
+    const dp = new Map();
+    
+    for (let i = 0; i < arr.length; i++) {
+        dp.set(arr[i], 1);  // Tree with single node
+        for (let j = 0; j < i; j++) {
+            if (arr[i] % arr[j] === 0) {  // arr[j] can be left child
+                const right = arr[i] / arr[j];
+                if (dp.has(right)) {  // If right child exists
+                    const ways = (dp.get(arr[j]) * dp.get(right)) % MOD;
+                    dp.set(arr[i], (dp.get(arr[i]) + ways) % MOD);
+                }
+            }
+        }
+    }
+    
+    let sum = 0;
+    for (const ways of dp.values()) {
+        sum = (sum + ways) % MOD;
+    }
+    return sum;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int NumFactoredBinaryTrees(int[] arr) {
+        const int MOD = 1_000_000_007;
+        Array.Sort(arr);
+        var dp = new Dictionary<int, long>();
+        
+        for (int i = 0; i < arr.Length; i++) {
+            dp[arr[i]] = 1;  // Tree with single node
+            for (int j = 0; j < i; j++) {
+                if (arr[i] % arr[j] == 0) {  // arr[j] can be left child
+                    int right = arr[i] / arr[j];
+                    if (dp.ContainsKey(right)) {  // If right child exists
+                        long ways = dp[arr[j]] * dp[right] % MOD;
+                        dp[arr[i]] = (dp[arr[i]] + ways) % MOD;
+                    }
+                }
+            }
+        }
+        
+        long sum = 0;
+        foreach (var ways in dp.Values) {
+            sum = (sum + ways) % MOD;
+        }
+        return (int)sum;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses Dictionary for dynamic programming</li>
+                    <li>Handles modulo arithmetic for large numbers</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

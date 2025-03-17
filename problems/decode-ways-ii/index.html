@@ -1,0 +1,501 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decode Ways II - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of ways to decode a message containing digits and '*' characters.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, decode ways ii, dynamic programming, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <meta property="og:title" content="Decode Ways II - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/decode-ways-ii/">
+    <meta property="og:description" content="Find the number of ways to decode a message containing digits and '*' characters. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/decode-ways-ii/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Decode Ways II - LeetCodee Solution",
+      "image": "",
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find the number of ways to decode a message containing digits and '*' characters. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/decode-ways-ii/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">639. Decode Ways II</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A message containing letters from <code class="bg-gray-100 px-1 rounded">A-Z</code> can be encoded into numbers using the following mapping:
+                </p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
+'A' -> "1"
+'B' -> "2"
+...
+'Z' -> "26"</pre>
+                <p class="text-gray-700 mb-4">
+                    To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, <code class="bg-gray-100 px-1 rounded">"11106"</code> can be mapped into:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>"AAJF" with the grouping (1 1 10 6)</li>
+                    <li>"KJF" with the grouping (11 10 6)</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Note that the grouping <code class="bg-gray-100 px-1 rounded">(1 11 06)</code> is invalid because <code class="bg-gray-100 px-1 rounded">"06"</code> cannot be mapped into <code class="bg-gray-100 px-1 rounded">'F'</code> since <code class="bg-gray-100 px-1 rounded">"6"</code> is different from <code class="bg-gray-100 px-1 rounded">"06"</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    In addition to the mapping above, an encoded message may contain the <code class="bg-gray-100 px-1 rounded">'*'</code> character, which can represent any digit from <code class="bg-gray-100 px-1 rounded">'1'</code> to <code class="bg-gray-100 px-1 rounded">'9'</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given a string <code class="bg-gray-100 px-1 rounded">s</code> containing digits and the <code class="bg-gray-100 px-1 rounded">'*'</code> character, return the number of ways to decode it. Since the answer may be very large, return it modulo <code class="bg-gray-100 px-1 rounded">10<sup>9</sup> + 7</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "*"
+Output: 9
+Explanation: The encoded message can represent any digit from 1 to 9.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "1*"
+Output: 18
+Explanation: The encoded message can represent any of the following: "11", "12", "13", "14", "15", "16", "17", "18", "19".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "2*"
+Output: 15
+Explanation: The encoded message can represent any of the following: "21", "22", "23", "24", "25", "26".</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 10<sup>5</sup></li>
+                    <li>s[i] is a digit or <code class="bg-gray-100 px-1 rounded">'*'</code></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def numDecodings(self, s: str) -> int:
+        MOD = 10**9 + 7
+        n = len(s)
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        
+        # Handle first character
+        if s[0] == '*':
+            dp[1] = 9
+        elif s[0] == '0':
+            dp[1] = 0
+        else:
+            dp[1] = 1
+            
+        for i in range(2, n + 1):
+            curr = s[i-1]
+            prev = s[i-2]
+            
+            # Single digit decode
+            if curr == '*':
+                dp[i] = (dp[i] + dp[i-1] * 9) % MOD
+            elif curr != '0':
+                dp[i] = (dp[i] + dp[i-1]) % MOD
+                
+            # Two digit decode
+            if prev == '*':
+                if curr == '*':
+                    # ** can be 11-19 or 21-26
+                    dp[i] = (dp[i] + dp[i-2] * 15) % MOD
+                elif curr <= '6':
+                    # *d where d <= 6 can be 1d or 2d
+                    dp[i] = (dp[i] + dp[i-2] * 2) % MOD
+                else:
+                    # *d where d > 6 can only be 1d
+                    dp[i] = (dp[i] + dp[i-2]) % MOD
+            elif prev == '1':
+                if curr == '*':
+                    # 1* can be 11-19
+                    dp[i] = (dp[i] + dp[i-2] * 9) % MOD
+                else:
+                    # 1d is always valid
+                    dp[i] = (dp[i] + dp[i-2]) % MOD
+            elif prev == '2':
+                if curr == '*':
+                    # 2* can be 21-26
+                    dp[i] = (dp[i] + dp[i-2] * 6) % MOD
+                elif curr <= '6':
+                    # 2d is valid if d <= 6
+                    dp[i] = (dp[i] + dp[i-2]) % MOD
+                    
+        return dp[n]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Space Optimized):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def numDecodings(self, s: str) -> int:
+        MOD = 10**9 + 7
+        n = len(s)
+        
+        def count_single(c):
+            if c == '*':
+                return 9
+            return 0 if c == '0' else 1
+            
+        def count_double(prev, curr):
+            if prev == '*' and curr == '*':
+                return 15  # 11-19, 21-26
+            if prev == '*':
+                return 2 if curr <= '6' else 1  # 1c or 2c if c≤6, else just 1c
+            if curr == '*':
+                if prev == '1':
+                    return 9  # 11-19
+                if prev == '2':
+                    return 6  # 21-26
+                return 0
+            val = int(prev + curr)
+            return 1 if 10 <= val <= 26 else 0
+            
+        prev2, prev1 = 1, count_single(s[0])
+        
+        for i in range(1, n):
+            curr = (prev1 * count_single(s[i])) % MOD
+            curr = (curr + prev2 * count_double(s[i-1], s[i])) % MOD
+            prev2, prev1 = prev1, curr
+            
+        return prev1</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses O(n) space with full DP array</li>
+                    <li>Second solution optimizes space to O(1)</li>
+                    <li>Both handle all cases with wildcards (*)</li>
+                    <li>Time complexity is O(n) for both solutions</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private static final int MOD = 1_000_000_007;
+    
+    public int numDecodings(String s) {
+        int n = s.length();
+        long[] dp = new long[n + 1];
+        dp[0] = 1;
+        
+        // Handle first character
+        dp[1] = s.charAt(0) == '*' ? 9 : (s.charAt(0) == '0' ? 0 : 1);
+        
+        for (int i = 2; i <= n; i++) {
+            char curr = s.charAt(i-1);
+            char prev = s.charAt(i-2);
+            
+            // Single digit decode
+            if (curr == '*') {
+                dp[i] = (dp[i] + dp[i-1] * 9) % MOD;
+            } else if (curr != '0') {
+                dp[i] = (dp[i] + dp[i-1]) % MOD;
+            }
+            
+            // Two digit decode
+            if (prev == '*') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 15) % MOD;
+                } else if (curr <= '6') {
+                    dp[i] = (dp[i] + dp[i-2] * 2) % MOD;
+                } else {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            } else if (prev == '1') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 9) % MOD;
+                } else {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            } else if (prev == '2') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 6) % MOD;
+                } else if (curr <= '6') {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            }
+        }
+        
+        return (int)dp[n];
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int numDecodings(string s) {
+        const int MOD = 1e9 + 7;
+        int n = s.length();
+        vector<long> dp(n + 1);
+        dp[0] = 1;
+        
+        // Handle first character
+        dp[1] = s[0] == '*' ? 9 : (s[0] == '0' ? 0 : 1);
+        
+        for (int i = 2; i <= n; i++) {
+            char curr = s[i-1];
+            char prev = s[i-2];
+            
+            // Single digit decode
+            if (curr == '*') {
+                dp[i] = (dp[i] + dp[i-1] * 9) % MOD;
+            } else if (curr != '0') {
+                dp[i] = (dp[i] + dp[i-1]) % MOD;
+            }
+            
+            // Two digit decode
+            if (prev == '*') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 15) % MOD;
+                } else if (curr <= '6') {
+                    dp[i] = (dp[i] + dp[i-2] * 2) % MOD;
+                } else {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            } else if (prev == '1') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 9) % MOD;
+                } else {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            } else if (prev == '2') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 6) % MOD;
+                } else if (curr <= '6') {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            }
+        }
+        
+        return dp[n];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {number}
+ */
+var numDecodings = function(s) {
+    const MOD = 1e9 + 7;
+    const n = s.length;
+    const dp = new Array(n + 1).fill(0);
+    dp[0] = 1;
+    
+    // Handle first character
+    dp[1] = s[0] === '*' ? 9 : (s[0] === '0' ? 0 : 1);
+    
+    for (let i = 2; i <= n; i++) {
+        const curr = s[i-1];
+        const prev = s[i-2];
+        
+        // Single digit decode
+        if (curr === '*') {
+            dp[i] = (dp[i] + dp[i-1] * 9) % MOD;
+        } else if (curr !== '0') {
+            dp[i] = (dp[i] + dp[i-1]) % MOD;
+        }
+        
+        // Two digit decode
+        if (prev === '*') {
+            if (curr === '*') {
+                dp[i] = (dp[i] + dp[i-2] * 15) % MOD;
+            } else if (curr <= '6') {
+                dp[i] = (dp[i] + dp[i-2] * 2) % MOD;
+            } else {
+                dp[i] = (dp[i] + dp[i-2]) % MOD;
+            }
+        } else if (prev === '1') {
+            if (curr === '*') {
+                dp[i] = (dp[i] + dp[i-2] * 9) % MOD;
+            } else {
+                dp[i] = (dp[i] + dp[i-2]) % MOD;
+            }
+        } else if (prev === '2') {
+            if (curr === '*') {
+                dp[i] = (dp[i] + dp[i-2] * 6) % MOD;
+            } else if (curr <= '6') {
+                dp[i] = (dp[i] + dp[i-2]) % MOD;
+            }
+        }
+    }
+    
+    return dp[n];
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private const int MOD = 1_000_000_007;
+    
+    public int NumDecodings(string s) {
+        int n = s.Length;
+        long[] dp = new long[n + 1];
+        dp[0] = 1;
+        
+        // Handle first character
+        dp[1] = s[0] == '*' ? 9 : (s[0] == '0' ? 0 : 1);
+        
+        for (int i = 2; i <= n; i++) {
+            char curr = s[i-1];
+            char prev = s[i-2];
+            
+            // Single digit decode
+            if (curr == '*') {
+                dp[i] = (dp[i] + dp[i-1] * 9) % MOD;
+            } else if (curr != '0') {
+                dp[i] = (dp[i] + dp[i-1]) % MOD;
+            }
+            
+            // Two digit decode
+            if (prev == '*') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 15) % MOD;
+                } else if (curr <= '6') {
+                    dp[i] = (dp[i] + dp[i-2] * 2) % MOD;
+                } else {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            } else if (prev == '1') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 9) % MOD;
+                } else {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            } else if (prev == '2') {
+                if (curr == '*') {
+                    dp[i] = (dp[i] + dp[i-2] * 6) % MOD;
+                } else if (curr <= '6') {
+                    dp[i] = (dp[i] + dp[i-2]) % MOD;
+                }
+            }
+        }
+        
+        return (int)dp[n];
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Space Optimized):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    private const int MOD = 1_000_000_007;
+    
+    private int CountSingle(char c) {
+        if (c == '*') return 9;
+        return c == '0' ? 0 : 1;
+    }
+    
+    private int CountDouble(char prev, char curr) {
+        if (prev == '*' && curr == '*') return 15;
+        if (prev == '*') return curr <= '6' ? 2 : 1;
+        if (curr == '*') {
+            if (prev == '1') return 9;
+            if (prev == '2') return 6;
+            return 0;
+        }
+        int val = (prev - '0') * 10 + (curr - '0');
+        return val >= 10 && val <= 26 ? 1 : 0;
+    }
+    
+    public int NumDecodings(string s) {
+        long prev2 = 1, prev1 = CountSingle(s[0]);
+        
+        for (int i = 1; i < s.Length; i++) {
+            long curr = prev1 * CountSingle(s[i]) % MOD;
+            curr = (curr + prev2 * CountDouble(s[i-1], s[i])) % MOD;
+            prev2 = prev1;
+            prev1 = curr;
+        }
+        
+        return (int)prev1;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses standard DP approach</li>
+                        <li>Second solution optimizes space usage to O(1)</li>
+                        <li>Both handle all wildcard cases correctly</li>
+                        <li>Careful handling of modulo arithmetic to prevent overflow</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

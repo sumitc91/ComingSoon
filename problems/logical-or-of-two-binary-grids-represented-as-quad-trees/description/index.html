@@ -1,0 +1,414 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logical OR of Two Binary Grids Represented as Quad-Trees - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for problem 558: Logical OR of Two Binary Grids Represented as Quad-Trees.  Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, leetcode solution, quad-tree, logical OR, binary matrix, python, java, c++, javascript, c#, algorithm, data structure, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/logical-or-of-two-binary-grids-represented-as-quad-trees/">
+    <meta property="og:title" content="Logical OR of Two Binary Grids Represented as Quad-Trees - LeetCodee Solution">
+    <meta property="og:description" content="LeetCodee solution for problem 558: Logical OR of Two Binary Grids Represented as Quad-Trees.  Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta property="og:url" content="https://leetcodee.com/problems/logical-or-of-two-binary-grids-represented-as-quad-trees/">
+    <meta property="og:site_name" content="LeetCodee">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "558. Logical OR of Two Binary Grids Represented as Quad-Trees",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-10-27",
+      "description": "LeetCodee solution for problem 558: Logical OR of Two Binary Grids Represented as Quad-Trees.  Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.",
+      "keywords": "leetcode, leetcode solution, quad-tree, logical OR, binary matrix, python, java, c++, javascript, c#, algorithm, data structure, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">558. Logical OR of Two Binary Grids Represented as Quad-Trees</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A Binary Matrix is a matrix in which all the elements are either <strong>0</strong> or <strong>1</strong>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given <code class="bg-gray-100 px-1 rounded">quadTree1</code> and <code class="bg-gray-100 px-1 rounded">quadTree2</code>. <code class="bg-gray-100 px-1 rounded">quadTree1</code> represents a <code class="bg-gray-100 px-1 rounded">n * n</code> binary matrix and <code class="bg-gray-100 px-1 rounded">quadTree2</code> represents another <code class="bg-gray-100 px-1 rounded">n * n</code> binary matrix.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return <em>a Quad-Tree representing the </em><code class="bg-gray-100 px-1 rounded">n * n</code><em> binary matrix which is the result of </em><strong>logical OR</strong><em> of the two binary matrices represented by </em><code class="bg-gray-100 px-1 rounded">quadTree1</code><em> and </em><code class="bg-gray-100 px-1 rounded">quadTree2</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Notice that you need to create a new Quad-Tree representing the result, and you <strong>cannot</strong> modify either of the given Quad-Trees.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A Quad-Tree is a tree data structure in which each internal node has exactly four children. Besides, each node has two attributes:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">val</code>: True if the node represents a grid of 1's or False if the node represents a grid of 0's.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">isLeaf</code>: True if the node is leaf node on the tree or False if the node has the four children.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Node Structure:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>class Node {
+    public boolean val;
+    public boolean isLeaf;
+    public Node topLeft;
+    public Node topRight;
+    public Node bottomLeft;
+    public Node bottomRight;
+}</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>Both <code class="bg-gray-100 px-1 rounded">quadTree1</code> and <code class="bg-gray-100 px-1 rounded">quadTree2</code> are the roots of Quad-Trees.</li>
+                    <li>The number of nodes in each tree is in the range <code class="bg-gray-100 px-1 rounded">[1, 1000]</code>.</li>
+                    <li>Each tree represents a binary matrix of size <code class="bg-gray-100 px-1 rounded">n * n</code>.</li>
+                    <li>For each node, <code class="bg-gray-100 px-1 rounded">val</code> is either <code class="bg-gray-100 px-1 rounded">0</code> or <code class="bg-gray-100 px-1 rounded">1</code>.</li>
+                    <li>The matrix size <code class="bg-gray-100 px-1 rounded">n</code> is equal to <code class="bg-gray-100 px-1 rounded">2^height</code> where <code class="bg-gray-100 px-1 rounded">height</code> is the height of the Quad-Tree.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def intersect(self, quadTree1: 'Node', quadTree2: 'Node') -> 'Node':
+        # If either node is a leaf, return the OR result
+        if quadTree1.isLeaf:
+            return quadTree1 if quadTree1.val else quadTree2
+        if quadTree2.isLeaf:
+            return quadTree2 if quadTree2.val else quadTree1
+        
+        # Recursively compute OR for all four quadrants
+        topLeft = self.intersect(quadTree1.topLeft, quadTree2.topLeft)
+        topRight = self.intersect(quadTree1.topRight, quadTree2.topRight)
+        bottomLeft = self.intersect(quadTree1.bottomLeft, quadTree2.bottomLeft)
+        bottomRight = self.intersect(quadTree1.bottomRight, quadTree2.bottomRight)
+        
+        # Check if all children are leaves with same value
+        if (topLeft.isLeaf and topRight.isLeaf and bottomLeft.isLeaf and bottomRight.isLeaf and
+            topLeft.val == topRight.val == bottomLeft.val == bottomRight.val):
+            # Merge into a single leaf node
+            node = Node(topLeft.val, True)
+        else:
+            # Create internal node with the four children
+            node = Node(True, False)
+            node.topLeft = topLeft
+            node.topRight = topRight
+            node.bottomLeft = bottomLeft
+            node.bottomRight = bottomRight
+        
+        return node</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of nodes in the quad-tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the quad-tree, for the recursion stack.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public Node intersect(Node quadTree1, Node quadTree2) {
+        // If either node is a leaf, return the OR result
+        if (quadTree1.isLeaf) {
+            return quadTree1.val ? quadTree1 : quadTree2;
+        }
+        if (quadTree2.isLeaf) {
+            return quadTree2.val ? quadTree2 : quadTree1;
+        }
+        
+        // Recursively compute OR for all four quadrants
+        Node topLeft = intersect(quadTree1.topLeft, quadTree2.topLeft);
+        Node topRight = intersect(quadTree1.topRight, quadTree2.topRight);
+        Node bottomLeft = intersect(quadTree1.bottomLeft, quadTree2.bottomLeft);
+        Node bottomRight = intersect(quadTree1.bottomRight, quadTree2.bottomRight);
+        
+        // Check if all children are leaves with same value
+        if (topLeft.isLeaf && topRight.isLeaf && bottomLeft.isLeaf && bottomRight.isLeaf &&
+            topLeft.val == topRight.val && topRight.val == bottomLeft.val && bottomLeft.val == bottomRight.val) {
+            // Merge into a single leaf node
+            return new Node(topLeft.val, true);
+        }
+        
+        // Create internal node with the four children
+        Node node = new Node();
+        node.val = true;
+        node.isLeaf = false;
+        node.topLeft = topLeft;
+        node.topRight = topRight;
+        node.bottomLeft = bottomLeft;
+        node.bottomRight = bottomRight;
+        
+        return node;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of nodes in the quad-tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the quad-tree, for the recursion stack.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    Node* intersect(Node* quadTree1, Node* quadTree2) {
+        // If either node is a leaf, return the OR result
+        if (quadTree1->isLeaf) {
+            return quadTree1->val ? quadTree1 : quadTree2;
+        }
+        if (quadTree2->isLeaf) {
+            return quadTree2->val ? quadTree2 : quadTree1;
+        }
+        
+        // Recursively compute OR for all four quadrants
+        Node* topLeft = intersect(quadTree1->topLeft, quadTree2->topLeft);
+        Node* topRight = intersect(quadTree1->topRight, quadTree2->topRight);
+        Node* bottomLeft = intersect(quadTree1->bottomLeft, quadTree2->bottomLeft);
+        Node* bottomRight = intersect(quadTree1->bottomRight, quadTree2->bottomRight);
+        
+        // Check if all children are leaves with same value
+        if (topLeft->isLeaf && topRight->isLeaf && bottomLeft->isLeaf && bottomRight->isLeaf &&
+            topLeft->val == topRight->val && topRight->val == bottomLeft->val && bottomLeft->val == bottomRight->val) {
+            // Merge into a single leaf node
+            return new Node(topLeft->val, true);
+        }
+        
+        // Create internal node with the four children
+        Node* node = new Node();
+        node->val = true;
+        node->isLeaf = false;
+        node->topLeft = topLeft;
+        node->topRight = topRight;
+        node->bottomLeft = bottomLeft;
+        node->bottomRight = bottomRight;
+        
+        return node;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of nodes in the quad-tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the quad-tree, for the recursion stack.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {Node} quadTree1
+ * @param {Node} quadTree2
+ * @return {Node}
+ */
+var intersect = function(quadTree1, quadTree2) {
+    // If either node is a leaf, return the OR result
+    if (quadTree1.isLeaf) {
+        return quadTree1.val ? quadTree1 : quadTree2;
+    }
+    if (quadTree2.isLeaf) {
+        return quadTree2.val ? quadTree2 : quadTree1;
+    }
+    
+    // Recursively compute OR for all four quadrants
+    const topLeft = intersect(quadTree1.topLeft, quadTree2.topLeft);
+    const topRight = intersect(quadTree1.topRight, quadTree2.topRight);
+    const bottomLeft = intersect(quadTree1.bottomLeft, quadTree2.bottomLeft);
+    const bottomRight = intersect(quadTree1.bottomRight, quadTree2.bottomRight);
+    
+    // Check if all children are leaves with same value
+    if (topLeft.isLeaf && topRight.isLeaf && bottomLeft.isLeaf && bottomRight.isLeaf &&
+        topLeft.val === topRight.val && topRight.val === bottomLeft.val && bottomLeft.val === bottomRight.val) {
+        // Merge into a single leaf node
+        return new Node(topLeft.val, true);
+    }
+    
+    // Create internal node with the four children
+    const node = new Node(true, false);
+    node.topLeft = topLeft;
+    node.topRight = topRight;
+    node.bottomLeft = bottomLeft;
+    node.bottomRight = bottomRight;
+    
+    return node;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of nodes in the quad-tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the quad-tree, for the recursion stack.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public Node Intersect(Node quadTree1, Node quadTree2) {
+        // If either node is a leaf, return the OR result
+        if (quadTree1.isLeaf) {
+            return quadTree1.val ? quadTree1 : quadTree2;
+        }
+        if (quadTree2.isLeaf) {
+            return quadTree2.val ? quadTree2 : quadTree1;
+        }
+        
+        // Recursively compute OR for all four quadrants
+        Node topLeft = Intersect(quadTree1.topLeft, quadTree2.topLeft);
+        Node topRight = Intersect(quadTree1.topRight, quadTree2.topRight);
+        Node bottomLeft = Intersect(quadTree1.bottomLeft, quadTree2.bottomLeft);
+        Node bottomRight = Intersect(quadTree1.bottomRight, quadTree2.bottomRight);
+        
+        // Check if all children are leaves with same value
+        if (topLeft.isLeaf && topRight.isLeaf && bottomLeft.isLeaf && bottomRight.isLeaf &&
+            topLeft.val == topRight.val && topRight.val == bottomLeft.val && bottomLeft.val == bottomRight.val) {
+            // Merge into a single leaf node
+            return new Node(topLeft.val, true);
+        }
+        
+        // Create internal node with the four children
+        Node node = new Node(true, false);
+        node.topLeft = topLeft;
+        node.topRight = topRight;
+        node.bottomLeft = bottomLeft;
+        node.bottomRight = bottomRight;
+        
+        return node;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of nodes in the quad-tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the quad-tree, for the recursion stack.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses recursive traversal of quad-trees:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Tree traversal</li>
+                            <li>Logical operations</li>
+                            <li>Node merging</li>
+                            <li>Recursion</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Handle leaf nodes</li>
+                            <li>Process quadrants</li>
+                            <li>Merge results</li>
+                            <li>Build new tree</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Node creation</li>
+                        <li>Value propagation</li>
+                        <li>Tree construction</li>
+                        <li>Optimization</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Early termination</li>
+                        <li>Node reuse</li>
+                        <li>Memory management</li>
+                        <li>Recursion depth</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Single node</li>
+                        <li>All same value</li>
+                        <li>Mixed values</li>
+                        <li>Maximum depth</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

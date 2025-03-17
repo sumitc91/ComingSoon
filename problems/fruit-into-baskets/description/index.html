@@ -1,0 +1,309 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Into Baskets - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode's Fruit Into Baskets problem.  Includes detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, fruit into baskets, algorithm, solution, python, java, cpp, javascript, c#, coding, interview, data structures">
+    <meta property="og:title" content="Fruit Into Baskets - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/fruit-into-baskets/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode's Fruit Into Baskets problem.  Includes detailed explanations and time/space complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/fruit-into-baskets/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Fruit Into Baskets - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode's Fruit Into Baskets problem. Includes detailed explanations and time/space complexity analysis.",
+      "articleBody": "You are visiting a farm that has a single row of fruit trees arranged from left to right. The trees are represented by an integer array fruits where fruits[i] is the type of fruit the iᵗʰ tree produces.\n\nYou want to collect as much fruit as possible. However, the owner has some strict rules that you must follow:\n\nYou only have two baskets, and each basket can only hold a single type of fruit. There is no limit on the amount of fruit each basket can hold.\nStarting from any tree, you must pick exactly one fruit from every tree (including the start tree) while moving to the right. The picked fruits must fit in one of your baskets.\nOnce you reach a tree with fruit that cannot fit in your baskets, you must stop.\n\nGiven the integer array fruits, return the maximum number of fruits you can pick.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/fruit-into-baskets/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">904. Fruit Into Baskets</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are visiting a farm that has a single row of fruit trees arranged from left to right. The trees are represented by an integer array <code class="bg-gray-100 px-1 rounded">fruits</code> where <code class="bg-gray-100 px-1 rounded">fruits[i]</code> is the type of fruit the <code class="bg-gray-100 px-1 rounded">iᵗʰ</code> tree produces.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You want to collect as much fruit as possible. However, the owner has some strict rules that you must follow:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>You only have two baskets, and each basket can only hold a single type of fruit. There is no limit on the amount of fruit each basket can hold.</li>
+                    <li>Starting from any tree, you must pick exactly one fruit from every tree (including the start tree) while moving to the right. The picked fruits must fit in one of your baskets.</li>
+                    <li>Once you reach a tree with fruit that cannot fit in your baskets, you must stop.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Given the integer array <code class="bg-gray-100 px-1 rounded">fruits</code>, return the maximum number of fruits you can pick.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: fruits = [1,2,1]
+Output: 3
+Explanation: We can pick from all 3 trees.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: fruits = [0,1,2,2]
+Output: 3
+Explanation: We can pick from trees [1,2,2].
+If we had started at the first tree, we would only pick from trees [0,1,2].</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: fruits = [1,2,3,2,2]
+Output: 4
+Explanation: We can pick from trees [2,3,2,2].
+If we had started at the first tree, we would only pick from trees [1,2].</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= fruits.length <= 10⁵</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= fruits[i] < fruits.length</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        basket = {}
+        max_fruits = 0
+        left = 0
+        
+        for right in range(len(fruits)):
+            basket[fruits[right]] = basket.get(fruits[right], 0) + 1
+            
+            while len(basket) > 2:
+                basket[fruits[left]] -= 1
+                if basket[fruits[left]] == 0:
+                    del basket[fruits[left]]
+                left += 1
+            
+            max_fruits = max(max_fruits, right - left + 1)
+        
+        return max_fruits</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only store at most 2 types of fruits in our basket.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int totalFruit(int[] fruits) {
+        Map<Integer, Integer> basket = new HashMap<>();
+        int maxFruits = 0;
+        int left = 0;
+        
+        for (int right = 0; right < fruits.length; right++) {
+            basket.put(fruits[right], basket.getOrDefault(fruits[right], 0) + 1);
+            
+            while (basket.size() > 2) {
+                basket.put(fruits[left], basket.get(fruits[left]) - 1);
+                if (basket.get(fruits[left]) == 0) {
+                    basket.remove(fruits[left]);
+                }
+                left++;
+            }
+            
+            maxFruits = Math.max(maxFruits, right - left + 1);
+        }
+        
+        return maxFruits;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only store at most 2 types of fruits in our basket.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        unordered_map<int, int> basket;
+        int maxFruits = 0;
+        int left = 0;
+        
+        for (int right = 0; right < fruits.size(); right++) {
+            basket[fruits[right]]++;
+            
+            while (basket.size() > 2) {
+                basket[fruits[left]]--;
+                if (basket[fruits[left]] == 0) {
+                    basket.erase(fruits[left]);
+                }
+                left++;
+            }
+            
+            maxFruits = max(maxFruits, right - left + 1);
+        }
+        
+        return maxFruits;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only store at most 2 types of fruits in our basket.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} fruits
+ * @return {number}
+ */
+var totalFruit = function(fruits) {
+    const basket = new Map();
+    let maxFruits = 0;
+    let left = 0;
+    
+    for (let right = 0; right < fruits.length; right++) {
+        basket.set(fruits[right], (basket.get(fruits[right]) || 0) + 1);
+        
+        while (basket.size > 2) {
+            basket.set(fruits[left], basket.get(fruits[left]) - 1);
+            if (basket.get(fruits[left]) === 0) {
+                basket.delete(fruits[left]);
+            }
+            left++;
+        }
+        
+        maxFruits = Math.max(maxFruits, right - left + 1);
+    }
+    
+    return maxFruits;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only store at most 2 types of fruits in our basket.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int TotalFruit(int[] fruits) {
+        Dictionary<int, int> basket = new Dictionary<int, int>();
+        int maxFruits = 0;
+        int left = 0;
+        
+        for (int right = 0; right < fruits.Length; right++) {
+            if (!basket.ContainsKey(fruits[right])) {
+                basket[fruits[right]] = 0;
+            }
+            basket[fruits[right]]++;
+            
+            while (basket.Count > 2) {
+                basket[fruits[left]]--;
+                if (basket[fruits[left]] == 0) {
+                    basket.Remove(fruits[left]);
+                }
+                left++;
+            }
+            
+            maxFruits = Math.Max(maxFruits, right - left + 1);
+        }
+        
+        return maxFruits;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only store at most 2 types of fruits in our basket.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

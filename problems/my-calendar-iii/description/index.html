@@ -1,0 +1,267 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Calendar III - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for My Calendar III problem. Find optimized Python, Java, C++, JavaScript, and C# code with explanations.">
+    <meta name="keywords" content="LeetCode, My Calendar III, solution, Python, Java, C++, JavaScript, C#, algorithm, data structure, coding interview, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/my-calendar-iii/">
+    <meta property="og:title" content="My Calendar III - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/my-calendar-iii/">
+    <meta property="og:description" content="LeetCodee solution for My Calendar III problem. Find optimized Python, Java, C++, JavaScript, and C# code with explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "My Calendar III - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "LeetCodee solution for My Calendar III problem. Find optimized Python, Java, C++, JavaScript, and C# code with explanations.",
+      "articleBody": "A k-booking happens when k events have some non-empty intersection (i.e., there is some time that is common to all k events.) You are given some events [start, end), after each given event, return an integer k representing the maximum k-booking between all the previous events. Implement the MyCalendarThree class: MyCalendarThree() Initializes the object. int book(int start, int end) Returns an integer k representing the largest integer such that there exists a k-booking in the calendar.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/my-calendar-iii/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">732. My Calendar III</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A k-booking happens when k events have some non-empty intersection (i.e., there is some time that is common to all k events.)
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given some events [start, end), after each given event, return an integer k representing the maximum k-booking between all the previous events.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement the MyCalendarThree class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>MyCalendarThree() Initializes the object.</li>
+                    <li>int book(int start, int end) Returns an integer k representing the largest integer such that there exists a k-booking in the calendar.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["MyCalendarThree", "book", "book", "book", "book", "book", "book"]
+[[], [10, 20], [50, 60], [10, 40], [5, 15], [5, 10], [25, 55]]
+Output
+[null, 1, 1, 2, 3, 3, 3]
+
+Explanation
+MyCalendarThree myCalendarThree = new MyCalendarThree();
+myCalendarThree.book(10, 20); // return 1, The first event can be booked and is disjoint, so the maximum k-booking is a 1-booking.
+myCalendarThree.book(50, 60); // return 1, The second event can be booked and is disjoint, so the maximum k-booking is a 1-booking.
+myCalendarThree.book(10, 40); // return 2, The third event [10, 40) intersects the first event, and the maximum k-booking is a 2-booking.
+myCalendarThree.book(5, 15);  // return 3, The remaining events cause the maximum K-booking to be only a 3-booking.
+myCalendarThree.book(5, 10); // return 3
+myCalendarThree.book(25, 55); // return 3</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>0 ≤ start < end ≤ 10^9</li>
+                    <li>At most 400 calls will be made to book.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>from collections import defaultdict
+
+class MyCalendarThree:
+    def __init__(self):
+        self.diff = defaultdict(int)
+    
+    def book(self, start: int, end: int) -> int:
+        self.diff[start] += 1
+        self.diff[end] -= 1
+        
+        curr = 0
+        max_overlap = 0
+        for time in sorted(self.diff):
+            curr += self.diff[time]
+            max_overlap = max(max_overlap, curr)
+        
+        return max_overlap</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a difference array approach to track overlapping events</li>
+                    <li>Time complexity: O(n log n) for each booking where n is the number of unique time points</li>
+                    <li>Space complexity: O(n) to store the difference array</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class MyCalendarThree {
+    private TreeMap<Integer, Integer> diff;
+    
+    public MyCalendarThree() {
+        diff = new TreeMap<>();
+    }
+    
+    public int book(int start, int end) {
+        diff.put(start, diff.getOrDefault(start, 0) + 1);
+        diff.put(end, diff.getOrDefault(end, 0) - 1);
+        
+        int curr = 0;
+        int maxOverlap = 0;
+        for (int time : diff.values()) {
+            curr += time;
+            maxOverlap = Math.max(maxOverlap, curr);
+        }
+        
+        return maxOverlap;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class MyCalendarThree {
+private:
+    map<int, int> diff;
+    
+public:
+    MyCalendarThree() {}
+    
+    int book(int start, int end) {
+        diff[start]++;
+        diff[end]--;
+        
+        int curr = 0;
+        int maxOverlap = 0;
+        for (const auto& [time, count] : diff) {
+            curr += count;
+            maxOverlap = max(maxOverlap, curr);
+        }
+        
+        return maxOverlap;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>class MyCalendarThree {
+    constructor() {
+        this.diff = new Map();
+    }
+    
+    book(start, end) {
+        this.diff.set(start, (this.diff.get(start) || 0) + 1);
+        this.diff.set(end, (this.diff.get(end) || 0) - 1);
+        
+        let curr = 0;
+        let maxOverlap = 0;
+        for (const [time, count] of [...this.diff.entries()].sort((a, b) => a[0] - b[0])) {
+            curr += count;
+            maxOverlap = Math.max(maxOverlap, curr);
+        }
+        
+        return maxOverlap;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class MyCalendarThree {
+    private SortedDictionary<int, int> diff;
+    
+    public MyCalendarThree() {
+        diff = new SortedDictionary<int, int>();
+    }
+    
+    public int Book(int start, int end) {
+        if (!diff.ContainsKey(start)) diff[start] = 0;
+        if (!diff.ContainsKey(end)) diff[end] = 0;
+        
+        diff[start]++;
+        diff[end]--;
+        
+        int curr = 0;
+        int maxOverlap = 0;
+        foreach (var count in diff.Values) {
+            curr += count;
+            maxOverlap = Math.Max(maxOverlap, curr);
+        }
+        
+        return maxOverlap;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a difference array approach to track overlapping events</li>
+                    <li>Time complexity: O(n log n) for each booking where n is the number of unique time points</li>
+                    <li>Space complexity: O(n) to store the difference array</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

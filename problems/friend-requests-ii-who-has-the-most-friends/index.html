@@ -1,0 +1,259 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friend Requests II: Who Has the Most Friends - LeetCodee Solution</title>
+    <meta name="description" content="Find the people with the most friends in the RequestAccepted table using SQL.  LeetCodee solution with MySQL, PostgreSQL, MS SQL Server, and Oracle examples.">
+    <meta name="keywords" content="LeetCode, SQL, Friend Requests, Database, Query, MySQL, PostgreSQL, MSSQL, Oracle, Solution, Tutorial, Programming">
+    <meta property="og:title" content="Friend Requests II: Who Has the Most Friends - LeetCodee Solution">
+    <meta property="og:description" content="Find the people with the most friends in the RequestAccepted table using SQL.  LeetCodee solution with MySQL, PostgreSQL, MS SQL Server, and Oracle examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/friend-requests-ii-who-has-the-most-friends/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/friend-requests-ii-who-has-the-most-friends/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">602. Friend Requests II: Who Has the Most Friends</h1>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Table: <code class="bg-gray-100 px-1 rounded">RequestAccepted</code>
+                </p>
+                <pre class="bg-gray-100 p-4 rounded mb-4"><code>+----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| requester_id   | int     |
+| accepter_id    | int     |
+| accept_date    | date    |
++----------------+---------+
+(requester_id, accepter_id) is the primary key for this table.
+This table contains the ID of the user who sent the request, the ID of the user who received the request, and the date when the request was accepted.</code></pre>
+                <p class="text-gray-700 mb-4">
+                    Write an SQL query to find the people who have the most friends.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the result table with the following columns:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">id</code>: The ID of the user</li>
+                    <li><code class="bg-gray-100 px-1 rounded">num</code>: The total number of friends the user has</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Return the result table ordered by <code class="bg-gray-100 px-1 rounded">id</code> in ascending order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example:</h2>
+                <p class="text-gray-700 mb-2">Input:</p>
+                <pre class="bg-gray-100 p-4 rounded mb-4"><code>RequestAccepted table:
++--------------+-------------+-------------+
+| requester_id | accepter_id | accept_date |
++--------------+-------------+-------------+
+| 1            | 2           | 2016/06/03  |
+| 1            | 3           | 2016/06/08  |
+| 2            | 3           | 2016/06/08  |
+| 3            | 4           | 2016/06/09  |
++--------------+-------------+-------------+</code></pre>
+                <p class="text-gray-700 mb-2">Output:</p>
+                <pre class="bg-gray-100 p-4 rounded"><code>+----+-----+
+| id | num |
++----+-----+
+| 3  | 3   |
++----+-----+</code></pre>
+                <p class="text-gray-700 mt-4">Explanation:</p>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>User 1 has 2 friends (2 and 3)</li>
+                    <li>User 2 has 2 friends (1 and 3)</li>
+                    <li>User 3 has 3 friends (1, 2 and 4)</li>
+                    <li>User 4 has 1 friend (3)</li>
+                    <li>User 3 has the most friends, with 3 friends.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- MySQL Solution -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MySQL Solution</h3>
+                <pre class="language-sql"><code>WITH AllFriends AS (
+    SELECT requester_id AS id FROM RequestAccepted
+    UNION ALL
+    SELECT accepter_id AS id FROM RequestAccepted
+)
+SELECT 
+    id,
+    COUNT(*) AS num
+FROM AllFriends
+GROUP BY id
+HAVING COUNT(*) = (
+    SELECT COUNT(*) AS cnt
+    FROM AllFriends
+    GROUP BY id
+    ORDER BY cnt DESC
+    LIMIT 1
+)
+ORDER BY id;</code></pre>
+            </div>
+
+            <!-- PostgreSQL Solution -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">PostgreSQL Solution</h3>
+                <pre class="language-sql"><code>WITH AllFriends AS (
+    SELECT requester_id AS id FROM RequestAccepted
+    UNION ALL
+    SELECT accepter_id AS id FROM RequestAccepted
+)
+SELECT 
+    id,
+    COUNT(*) AS num
+FROM AllFriends
+GROUP BY id
+HAVING COUNT(*) = (
+    SELECT COUNT(*) AS cnt
+    FROM AllFriends
+    GROUP BY id
+    ORDER BY cnt DESC
+    LIMIT 1
+)
+ORDER BY id;</code></pre>
+            </div>
+
+            <!-- MS SQL Server Solution -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MS SQL Server Solution</h3>
+                <pre class="language-sql"><code>WITH AllFriends AS (
+    SELECT requester_id AS id FROM RequestAccepted
+    UNION ALL
+    SELECT accepter_id AS id FROM RequestAccepted
+)
+SELECT 
+    id,
+    COUNT(*) AS num
+FROM AllFriends
+GROUP BY id
+HAVING COUNT(*) = (
+    SELECT TOP 1 COUNT(*) AS cnt
+    FROM AllFriends
+    GROUP BY id
+    ORDER BY cnt DESC
+)
+ORDER BY id;</code></pre>
+            </div>
+
+            <!-- Oracle Solution -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Oracle Solution</h3>
+                <pre class="language-sql"><code>WITH AllFriends AS (
+    SELECT requester_id AS id FROM RequestAccepted
+    UNION ALL
+    SELECT accepter_id AS id FROM RequestAccepted
+)
+SELECT 
+    id,
+    COUNT(*) AS num
+FROM AllFriends
+GROUP BY id
+HAVING COUNT(*) = (
+    SELECT COUNT(*) AS cnt
+    FROM AllFriends
+    GROUP BY id
+    ORDER BY cnt DESC
+    FETCH FIRST 1 ROW ONLY
+)
+ORDER BY id;</code></pre>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses a combination of UNION ALL and aggregation:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Bidirectional friendships</li>
+                            <li>Count aggregation</li>
+                            <li>Maximum finding</li>
+                            <li>Result filtering</li>
+                        </ul>
+                    </li>
+                    <li>Query Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Combine friend lists</li>
+                            <li>Count frequencies</li>
+                            <li>Find maximum</li>
+                            <li>Filter results</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>CTE usage</li>
+                        <li>UNION ALL</li>
+                        <li>GROUP BY</li>
+                        <li>HAVING clause</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Single scan</li>
+                        <li>No self-joins</li>
+                        <li>Efficient grouping</li>
+                        <li>Index usage</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Empty table</li>
+                        <li>Single friend</li>
+                        <li>Multiple maximums</li>
+                        <li>Duplicate requests</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</body>
+</html>

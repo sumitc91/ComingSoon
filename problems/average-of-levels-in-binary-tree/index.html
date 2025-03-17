@@ -1,0 +1,460 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Average of Levels in Binary Tree - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for Average of Levels in Binary Tree problem.  Find efficient Python, Java, C++, JavaScript, and C# solutions with detailed explanations and implementation notes.">
+    <meta name="keywords" content="LeetCode, Average of Levels in Binary Tree, Binary Tree, Tree Traversal, BFS, DFS, Python, Java, C++, JavaScript, C#, Algorithm, Data Structures, Solution, Coding, Programming">
+    <meta property="og:title" content="Average of Levels in Binary Tree - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/average-of-levels-in-binary-tree/">
+    <meta property="og:description" content="LeetCodee solution for Average of Levels in Binary Tree problem.  Find efficient Python, Java, C++, JavaScript, and C# solutions with detailed explanations and implementation notes.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/average-of-levels-in-binary-tree/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">637. Average of Levels in Binary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">root</code> of a binary tree, return the average value of the nodes on each level in the form of an array. Answers within 10<sup>-5</sup> of the actual answer will be accepted.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [3,9,20,null,null,15,7]
+Output: [3.00000,14.50000,11.00000]
+Explanation: 
+The average value of nodes on level 0 is 3.
+The average value of nodes on level 1 is (9 + 20) / 2 = 14.5.
+The average value of nodes on level 2 is (15 + 7) / 2 = 11.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [3,9,20,15,7]
+Output: [3.00000,14.50000,11.00000]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 10<sup>4</sup>]</li>
+                    <li>-2<sup>31</sup> ≤ Node.val ≤ 2<sup>31</sup> - 1</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        if not root:
+            return []
+            
+        result = []
+        queue = deque([root])
+        
+        while queue:
+            level_size = len(queue)
+            level_sum = 0
+            
+            for _ in range(level_size):
+                node = queue.popleft()
+                level_sum += node.val
+                
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            
+            result.append(level_sum / level_size)
+            
+        return result</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (DFS):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        def dfs(node: TreeNode, level: int, sums: List[float], counts: List[int]):
+            if not node:
+                return
+                
+            if level == len(sums):
+                sums.append(0)
+                counts.append(0)
+                
+            sums[level] += node.val
+            counts[level] += 1
+            
+            dfs(node.left, level + 1, sums, counts)
+            dfs(node.right, level + 1, sums, counts)
+        
+        sums = []
+        counts = []
+        dfs(root, 0, sums, counts)
+        
+        return [s / c for s, c in zip(sums, counts)]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>BFS solution uses queue: O(n) time, O(w) space where w is max width</li>
+                    <li>DFS solution uses recursion: O(n) time, O(h) space where h is height</li>
+                    <li>Both handle integer overflow by using floating-point division</li>
+                    <li>BFS is more intuitive for level-by-level processing</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        
+        List<Double> result = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            double levelSum = 0;
+            
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = queue.poll();
+                levelSum += node.val;
+                
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            
+            result.add(levelSum / levelSize);
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (DFS):</h4>
+                    <pre class="language-java"><code>class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> sums = new ArrayList<>();
+        List<Integer> counts = new ArrayList<>();
+        dfs(root, 0, sums, counts);
+        
+        List<Double> result = new ArrayList<>();
+        for (int i = 0; i < sums.size(); i++) {
+            result.add(sums.get(i) / counts.get(i));
+        }
+        
+        return result;
+    }
+    
+    private void dfs(TreeNode node, int level, List<Double> sums, List<Integer> counts) {
+        if (node == null) {
+            return;
+        }
+        
+        if (level == sums.size()) {
+            sums.add(0.0);
+            counts.add(0);
+        }
+        
+        sums.set(level, sums.get(level) + node.val);
+        counts.set(level, counts.get(level) + 1);
+        
+        dfs(node.left, level + 1, sums, counts);
+        dfs(node.right, level + 1, sums, counts);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<double> averageOfLevels(TreeNode* root) {
+        if (!root) {
+            return {};
+        }
+        
+        vector<double> result;
+        queue<TreeNode*> q;
+        q.push(root);
+        
+        while (!q.empty()) {
+            int levelSize = q.size();
+            double levelSum = 0;
+            
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode* node = q.front();
+                q.pop();
+                levelSum += node->val;
+                
+                if (node->left) {
+                    q.push(node->left);
+                }
+                if (node->right) {
+                    q.push(node->right);
+                }
+            }
+            
+            result.push_back(levelSum / levelSize);
+        }
+        
+        return result;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (DFS):</h4>
+                    <pre class="language-cpp"><code>class Solution {
+    void dfs(TreeNode* node, int level, vector<double>& sums, vector<int>& counts) {
+        if (!node) {
+            return;
+        }
+        
+        if (level == sums.size()) {
+            sums.push_back(0);
+            counts.push_back(0);
+        }
+        
+        sums[level] += node->val;
+        counts[level]++;
+        
+        dfs(node->left, level + 1, sums, counts);
+        dfs(node->right, level + 1, sums, counts);
+    }
+    
+public:
+    vector<double> averageOfLevels(TreeNode* root) {
+        vector<double> sums;
+        vector<int> counts;
+        dfs(root, 0, sums, counts);
+        
+        vector<double> result;
+        for (int i = 0; i < sums.size(); i++) {
+            result.push_back(sums[i] / counts[i]);
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var averageOfLevels = function(root) {
+    if (!root) {
+        return [];
+    }
+    
+    const result = [];
+    const queue = [root];
+    
+    while (queue.length > 0) {
+        const levelSize = queue.length;
+        let levelSum = 0;
+        
+        for (let i = 0; i < levelSize; i++) {
+            const node = queue.shift();
+            levelSum += node.val;
+            
+            if (node.left) {
+                queue.push(node.left);
+            }
+            if (node.right) {
+                queue.push(node.right);
+            }
+        }
+        
+        result.push(levelSum / levelSize);
+    }
+    
+    return result;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (DFS):</h4>
+                    <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var averageOfLevels = function(root) {
+    const sums = [];
+    const counts = [];
+    
+    const dfs = (node, level) => {
+        if (!node) {
+            return;
+        }
+        
+        if (level === sums.length) {
+            sums.push(0);
+            counts.push(0);
+        }
+        
+        sums[level] += node.val;
+        counts[level]++;
+        
+        dfs(node.left, level + 1);
+        dfs(node.right, level + 1);
+    };
+    
+    dfs(root, 0);
+    
+    return sums.map((sum, i) => sum / counts[i]);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<double> AverageOfLevels(TreeNode root) {
+        if (root == null) {
+            return new List<double>();
+        }
+        
+        var result = new List<double>();
+        var queue = new Queue<TreeNode>();
+        queue.Enqueue(root);
+        
+        while (queue.Count > 0) {
+            int levelSize = queue.Count;
+            double levelSum = 0;
+            
+            for (int i = 0; i < levelSize; i++) {
+                var node = queue.Dequeue();
+                levelSum += node.val;
+                
+                if (node.left != null) {
+                    queue.Enqueue(node.left);
+                }
+                if (node.right != null) {
+                    queue.Enqueue(node.right);
+                }
+            }
+            
+            result.Add(levelSum / levelSize);
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using LINQ:</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    private void Dfs(TreeNode node, int level, List<double> sums, List<int> counts) {
+        if (node == null) {
+            return;
+        }
+        
+        if (level == sums.Count) {
+            sums.Add(0);
+            counts.Add(0);
+        }
+        
+        sums[level] += node.val;
+        counts[level]++;
+        
+        Dfs(node.left, level + 1, sums, counts);
+        Dfs(node.right, level + 1, sums, counts);
+    }
+    
+    public IList<double> AverageOfLevels(TreeNode root) {
+        var sums = new List<double>();
+        var counts = new List<int>();
+        
+        Dfs(root, 0, sums, counts);
+        
+        return sums.Zip(counts, (sum, count) => sum / count).ToList();
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>BFS solution uses Queue for level order traversal</li>
+                        <li>DFS solution uses recursion with LINQ for elegant averaging</li>
+                        <li>Both solutions handle potential overflow</li>
+                        <li>Time complexity is O(n) for both approaches</li>
+                    </ul>
+                </div>
+            </div>
+            <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "637. Average of Levels in Binary Tree",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2023-10-27",
+  "description": "LeetCodee solution for Average of Levels in Binary Tree problem. Find efficient Python, Java, C++, JavaScript, and C# solutions.",
+  "articleBody": "Given the root of a binary tree, return the average value of the nodes on each level in the form of an array. Answers within 10<sup>-5</sup> of the actual answer will be accepted.  Solutions provided in Python, Java, C++, JavaScript and C#.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://leetcodee.com/problems/average-of-levels-in-binary-tree/"
+  }
+}
+</script>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

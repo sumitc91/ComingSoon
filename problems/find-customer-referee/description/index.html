@@ -1,0 +1,222 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Customer Referee - LeetCodee Solution</title>
+    <meta name="description" content="Find Customer Referee LeetCode solution explained. Learn how to write SQL queries to find customers not referred by a specific customer (id=2). Includes MySQL, PostgreSQL, MS SQL Server, and Oracle solutions with detailed approach explanations.">
+    <meta name="keywords" content="LeetCode, SQL, Database, Find Customer Referee, Solution, MySQL, PostgreSQL, MS SQL Server, Oracle, Tutorial, Explanation, Coding, Programming, Algorithm">
+    <meta property="og:title" content="Find Customer Referee - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/find-customer-referee/">
+    <meta property="og:description" content="Find Customer Referee LeetCode solution explained. Learn how to write SQL queries to find customers not referred by a specific customer (id=2). Includes MySQL, PostgreSQL, MS SQL Server, and Oracle solutions with detailed approach explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/find-customer-referee/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Find Customer Referee - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-10-27",
+      "dateModified": "2024-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find Customer Referee LeetCode solution explained. Learn how to write SQL queries to find customers not referred by a specific customer (id=2). Includes MySQL, PostgreSQL, MS SQL Server, and Oracle solutions with detailed approach explanations.",
+      "keywords": "LeetCode, SQL, Database, Find Customer Referee, Solution, MySQL, PostgreSQL, MS SQL Server, Oracle, Tutorial, Explanation, Coding, Programming, Algorithm"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">584. Find Customer Referee</h1>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Table: <code class="bg-gray-100 px-1 rounded">Customer</code>
+                </p>
+                <pre class="bg-gray-100 p-4 rounded mb-4"><code>+-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| referee_id  | int     |
++-------------+---------+
+id is the primary key column for this table.
+Each row of this table indicates the id of a customer, their name, and the id of the customer who referred them.</code></pre>
+
+                <p class="text-gray-700 mb-4">
+                    Write an SQL query to report the names of the customer that are <strong>not referred by</strong> the customer with <code class="bg-gray-100 px-1 rounded">id = 2</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the result table in <strong>any order</strong>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The query result format is in the following example.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example:</h2>
+                <pre class="bg-gray-100 p-4 rounded mb-4"><code>Input: 
+Customer table:
++----+------+------------+
+| id | name | referee_id |
++----+------+------------+
+| 1  | Will | null       |
+| 2  | Jane | null       |
+| 3  | Alex | 2          |
+| 4  | Bill | null       |
+| 5  | Zack | 1          |
+| 6  | Mark | 2          |
++----+------+------------+
+Output: 
++------+
+| name |
++------+
+| Will |
+| Jane |
+| Bill |
+| Zack |
++------+</code></pre>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- MySQL Solution -->
+            <div id="mysql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MySQL Solution</h3>
+                <pre class="language-sql"><code>SELECT name
+FROM Customer
+WHERE referee_id IS NULL OR referee_id != 2;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution:</h4>
+                    <pre class="language-sql"><code>SELECT name
+FROM Customer
+WHERE COALESCE(referee_id, 0) != 2;</code></pre>
+                </div>
+            </div>
+
+            <!-- PostgreSQL Solution -->
+            <div id="postgresql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">PostgreSQL Solution</h3>
+                <pre class="language-sql"><code>SELECT name
+FROM Customer
+WHERE referee_id IS NULL OR referee_id != 2;</code></pre>
+            </div>
+
+            <!-- MS SQL Server Solution -->
+            <div id="mssql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MS SQL Server Solution</h3>
+                <pre class="language-sql"><code>SELECT name
+FROM Customer
+WHERE referee_id IS NULL OR referee_id != 2;</code></pre>
+            </div>
+
+            <!-- Oracle Solution -->
+            <div id="oracle" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Oracle Solution</h3>
+                <pre class="language-sql"><code>SELECT name
+FROM Customer
+WHERE referee_id IS NULL OR referee_id != 2;</code></pre>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses NULL handling and comparison:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>NULL handling</li>
+                            <li>Condition combination</li>
+                            <li>Result filtering</li>
+                            <li>Order independence</li>
+                        </ul>
+                    </li>
+                    <li>Query Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Check NULL</li>
+                            <li>Compare ID</li>
+                            <li>Select names</li>
+                            <li>Filter results</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>NULL checking</li>
+                        <li>ID comparison</li>
+                        <li>Name selection</li>
+                        <li>Condition handling</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Index usage</li>
+                        <li>NULL handling</li>
+                        <li>Condition order</li>
+                        <li>Result filtering</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>NULL referee_id</li>
+                        <li>Self reference</li>
+                        <li>Empty table</li>
+                        <li>All NULLs</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

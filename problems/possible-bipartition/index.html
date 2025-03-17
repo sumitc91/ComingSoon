@@ -1,0 +1,357 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Possible Bipartition - LeetCodee Solution</title>
+    <meta name="description" content="Find out if a group of people can be split into two groups based on their dislikes. LeetCodee provides Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="leetcode, bipartite graph, graph coloring, dfs, algorithm, solution, python, java, cpp, javascript, c#, possible bipartition, 886">
+    <meta property="og:title" content="Possible Bipartition - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/possible-bipartition/">
+    <meta property="og:description" content="Find out if a group of people can be split into two groups based on their dislikes. LeetCodee provides Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/possible-bipartition/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Possible Bipartition - LeetCodee Solution",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find out if a group of people can be split into two groups based on their dislikes.  Solutions in Python, Java, C++, Javascript, and C# are provided.",
+      "articleBody": "We want to split a group of n people (labeled from 1 to n) into two groups of any size. Each person may dislike some other people, and they should not go into the same group. Given the array dislikes where dislikes[i] = [a<sub>i</sub>, b<sub>i</sub>] indicates that the person labeled a<sub>i</sub> does not like the person labeled b<sub>i</sub>, return true if it is possible to split everyone into two groups in this way.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/possible-bipartition/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">886. Possible Bipartition</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    We want to split a group of n people (labeled from 1 to n) into two groups of any size. Each person may dislike some other people, and they should not go into the same group.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given the array dislikes where dislikes[i] = [a<sub>i</sub>, b<sub>i</sub>] indicates that the person labeled a<sub>i</sub> does not like the person labeled b<sub>i</sub>, return true if it is possible to split everyone into two groups in this way.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 4, dislikes = [[1,2],[1,3],[2,4]]
+Output: true
+Explanation: group1 [1,4], group2 [2,3]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 3, dislikes = [[1,2],[1,3],[2,3]]
+Output: false</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 5, dislikes = [[1,2],[2,3],[3,4],[4,5],[1,5]]
+Output: false</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ n ≤ 2000</li>
+                    <li>0 ≤ dislikes.length ≤ 10⁴</li>
+                    <li>dislikes[i].length == 2</li>
+                    <li>1 ≤ dislikes[i][j] ≤ n</li>
+                    <li>a<sub>i</sub> &lt; b<sub>i</sub></li>
+                    <li>All the pairs of dislikes are unique</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def possibleBipartition(self, n: int, dislikes: List[List[int]]) -> bool:
+        # Build adjacency list
+        graph = [[] for _ in range(n + 1)]
+        for a, b in dislikes:
+            graph[a].append(b)
+            graph[b].append(a)
+            
+        # Colors: 0 = uncolored, 1 = red, -1 = blue
+        colors = [0] * (n + 1)
+        
+        def dfs(node: int, color: int) -> bool:
+            colors[node] = color
+            
+            # Check all neighbors
+            for neighbor in graph[node]:
+                if colors[neighbor] == color:
+                    return False
+                if colors[neighbor] == 0 and not dfs(neighbor, -color):
+                    return False
+            return True
+        
+        # Try to color each uncolored node
+        for i in range(1, n + 1):
+            if colors[i] == 0 and not dfs(i, 1):
+                return False
+        return True</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS for graph coloring</li>
+                    <li>Time complexity: O(N + E)</li>
+                    <li>Space complexity: O(N + E)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private List<Integer>[] graph;
+    private int[] colors;
+    
+    public boolean possibleBipartition(int n, int[][] dislikes) {
+        // Build adjacency list
+        graph = new List[n + 1];
+        for (int i = 1; i <= n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for (int[] edge : dislikes) {
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+        
+        // Colors: 0 = uncolored, 1 = red, -1 = blue
+        colors = new int[n + 1];
+        
+        // Try to color each uncolored node
+        for (int i = 1; i <= n; i++) {
+            if (colors[i] == 0 && !dfs(i, 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean dfs(int node, int color) {
+        colors[node] = color;
+        
+        // Check all neighbors
+        for (int neighbor : graph[node]) {
+            if (colors[neighbor] == color) {
+                return false;
+            }
+            if (colors[neighbor] == 0 && !dfs(neighbor, -color)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    vector<vector<int>> graph;
+    vector<int> colors;
+    
+    bool dfs(int node, int color) {
+        colors[node] = color;
+        
+        // Check all neighbors
+        for (int neighbor : graph[node]) {
+            if (colors[neighbor] == color) {
+                return false;
+            }
+            if (colors[neighbor] == 0 && !dfs(neighbor, -color)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+public:
+    bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
+        // Build adjacency list
+        graph.resize(n + 1);
+        for (const auto& edge : dislikes) {
+            graph[edge[0]].push_back(edge[1]);
+            graph[edge[1]].push_back(edge[0]);
+        }
+        
+        // Colors: 0 = uncolored, 1 = red, -1 = blue
+        colors.assign(n + 1, 0);
+        
+        // Try to color each uncolored node
+        for (int i = 1; i <= n; i++) {
+            if (colors[i] == 0 && !dfs(i, 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ * @param {number[][]} dislikes
+ * @return {boolean}
+ */
+var possibleBipartition = function(n, dislikes) {
+    // Build adjacency list
+    const graph = Array(n + 1).fill().map(() => []);
+    for (const [a, b] of dislikes) {
+        graph[a].push(b);
+        graph[b].push(a);
+    }
+    
+    // Colors: 0 = uncolored, 1 = red, -1 = blue
+    const colors = new Array(n + 1).fill(0);
+    
+    const dfs = (node, color) => {
+        colors[node] = color;
+        
+        // Check all neighbors
+        for (const neighbor of graph[node]) {
+            if (colors[neighbor] === color) {
+                return false;
+            }
+            if (colors[neighbor] === 0 && !dfs(neighbor, -color)) {
+                return false;
+            }
+        }
+        return true;
+    };
+    
+    // Try to color each uncolored node
+    for (let i = 1; i <= n; i++) {
+        if (colors[i] === 0 && !dfs(i, 1)) {
+            return false;
+        }
+    }
+    return true;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private List<int>[] graph;
+    private int[] colors;
+    
+    public bool PossibleBipartition(int n, int[][] dislikes) {
+        // Build adjacency list
+        graph = new List<int>[n + 1];
+        for (int i = 1; i <= n; i++) {
+            graph[i] = new List<int>();
+        }
+        foreach (var edge in dislikes) {
+            graph[edge[0]].Add(edge[1]);
+            graph[edge[1]].Add(edge[0]);
+        }
+        
+        // Colors: 0 = uncolored, 1 = red, -1 = blue
+        colors = new int[n + 1];
+        
+        // Try to color each uncolored node
+        for (int i = 1; i <= n; i++) {
+            if (colors[i] == 0 && !Dfs(i, 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private bool Dfs(int node, int color) {
+        colors[node] = color;
+        
+        // Check all neighbors
+        foreach (int neighbor in graph[node]) {
+            if (colors[neighbor] == color) {
+                return false;
+            }
+            if (colors[neighbor] == 0 && !Dfs(neighbor, -color)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses graph coloring approach</li>
+                    <li>Implements DFS traversal</li>
+                    <li>Handles bipartite graph verification</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

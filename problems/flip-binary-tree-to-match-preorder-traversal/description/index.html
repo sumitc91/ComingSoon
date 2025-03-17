@@ -1,0 +1,322 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flip Binary Tree to Match Preorder Traversal - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the LeetCode problem 'Flip Binary Tree to Match Preorder Traversal' with optimized Python, Java, C++, JavaScript, and C# solutions.  Includes detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, flip binary tree, preorder traversal, algorithm, data structure, python, java, c++, javascript, c#, solution, tutorial, coding, interview">
+    <link rel="canonical" href="https://leetcodee.com/problems/flip-binary-tree-to-match-preorder-traversal/">
+    <meta property="og:title" content="Flip Binary Tree to Match Preorder Traversal - LeetCodee Solution">
+    <meta property="og:description" content="Learn how to solve the LeetCode problem 'Flip Binary Tree to Match Preorder Traversal' with optimized Python, Java, C++, JavaScript, and C# solutions.  Includes detailed explanations and time/space complexity analysis.">
+    <meta property="og:url" content="https://leetcodee.com/problems/flip-binary-tree-to-match-preorder-traversal/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Flip Binary Tree to Match Preorder Traversal - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-07-27",
+      "description": "Learn how to solve the LeetCode problem 'Flip Binary Tree to Match Preorder Traversal' with optimized Python, Java, C++, JavaScript, and C# solutions.  Includes detailed explanations and time/space complexity analysis.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/flip-binary-tree-to-match-preorder-traversal/"
+      },
+      "keywords": "leetcode, flip binary tree, preorder traversal, algorithm, data structure, python, java, c++, javascript, c#, solution, tutorial, coding, interview"
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">971. Flip Binary Tree to Match Preorder Traversal</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given the root of a binary tree with n nodes, where each node is uniquely assigned a value from 1 to n. You are also given a sequence of n values voyage, which is the desired pre-order traversal of the binary tree.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Any node in the binary tree can be flipped by swapping its left and right subtrees. For example, flipping node 1 will have the following effect:
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Flip the smallest number of nodes so that the pre-order traversal of the tree matches voyage.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If we can make the pre-order traversal match voyage, then return a list of the values of all flipped nodes. You may return the answer in any order.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If we cannot make the pre-order traversal match voyage, then return the list [-1].
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,2], voyage = [2,1]
+Output: [-1]
+Explanation: It is impossible to flip the nodes such that the pre-order traversal matches voyage.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,2,3], voyage = [1,3,2]
+Output: [1]
+Explanation: Flipping node 1 swaps nodes 2 and 3, so the pre-order traversal matches voyage.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,2,3], voyage = [1,2,3]
+Output: []
+Explanation: The tree's pre-order traversal already matches voyage, so no nodes need to be flipped.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">The number of nodes in the tree is n.</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">n == voyage.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= n <= 100</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">All the values in the tree are unique.</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">All the values in voyage are unique.</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def flipMatchVoyage(self, root: TreeNode, voyage: List[int]) -> List[int]:
+        self.flipped = []
+        self.i = 0
+        
+        def dfs(node):
+            if not node:
+                return True
+                
+            if node.val != voyage[self.i]:
+                return False
+                
+            self.i += 1
+            
+            if node.left and node.left.val != voyage[self.i]:
+                self.flipped.append(node.val)
+                return dfs(node.right) and dfs(node.left)
+            return dfs(node.left) and dfs(node.right)
+            
+        return self.flipped if dfs(root) else [-1]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The height of the recursion stack can be up to the height of the tree.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private List<Integer> flipped;
+    private int index;
+    
+    public List<Integer> flipMatchVoyage(TreeNode root, int[] voyage) {
+        flipped = new ArrayList<>();
+        index = 0;
+        
+        return dfs(root, voyage) ? flipped : Arrays.asList(-1);
+    }
+    
+    private boolean dfs(TreeNode node, int[] voyage) {
+        if (node == null) {
+            return true;
+        }
+        
+        if (node.val != voyage[index++]) {
+            return false;
+        }
+        
+        if (node.left != null && node.left.val != voyage[index]) {
+            flipped.add(node.val);
+            return dfs(node.right, voyage) && dfs(node.left, voyage);
+        }
+        
+        return dfs(node.left, voyage) && dfs(node.right, voyage);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The height of the recursion stack can be up to the height of the tree.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    vector<int> flipped;
+    int index = 0;
+    
+    bool dfs(TreeNode* node, vector<int>& voyage) {
+        if (!node) {
+            return true;
+        }
+        
+        if (node->val != voyage[index++]) {
+            return false;
+        }
+        
+        if (node->left && node->left->val != voyage[index]) {
+            flipped.push_back(node->val);
+            return dfs(node->right, voyage) && dfs(node->left, voyage);
+        }
+        
+        return dfs(node->left, voyage) && dfs(node->right, voyage);
+    }
+    
+public:
+    vector<int> flipMatchVoyage(TreeNode* root, vector<int>& voyage) {
+        return dfs(root, voyage) ? flipped : vector<int>{-1};
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The height of the recursion stack can be up to the height of the tree.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @param {number[]} voyage
+ * @return {number[]}
+ */
+var flipMatchVoyage = function(root, voyage) {
+    const flipped = [];
+    let index = 0;
+    
+    function dfs(node) {
+        if (!node) {
+            return true;
+        }
+        
+        if (node.val !== voyage[index++]) {
+            return false;
+        }
+        
+        if (node.left && node.left.val !== voyage[index]) {
+            flipped.push(node.val);
+            return dfs(node.right) && dfs(node.left);
+        }
+        
+        return dfs(node.left) && dfs(node.right);
+    }
+    
+    return dfs(root) ? flipped : [-1];
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The height of the recursion stack can be up to the height of the tree.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private List<int> flipped = new List<int>();
+    private int index = 0;
+    
+    public IList<int> FlipMatchVoyage(TreeNode root, int[] voyage) {
+        return Dfs(root, voyage) ? flipped : new List<int> { -1 };
+    }
+    
+    private bool Dfs(TreeNode node, int[] voyage) {
+        if (node == null) {
+            return true;
+        }
+        
+        if (node.val != voyage[index++]) {
+            return false;
+        }
+        
+        if (node.left != null && node.left.val != voyage[index]) {
+            flipped.Add(node.val);
+            return Dfs(node.right, voyage) && Dfs(node.left, voyage);
+        }
+        
+        return Dfs(node.left, voyage) && Dfs(node.right, voyage);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">The height of the recursion stack can be up to the height of the tree.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

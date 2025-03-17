@@ -1,0 +1,283 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Sheet Column Title - LeetCodee</title>
+    <meta name="description" content="Detailed solution explanation for LeetCode problem 168: Excel Sheet Column Title. Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, excel sheet column title, algorithm, solution, python, java, c++, javascript, c#, coding, programming, data structures">
+    <meta name="canonical" content="https://leetcodee.com/problems/excel-sheet-column-title/">
+    <meta property="og:title" content="Excel Sheet Column Title - LeetCodee"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="https://leetcodee.com/problems/excel-sheet-column-title/"/>
+    <meta property="og:description" content="Detailed solution explanation for LeetCode problem 168: Excel Sheet Column Title. Solutions in Python, Java, C++, JavaScript, and C#."/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Excel Sheet Column Title - LeetCodee",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Detailed solution explanation for LeetCode problem 168: Excel Sheet Column Title. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "Given an integer `columnNumber`, return *its corresponding column title as it appears in an Excel sheet*. For example: A -> 1 B -> 2 C -> 3 ... Z -> 26 AA -> 27 AB -> 28 ...",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/excel-sheet-column-title/"
+      }
+    }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            margin: 0;
+            color: #ffa116;
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .easy { background-color: #00B8A3; color: white; }
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .solution-nav {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+        .solution-nav a {
+            margin-right: 15px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .solution-nav a:hover {
+            text-decoration: underline;
+        }
+        .solution {
+            margin-top: 20px;
+        }
+        .complexity {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>168. Excel Sheet Column Title</h1>
+        <span class="difficulty easy">Easy</span>
+    </header>
+
+    <div class="content">
+        <h2>Problem Description</h2>
+        <p>Given an integer <code>columnNumber</code>, return <em>its corresponding column title as it appears in an Excel sheet</em>.</p>
+        <p>For example:</p>
+        <pre>
+A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28 
+...</pre>
+
+        <h3>Examples</h3>
+        <pre>
+Example 1:
+Input: columnNumber = 1
+Output: "A"
+
+Example 2:
+Input: columnNumber = 28
+Output: "AB"
+
+Example 3:
+Input: columnNumber = 701
+Output: "ZY"</pre>
+
+        <div class="solution-nav">
+            Jump to Solution:
+            <a href="#python">Python</a>
+            <a href="#java">Java</a>
+            <a href="#cpp">C++</a>
+            <a href="#javascript">JavaScript</a>
+            <a href="#csharp">C#</a>
+        </div>
+
+        <div class="solution" id="python">
+            <h3>Python Solution</h3>
+            <pre><code>
+def convertToTitle(columnNumber: int) -> str:
+    result = []
+    
+    while columnNumber > 0:
+        columnNumber -= 1
+        result.append(chr(columnNumber % 26 + ord('A')))
+        columnNumber //= 26
+    
+    return ''.join(reversed(result))</code></pre>
+        </div>
+
+        <div class="solution" id="java">
+            <h3>Java Solution</h3>
+            <pre><code>
+class Solution {
+    public String convertToTitle(int columnNumber) {
+        StringBuilder result = new StringBuilder();
+        
+        while (columnNumber > 0) {
+            columnNumber--;
+            result.append((char)('A' + columnNumber % 26));
+            columnNumber /= 26;
+        }
+        
+        return result.reverse().toString();
+    }
+}</code></pre>
+        </div>
+
+        <div class="solution" id="cpp">
+            <h3>C++ Solution</h3>
+            <pre><code>
+class Solution {
+public:
+    string convertToTitle(int columnNumber) {
+        string result;
+        
+        while (columnNumber > 0) {
+            columnNumber--;
+            result = (char)('A' + columnNumber % 26) + result;
+            columnNumber /= 26;
+        }
+        
+        return result;
+    }
+};</code></pre>
+        </div>
+
+        <div class="solution" id="javascript">
+            <h3>JavaScript Solution</h3>
+            <pre><code>
+/**
+ * @param {number} columnNumber
+ * @return {string}
+ */
+var convertToTitle = function(columnNumber) {
+    const result = [];
+    
+    while (columnNumber > 0) {
+        columnNumber--;
+        result.push(String.fromCharCode('A'.charCodeAt(0) + columnNumber % 26));
+        columnNumber = Math.floor(columnNumber / 26);
+    }
+    
+    return result.reverse().join('');
+};</code></pre>
+        </div>
+
+        <div class="solution" id="csharp">
+            <h3>C# Solution</h3>
+            <pre><code>
+public class Solution {
+    public string ConvertToTitle(int columnNumber) {
+        StringBuilder result = new StringBuilder();
+        
+        while (columnNumber > 0) {
+            columnNumber--;
+            result.Append((char)('A' + columnNumber % 26));
+            columnNumber /= 26;
+        }
+        
+        return new string(result.ToString().Reverse().ToArray());
+    }
+}</code></pre>
+        </div>
+
+        <div class="complexity">
+            <h3>Complexity Analysis</h3>
+            <ul>
+                <li><strong>Time Complexity:</strong> O(log n) where n is the input number</li>
+                <li><strong>Space Complexity:</strong> O(log n) to store the result string</li>
+            </ul>
+        </div>
+
+        <div class="explanation">
+            <h3>Solution Explanation</h3>
+            <p>This solution converts from base-10 to base-26:</p>
+            <ul>
+                <li>Key concept:
+                    <ul>
+                        <li>Base conversion</li>
+                        <li>Character mapping</li>
+                        <li>Zero-based indexing</li>
+                    </ul>
+                </li>
+                <li>Algorithm steps:
+                    <ul>
+                        <li>Adjust for zero-based</li>
+                        <li>Convert remainder</li>
+                        <li>Build string</li>
+                        <li>Reverse result</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Key points:</p>
+            <ul>
+                <li>Logarithmic time</li>
+                <li>Handle zero-based</li>
+                <li>String building</li>
+                <li>Reverse order</li>
+            </ul>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+</body>
+</html>

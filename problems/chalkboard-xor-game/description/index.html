@@ -1,0 +1,240 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chalkboard XOR Game - LeetCodee Solution</title>
+    <meta name="description" content="Find the optimal strategy for the Chalkboard XOR Game.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, leetcode solution, chalkboard xor game, algorithm, python, java, cpp, javascript, c#, bitwise xor, game theory">
+    <meta name="canonical" content="https://leetcodee.com/problems/chalkboard-xor-game/">
+    <meta property="og:title" content="Chalkboard XOR Game - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/chalkboard-xor-game/">
+    <meta property="og:description" content="Find the optimal strategy for the Chalkboard XOR Game.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Chalkboard XOR Game - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the optimal strategy for the Chalkboard XOR Game. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "You are given an array of integers nums. Alice and Bob take turns playing a game, with Alice starting first. During each player's turn, that player must pick an integer from nums and remove it. The player who removes a number that makes the bitwise XOR of all remaining elements equal to 0 loses. If a player cannot make a move, they lose. Return true if Alice wins the game, assuming both players play optimally.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/chalkboard-xor-game/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">810. Chalkboard XOR Game</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an array of integers nums. Alice and Bob take turns playing a game, with Alice starting first.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    During each player's turn, that player must pick an integer from nums and remove it. The player who removes a number that makes the bitwise XOR of all remaining elements equal to 0 loses. If a player cannot make a move, they lose.
+                </p>
+                <p class="text-gray-700">
+                    Return true if Alice wins the game, assuming both players play optimally.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,1,2]
+Output: false
+Explanation: 
+Alice has two choices: erase 1 or erase 2. 
+If she erases 1, the nums array becomes [1, 2]. The bitwise XOR of all remaining elements is 1 XOR 2 = 3. 
+Now Bob can remove any element he wants, because Alice will be the one to remove the last element and she will lose. 
+If Alice erases 2 first, now nums becomes [1, 1]. The bitwise XOR of all remaining elements is 1 XOR 1 = 0. 
+Alice will lose.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,3]
+Output: true</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1]
+Output: true</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 1000</li>
+                    <li>0 ≤ nums[i] < 2¹⁶</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def xorGame(self, nums: List[int]) -> bool:
+        if len(nums) % 2 == 0:
+            return True
+            
+        xor_sum = 0
+        for num in nums:
+            xor_sum ^= num
+            
+        return xor_sum == 0</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>If array length is even, Alice always wins</li>
+                    <li>If array length is odd, Alice wins only if XOR of all numbers is 0</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean xorGame(int[] nums) {
+        if (nums.length % 2 == 0) {
+            return true;
+        }
+        
+        int xorSum = 0;
+        for (int num : nums) {
+            xorSum ^= num;
+        }
+        
+        return xorSum == 0;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool xorGame(vector<int>& nums) {
+        if (nums.size() % 2 == 0) {
+            return true;
+        }
+        
+        int xorSum = 0;
+        for (int num : nums) {
+            xorSum ^= num;
+        }
+        
+        return xorSum == 0;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var xorGame = function(nums) {
+    if (nums.length % 2 === 0) {
+        return true;
+    }
+    
+    let xorSum = 0;
+    for (const num of nums) {
+        xorSum ^= num;
+    }
+    
+    return xorSum === 0;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool XorGame(int[] nums) {
+        if (nums.Length % 2 == 0) {
+            return true;
+        }
+        
+        int xorSum = 0;
+        foreach (int num in nums) {
+            xorSum ^= num;
+        }
+        
+        return xorSum == 0;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses mathematical properties of XOR operation</li>
+                    <li>For even length arrays, Alice can always win by maintaining XOR balance</li>
+                    <li>For odd length arrays, Alice wins only if initial XOR is 0</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

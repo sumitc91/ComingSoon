@@ -1,0 +1,367 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Similar Strings - LeetCodee Solution</title>
+    <meta name="description" content="Find the smallest k for which two anagrams s1 and s2 are k-similar.  Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="LeetCode, K-Similar Strings, algorithm, solution, Python, Java, C++, JavaScript, C#, coding, programming, tutorial, BFS, graph">
+    <meta name="canonical" content="https://leetcodee.com/problems/k-similar-strings/">
+    <meta property="og:title" content="K-Similar Strings - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/k-similar-strings/">
+    <meta property="og:description" content="Find the smallest k for which two anagrams s1 and s2 are k-similar.  Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "854. K-Similar Strings",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the smallest k for which two anagrams s1 and s2 are k-similar.  Includes Python, Java, C++, JavaScript, and C# solutions.",
+      "keywords": "LeetCode, K-Similar Strings, algorithm, solution, Python, Java, C++, JavaScript, C#, coding, programming, tutorial, BFS, graph",
+      "articleBody": "Strings s1 and s2 are k-similar (for some non-negative integer k) if we can swap the positions of two letters in s1 exactly k times so that the resulting string equals s2. Given two anagrams s1 and s2, return the smallest k for which s1 and s2 are k-similar.  [Problem Description, Examples, Constraints and Solutions in Python, Java, C++, JavaScript, and C# follow]",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/k-similar-strings/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">854. K-Similar Strings</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Strings s1 and s2 are k-similar (for some non-negative integer k) if we can swap the positions of two letters in s1 exactly k times so that the resulting string equals s2.
+                </p>
+                <p class="text-gray-700">
+                    Given two anagrams s1 and s2, return the smallest k for which s1 and s2 are k-similar.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s1 = "ab", s2 = "ba"
+Output: 1
+Explanation: The two strings are 1-similar because we can use one swap to change s1 to s2: "ab" → "ba".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s1 = "abc", s2 = "bca"
+Output: 2
+Explanation: The two strings are 2-similar because we can use two swaps to change s1 to s2: "abc" → "bac" → "bca".</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s1.length ≤ 20</li>
+                    <li>s2.length == s1.length</li>
+                    <li>s1 and s2 contain only lowercase letters from the set {'a', 'b', 'c', 'd', 'e', 'f'}</li>
+                    <li>s2 is an anagram of s1</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def kSimilarity(self, s1: str, s2: str) -> int:
+        def get_next_states(s1, s2):
+            i = 0
+            while i < len(s1) and s1[i] == s2[i]:
+                i += 1
+            
+            states = []
+            for j in range(i + 1, len(s1)):
+                if s1[j] == s2[i]:
+                    # Create new string with characters swapped
+                    new_s = list(s1)
+                    new_s[i], new_s[j] = new_s[j], new_s[i]
+                    states.append(''.join(new_s))
+            return states
+        
+        # BFS to find shortest path
+        queue = deque([(s1, 0)])
+        seen = {s1}
+        
+        while queue:
+            s, steps = queue.popleft()
+            if s == s2:
+                return steps
+            
+            for next_s in get_next_states(s, s2):
+                if next_s not in seen:
+                    seen.add(next_s)
+                    queue.append((next_s, steps + 1))
+        
+        return 0</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses BFS to find minimum number of swaps</li>
+                    <li>Time complexity: O(n! * n)</li>
+                    <li>Space complexity: O(n! * n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int kSimilarity(String s1, String s2) {
+        if (s1.equals(s2)) return 0;
+        
+        Set<String> seen = new HashSet<>();
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(s1);
+        seen.add(s1);
+        int steps = 0;
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String curr = queue.poll();
+                if (curr.equals(s2)) return steps;
+                
+                // Find first mismatch
+                int j = 0;
+                while (j < curr.length() && curr.charAt(j) == s2.charAt(j)) j++;
+                
+                // Try all possible swaps
+                for (int k = j + 1; k < curr.length(); k++) {
+                    if (curr.charAt(k) == s2.charAt(j)) {
+                        String next = swap(curr, j, k);
+                        if (!seen.contains(next)) {
+                            seen.add(next);
+                            queue.offer(next);
+                        }
+                    }
+                }
+            }
+            steps++;
+        }
+        
+        return steps;
+    }
+    
+    private String swap(String s, int i, int j) {
+        char[] arr = s.toCharArray();
+        char temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        return new String(arr);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int kSimilarity(string s1, string s2) {
+        if (s1 == s2) return 0;
+        
+        unordered_set<string> seen;
+        queue<string> q;
+        q.push(s1);
+        seen.insert(s1);
+        int steps = 0;
+        
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                string curr = q.front();
+                q.pop();
+                
+                if (curr == s2) return steps;
+                
+                // Find first mismatch
+                int j = 0;
+                while (j < curr.length() && curr[j] == s2[j]) j++;
+                
+                // Try all possible swaps
+                for (int k = j + 1; k < curr.length(); k++) {
+                    if (curr[k] == s2[j]) {
+                        string next = curr;
+                        swap(next[j], next[k]);
+                        if (seen.find(next) == seen.end()) {
+                            seen.insert(next);
+                            q.push(next);
+                        }
+                    }
+                }
+            }
+            steps++;
+        }
+        
+        return steps;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {number}
+ */
+var kSimilarity = function(s1, s2) {
+    if (s1 === s2) return 0;
+    
+    const seen = new Set();
+    const queue = [[s1, 0]];
+    seen.add(s1);
+    
+    while (queue.length) {
+        const [curr, steps] = queue.shift();
+        if (curr === s2) return steps;
+        
+        // Find first mismatch
+        let j = 0;
+        while (j < curr.length && curr[j] === s2[j]) j++;
+        
+        // Try all possible swaps
+        for (let k = j + 1; k < curr.length; k++) {
+            if (curr[k] === s2[j]) {
+                const next = swap(curr, j, k);
+                if (!seen.has(next)) {
+                    seen.add(next);
+                    queue.push([next, steps + 1]);
+                }
+            }
+        }
+    }
+    
+    return 0;
+};
+
+function swap(s, i, j) {
+    const arr = s.split('');
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    return arr.join('');
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int KSimilarity(string s1, string s2) {
+        if (s1 == s2) return 0;
+        
+        var seen = new HashSet<string>();
+        var queue = new Queue<(string s, int steps)>();
+        queue.Enqueue((s1, 0));
+        seen.Add(s1);
+        
+        while (queue.Count > 0) {
+            var (curr, steps) = queue.Dequeue();
+            if (curr == s2) return steps;
+            
+            // Find first mismatch
+            int j = 0;
+            while (j < curr.Length && curr[j] == s2[j]) j++;
+            
+            // Try all possible swaps
+            for (int k = j + 1; k < curr.Length; k++) {
+                if (curr[k] == s2[j]) {
+                    string next = Swap(curr, j, k);
+                    if (!seen.Contains(next)) {
+                        seen.Add(next);
+                        queue.Enqueue((next, steps + 1));
+                    }
+                }
+            }
+        }
+        
+        return 0;
+    }
+    
+    private string Swap(string s, int i, int j) {
+        var arr = s.ToCharArray();
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        return new string(arr);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses BFS with string manipulation</li>
+                    <li>Time complexity: O(n! * n)</li>
+                    <li>Space complexity: O(n! * n)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        (function() {
+            const deque = (function() {
+                const arr = [];
+                return {
+                    push: (x) => arr.push(x),
+                    pop: () => arr.pop(),
+                    pushLeft: (x) => arr.unshift(x),
+                    popleft: () => arr.shift()
+                }
+            })();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimum Number of Refueling Stops - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum number of refueling stops required to reach the destination.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, minimum refueling stops, algorithm, solution, python, java, c++, javascript, c#, coding, programming, competitive programming, dynamic programming, greedy algorithm">
+    <meta property="og:title" content="Minimum Number of Refueling Stops - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/minimum-number-of-refueling-stops/">
+    <meta property="og:description" content="Find the minimum number of refueling stops required to reach the destination.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/minimum-number-of-refueling-stops/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "871. Minimum Number of Refueling Stops",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "A car travels from a starting position to a destination which is target miles east of the starting position. There are gas stations along the way. The gas stations are represented as an array stations where stations[i] = [position<sub>i</sub>, fuel<sub>i</sub>] indicates that the i<sup>th</sup> gas station is position<sub>i</sub> miles east of the starting position and has fuel<sub>i</sub> liters of gas. The car starts with an infinite tank of gas, which initially has startFuel liters of fuel in it. It uses one liter of gas per one mile traveled. When the car reaches a gas station, it may stop and refuel, transferring all the gas from the station into the car. Return the minimum number of refueling stops the car must make in order to reach its destination. If it cannot reach the destination, return -1.",
+      "keywords": "leetcode, minimum refueling stops, algorithm, solution, python, java, c++, javascript, c#, coding, programming, competitive programming, dynamic programming, greedy algorithm",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/minimum-number-of-refueling-stops/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">871. Minimum Number of Refueling Stops</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A car travels from a starting position to a destination which is target miles east of the starting position.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    There are gas stations along the way. The gas stations are represented as an array stations where stations[i] = [position<sub>i</sub>, fuel<sub>i</sub>] indicates that the i<sup>th</sup> gas station is position<sub>i</sub> miles east of the starting position and has fuel<sub>i</sub> liters of gas.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The car starts with an infinite tank of gas, which initially has startFuel liters of fuel in it. It uses one liter of gas per one mile traveled. When the car reaches a gas station, it may stop and refuel, transferring all the gas from the station into the car.
+                </p>
+                <p class="text-gray-700">
+                    Return the minimum number of refueling stops the car must make in order to reach its destination. If it cannot reach the destination, return -1.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: target = 1, startFuel = 1, stations = []
+Output: 0
+Explanation: We can reach the target without refueling.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: target = 100, startFuel = 1, stations = [[10,100]]
+Output: -1
+Explanation: We can not reach the target (or even the first gas station).</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: target = 100, startFuel = 10, stations = [[10,60],[20,30],[30,30],[60,40]]
+Output: 2
+Explanation: We start with 10 liters of fuel.
+We drive to position 10, expending 10 liters of fuel. We refuel from 0 liters to 60 liters of gas.
+Then, we drive from position 10 to position 60 (expending 50 liters of fuel),
+and refuel from 10 liters to 50 liters of gas.
+We then drive to and reach the target.
+We made 2 refueling stops along the way, so we return 2.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ target, startFuel ≤ 10⁹</li>
+                    <li>0 ≤ stations.length ≤ 500</li>
+                    <li>0 ≤ position<sub>i</sub> ≤ position<sub>i+1</sub> ≤ target</li>
+                    <li>1 ≤ fuel<sub>i</sub> ≤ 10⁹</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:
+        # Priority queue to store fuel amounts from stations we've passed
+        pq = []
+        stations.append([target, 0])  # Add target as a station with no fuel
+        tank = startFuel
+        prev = 0
+        stops = 0
+        
+        for position, fuel in stations:
+            # Consume fuel to reach current station
+            tank -= position - prev
+            
+            # While we're out of fuel, use the largest fuel stations we've passed
+            while tank < 0 and pq:
+                tank += -heapq.heappop(pq)
+                stops += 1
+            
+            # If we still can't reach this station
+            if tank < 0:
+                return -1
+            
+            # Add this station's fuel to our options
+            heapq.heappush(pq, -fuel)
+            prev = position
+        
+        return stops</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses max heap (implemented as negative min heap) for greedy approach</li>
+                    <li>Time complexity: O(n log n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int minRefuelStops(int target, int startFuel, int[][] stations) {
+        // Priority queue to store fuel amounts from stations we've passed
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+        int n = stations.length;
+        int tank = startFuel;
+        int prev = 0;
+        int stops = 0;
+        int i = 0;
+        
+        while (prev < target) {
+            tank -= (i < n ? stations[i][0] : target) - prev;
+            
+            while (tank < 0 && !pq.isEmpty()) {
+                tank += pq.poll();
+                stops++;
+            }
+            
+            if (tank < 0) return -1;
+            
+            if (i < n) {
+                pq.offer(stations[i][1]);
+                prev = stations[i][0];
+                i++;
+            } else {
+                break;
+            }
+        }
+        
+        return stops;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+        // Priority queue to store fuel amounts from stations we've passed
+        priority_queue<int> pq;
+        stations.push_back({target, 0});  // Add target as a station with no fuel
+        int tank = startFuel;
+        int prev = 0;
+        int stops = 0;
+        
+        for (const auto& station : stations) {
+            int position = station[0];
+            int fuel = station[1];
+            
+            // Consume fuel to reach current station
+            tank -= position - prev;
+            
+            // While we're out of fuel, use the largest fuel stations we've passed
+            while (tank < 0 && !pq.empty()) {
+                tank += pq.top();
+                pq.pop();
+                stops++;
+            }
+            
+            // If we still can't reach this station
+            if (tank < 0) return -1;
+            
+            // Add this station's fuel to our options
+            pq.push(fuel);
+            prev = position;
+        }
+        
+        return stops;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} target
+ * @param {number} startFuel
+ * @param {number[][]} stations
+ * @return {number}
+ */
+var minRefuelStops = function(target, startFuel, stations) {
+    // Priority queue implementation using max heap
+    class MaxHeap {
+        constructor() {
+            this.heap = [];
+        }
+        
+        push(val) {
+            this.heap.push(val);
+            this.bubbleUp(this.heap.length - 1);
+        }
+        
+        pop() {
+            if (this.heap.length === 0) return null;
+            if (this.heap.length === 1) return this.heap.pop();
+            
+            const result = this.heap[0];
+            this.heap[0] = this.heap.pop();
+            this.bubbleDown(0);
+            return result;
+        }
+        
+        bubbleUp(index) {
+            while (index > 0) {
+                const parent = Math.floor((index - 1) / 2);
+                if (this.heap[parent] >= this.heap[index]) break;
+                
+                [this.heap[parent], this.heap[index]] = 
+                    [this.heap[index], this.heap[parent]];
+                index = parent;
+            }
+        }
+        
+        bubbleDown(index) {
+            while (true) {
+                let largest = index;
+                const left = 2 * index + 1;
+                const right = 2 * index + 2;
+                
+                if (left < this.heap.length && 
+                    this.heap[left] > this.heap[largest]) {
+                    largest = left;
+                }
+                if (right < this.heap.length && 
+                    this.heap[right] > this.heap[largest]) {
+                    largest = right;
+                }
+                
+                if (largest === index) break;
+                
+                [this.heap[index], this.heap[largest]] = 
+                    [this.heap[largest], this.heap[index]];
+                index = largest;
+            }
+        }
+        
+        isEmpty() {
+            return this.heap.length === 0;
+        }
+    }
+    
+    stations.push([target, 0]);  // Add target as a station with no fuel
+    const pq = new MaxHeap();
+    let tank = startFuel;
+    let prev = 0;
+    let stops = 0;
+    
+    for (const [position, fuel] of stations) {
+        tank -= position - prev;
+        
+        while (tank < 0 && !pq.isEmpty()) {
+            tank += pq.pop();
+            stops++;
+        }
+        
+        if (tank < 0) return -1;
+        
+        pq.push(fuel);
+        prev = position;
+    }
+    
+    return stops;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int MinRefuelStops(int target, int startFuel, int[][] stations) {
+        // Priority queue to store fuel amounts from stations we've passed
+        var pq = new PriorityQueue<int, int>();
+        int n = stations.Length;
+        int tank = startFuel;
+        int prev = 0;
+        int stops = 0;
+        int i = 0;
+        
+        while (prev < target) {
+            tank -= (i < n ? stations[i][0] : target) - prev;
+            
+            while (tank < 0 && pq.Count > 0) {
+                tank += pq.Dequeue();
+                stops++;
+            }
+            
+            if (tank < 0) return -1;
+            
+            if (i < n) {
+                pq.Enqueue(stations[i][1], -stations[i][1]);  // Negative for max heap
+                prev = stations[i][0];
+                i++;
+            } else {
+                break;
+            }
+        }
+        
+        return stops;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses priority queue for greedy approach</li>
+                    <li>Time complexity: O(n log n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

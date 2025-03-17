@@ -1,0 +1,425 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyramid Transition Matrix - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Pyramid Transition Matrix problem on LeetCodee. Find Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta name="keywords" content="LeetCode, LeetCodee, Pyramid Transition Matrix, Python, Java, C++, JavaScript, C#, algorithm, solution, coding, programming">
+    <meta property="og:title" content="Pyramid Transition Matrix - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/pyramid-transition-matrix/">
+    <meta property="og:description" content="Learn how to solve the Pyramid Transition Matrix problem on LeetCodee. Find Python, Java, C++, JavaScript, and C# solutions with explanations and implementation notes.">
+    <meta property="og:image" content="https://leetcodee.com/your-image.jpg">  <!-- Replace with actual image URL -->
+    <link rel="canonical" href="https://leetcodee.com/problems/pyramid-transition-matrix/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "756. Pyramid Transition Matrix",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27", <!-- Replace with actual modification date -->
+      "description": "We are stacking blocks to form a pyramid. Each block has a color which is a one letter string, like 'Z'. For every block of color 'C' we place not in the bottom row, we are placing it on top of a left block of color 'A' and right block of color 'B'. We are allowed to place the block there only if '(A, B, C)' is an allowed triple.",
+      "image": "https://leetcodee.com/your-image.jpg",  <!-- Replace with actual image URL -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/your-logo.jpg"  <!-- Replace with actual logo URL -->
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/pyramid-transition-matrix/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">756. Pyramid Transition Matrix</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    We are stacking blocks to form a pyramid. Each block has a color which is a one letter string, like 'Z'.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For every block of color 'C' we place not in the bottom row, we are placing it on top of a left block of color 'A' and right block of color 'B'. We are allowed to place the block there only if '(A, B, C)' is an allowed triple.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    We start with a bottom row of bottom, represented as a single string. We also start with a list of allowed triples allowed. Each allowed triple is represented as a string of length 3.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return true if we can build the pyramid all the way to the top, otherwise false.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: bottom = "BCD", allowed = ["BCG", "CDE", "GEA", "FFF"]
+Output: true
+Explanation:
+We can stack the pyramid like this:
+    A
+   / \
+  G   E
+ / \ / \
+B   C   D
+
+We are allowed to place G on top of B and C because BCG is an allowed triple.  Similarly, we can place E on top of C and D, then A on top of G and E.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: bottom = "AABA", allowed = ["AAA", "AAB", "ABA", "ABB", "BAC"]
+Output: false
+Explanation:
+We can't stack the pyramid to the top. Note that there could be multiple triples that would be allowed in this case.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>2 ≤ bottom.length ≤ 8</li>
+                    <li>0 ≤ allowed.length ≤ 200</li>
+                    <li>allowed[i].length == 3</li>
+                    <li>The letters in all input strings are from the set {'A', 'B', 'C', 'D', 'E', 'F', 'G'}</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:
+        # Build transition map
+        transitions = {}
+        for triple in allowed:
+            key = (triple[0], triple[1])
+            if key not in transitions:
+                transitions[key] = set()
+            transitions[key].add(triple[2])
+            
+        def can_build(row: str) -> bool:
+            if len(row) == 1:
+                return True
+                
+            # Try all possible next rows
+            next_rows = []
+            for i in range(len(row) - 1):
+                key = (row[i], row[i + 1])
+                if key not in transitions:
+                    return False
+                if not next_rows:
+                    next_rows = [c for c in transitions[key]]
+                else:
+                    next_rows = [r + c for r in next_rows for c in transitions[key]]
+                    
+            # Try each possible next row
+            for next_row in next_rows:
+                if can_build(next_row):
+                    return True
+            return False
+            
+        return can_build(bottom)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to try all possible pyramid configurations</li>
+                    <li>Builds a transition map for O(1) lookup of allowed triples</li>
+                    <li>Time complexity: O(7^n) where n is the length of bottom</li>
+                    <li>Space complexity: O(7^n) for storing possible next rows</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private Map<String, Set<Character>> transitions;
+    
+    public boolean pyramidTransition(String bottom, List<String> allowed) {
+        // Build transition map
+        transitions = new HashMap<>();
+        for (String triple : allowed) {
+            String key = triple.substring(0, 2);
+            transitions.computeIfAbsent(key, k -> new HashSet<>())
+                     .add(triple.charAt(2));
+        }
+        
+        return canBuild(bottom);
+    }
+    
+    private boolean canBuild(String row) {
+        if (row.length() == 1) {
+            return true;
+        }
+        
+        // Try all possible next rows
+        List<String> nextRows = new ArrayList<>();
+        for (int i = 0; i < row.length() - 1; i++) {
+            String key = row.substring(i, i + 2);
+            if (!transitions.containsKey(key)) {
+                return false;
+            }
+            
+            if (nextRows.isEmpty()) {
+                for (char c : transitions.get(key)) {
+                    nextRows.add(String.valueOf(c));
+                }
+            } else {
+                List<String> newRows = new ArrayList<>();
+                for (String prev : nextRows) {
+                    for (char c : transitions.get(key)) {
+                        newRows.add(prev + c);
+                    }
+                }
+                nextRows = newRows;
+            }
+        }
+        
+        // Try each possible next row
+        for (String nextRow : nextRows) {
+            if (canBuild(nextRow)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    unordered_map<string, unordered_set<char>> transitions;
+    
+    bool canBuild(const string& row) {
+        if (row.length() == 1) {
+            return true;
+        }
+        
+        // Try all possible next rows
+        vector<string> nextRows;
+        for (int i = 0; i < row.length() - 1; i++) {
+            string key = row.substr(i, 2);
+            if (transitions.find(key) == transitions.end()) {
+                return false;
+            }
+            
+            if (nextRows.empty()) {
+                for (char c : transitions[key]) {
+                    nextRows.push_back(string(1, c));
+                }
+            } else {
+                vector<string> newRows;
+                for (const string& prev : nextRows) {
+                    for (char c : transitions[key]) {
+                        newRows.push_back(prev + c);
+                    }
+                }
+                nextRows = newRows;
+            }
+        }
+        
+        // Try each possible next row
+        for (const string& nextRow : nextRows) {
+            if (canBuild(nextRow)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+public:
+    bool pyramidTransition(string bottom, vector<string>& allowed) {
+        // Build transition map
+        for (const string& triple : allowed) {
+            string key = triple.substr(0, 2);
+            transitions[key].insert(triple[2]);
+        }
+        
+        return canBuild(bottom);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function pyramidTransition(bottom, allowed) {
+    // Build transition map
+    const transitions = new Map();
+    for (const triple of allowed) {
+        const key = triple.slice(0, 2);
+        if (!transitions.has(key)) {
+            transitions.set(key, new Set());
+        }
+        transitions.get(key).add(triple[2]);
+    }
+    
+    function canBuild(row) {
+        if (row.length === 1) {
+            return true;
+        }
+        
+        // Try all possible next rows
+        let nextRows = [];
+        for (let i = 0; i < row.length - 1; i++) {
+            const key = row.slice(i, i + 2);
+            if (!transitions.has(key)) {
+                return false;
+            }
+            
+            if (nextRows.length === 0) {
+                nextRows = Array.from(transitions.get(key)).map(c => c);
+            } else {
+                const newRows = [];
+                for (const prev of nextRows) {
+                    for (const c of transitions.get(key)) {
+                        newRows.push(prev + c);
+                    }
+                }
+                nextRows = newRows;
+            }
+        }
+        
+        // Try each possible next row
+        for (const nextRow of nextRows) {
+            if (canBuild(nextRow)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    return canBuild(bottom);
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private Dictionary<string, HashSet<char>> transitions;
+    
+    public bool PyramidTransition(string bottom, IList<string> allowed) {
+        // Build transition map
+        transitions = new Dictionary<string, HashSet<char>>();
+        foreach (string triple in allowed) {
+            string key = triple.Substring(0, 2);
+            if (!transitions.ContainsKey(key)) {
+                transitions[key] = new HashSet<char>();
+            }
+            transitions[key].Add(triple[2]);
+        }
+        
+        return CanBuild(bottom);
+    }
+    
+    private bool CanBuild(string row) {
+        if (row.Length == 1) {
+            return true;
+        }
+        
+        // Try all possible next rows
+        List<string> nextRows = new List<string>();
+        for (int i = 0; i < row.Length - 1; i++) {
+            string key = row.Substring(i, 2);
+            if (!transitions.ContainsKey(key)) {
+                return false;
+            }
+            
+            if (nextRows.Count == 0) {
+                nextRows = transitions[key].Select(c => c.ToString()).ToList();
+            } else {
+                List<string> newRows = new List<string>();
+                foreach (string prev in nextRows) {
+                    foreach (char c in transitions[key]) {
+                        newRows.Add(prev + c);
+                    }
+                }
+                nextRows = newRows;
+            }
+        }
+        
+        // Try each possible next row
+        foreach (string nextRow in nextRows) {
+            if (CanBuild(nextRow)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to try all possible pyramid configurations</li>
+                    <li>Builds a transition map for O(1) lookup of allowed triples</li>
+                    <li>Time complexity: O(7^n) where n is the length of bottom</li>
+                    <li>Space complexity: O(7^n) for storing possible next rows</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

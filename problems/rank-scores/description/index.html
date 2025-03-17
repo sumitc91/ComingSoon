@@ -1,0 +1,212 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rank Scores - LeetCodee</title>
+    <meta name="description" content="Detailed solution explanation for LeetCode problem 178: Rank Scores. SQL solution with explanation.">
+    <meta name="keywords" content="LeetCode, SQL, Rank Scores, Database, Solution, Tutorial, DENSE_RANK, Window Function, Subquery">
+    <link rel="canonical" href="https://leetcodee.com/problems/rank-scores/">
+    <meta property="og:title" content="Rank Scores - LeetCodee">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/rank-scores/">
+    <meta property="og:description" content="Detailed solution explanation for LeetCode problem 178: Rank Scores. SQL solution with explanation.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Rank Scores - LeetCodee",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-04-26",
+      "dateModified": "2024-04-26",
+      "description": "Detailed solution explanation for LeetCode problem 178: Rank Scores. SQL solution with explanation.",
+      "articleBody": "Table: Scores\n\n+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| id          | int     |\n| score       | decimal |\n+-------------+---------+\nid is the primary key for this table.\nEach row of this table contains the score of a game.\nScore is a floating point value with two decimal places.\n\nWrite an SQL query to rank the scores. The ranking should be calculated according to the following rules:\n\nThe scores should be ranked from the highest to the lowest.\nIf there is a tie between two scores, both should have the same ranking.\nAfter a tie, the next ranking number should be the next consecutive integer value. In other words, there should be no holes between ranks.\n\nReturn the result table ordered by score in descending order.\n\nSQL Solution\nSELECT \n    score,\n    DENSE_RANK() OVER (ORDER BY score DESC) AS 'rank'\nFROM Scores;\n\nAlternative Solution (without window function):\nSELECT\n    s1.score,\n    (SELECT COUNT(DISTINCT s2.score)\n     FROM Scores s2\n     WHERE s2.score >= s1.score) AS 'rank'\nFROM Scores s1\nORDER BY s1.score DESC;"
+    }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            margin: 0;
+            color: #ffa116;
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .medium { background-color: #FFB800; color: #1a1a1a; }
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>178. Rank Scores</h1>
+        <span class="difficulty medium">Medium</span>
+    </header>
+
+    <div class="content">
+        <h2>Problem Description</h2>
+        <p>Table: <code>Scores</code></p>
+        <pre>
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| score       | decimal |
++-------------+---------+
+id is the primary key for this table.
+Each row of this table contains the score of a game.
+Score is a floating point value with two decimal places.</pre>
+
+        <p>Write an SQL query to rank the scores. The ranking should be calculated according to the following rules:</p>
+        <ul>
+            <li>The scores should be ranked from the highest to the lowest.</li>
+            <li>If there is a tie between two scores, both should have the same ranking.</li>
+            <li>After a tie, the next ranking number should be the next consecutive integer value. In other words, there should be no holes between ranks.</li>
+        </ul>
+        <p>Return the result table ordered by <code>score</code> in descending order.</p>
+
+        <h3>Examples</h3>
+        <p>Example 1:</p>
+        <pre>
+Input: 
+Scores table:
++----+-------+
+| id | score |
++----+-------+
+| 1  | 3.50  |
+| 2  | 3.65  |
+| 3  | 4.00  |
+| 4  | 3.85  |
+| 5  | 4.00  |
+| 6  | 3.65  |
++----+-------+
+Output: 
++-------+------+
+| score | rank |
++-------+------+
+| 4.00  | 1    |
+| 4.00  | 1    |
+| 3.85  | 2    |
+| 3.65  | 3    |
+| 3.65  | 3    |
+| 3.50  | 4    |
++-------+------+</pre>
+
+        <div class="solution">
+            <h3>SQL Solution</h3>
+            <pre><code>
+SELECT 
+    score,
+    DENSE_RANK() OVER (ORDER BY score DESC) AS 'rank'
+FROM Scores;</code></pre>
+
+            <p>Alternative Solution (without window function):</p>
+            <pre><code>
+SELECT
+    s1.score,
+    (SELECT COUNT(DISTINCT s2.score)
+     FROM Scores s2
+     WHERE s2.score >= s1.score) AS 'rank'
+FROM Scores s1
+ORDER BY s1.score DESC;</code></pre>
+        </div>
+
+        <div class="explanation">
+            <h3>Solution Explanation</h3>
+            <p>This problem can be solved in two ways:</p>
+            <ul>
+                <li>Using Window Function:
+                    <ul>
+                        <li>DENSE_RANK() for consecutive ranking</li>
+                        <li>ORDER BY for descending order</li>
+                        <li>Simple and efficient</li>
+                    </ul>
+                </li>
+                <li>Using Subquery:
+                    <ul>
+                        <li>Count distinct scores greater or equal</li>
+                        <li>Self join approach</li>
+                        <li>Works in older SQL versions</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Key points:</p>
+            <ul>
+                <li>Handle ties correctly</li>
+                <li>No gaps in ranking</li>
+                <li>Descending order</li>
+                <li>Floating point scores</li>
+            </ul>
+            <p>Important considerations:</p>
+            <ul>
+                <li>DENSE_RANK vs RANK</li>
+                <li>Distinct scores for ties</li>
+                <li>Performance implications</li>
+                <li>Database compatibility</li>
+            </ul>
+        </div>
+        <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+    </div>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cherry Pickup - LeetCodee Solution</title>
+    <meta name="description" content="Find the maximum number of cherries you can collect in an n x n grid.  This LeetCodee solution provides optimized Python, Java, C++, JavaScript, and C# code with detailed explanations.">
+    <meta name="keywords" content="leetcode, cherry pickup, dynamic programming, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <meta property="og:title" content="Cherry Pickup - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/cherry-pickup/">
+    <meta property="og:description" content="Find the maximum number of cherries you can collect in an n x n grid.  This LeetCodee solution provides optimized Python, Java, C++, JavaScript, and C# code with detailed explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/cherry-pickup/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "741. Cherry Pickup",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the maximum number of cherries you can collect in an n x n grid.  This LeetCodee solution provides optimized Python, Java, C++, JavaScript, and C# code with detailed explanations.",
+      "image": "",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">741. Cherry Pickup</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an n x n grid representing a field of cherries, each cell is one of three possible integers:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>0 means the cell is empty, so you can pass through it</li>
+                    <li>1 means the cell contains a cherry that you can pick up and pass through it</li>
+                    <li>-1 means the cell contains a thorn that blocks your way</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Return the maximum number of cherries you can collect by following the rules below:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Starting at the position (0, 0) and reaching (n-1, n-1) by moving right or down through valid path cells (cells with value 0 or 1)</li>
+                    <li>After reaching (n-1, n-1), returning to (0, 0) by moving left or up through valid path cells</li>
+                    <li>When passing through a path cell containing a cherry, you pick it up and the cell becomes an empty cell (0)</li>
+                    <li>If there is no valid path between (0, 0) and (n-1, n-1), then no cherries can be collected</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[0,1,-1],[1,0,-1],[1,1,1]]
+Output: 5
+Explanation: The player started at (0, 0) and went down, down, right right to reach (2, 2).
+4 cherries were picked up during this single trip, and the matrix becomes [[0,1,-1],[0,0,-1],[0,0,0]].
+Then, the player went left, up, up, left to return home, picking up one more cherry.
+The total number of cherries picked up is 5, and we can prove this is the maximum possible.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,1,-1],[1,-1,1],[-1,1,1]]
+Output: 0</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == grid.length</li>
+                    <li>n == grid[i].length</li>
+                    <li>2 ≤ n ≤ 50</li>
+                    <li>grid[i][j] is -1, 0, or 1</li>
+                    <li>grid[0][0] != -1</li>
+                    <li>grid[n-1][n-1] != -1</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def cherryPickup(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        memo = {}
+        
+        def dp(r1, c1, r2, c2):
+            # If either person goes out of bounds or hits a thorn
+            if (r1 >= n or c1 >= n or r2 >= n or c2 >= n or
+                grid[r1][c1] == -1 or grid[r2][c2] == -1):
+                return float('-inf')
+            
+            # If both reach the end
+            if r1 == n-1 and c1 == n-1 and r2 == n-1 and c2 == n-1:
+                return grid[r1][c1]
+            
+            # If already calculated
+            if (r1, c1, r2, c2) in memo:
+                return memo[(r1, c1, r2, c2)]
+            
+            # Calculate cherries picked up
+            cherries = grid[r1][c1]
+            if r1 != r2 or c1 != c2:
+                cherries += grid[r2][c2]
+            
+            # Try all possible moves
+            cherries += max(
+                dp(r1+1, c1, r2+1, c2),  # both down
+                dp(r1+1, c1, r2, c2+1),  # first down, second right
+                dp(r1, c1+1, r2+1, c2),  # first right, second down
+                dp(r1, c1+1, r2, c2+1)   # both right
+            )
+            
+            memo[(r1, c1, r2, c2)] = cherries
+            return cherries
+        
+        result = dp(0, 0, 0, 0)
+        return max(0, result)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with memoization to solve the problem</li>
+                    <li>Simulates two people moving simultaneously to avoid picking up the same cherry twice</li>
+                    <li>Time complexity: O(n^4) where n is the grid size</li>
+                    <li>Space complexity: O(n^4) for the memoization cache</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int n;
+    private int[][] grid;
+    private Map<String, Integer> memo;
+    
+    public int cherryPickup(int[][] grid) {
+        this.grid = grid;
+        this.n = grid.length;
+        this.memo = new HashMap<>();
+        
+        int result = dp(0, 0, 0, 0);
+        return Math.max(0, result);
+    }
+    
+    private int dp(int r1, int c1, int r2, int c2) {
+        // If either person goes out of bounds or hits a thorn
+        if (r1 >= n || c1 >= n || r2 >= n || c2 >= n ||
+            grid[r1][c1] == -1 || grid[r2][c2] == -1) {
+            return Integer.MIN_VALUE;
+        }
+        
+        // If both reach the end
+        if (r1 == n-1 && c1 == n-1 && r2 == n-1 && c2 == n-1) {
+            return grid[r1][c1];
+        }
+        
+        // If already calculated
+        String key = r1 + "," + c1 + "," + r2 + "," + c2;
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
+        
+        // Calculate cherries picked up
+        int cherries = grid[r1][c1];
+        if (r1 != r2 || c1 != c2) {
+            cherries += grid[r2][c2];
+        }
+        
+        // Try all possible moves
+        cherries += Math.max(
+            Math.max(dp(r1+1, c1, r2+1, c2), dp(r1+1, c1, r2, c2+1)),
+            Math.max(dp(r1, c1+1, r2+1, c2), dp(r1, c1+1, r2, c2+1))
+        );
+        
+        memo.put(key, cherries);
+        return cherries;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int n;
+    vector<vector<int>> grid;
+    map<string, int> memo;
+    
+    int dp(int r1, int c1, int r2, int c2) {
+        // If either person goes out of bounds or hits a thorn
+        if (r1 >= n || c1 >= n || r2 >= n || c2 >= n ||
+            grid[r1][c1] == -1 || grid[r2][c2] == -1) {
+            return INT_MIN;
+        }
+        
+        // If both reach the end
+        if (r1 == n-1 && c1 == n-1 && r2 == n-1 && c2 == n-1) {
+            return grid[r1][c1];
+        }
+        
+        // If already calculated
+        string key = to_string(r1) + "," + to_string(c1) + "," + 
+                    to_string(r2) + "," + to_string(c2);
+        if (memo.count(key)) {
+            return memo[key];
+        }
+        
+        // Calculate cherries picked up
+        int cherries = grid[r1][c1];
+        if (r1 != r2 || c1 != c2) {
+            cherries += grid[r2][c2];
+        }
+        
+        // Try all possible moves
+        cherries += max({
+            dp(r1+1, c1, r2+1, c2),
+            dp(r1+1, c1, r2, c2+1),
+            dp(r1, c1+1, r2+1, c2),
+            dp(r1, c1+1, r2, c2+1)
+        });
+        
+        memo[key] = cherries;
+        return cherries;
+    }
+    
+public:
+    int cherryPickup(vector<vector<int>>& grid) {
+        this->grid = grid;
+        this->n = grid.size();
+        
+        int result = dp(0, 0, 0, 0);
+        return max(0, result);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function cherryPickup(grid) {
+    const n = grid.length;
+    const memo = new Map();
+    
+    function dp(r1, c1, r2, c2) {
+        // If either person goes out of bounds or hits a thorn
+        if (r1 >= n || c1 >= n || r2 >= n || c2 >= n ||
+            grid[r1][c1] === -1 || grid[r2][c2] === -1) {
+            return -Infinity;
+        }
+        
+        // If both reach the end
+        if (r1 === n-1 && c1 === n-1 && r2 === n-1 && c2 === n-1) {
+            return grid[r1][c1];
+        }
+        
+        // If already calculated
+        const key = `${r1},${c1},${r2},${c2}`;
+        if (memo.has(key)) {
+            return memo.get(key);
+        }
+        
+        // Calculate cherries picked up
+        let cherries = grid[r1][c1];
+        if (r1 !== r2 || c1 !== c2) {
+            cherries += grid[r2][c2];
+        }
+        
+        // Try all possible moves
+        cherries += Math.max(
+            dp(r1+1, c1, r2+1, c2),
+            dp(r1+1, c1, r2, c2+1),
+            dp(r1, c1+1, r2+1, c2),
+            dp(r1, c1+1, r2, c2+1)
+        );
+        
+        memo.set(key, cherries);
+        return cherries;
+    }
+    
+    const result = dp(0, 0, 0, 0);
+    return Math.max(0, result);
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int n;
+    private int[][] grid;
+    private Dictionary<string, int> memo;
+    
+    public int CherryPickup(int[][] grid) {
+        this.grid = grid;
+        this.n = grid.Length;
+        this.memo = new Dictionary<string, int>();
+        
+        int result = Dp(0, 0, 0, 0);
+        return Math.Max(0, result);
+    }
+    
+    private int Dp(int r1, int c1, int r2, int c2) {
+        // If either person goes out of bounds or hits a thorn
+        if (r1 >= n || c1 >= n || r2 >= n || c2 >= n ||
+            grid[r1][c1] == -1 || grid[r2][c2] == -1) {
+            return int.MinValue;
+        }
+        
+        // If both reach the end
+        if (r1 == n-1 && c1 == n-1 && r2 == n-1 && c2 == n-1) {
+            return grid[r1][c1];
+        }
+        
+        // If already calculated
+        string key = $"{r1},{c1},{r2},{c2}";
+        if (memo.ContainsKey(key)) {
+            return memo[key];
+        }
+        
+        // Calculate cherries picked up
+        int cherries = grid[r1][c1];
+        if (r1 != r2 || c1 != c2) {
+            cherries += grid[r2][c2];
+        }
+        
+        // Try all possible moves
+        cherries += Math.Max(
+            Math.Max(Dp(r1+1, c1, r2+1, c2), Dp(r1+1, c1, r2, c2+1)),
+            Math.Max(Dp(r1, c1+1, r2+1, c2), Dp(r1, c1+1, r2, c2+1))
+        );
+        
+        memo[key] = cherries;
+        return cherries;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with memoization to solve the problem</li>
+                    <li>Simulates two people moving simultaneously to avoid picking up the same cherry twice</li>
+                    <li>Time complexity: O(n^4) where n is the grid size</li>
+                    <li>Space complexity: O(n^4) for the memoization cache</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

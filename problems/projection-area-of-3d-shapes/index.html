@@ -1,0 +1,250 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projection Area of 3D Shapes - LeetCodee Solution</title>
+    <meta name="description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 883: Projection Area of 3D Shapes.  Learn efficient algorithms and optimize your coding skills.">
+    <meta name="keywords" content="leetcode, leetcode solution, projection area of 3d shapes, algorithm, python, java, c++, javascript, c#, coding, programming, competitive programming, problem 883">
+    <meta property="og:title" content="Projection Area of 3D Shapes - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/projection-area-of-3d-shapes/">
+    <meta property="og:description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 883: Projection Area of 3D Shapes.  Learn efficient algorithms and optimize your coding skills.">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/projection-area-of-3d-shapes/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">883. Projection Area of 3D Shapes</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an n x n grid where we place some 1 x 1 x 1 cubes that are axis-aligned with the x, y, and z axes.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Each value v = grid[i][j] represents a tower of v cubes placed on top of the cell (i, j).
+                </p>
+                <p class="text-gray-700">
+                    We view the projection of these cubes onto the xy, yz, and zx planes.
+                    A projection is like a shadow, that maps our 3D figure to a 2D plane.
+                    We are viewing the "shadow" when looking at the cubes from the top, front, and side.
+                </p>
+                <p class="text-gray-700">
+                    Return the total area of all three projections.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,2],[3,4]]
+Output: 17
+Explanation: Here are the three projections ("shadows") of the shape made with each axis-aligned plane.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[2]]
+Output: 5</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,0],[0,2]]
+Output: 8</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == grid.length == grid[i].length</li>
+                    <li>1 ≤ n ≤ 50</li>
+                    <li>0 ≤ grid[i][j] ≤ 50</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def projectionArea(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        top = sum(cell > 0 for row in grid for cell in row)
+        front = sum(max(row) for row in grid)
+        side = sum(max(grid[i][j] for i in range(n)) for j in range(n))
+        return top + front + side</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Top view: Count non-zero cells</li>
+                    <li>Front view: Maximum in each row</li>
+                    <li>Side view: Maximum in each column</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int projectionArea(int[][] grid) {
+        int n = grid.length;
+        int top = 0, front = 0, side = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int maxRow = 0, maxCol = 0;
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] > 0) top++;
+                maxRow = Math.max(maxRow, grid[i][j]);
+                maxCol = Math.max(maxCol, grid[j][i]);
+            }
+            front += maxRow;
+            side += maxCol;
+        }
+        
+        return top + front + side;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int projectionArea(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int top = 0, front = 0, side = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int maxRow = 0, maxCol = 0;
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] > 0) top++;
+                maxRow = max(maxRow, grid[i][j]);
+                maxCol = max(maxCol, grid[j][i]);
+            }
+            front += maxRow;
+            side += maxCol;
+        }
+        
+        return top + front + side;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var projectionArea = function(grid) {
+    const n = grid.length;
+    let top = 0, front = 0, side = 0;
+    
+    for (let i = 0; i < n; i++) {
+        let maxRow = 0, maxCol = 0;
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j] > 0) top++;
+            maxRow = Math.max(maxRow, grid[i][j]);
+            maxCol = Math.max(maxCol, grid[j][i]);
+        }
+        front += maxRow;
+        side += maxCol;
+    }
+    
+    return top + front + side;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int ProjectionArea(int[][] grid) {
+        int n = grid.Length;
+        int top = 0, front = 0, side = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int maxRow = 0, maxCol = 0;
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] > 0) top++;
+                maxRow = Math.Max(maxRow, grid[i][j]);
+                maxCol = Math.Max(maxCol, grid[j][i]);
+            }
+            front += maxRow;
+            side += maxCol;
+        }
+        
+        return top + front + side;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Single pass through grid for efficiency</li>
+                    <li>Calculates all three projections simultaneously</li>
+                    <li>Handles empty cells (value 0) correctly</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "Article",
+                  "headline": "883. Projection Area of 3D Shapes",
+                  "author": {
+                    "@type": "Person",
+                    "name": "LeetCodee"
+                  },
+                  "datePublished": "2023-10-27",
+                  "description": "Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 883: Projection Area of 3D Shapes. Learn efficient algorithms and optimize your coding skills.",
+                  "image": "",
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "LeetCodee",
+                    "url": "https://leetcodee.com"
+                  }
+                }
+            </script>
+
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

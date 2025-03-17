@@ -1,0 +1,325 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximum Binary Tree - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Maximum Binary Tree problem on LeetCodee.  Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and code examples.">
+    <meta name="keywords" content="leetcode, leetcodee, maximum binary tree, binary tree, algorithm, data structure, python, java, c++, javascript, c#, solution, coding, programming">
+    <meta name="canonical" content="https://leetcodee.com/problems/maximum-binary-tree/">
+    <meta property="og:title" content="Maximum Binary Tree - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/maximum-binary-tree/">
+    <meta property="og:description" content="Learn how to solve the Maximum Binary Tree problem on LeetCodee.  Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "654. Maximum Binary Tree",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm: Create a root node whose value is the maximum element in nums. Recursively build the left subtree on the subarray prefix to the left of the maximum element. Recursively build the right subtree on the subarray suffix to the right of the maximum element. Return the maximum binary tree built from nums.",
+      "articleBody": "Learn how to solve the Maximum Binary Tree problem on LeetCodee.  Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations and code examples.",
+      "mainEntityOfPage": "https://leetcodee.com/problems/maximum-binary-tree/"
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">654. Maximum Binary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array <code class="bg-gray-100 px-1 rounded">nums</code> with no duplicates. A maximum binary tree can be built recursively from <code class="bg-gray-100 px-1 rounded">nums</code> using the following algorithm:
+                </p>
+                <ol class="list-decimal list-inside text-gray-700 mb-4 space-y-2">
+                    <li>Create a root node whose value is the maximum element in <code class="bg-gray-100 px-1 rounded">nums</code>.</li>
+                    <li>Recursively build the left subtree on the subarray prefix to the left of the maximum element.</li>
+                    <li>Recursively build the right subtree on the subarray suffix to the right of the maximum element.</li>
+                </ol>
+                <p class="text-gray-700">Return the maximum binary tree built from <code class="bg-gray-100 px-1 rounded">nums</code>.</p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [3,2,1,6,0,5]
+Output: [6,3,5,null,2,0,null,null,1]
+Explanation: The recursive calls are as follows:
+- The largest value in [3,2,1,6,0,5] is 6. Left prefix is [3,2,1] and right suffix is [0,5].
+    - The largest value in [3,2,1] is 3. Left prefix is [] and right suffix is [2,1].
+        - Empty array, so no child.
+        - The largest value in [2,1] is 2. Left prefix is [] and right suffix is [1].
+            - Empty array, so no child.
+            - Only one element, so child is a node with value 1.
+    - The largest value in [0,5] is 5. Left prefix is [0] and right suffix is [].
+        - Only one element, so child is a node with value 0.
+        - Empty array, so no child.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [3,2,1]
+Output: [3,null,2,null,1]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 1000</li>
+                    <li>0 ≤ nums[i] ≤ 1000</li>
+                    <li>All integers in nums are unique</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
+        if not nums:
+            return None
+        
+        # Find maximum value and its index
+        max_val = max(nums)
+        max_idx = nums.index(max_val)
+        
+        # Create root node with maximum value
+        root = TreeNode(max_val)
+        
+        # Recursively build left and right subtrees
+        root.left = self.constructMaximumBinaryTree(nums[:max_idx])
+        root.right = self.constructMaximumBinaryTree(nums[max_idx + 1:])
+        
+        return root</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Stack - O(n) time):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
+        stack = []
+        
+        for num in nums:
+            node = TreeNode(num)
+            
+            # Pop elements smaller than current number
+            # They become left subtree of current node
+            while stack and stack[-1].val < num:
+                node.left = stack.pop()
+            
+            # If stack not empty, current node becomes
+            # right child of last element in stack
+            if stack:
+                stack[-1].right = node
+            
+            stack.append(node)
+        
+        return stack[0] if stack else None</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses recursive approach with O(n log n) average time complexity</li>
+                    <li>Second solution uses monotonic stack with O(n) time complexity</li>
+                    <li>Stack solution maintains decreasing order of values</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        return buildTree(nums, 0, nums.length);
+    }
+    
+    private TreeNode buildTree(int[] nums, int start, int end) {
+        if (start >= end) {
+            return null;
+        }
+        
+        // Find maximum value and its index
+        int maxIdx = start;
+        for (int i = start + 1; i < end; i++) {
+            if (nums[i] > nums[maxIdx]) {
+                maxIdx = i;
+            }
+        }
+        
+        // Create root node with maximum value
+        TreeNode root = new TreeNode(nums[maxIdx]);
+        
+        // Recursively build left and right subtrees
+        root.left = buildTree(nums, start, maxIdx);
+        root.right = buildTree(nums, maxIdx + 1, end);
+        
+        return root;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        vector<TreeNode*> stack;
+        
+        for (int num : nums) {
+            TreeNode* node = new TreeNode(num);
+            
+            // Pop elements smaller than current number
+            while (!stack.empty() && stack.back()->val < num) {
+                node->left = stack.back();
+                stack.pop_back();
+            }
+            
+            // If stack not empty, current node becomes
+            // right child of last element in stack
+            if (!stack.empty()) {
+                stack.back()->right = node;
+            }
+            
+            stack.push_back(node);
+        }
+        
+        return stack.empty() ? nullptr : stack[0];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {TreeNode}
+ */
+var constructMaximumBinaryTree = function(nums) {
+    if (nums.length === 0) {
+        return null;
+    }
+    
+    // Find maximum value and its index
+    const maxVal = Math.max(...nums);
+    const maxIdx = nums.indexOf(maxVal);
+    
+    // Create root node with maximum value
+    const root = new TreeNode(maxVal);
+    
+    // Recursively build left and right subtrees
+    root.left = constructMaximumBinaryTree(nums.slice(0, maxIdx));
+    root.right = constructMaximumBinaryTree(nums.slice(maxIdx + 1));
+    
+    return root;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public TreeNode ConstructMaximumBinaryTree(int[] nums) {
+        return BuildTree(nums, 0, nums.Length);
+    }
+    
+    private TreeNode BuildTree(int[] nums, int start, int end) {
+        if (start >= end) {
+            return null;
+        }
+        
+        // Find maximum value and its index
+        int maxIdx = start;
+        for (int i = start + 1; i < end; i++) {
+            if (nums[i] > nums[maxIdx]) {
+                maxIdx = i;
+            }
+        }
+        
+        // Create root node with maximum value
+        TreeNode root = new TreeNode(nums[maxIdx]);
+        
+        // Recursively build left and right subtrees
+        root.left = BuildTree(nums, start, maxIdx);
+        root.right = BuildTree(nums, maxIdx + 1, end);
+        
+        return root;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using LINQ):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public TreeNode ConstructMaximumBinaryTree(int[] nums) {
+        if (!nums.Any()) {
+            return null;
+        }
+        
+        var maxVal = nums.Max();
+        var maxIdx = Array.IndexOf(nums, maxVal);
+        
+        return new TreeNode(maxVal) {
+            left = ConstructMaximumBinaryTree(nums.Take(maxIdx).ToArray()),
+            right = ConstructMaximumBinaryTree(nums.Skip(maxIdx + 1).ToArray())
+        };
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses array indices to avoid array copying</li>
+                        <li>Second solution uses LINQ for cleaner but less efficient code</li>
+                        <li>Both maintain the same recursive structure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

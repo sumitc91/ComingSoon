@@ -1,0 +1,283 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy Strings - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for Buddy Strings problem. Find out how to determine if you can swap two letters in a string to match a goal string. Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="LeetCode, Buddy Strings, solution, algorithm, Python, Java, C++, JavaScript, C#, coding, programming, swap letters, string manipulation">
+    <meta name="canonical" content="https://leetcodee.com/problems/buddy-strings/">
+    <meta property="og:title" content="Buddy Strings - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/buddy-strings/">
+    <meta property="og:description" content="LeetCodee solution for Buddy Strings problem. Find out how to determine if you can swap two letters in a string to match a goal string. Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Buddy Strings - LeetCodee Solution",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "LeetCodee solution for Buddy Strings problem. Find out how to determine if you can swap two letters in a string to match a goal string. Includes Python, Java, C++, JavaScript, and C# solutions.",
+      "articleBody": "Given two strings s and goal, return true if you can swap two letters in s so the result is equal to goal, otherwise, return false.  Swapping letters is defined as taking two indices i and j (0-indexed) such that i != j and swapping the characters at s[i] and s[j]. For example, swapping at indices 0 and 2 in \"abcd\" results in \"cbad\".  Solutions in Python, Java, C++, Javascript, and C# are provided.",
+      "mainEntityOfPage": "https://leetcodee.com/problems/buddy-strings/"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">859. Buddy Strings</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given two strings s and goal, return true if you can swap two letters in s so the result is equal to goal, otherwise, return false.
+                </p>
+                <p class="text-gray-700">
+                    Swapping letters is defined as taking two indices i and j (0-indexed) such that i != j and swapping the characters at s[i] and s[j].
+                    For example, swapping at indices 0 and 2 in "abcd" results in "cbad".
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "ab", goal = "ba"
+Output: true
+Explanation: You can swap s[0] = 'a' and s[1] = 'b' to get "ba", which is equal to goal.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "ab", goal = "ab"
+Output: false
+Explanation: The only letters you can swap are s[0] = 'a' and s[1] = 'b', which results in "ba" != goal.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "aa", goal = "aa"
+Output: true
+Explanation: You can swap s[0] = 'a' and s[1] = 'a' to get "aa", which is equal to goal.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length, goal.length ≤ 2 * 10⁴</li>
+                    <li>s and goal consist of lowercase letters</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def buddyStrings(self, s: str, goal: str) -> bool:
+        # If lengths are different, return False
+        if len(s) != len(goal):
+            return False
+        
+        # If strings are equal, check if there are duplicate characters
+        if s == goal:
+            return len(set(s)) < len(s)
+        
+        # Find positions where characters differ
+        diffs = [(a, b) for a, b in zip(s, goal) if a != b]
+        
+        # Check if exactly two positions differ and they can be swapped
+        return len(diffs) == 2 and diffs[0] == diffs[1][::-1]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Handles three cases: different lengths, identical strings, and strings with differences</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean buddyStrings(String s, String goal) {
+        // If lengths are different, return false
+        if (s.length() != goal.length()) return false;
+        
+        // If strings are equal, check for duplicate characters
+        if (s.equals(goal)) {
+            int[] count = new int[26];
+            for (char c : s.toCharArray()) {
+                count[c - 'a']++;
+                if (count[c - 'a'] > 1) return true;
+            }
+            return false;
+        }
+        
+        // Find positions where characters differ
+        List<Integer> diffs = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) != goal.charAt(i)) {
+                diffs.add(i);
+            }
+        }
+        
+        // Check if exactly two positions differ and they can be swapped
+        return diffs.size() == 2 && 
+               s.charAt(diffs.get(0)) == goal.charAt(diffs.get(1)) &&
+               s.charAt(diffs.get(1)) == goal.charAt(diffs.get(0));
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool buddyStrings(string s, string goal) {
+        // If lengths are different, return false
+        if (s.length() != goal.length()) return false;
+        
+        // If strings are equal, check for duplicate characters
+        if (s == goal) {
+            vector<int> count(26, 0);
+            for (char c : s) {
+                count[c - 'a']++;
+                if (count[c - 'a'] > 1) return true;
+            }
+            return false;
+        }
+        
+        // Find positions where characters differ
+        vector<int> diffs;
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] != goal[i]) {
+                diffs.push_back(i);
+            }
+        }
+        
+        // Check if exactly two positions differ and they can be swapped
+        return diffs.size() == 2 && 
+               s[diffs[0]] == goal[diffs[1]] &&
+               s[diffs[1]] == goal[diffs[0]];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @param {string} goal
+ * @return {boolean}
+ */
+var buddyStrings = function(s, goal) {
+    // If lengths are different, return false
+    if (s.length !== goal.length) return false;
+    
+    // If strings are equal, check for duplicate characters
+    if (s === goal) {
+        const seen = new Set(s);
+        return seen.size < s.length;
+    }
+    
+    // Find positions where characters differ
+    const diffs = [];
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] !== goal[i]) {
+            diffs.push(i);
+        }
+    }
+    
+    // Check if exactly two positions differ and they can be swapped
+    return diffs.length === 2 && 
+           s[diffs[0]] === goal[diffs[1]] &&
+           s[diffs[1]] === goal[diffs[0]];
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool BuddyStrings(string s, string goal) {
+        // If lengths are different, return false
+        if (s.Length != goal.Length) return false;
+        
+        // If strings are equal, check for duplicate characters
+        if (s == goal) {
+            var seen = new HashSet<char>();
+            foreach (char c in s) {
+                if (!seen.Add(c)) return true;
+            }
+            return false;
+        }
+        
+        // Find positions where characters differ
+        var diffs = new List<int>();
+        for (int i = 0; i < s.Length; i++) {
+            if (s[i] != goal[i]) {
+                diffs.Add(i);
+            }
+        }
+        
+        // Check if exactly two positions differ and they can be swapped
+        return diffs.Count == 2 && 
+               s[diffs[0]] == goal[diffs[1]] &&
+               s[diffs[1]] == goal[diffs[0]];
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses HashSet for efficient character counting</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(min(n, k)) where k is alphabet size</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

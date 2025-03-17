@@ -1,0 +1,330 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Area of Island - LeetCodee Solution</title>
+    <meta name="description" content="Find the maximum area of an island in a given binary matrix. LeetCodee provides Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="leetcode, max area of island, algorithm, solution, python, java, c++, javascript, c#, dfs, depth-first search, binary matrix, island">
+    <meta property="og:title" content="Max Area of Island - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/max-area-of-island/">
+    <meta property="og:description" content="Find the maximum area of an island in a given binary matrix. LeetCodee provides Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/max-area-of-island/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">695. Max Area of Island</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an <code class="bg-gray-100 px-1 rounded">m x n</code> binary matrix <code class="bg-gray-100 px-1 rounded">grid</code>. An island is a group of <code class="bg-gray-100 px-1 rounded">1</code>'s (representing land) connected 4-directionally (horizontal or vertical). You may assume all four edges of the grid are surrounded by water.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The area of an island is the number of cells with a value <code class="bg-gray-100 px-1 rounded">1</code> in the island.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the maximum area of an island in <code class="bg-gray-100 px-1 rounded">grid</code>. If there is no island, return <code class="bg-gray-100 px-1 rounded">0</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [
+  [0,0,1,0,0,0,0,1,0,0,0,0,0],
+  [0,0,0,0,0,0,0,1,1,1,0,0,0],
+  [0,1,1,0,1,0,0,0,0,0,0,0,0],
+  [0,1,0,0,1,1,0,0,1,0,1,0,0],
+  [0,1,0,0,1,1,0,0,1,1,1,0,0],
+  [0,0,0,0,0,0,0,0,0,0,1,0,0],
+  [0,0,0,0,0,0,0,1,1,1,0,0,0],
+  [0,0,0,0,0,0,0,1,1,0,0,0,0]
+]
+Output: 6
+Explanation: The answer is not 11, because the island must be connected 4-directionally.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[0,0,0,0,0,0,0,0]]
+Output: 0</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>m == grid.length</li>
+                    <li>n == grid[i].length</li>
+                    <li>1 ≤ m, n ≤ 50</li>
+                    <li>grid[i][j] is either 0 or 1</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return 0
+            
+        m, n = len(grid), len(grid[0])
+        max_area = 0
+        
+        def dfs(i: int, j: int) -> int:
+            if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] == 0:
+                return 0
+                
+            # Mark as visited
+            grid[i][j] = 0
+            
+            # Check all 4 directions
+            area = 1
+            area += dfs(i+1, j)
+            area += dfs(i-1, j)
+            area += dfs(i, j+1)
+            area += dfs(i, j-1)
+            
+            return area
+        
+        # Check each cell in the grid
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    max_area = max(max_area, dfs(i, j))
+                    
+        return max_area</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses depth-first search (DFS) to explore islands</li>
+                    <li>Modifies input grid to mark visited cells</li>
+                    <li>Time complexity: O(m * n)</li>
+                    <li>Space complexity: O(m * n) for recursion stack</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int m, n;
+    private int[][] grid;
+    
+    public int maxAreaOfIsland(int[][] grid) {
+        this.grid = grid;
+        this.m = grid.length;
+        this.n = grid[0].length;
+        int maxArea = 0;
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    maxArea = Math.max(maxArea, dfs(i, j));
+                }
+            }
+        }
+        
+        return maxArea;
+    }
+    
+    private int dfs(int i, int j) {
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0) {
+            return 0;
+        }
+        
+        // Mark as visited
+        grid[i][j] = 0;
+        
+        // Check all 4 directions
+        return 1 + dfs(i+1, j) + dfs(i-1, j) + dfs(i, j+1) + dfs(i, j-1);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int m, n;
+    vector<vector<int>>* grid;
+    
+    int dfs(int i, int j) {
+        if (i < 0 || i >= m || j < 0 || j >= n || (*grid)[i][j] == 0) {
+            return 0;
+        }
+        
+        // Mark as visited
+        (*grid)[i][j] = 0;
+        
+        // Check all 4 directions
+        return 1 + dfs(i+1, j) + dfs(i-1, j) + dfs(i, j+1) + dfs(i, j-1);
+    }
+    
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        this->grid = &grid;
+        this->m = grid.size();
+        this->n = grid[0].size();
+        int maxArea = 0;
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    maxArea = max(maxArea, dfs(i, j));
+                }
+            }
+        }
+        
+        return maxArea;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var maxAreaOfIsland = function(grid) {
+    const m = grid.length;
+    const n = grid[0].length;
+    let maxArea = 0;
+    
+    const dfs = (i, j) => {
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] === 0) {
+            return 0;
+        }
+        
+        // Mark as visited
+        grid[i][j] = 0;
+        
+        // Check all 4 directions
+        return 1 + dfs(i+1, j) + dfs(i-1, j) + dfs(i, j+1) + dfs(i, j-1);
+    };
+    
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j] === 1) {
+                maxArea = Math.max(maxArea, dfs(i, j));
+            }
+        }
+    }
+    
+    return maxArea;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int m, n;
+    private int[][] grid;
+    
+    public int MaxAreaOfIsland(int[][] grid) {
+        this.grid = grid;
+        this.m = grid.Length;
+        this.n = grid[0].Length;
+        int maxArea = 0;
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    maxArea = Math.Max(maxArea, DFS(i, j));
+                }
+            }
+        }
+        
+        return maxArea;
+    }
+    
+    private int DFS(int i, int j) {
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0) {
+            return 0;
+        }
+        
+        // Mark as visited
+        grid[i][j] = 0;
+        
+        // Check all 4 directions
+        return 1 + DFS(i+1, j) + DFS(i-1, j) + DFS(i, j+1) + DFS(i, j-1);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to explore connected land cells</li>
+                    <li>Marks visited cells to avoid counting them multiple times</li>
+                    <li>Time complexity: O(m * n) where m and n are grid dimensions</li>
+                    <li>Space complexity: O(m * n) in worst case for recursion stack</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "695. Max Area of Island",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2023-10-27",
+  "description": "Find the maximum area of an island in a given binary matrix.  Solutions in Python, Java, C++, JavaScript, and C# are provided.",
+  "articleBody": "This article provides solutions to the LeetCode problem 695. Max Area of Island.  The problem involves finding the maximum area of an island (connected group of 1s) in a given binary matrix.  Solutions are presented in various programming languages, including Python, Java, C++, JavaScript, and C#, along with explanations and analysis of time and space complexity.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://leetcodee.com/problems/max-area-of-island/"
+  }
+}
+</script>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

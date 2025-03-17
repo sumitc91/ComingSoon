@@ -1,0 +1,307 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construct Binary Tree from Preorder and Postorder Traversal - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to construct a binary tree from its preorder and postorder traversal using Python, Java, C++, JavaScript, and C#.  Includes detailed explanations and example code.">
+    <meta name="keywords" content="leetcode, binary tree, preorder traversal, postorder traversal, tree construction, algorithm, python, java, c++, javascript, c#, data structures">
+    <meta property="og:title" content="Construct Binary Tree from Preorder and Postorder Traversal - LeetCodee Solution">
+    <meta property="og:description" content="Learn how to construct a binary tree from its preorder and postorder traversal using Python, Java, C++, JavaScript, and C#.  Includes detailed explanations and example code.">
+    <meta property="og:url" content="https://leetcodee.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">889. Construct Binary Tree from Preorder and Postorder Traversal</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given two integer arrays, preorder and postorder where preorder is the preorder traversal of a binary tree and postorder is the postorder traversal of the same tree, reconstruct and return the binary tree.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If there exist multiple answers, you can return any of them.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]
+Output: [1,2,3,4,5,6,7]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: preorder = [1], postorder = [1]
+Output: [1]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ preorder.length ≤ 30</li>
+                    <li>1 ≤ preorder[i] ≤ preorder.length</li>
+                    <li>All the values of preorder are unique</li>
+                    <li>postorder.length == preorder.length</li>
+                    <li>1 ≤ postorder[i] ≤ postorder.length</li>
+                    <li>All the values of postorder are unique</li>
+                    <li>It is guaranteed that preorder and postorder are the preorder and postorder traversal of the same binary tree</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def constructFromPrePost(self, preorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        if not preorder:
+            return None
+            
+        # Create root node from first element of preorder
+        root = TreeNode(preorder[0])
+        if len(preorder) == 1:
+            return root
+            
+        # Find index of left subtree root in postorder
+        left_size = postorder.index(preorder[1]) + 1
+        
+        # Recursively construct left and right subtrees
+        root.left = self.constructFromPrePost(preorder[1:left_size+1], postorder[:left_size])
+        root.right = self.constructFromPrePost(preorder[left_size+1:], postorder[left_size:-1])
+        
+        return root</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive approach</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    int preIndex = 0, posIndex = 0;
+    
+    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+        TreeNode root = new TreeNode(preorder[preIndex++]);
+        
+        if (root.val != postorder[posIndex])
+            root.left = constructFromPrePost(preorder, postorder);
+            
+        if (root.val != postorder[posIndex])
+            root.right = constructFromPrePost(preorder, postorder);
+            
+        posIndex++;
+        return root;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+class Solution {
+public:
+    TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
+        vector<TreeNode*> stack;
+        TreeNode* root = new TreeNode(preorder[0]);
+        stack.push_back(root);
+        
+        int j = 0;
+        for (int i = 1; i < preorder.size(); ++i) {
+            TreeNode* node = new TreeNode(preorder[i]);
+            while (stack.back()->val == postorder[j]) {
+                stack.pop_back();
+                j++;
+            }
+            if (!stack.back()->left)
+                stack.back()->left = node;
+            else
+                stack.back()->right = node;
+            stack.push_back(node);
+        }
+        
+        return root;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+var constructFromPrePost = function(preorder, postorder) {
+    if (!preorder.length) return null;
+    
+    const root = new TreeNode(preorder[0]);
+    if (preorder.length === 1) return root;
+    
+    const leftSize = postorder.indexOf(preorder[1]) + 1;
+    
+    root.left = constructFromPrePost(
+        preorder.slice(1, leftSize + 1),
+        postorder.slice(0, leftSize)
+    );
+    root.right = constructFromPrePost(
+        preorder.slice(leftSize + 1),
+        postorder.slice(leftSize, -1)
+    );
+    
+    return root;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class TreeNode {
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class Solution {
+    private int preIndex = 0;
+    private int postIndex = 0;
+    
+    public TreeNode ConstructFromPrePost(int[] preorder, int[] postorder) {
+        TreeNode root = new TreeNode(preorder[preIndex++]);
+        
+        if (root.val != postorder[postIndex])
+            root.left = ConstructFromPrePost(preorder, postorder);
+            
+        if (root.val != postorder[postIndex])
+            root.right = ConstructFromPrePost(preorder, postorder);
+            
+        postIndex++;
+        return root;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses indices to track progress</li>
+                    <li>Avoids array copying</li>
+                    <li>More efficient than slice-based approach</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              "headline": "Construct Binary Tree from Preorder and Postorder Traversal",
+              "author": {
+                "@type": "Person",
+                "name": "LeetCodee"
+              },
+              "datePublished": "2023-10-27",
+              "dateModified": "2023-10-27",
+              "publisher": {
+                "@type": "Organization",
+                "name": "LeetCodee",
+                "url": "https://leetcodee.com"
+              },
+              "description": "Learn how to construct a binary tree from its preorder and postorder traversal using Python, Java, C++, JavaScript, and C#.  Includes detailed explanations and example code.",
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://leetcodee.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/"
+              }
+            }
+            </script>
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-1068871795581451"
+                data-ad-slot="YOUR_AD_SLOT"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

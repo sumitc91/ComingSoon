@@ -1,0 +1,248 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domino and Tromino Tiling - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of ways to tile a 2 x n board with 2 x 1 dominoes and trominoes.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="LeetCode, Domino and Tromino Tiling, dynamic programming, algorithm, Python, Java, C++, JavaScript, C#, solution, coding, problem solving">
+    <link rel="canonical" href="https://leetcodee.com/problems/domino-and-tromino-tiling/">
+    <meta property="og:title" content="Domino and Tromino Tiling - LeetCodee Solution">
+    <meta property="og:description" content="Find the number of ways to tile a 2 x n board with 2 x 1 dominoes and trominoes. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/domino-and-tromino-tiling/">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Domino and Tromino Tiling - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the number of ways to tile a 2 x n board with 2 x 1 dominoes and trominoes. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "keywords": "LeetCode, Domino and Tromino Tiling, dynamic programming, algorithm, Python, Java, C++, JavaScript, C#, solution, coding, problem solving"
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">790. Domino and Tromino Tiling</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You have two types of tiles: a 2 x 1 domino shape and a tromino shape. You are given an integer n, the number of rows in the board.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the number of ways to tile an 2 x n board. Since the answer may be very large, return it modulo 10^9 + 7.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    In a tiling, every square must be covered by a tile. Two tilings are different if and only if there are two 4-directionally adjacent cells on the board such that exactly one of the tilings has both squares occupied by a tile.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 3
+Output: 5
+Explanation: The five different ways are shown above.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 1
+Output: 1</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ n ≤ 1000</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def numTilings(self, n: int) -> int:
+        MOD = 10**9 + 7
+        
+        if n <= 2:
+            return n
+            
+        # dp[i] represents number of ways to tile 2xi board
+        dp = [0] * (n + 1)
+        dp[1] = 1  # one way for 2x1
+        dp[2] = 2  # two ways for 2x2
+        dp[3] = 5  # five ways for 2x3
+        
+        for i in range(4, n + 1):
+            # dp[i] = 2 * dp[i-1] + dp[i-3]
+            dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD
+            
+        return dp[n]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming to solve the problem</li>
+                    <li>For each position i, we can either:</li>
+                    <li>1. Place a vertical domino (dp[i-1])</li>
+                    <li>2. Place two horizontal dominos (dp[i-2])</li>
+                    <li>3. Place a tromino with a domino (dp[i-3])</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int numTilings(int n) {
+        int MOD = 1000000007;
+        
+        if (n <= 2) {
+            return n;
+        }
+        
+        long[] dp = new long[n + 1];
+        dp[1] = 1;  // one way for 2x1
+        dp[2] = 2;  // two ways for 2x2
+        dp[3] = 5;  // five ways for 2x3
+        
+        for (int i = 4; i <= n; i++) {
+            dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD;
+        }
+        
+        return (int)dp[n];
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int numTilings(int n) {
+        const int MOD = 1000000007;
+        
+        if (n <= 2) {
+            return n;
+        }
+        
+        vector<long long> dp(n + 1, 0);
+        dp[1] = 1;  // one way for 2x1
+        dp[2] = 2;  // two ways for 2x2
+        dp[3] = 5;  // five ways for 2x3
+        
+        for (int i = 4; i <= n; i++) {
+            dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD;
+        }
+        
+        return dp[n];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function numTilings(n) {
+    const MOD = 1000000007;
+    
+    if (n <= 2) {
+        return n;
+    }
+    
+    const dp = new Array(n + 1).fill(0);
+    dp[1] = 1;  // one way for 2x1
+    dp[2] = 2;  // two ways for 2x2
+    dp[3] = 5;  // five ways for 2x3
+    
+    for (let i = 4; i <= n; i++) {
+        dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD;
+    }
+    
+    return dp[n];
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int NumTilings(int n) {
+        const int MOD = 1000000007;
+        
+        if (n <= 2) {
+            return n;
+        }
+        
+        long[] dp = new long[n + 1];
+        dp[1] = 1;  // one way for 2x1
+        dp[2] = 2;  // two ways for 2x2
+        dp[3] = 5;  // five ways for 2x3
+        
+        for (int i = 4; i <= n; i++) {
+            dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD;
+        }
+        
+        return (int)dp[n];
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming to solve the problem</li>
+                    <li>For each position i, we can either:</li>
+                    <li>1. Place a vertical domino (dp[i-1])</li>
+                    <li>2. Place two horizontal dominos (dp[i-2])</li>
+                    <li>3. Place a tromino with a domino (dp[i-3])</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Sort String - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for Custom Sort String problem.  Learn how to efficiently sort a string based on a custom order. Includes Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="leetcode, leetcode solution, custom sort string, algorithm, coding, python, java, cpp, javascript, c#, data structures, sorting, string manipulation">
+    <meta property="og:title" content="Custom Sort String - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/custom-sort-string/">
+    <meta property="og:description" content="LeetCodee solution for Custom Sort String problem.  Learn how to efficiently sort a string based on a custom order. Includes Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/custom-sort-string/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">791. Custom Sort String</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given two strings order and s. All the characters of order are unique and were sorted in some custom order previously.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Permute the characters of s so that they match the order that order was sorted. More specifically, if a character x occurs before a character y in order, then x should occur before y in the permuted string.
+                </p>
+                <p class="text-gray-700">
+                    Return any permutation of s that satisfies this property.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: order = "cba", s = "abcd"
+Output: "cbad"
+Explanation: 
+"a", "b", "c" appear in order, so the order of "a", "b", "c" should be "c", "b", and "a". 
+Since "d" does not appear in order, it can be at any position in the returned string. "dcba", "cdba", "cbda" are also valid outputs.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: order = "cbafg", s = "abcd"
+Output: "cbad"</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ order.length ≤ 26</li>
+                    <li>1 ≤ s.length ≤ 200</li>
+                    <li>order and s consist of lowercase English letters</li>
+                    <li>All the characters of order are unique</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def customSortString(self, order: str, s: str) -> str:
+        # Create a dictionary to store the order of each character
+        order_dict = {char: idx for idx, char in enumerate(order)}
+        
+        # Sort the string based on the order dictionary
+        # If character not in order, put it at the end
+        return ''.join(sorted(s, key=lambda x: order_dict.get(x, float('inf')))</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Creates a dictionary mapping characters to their positions in order</li>
+                    <li>Uses sorted() with a key function to sort characters based on their position</li>
+                    <li>Characters not in order are placed at the end</li>
+                    <li>Time complexity: O(n log n) where n is length of s</li>
+                    <li>Space complexity: O(1) since order has at most 26 characters</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String customSortString(String order, String s) {
+        int[] orderMap = new int[26];
+        for (int i = 0; i < order.length(); i++) {
+            orderMap[order.charAt(i) - 'a'] = i;
+        }
+        
+        Character[] chars = new Character[s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            chars[i] = s.charAt(i);
+        }
+        
+        Arrays.sort(chars, (a, b) -> 
+            orderMap[a - 'a'] - orderMap[b - 'a']);
+            
+        StringBuilder result = new StringBuilder();
+        for (char c : chars) {
+            result.append(c);
+        }
+        
+        return result.toString();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string customSortString(string order, string s) {
+        vector<int> orderMap(26, INT_MAX);
+        for (int i = 0; i < order.length(); i++) {
+            orderMap[order[i] - 'a'] = i;
+        }
+        
+        sort(s.begin(), s.end(), [&orderMap](char a, char b) {
+            return orderMap[a - 'a'] < orderMap[b - 'a'];
+        });
+        
+        return s;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function customSortString(order, s) {
+    const orderMap = new Map();
+    for (let i = 0; i < order.length; i++) {
+        orderMap.set(order[i], i);
+    }
+    
+    return s.split('').sort((a, b) => {
+        const posA = orderMap.get(a) ?? Infinity;
+        const posB = orderMap.get(b) ?? Infinity;
+        return posA - posB;
+    }).join('');
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string CustomSortString(string order, string s) {
+        var orderMap = new Dictionary<char, int>();
+        for (int i = 0; i < order.Length; i++) {
+            orderMap[order[i]] = i;
+        }
+        
+        var chars = s.ToCharArray();
+        Array.Sort(chars, (a, b) => {
+            int posA = orderMap.ContainsKey(a) ? orderMap[a] : int.MaxValue;
+            int posB = orderMap.ContainsKey(b) ? orderMap[b] : int.MaxValue;
+            return posA.CompareTo(posB);
+        });
+        
+        return new string(chars);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Creates a dictionary/map to store character positions from order</li>
+                    <li>Sorts characters based on their position in order</li>
+                    <li>Characters not in order are placed at the end</li>
+                    <li>Time complexity: O(n log n) where n is length of s</li>
+                    <li>Space complexity: O(1) since order has at most 26 characters</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "791. Custom Sort String",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "LeetCodee solution for Custom Sort String problem. Learn how to efficiently sort a string based on a custom order. Includes Python, Java, C++, JavaScript, and C# solutions with explanations.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/custom-sort-string/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" // Replace with actual logo URL
+        }
+      }
+    }
+    </script>
+</body>
+</html>

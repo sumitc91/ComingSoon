@@ -1,0 +1,279 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximum Average Subarray I - LeetCodee Solution</title>
+    <meta name="description" content="Find a contiguous subarray of length k with the maximum average value. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, leetcode solution, maximum average subarray, sliding window, prefix sum, python, java, cpp, javascript, csharp, algorithm, coding interview">
+    <meta name="canonical" content="https://leetcodee.com/problems/maximum-average-subarray-i/">
+    <meta property="og:title" content="Maximum Average Subarray I - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/maximum-average-subarray-i/">
+    <meta property="og:description" content="Find a contiguous subarray of length k with the maximum average value. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://leetcodee.com/logo.png">  <!-- Replace with actual logo URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Maximum Average Subarray I - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Update with actual publication date -->
+      "dateModified": "2023-10-27", <!-- Update with actual modification date -->
+      "description": "Find a contiguous subarray of length k with the maximum average value. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "articleBody": "You are given an integer array nums consisting of n elements, and an integer k. Find a contiguous subarray whose length is equal to k that has the maximum average value and return this value.  Solutions provided in Python, Java, C++, Javascript, and C#.",
+      "image": "https://leetcodee.com/logo.png",  <!-- Replace with actual image URL -->
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/maximum-average-subarray-i/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">643. Maximum Average Subarray I</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array <code class="bg-gray-100 px-1 rounded">nums</code> consisting of <code class="bg-gray-100 px-1 rounded">n</code> elements, and an integer <code class="bg-gray-100 px-1 rounded">k</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Find a contiguous subarray whose length is equal to <code class="bg-gray-100 px-1 rounded">k</code> that has the maximum average value and return this value. Any answer with a calculation error less than 10<sup>-5</sup> will be accepted.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,12,-5,-6,50,3], k = 4
+Output: 12.75000
+Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [5], k = 1
+Output: 5.00000</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == nums.length</li>
+                    <li>1 ≤ k ≤ n ≤ 10<sup>5</sup></li>
+                    <li>-10<sup>4</sup> ≤ nums[i] ≤ 10<sup>4</sup></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findMaxAverage(self, nums: List[int], k: int) -> float:
+        # Initialize the sum of first k elements
+        curr_sum = sum(nums[:k])
+        max_sum = curr_sum
+        
+        # Slide the window and keep track of maximum sum
+        for i in range(k, len(nums)):
+            curr_sum = curr_sum + nums[i] - nums[i - k]
+            max_sum = max(max_sum, curr_sum)
+        
+        # Return the maximum average
+        return max_sum / k</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Prefix Sum):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def findMaxAverage(self, nums: List[int], k: int) -> float:
+        # Calculate prefix sums
+        prefix_sum = [0] * (len(nums) + 1)
+        for i in range(len(nums)):
+            prefix_sum[i + 1] = prefix_sum[i] + nums[i]
+        
+        # Find maximum sum of k consecutive elements
+        max_sum = float('-inf')
+        for i in range(k, len(prefix_sum)):
+            curr_sum = prefix_sum[i] - prefix_sum[i - k]
+            max_sum = max(max_sum, curr_sum)
+        
+        return max_sum / k</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses sliding window technique with O(n) time and O(1) space</li>
+                    <li>Second solution uses prefix sum with O(n) time and O(n) space</li>
+                    <li>Both solutions handle edge cases where k equals array length</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public double findMaxAverage(int[] nums, int k) {
+        // Initialize sum of first k elements
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+        
+        int maxSum = sum;
+        
+        // Slide window and track maximum sum
+        for (int i = k; i < nums.length; i++) {
+            sum = sum + nums[i] - nums[i - k];
+            maxSum = Math.max(maxSum, sum);
+        }
+        
+        return (double) maxSum / k;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+        // Initialize sum of first k elements
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+        
+        int maxSum = sum;
+        
+        // Slide window and track maximum sum
+        for (int i = k; i < nums.size(); i++) {
+            sum = sum + nums[i] - nums[i - k];
+            maxSum = max(maxSum, sum);
+        }
+        
+        return static_cast<double>(maxSum) / k;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var findMaxAverage = function(nums, k) {
+    // Initialize sum of first k elements
+    let sum = 0;
+    for (let i = 0; i < k; i++) {
+        sum += nums[i];
+    }
+    
+    let maxSum = sum;
+    
+    // Slide window and track maximum sum
+    for (let i = k; i < nums.length; i++) {
+        sum = sum + nums[i] - nums[i - k];
+        maxSum = Math.max(maxSum, sum);
+    }
+    
+    return maxSum / k;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public double FindMaxAverage(int[] nums, int k) {
+        // Initialize sum of first k elements
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+        
+        int maxSum = sum;
+        
+        // Slide window and track maximum sum
+        for (int i = k; i < nums.Length; i++) {
+            sum = sum + nums[i] - nums[i - k];
+            maxSum = Math.Max(maxSum, sum);
+        }
+        
+        return (double)maxSum / k;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using LINQ):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public double FindMaxAverage(int[] nums, int k) {
+        return Enumerable.Range(0, nums.Length - k + 1)
+            .Select(i => nums.Skip(i).Take(k).Average())
+            .Max();
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses sliding window technique for optimal performance</li>
+                        <li>Second solution uses LINQ for cleaner but less efficient implementation</li>
+                        <li>Both solutions handle floating-point arithmetic correctly</li>
+                    </ul>
+                </div>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

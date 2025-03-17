@@ -1,0 +1,293 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Calendar II - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions and explanations for LeetCode problem 731: My Calendar II.  Learn how to implement a calendar that prevents triple bookings. Includes Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, leetcode solution, my calendar ii, 731, algorithm, data structure, python, java, c++, javascript, c#, coding, programming, interview, triple booking">
+    <meta name="canonical" content="https://leetcodee.com/problems/my-calendar-ii/">
+    <meta property="og:title" content="My Calendar II - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/my-calendar-ii/">
+    <meta property="og:description" content="Efficient solutions and explanations for LeetCode problem 731: My Calendar II.  Learn how to implement a calendar that prevents triple bookings. Includes Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "731. My Calendar II",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Efficient solutions and explanations for LeetCode problem 731: My Calendar II.  Learn how to implement a calendar that prevents triple bookings. Includes Python, Java, C++, JavaScript, and C# code examples.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/my-calendar-ii/"
+      },
+      "keywords": "leetcode, leetcode solution, my calendar ii, 731, algorithm, data structure, python, java, c++, javascript, c#, coding, programming, interview, triple booking"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">731. My Calendar II</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a triple booking.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A triple booking happens when three events have some non-empty intersection (i.e., some moment is common to all three events.).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The event can be represented as a pair of integers start and end that represents a booking on the half-open interval [start, end), the range of real numbers x such that start ≤ x < end.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement the MyCalendarTwo class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>MyCalendarTwo() Initializes the calendar object.</li>
+                    <li>boolean book(int start, int end) Returns true if the event can be added to the calendar successfully without causing a triple booking. Otherwise, return false and do not add the event to the calendar.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["MyCalendarTwo", "book", "book", "book", "book", "book", "book"]
+[[], [10, 20], [50, 60], [10, 40], [5, 15], [5, 10], [25, 55]]
+Output
+[null, true, true, true, false, true, true]
+
+Explanation
+MyCalendarTwo myCalendarTwo = new MyCalendarTwo();
+myCalendarTwo.book(10, 20); // return True, The event can be booked. 
+myCalendarTwo.book(50, 60); // return True, The event can be booked. 
+myCalendarTwo.book(10, 40); // return True, The third event can be double booked. 
+myCalendarTwo.book(5, 15);  // return False, The event cannot be booked, because it would result in a triple booking.
+myCalendarTwo.book(5, 10); // return True, The event can be booked, as it does not use time 10 which is already double booked.
+myCalendarTwo.book(25, 55); // return True, The event can be booked, as the time in [25, 40) will be double booked with the third event, the time [40, 50) will be single booked, and the time [50, 55) will be double booked with the second event.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>0 ≤ start < end ≤ 10^9</li>
+                    <li>At most 1000 calls will be made to book.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class MyCalendarTwo:
+    def __init__(self):
+        self.bookings = []  # List of all bookings
+        self.overlaps = []  # List of overlapping intervals
+    
+    def book(self, start: int, end: int) -> bool:
+        # Check if this booking would create a triple booking
+        for s, e in self.overlaps:
+            if start < e and end > s:
+                return False
+        
+        # Add to overlaps if it overlaps with any existing booking
+        for s, e in self.bookings:
+            if start < e and end > s:
+                self.overlaps.append((max(start, s), min(end, e)))
+        
+        self.bookings.append((start, end))
+        return True</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses two lists to track bookings and overlapping intervals</li>
+                    <li>Time complexity: O(n) for each booking where n is the number of existing bookings</li>
+                    <li>Space complexity: O(n) to store all bookings and overlaps</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class MyCalendarTwo {
+    private List<int[]> bookings;
+    private List<int[]> overlaps;
+    
+    public MyCalendarTwo() {
+        bookings = new ArrayList<>();
+        overlaps = new ArrayList<>();
+    }
+    
+    public boolean book(int start, int end) {
+        // Check if this booking would create a triple booking
+        for (int[] overlap : overlaps) {
+            if (start < overlap[1] && end > overlap[0]) {
+                return false;
+            }
+        }
+        
+        // Add to overlaps if it overlaps with any existing booking
+        for (int[] booking : bookings) {
+            if (start < booking[1] && end > booking[0]) {
+                overlaps.add(new int[]{Math.max(start, booking[0]), Math.min(end, booking[1])});
+            }
+        }
+        
+        bookings.add(new int[]{start, end});
+        return true;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class MyCalendarTwo {
+private:
+    vector<pair<int, int>> bookings;
+    vector<pair<int, int>> overlaps;
+    
+public:
+    MyCalendarTwo() {}
+    
+    bool book(int start, int end) {
+        // Check if this booking would create a triple booking
+        for (const auto& overlap : overlaps) {
+            if (start < overlap.second && end > overlap.first) {
+                return false;
+            }
+        }
+        
+        // Add to overlaps if it overlaps with any existing booking
+        for (const auto& booking : bookings) {
+            if (start < booking.second && end > booking.first) {
+                overlaps.emplace_back(max(start, booking.first), min(end, booking.second));
+            }
+        }
+        
+        bookings.emplace_back(start, end);
+        return true;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>class MyCalendarTwo {
+    constructor() {
+        this.bookings = [];  // List of all bookings
+        this.overlaps = [];  // List of overlapping intervals
+    }
+    
+    book(start, end) {
+        // Check if this booking would create a triple booking
+        for (const [s, e] of this.overlaps) {
+            if (start < e && end > s) {
+                return false;
+            }
+        }
+        
+        // Add to overlaps if it overlaps with any existing booking
+        for (const [s, e] of this.bookings) {
+            if (start < e && end > s) {
+                this.overlaps.push([Math.max(start, s), Math.min(end, e)]);
+            }
+        }
+        
+        this.bookings.push([start, end]);
+        return true;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class MyCalendarTwo {
+    private List<(int start, int end)> bookings;
+    private List<(int start, int end)> overlaps;
+    
+    public MyCalendarTwo() {
+        bookings = new List<(int start, int end)>();
+        overlaps = new List<(int start, int end)>();
+    }
+    
+    public bool Book(int start, int end) {
+        // Check if this booking would create a triple booking
+        foreach (var overlap in overlaps) {
+            if (start < overlap.end && end > overlap.start) {
+                return false;
+            }
+        }
+        
+        // Add to overlaps if it overlaps with any existing booking
+        foreach (var booking in bookings) {
+            if (start < booking.end && end > booking.start) {
+                overlaps.Add((Math.Max(start, booking.start), Math.Min(end, booking.end)));
+            }
+        }
+        
+        bookings.Add((start, end));
+        return true;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses two lists to track bookings and overlapping intervals</li>
+                    <li>Time complexity: O(n) for each booking where n is the number of existing bookings</li>
+                    <li>Space complexity: O(n) to store all bookings and overlaps</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

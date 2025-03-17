@@ -1,0 +1,298 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimum Add to Make Parentheses Valid - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum number of parentheses to add to make a given parentheses string valid.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, parentheses, valid parentheses, minimum add, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <meta property="og:title" content="Minimum Add to Make Parentheses Valid - LeetCodee Solution">
+    <meta property="og:description" content="Find the minimum number of parentheses to add to make a given parentheses string valid. Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/minimum-add-to-make-parentheses-valid/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/minimum-add-to-make-parentheses-valid/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">921. Minimum Add to Make Parentheses Valid</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A parentheses string is valid if and only if:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>It is the empty string,</li>
+                    <li>It can be written as <code class="bg-gray-100 px-1 rounded">AB</code> (A concatenated with B), where A and B are valid strings, or</li>
+                    <li>It can be written as <code class="bg-gray-100 px-1 rounded">(A)</code>, where A is a valid string.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    You are given a parentheses string <code class="bg-gray-100 px-1 rounded">s</code>. In one move, you can insert a parenthesis at any position of the string.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, if <code class="bg-gray-100 px-1 rounded">s = "()))"</code>, you can insert an opening parenthesis to be <code class="bg-gray-100 px-1 rounded">"(()))"</code> or a closing parenthesis to be <code class="bg-gray-100 px-1 rounded">"())))"</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the minimum number of moves required to make <code class="bg-gray-100 px-1 rounded">s</code> valid.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "())"
+Output: 1</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "((("
+Output: 3</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "()"
+Output: 0</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 4:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "()))(("
+Output: 4</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= s.length <= 1000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">s[i]</code> is either <code class="bg-gray-100 px-1 rounded">'('</code> or <code class="bg-gray-100 px-1 rounded">')'</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def minAddToMakeValid(self, s: str) -> int:
+        left_needed = right_needed = 0
+        
+        for char in s:
+            if char == '(':
+                right_needed += 1
+            else:
+                if right_needed > 0:
+                    right_needed -= 1
+                else:
+                    left_needed += 1
+                    
+        return left_needed + right_needed</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the string once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int minAddToMakeValid(String s) {
+        int leftNeeded = 0;
+        int rightNeeded = 0;
+        
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                rightNeeded++;
+            } else {
+                if (rightNeeded > 0) {
+                    rightNeeded--;
+                } else {
+                    leftNeeded++;
+                }
+            }
+        }
+        
+        return leftNeeded + rightNeeded;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the string once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int minAddToMakeValid(string s) {
+        int leftNeeded = 0;
+        int rightNeeded = 0;
+        
+        for (char c : s) {
+            if (c == '(') {
+                rightNeeded++;
+            } else {
+                if (rightNeeded > 0) {
+                    rightNeeded--;
+                } else {
+                    leftNeeded++;
+                }
+            }
+        }
+        
+        return leftNeeded + rightNeeded;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the string once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {number}
+ */
+var minAddToMakeValid = function(s) {
+    let leftNeeded = 0;
+    let rightNeeded = 0;
+    
+    for (const c of s) {
+        if (c === '(') {
+            rightNeeded++;
+        } else {
+            if (rightNeeded > 0) {
+                rightNeeded--;
+            } else {
+                leftNeeded++;
+            }
+        }
+    }
+    
+    return leftNeeded + rightNeeded;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the string once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int MinAddToMakeValid(string s) {
+        int leftNeeded = 0;
+        int rightNeeded = 0;
+        
+        foreach (char c in s) {
+            if (c == '(') {
+                rightNeeded++;
+            } else {
+                if (rightNeeded > 0) {
+                    rightNeeded--;
+                } else {
+                    leftNeeded++;
+                }
+            }
+        }
+        
+        return leftNeeded + rightNeeded;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the string once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "921. Minimum Add to Make Parentheses Valid",
+          "image": "",
+          "datePublished": "2024-03-08",
+          "dateModified": "2024-03-08",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://leetcodee.com/logo.png"
+            }
+          },
+          "description": "Find the minimum number of parentheses to add to make a given parentheses string valid. Solutions in Python, Java, C++, JavaScript, and C#.",
+          "articleBody": "A parentheses string is valid if and only if: It is the empty string, It can be written as AB (A concatenated with B), where A and B are valid strings, or It can be written as (A), where A is a valid string. You are given a parentheses string s. In one move, you can insert a parenthesis at any position of the string. For example, if s = \")))\", you can insert an opening parenthesis to be \"(()))\" or a closing parenthesis to be \"))))\". Return the minimum number of moves required to make s valid."
+        }
+      </script>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

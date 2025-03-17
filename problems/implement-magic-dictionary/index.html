@@ -1,0 +1,336 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implement Magic Dictionary - LeetCodee Solution</title>
+    <meta name="description" content="Find efficient solutions and explanations for the LeetCode problem 'Implement Magic Dictionary' in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, implement magic dictionary, python, java, c++, javascript, c#, solution, coding, algorithm, data structure, trie">
+    <link rel="canonical" href="https://leetcodee.com/problems/implement-magic-dictionary/">
+    <meta property="og:title" content="Implement Magic Dictionary - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/implement-magic-dictionary/">
+    <meta property="og:description" content="Find efficient solutions and explanations for the LeetCode problem 'Implement Magic Dictionary' in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Implement Magic Dictionary - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find efficient solutions and explanations for the LeetCode problem 'Implement Magic Dictionary' in Python, Java, C++, JavaScript, and C#.",
+      "keywords": "leetcode, implement magic dictionary, python, java, c++, javascript, c#, solution, coding, algorithm, data structure, trie",
+      "articleBody": "Design a data structure that is initialized with a list of different words. Provided a string, you should determine if you can change exactly one character in this string to match any word in your data structure. Implement the MagicDictionary class...[rest of article body]"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">676. Implement Magic Dictionary</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Design a data structure that is initialized with a list of <strong>different</strong> words. Provided a string, you should determine if you can change exactly one character in this string to match any word in your data structure.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement the <code class="bg-gray-100 px-1 rounded">MagicDictionary</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">MagicDictionary()</code> Initializes the object.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">void buildDict(String[] dictionary)</code> Sets the data structure with an array of distinct strings dictionary.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">bool search(String searchWord)</code> Returns true if you can change exactly one character in searchWord to match any string in the data structure, otherwise returns false.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["MagicDictionary", "buildDict", "search", "search", "search", "search"]
+[[], [["hello","leetcode"]], ["hello"], ["hhllo"], ["hell"], ["leetcoded"]]
+Output
+[null, null, false, true, false, false]
+
+Explanation
+MagicDictionary magicDictionary = new MagicDictionary();
+magicDictionary.buildDict(["hello", "leetcode"]);
+magicDictionary.search("hello"); // return False
+magicDictionary.search("hhllo"); // We can change the second 'h' to 'e' to match "hello" so we return True
+magicDictionary.search("hell"); // return False
+magicDictionary.search("leetcoded"); // return False</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ dictionary.length ≤ 100</li>
+                    <li>1 ≤ dictionary[i].length ≤ 100</li>
+                    <li>dictionary[i] consists of only lowercase English letters</li>
+                    <li>All the strings in dictionary are distinct</li>
+                    <li>1 ≤ searchWord.length ≤ 100</li>
+                    <li>searchWord consists of only lowercase English letters</li>
+                    <li>buildDict will be called only once before search</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class MagicDictionary:
+    def __init__(self):
+        self.dictionary = []
+        
+    def buildDict(self, dictionary: List[str]) -> None:
+        self.dictionary = dictionary
+        
+    def search(self, searchWord: str) -> bool:
+        for word in self.dictionary:
+            if len(word) != len(searchWord):
+                continue
+            diff = 0
+            for i in range(len(word)):
+                if word[i] != searchWord[i]:
+                    diff += 1
+            if diff == 1:
+                return True
+        return False</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Trie):</h4>
+                    <pre class="language-python"><code>class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+        
+class MagicDictionary:
+    def __init__(self):
+        self.root = TrieNode()
+        
+    def buildDict(self, dictionary: List[str]) -> None:
+        for word in dictionary:
+            node = self.root
+            for char in word:
+                if char not in node.children:
+                    node.children[char] = TrieNode()
+                node = node.children[char]
+            node.is_end = True
+            
+    def search(self, searchWord: str) -> bool:
+        def dfs(node: TrieNode, word: str, diff: int) -> bool:
+            if not word:
+                return node.is_end and diff == 1
+                
+            char = word[0]
+            if char in node.children:
+                if dfs(node.children[char], word[1:], diff):
+                    return True
+                    
+            if diff == 0:
+                for child in node.children.values():
+                    if child != node.children.get(char):
+                        if dfs(child, word[1:], 1):
+                            return True
+            return False
+            
+        return dfs(self.root, searchWord, 0)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses simple string comparison</li>
+                    <li>Second solution uses Trie for better space efficiency</li>
+                    <li>Time complexity: O(n*m) for first solution, O(m) for second</li>
+                    <li>Space complexity: O(n*m) for first solution, O(n*m) for second</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class MagicDictionary {
+    private String[] dictionary;
+    
+    public MagicDictionary() {
+        dictionary = new String[0];
+    }
+    
+    public void buildDict(String[] dictionary) {
+        this.dictionary = dictionary;
+    }
+    
+    public boolean search(String searchWord) {
+        for (String word : dictionary) {
+            if (word.length() != searchWord.length()) {
+                continue;
+            }
+            int diff = 0;
+            for (int i = 0; i < word.length(); i++) {
+                if (word.charAt(i) != searchWord.charAt(i)) {
+                    diff++;
+                }
+            }
+            if (diff == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class MagicDictionary {
+private:
+    vector<string> dictionary;
+    
+public:
+    MagicDictionary() {}
+    
+    void buildDict(vector<string> dictionary) {
+        this->dictionary = dictionary;
+    }
+    
+    bool search(string searchWord) {
+        for (const string& word : dictionary) {
+            if (word.length() != searchWord.length()) {
+                continue;
+            }
+            int diff = 0;
+            for (int i = 0; i < word.length(); i++) {
+                if (word[i] != searchWord[i]) {
+                    diff++;
+                }
+            }
+            if (diff == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>class MagicDictionary {
+    constructor() {
+        this.dictionary = [];
+    }
+    
+    buildDict(dictionary) {
+        this.dictionary = dictionary;
+    }
+    
+    search(searchWord) {
+        for (const word of this.dictionary) {
+            if (word.length !== searchWord.length) {
+                continue;
+            }
+            let diff = 0;
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] !== searchWord[i]) {
+                    diff++;
+                }
+            }
+            if (diff === 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class MagicDictionary {
+    private string[] dictionary;
+    
+    public MagicDictionary() {
+        dictionary = new string[0];
+    }
+    
+    public void BuildDict(string[] dictionary) {
+        this.dictionary = dictionary;
+    }
+    
+    public bool Search(string searchWord) {
+        foreach (string word in dictionary) {
+            if (word.Length != searchWord.Length) {
+                continue;
+            }
+            int diff = 0;
+            for (int i = 0; i < word.Length; i++) {
+                if (word[i] != searchWord[i]) {
+                    diff++;
+                }
+            }
+            if (diff == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Simple string comparison approach</li>
+                    <li>Time complexity: O(n*m) where n is number of words and m is word length</li>
+                    <li>Space complexity: O(n*m)</li>
+                    <li>Handles edge cases like different length words</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

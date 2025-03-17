@@ -1,0 +1,261 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keys and Rooms - LeetCodee Solution</title>
+    <meta name="description" content="Find the LeetCodee solution for the Keys and Rooms problem.  Learn how to solve this graph traversal problem using Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, leetcodee, keys and rooms, solution, python, java, cpp, javascript, c#, algorithm, graph traversal, dfs, depth-first search">
+    <meta name="canonical" content="https://leetcodee.com/problems/keys-and-rooms/">
+    <meta property="og:title" content="Keys and Rooms - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/keys-and-rooms/">
+    <meta property="og:description" content="Find the LeetCodee solution for the Keys and Rooms problem.  Learn how to solve this graph traversal problem using Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:image" content="https://leetcodee.com/og-image.jpg">  <!-- Replace with actual image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "841. Keys and Rooms",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27",  <!-- Replace with actual modification date -->
+      "description": "Find the LeetCodee solution for the Keys and Rooms problem. Learn how to solve this graph traversal problem using Python, Java, C++, JavaScript, and C#.",
+      "image": "https://leetcodee.com/og-image.jpg",  <!-- Replace with actual image URL -->
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/keys-and-rooms/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.jpg"  <!-- Replace with actual logo URL -->
+        }
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">841. Keys and Rooms</h1>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT_HERE"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There are n rooms labeled from 0 to n - 1 and all the rooms are locked except for room 0. Your goal is to visit all the rooms. However, you cannot enter a locked room without having its key.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    When you visit a room, you may find a set of distinct keys in it. Each key has a number on it, denoting which room it unlocks, and you can take all of them with you to unlock the other rooms.
+                </p>
+                <p class="text-gray-700">
+                    Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i, return true if you can visit all the rooms, or false otherwise.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: rooms = [[1],[2],[3],[]]
+Output: true
+Explanation: 
+We visit room 0 and pick up key 1.
+We then visit room 1 and pick up key 2.
+We then visit room 2 and pick up key 3.
+We then visit room 3.
+Since we were able to visit every room, we return true.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: rooms = [[1,3],[3,0,1],[2],[0]]
+Output: false
+Explanation: We can't enter room number 2 since the only key that unlocks it is in room 2.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == rooms.length</li>
+                    <li>2 ≤ n ≤ 1000</li>
+                    <li>0 ≤ rooms[i].length ≤ 1000</li>
+                    <li>1 ≤ sum(rooms[i].length) ≤ 3000</li>
+                    <li>0 ≤ rooms[i][j] < n</li>
+                    <li>All the values of rooms[i] are unique</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
+        n = len(rooms)
+        visited = set()
+        
+        def dfs(room: int) -> None:
+            visited.add(room)
+            for key in rooms[room]:
+                if key not in visited:
+                    dfs(key)
+        
+        dfs(0)
+        return len(visited) == n</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS to explore rooms and collect keys</li>
+                    <li>Time complexity: O(N + K) where N is number of rooms and K is total number of keys</li>
+                    <li>Space complexity: O(N) for visited set and recursion stack</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private Set<Integer> visited;
+    
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        visited = new HashSet<>();
+        dfs(rooms, 0);
+        return visited.size() == rooms.size();
+    }
+    
+    private void dfs(List<List<Integer>> rooms, int room) {
+        visited.add(room);
+        for (int key : rooms.get(room)) {
+            if (!visited.contains(key)) {
+                dfs(rooms, key);
+            }
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        unordered_set<int> visited;
+        dfs(rooms, 0, visited);
+        return visited.size() == rooms.size();
+    }
+    
+private:
+    void dfs(const vector<vector<int>>& rooms, int room, unordered_set<int>& visited) {
+        visited.insert(room);
+        for (int key : rooms[room]) {
+            if (visited.find(key) == visited.end()) {
+                dfs(rooms, key, visited);
+            }
+        }
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} rooms
+ * @return {boolean}
+ */
+var canVisitAllRooms = function(rooms) {
+    const visited = new Set();
+    
+    const dfs = (room) => {
+        visited.add(room);
+        for (const key of rooms[room]) {
+            if (!visited.has(key)) {
+                dfs(key);
+            }
+        }
+    };
+    
+    dfs(0);
+    return visited.size === rooms.length;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private HashSet<int> visited;
+    
+    public bool CanVisitAllRooms(IList<IList<int>> rooms) {
+        visited = new HashSet<int>();
+        DFS(rooms, 0);
+        return visited.Count == rooms.Count;
+    }
+    
+    private void DFS(IList<IList<int>> rooms, int room) {
+        visited.Add(room);
+        foreach (int key in rooms[room]) {
+            if (!visited.Contains(key)) {
+                DFS(rooms, key);
+            }
+        }
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses HashSet for efficient visited room tracking</li>
+                    <li>DFS implementation with recursion</li>
+                    <li>Time complexity: O(N + K)</li>
+                    <li>Space complexity: O(N)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood Fill - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the LeetCode Flood Fill problem with detailed explanations and solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, flood fill, algorithm, solution, python, java, cpp, javascript, c#, depth-first search, dfs">
+    <meta name="canonical" content="https://leetcodee.com/problems/flood-fill/">
+    <meta property="og:title" content="Flood Fill - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/flood-fill/">
+    <meta property="og:description" content="Learn how to solve the LeetCode Flood Fill problem with detailed explanations and solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:image" content="https://leetcodee.com/logo.png">  <!-- Replace with actual logo URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "733. Flood Fill",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27",  <!-- Replace with actual modification date -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Learn how to solve the LeetCode Flood Fill problem with detailed explanations and solutions in Python, Java, C++, JavaScript, and C#.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/flood-fill/"
+      },
+      "keywords": "leetcode, flood fill, algorithm, solution, python, java, cpp, javascript, c#, depth-first search, dfs"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">733. Flood Fill</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    An image is represented by an m x n integer grid image where image[i][j] represents the pixel value of the image.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are also given three integers sr, sc, and newColor. You should perform a flood fill on the image starting from the pixel image[sr][sc].
+                </p>
+                <p class="text-gray-700 mb-4">
+                    To perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same color as the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same color), and so on. Replace the color of all of the aforementioned pixels with newColor.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the modified image after performing the flood fill.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2
+Output: [[2,2,2],[2,2,0],[2,0,1]]
+Explanation: From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.
+Note the bottom corner is not colored 2, because it is not 4-directionally connected to the starting pixel.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, newColor = 2
+Output: [[2,2,2],[2,2,2]]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>m == image.length</li>
+                    <li>n == image[i].length</li>
+                    <li>1 ≤ m, n ≤ 50</li>
+                    <li>0 ≤ image[i][j], newColor < 2^16</li>
+                    <li>0 ≤ sr < m</li>
+                    <li>0 ≤ sc < n</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+        if not image or image[sr][sc] == newColor:
+            return image
+            
+        def dfs(r: int, c: int, oldColor: int):
+            if r < 0 or r >= len(image) or c < 0 or c >= len(image[0]) or image[r][c] != oldColor:
+                return
+                
+            image[r][c] = newColor
+            for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                dfs(r + dr, c + dc, oldColor)
+        
+        dfs(sr, sc, image[sr][sc])
+        return image</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses depth-first search to traverse connected pixels</li>
+                    <li>Time complexity: O(m × n) where m and n are the dimensions of the image</li>
+                    <li>Space complexity: O(m × n) for the recursion stack in worst case</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if (image == null || image.length == 0 || image[sr][sc] == newColor) {
+            return image;
+        }
+        
+        dfs(image, sr, sc, image[sr][sc], newColor);
+        return image;
+    }
+    
+    private void dfs(int[][] image, int r, int c, int oldColor, int newColor) {
+        if (r < 0 || r >= image.length || c < 0 || c >= image[0].length || image[r][c] != oldColor) {
+            return;
+        }
+        
+        image[r][c] = newColor;
+        dfs(image, r + 1, c, oldColor, newColor);
+        dfs(image, r - 1, c, oldColor, newColor);
+        dfs(image, r, c + 1, oldColor, newColor);
+        dfs(image, r, c - 1, oldColor, newColor);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    void dfs(vector<vector<int>>& image, int r, int c, int oldColor, int newColor) {
+        if (r < 0 || r >= image.size() || c < 0 || c >= image[0].size() || image[r][c] != oldColor) {
+            return;
+        }
+        
+        image[r][c] = newColor;
+        dfs(image, r + 1, c, oldColor, newColor);
+        dfs(image, r - 1, c, oldColor, newColor);
+        dfs(image, r, c + 1, oldColor, newColor);
+        dfs(image, r, c - 1, oldColor, newColor);
+    }
+    
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        if (image.empty() || image[sr][sc] == newColor) {
+            return image;
+        }
+        
+        dfs(image, sr, sc, image[sr][sc], newColor);
+        return image;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function floodFill(image, sr, sc, newColor) {
+    if (!image || image[sr][sc] === newColor) {
+        return image;
+    }
+    
+    function dfs(r, c, oldColor) {
+        if (r < 0 || r >= image.length || c < 0 || c >= image[0].length || image[r][c] !== oldColor) {
+            return;
+        }
+        
+        image[r][c] = newColor;
+        dfs(r + 1, c, oldColor);
+        dfs(r - 1, c, oldColor);
+        dfs(r, c + 1, oldColor);
+        dfs(r, c - 1, oldColor);
+    }
+    
+    dfs(sr, sc, image[sr][sc]);
+    return image;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int[][] FloodFill(int[][] image, int sr, int sc, int newColor) {
+        if (image == null || image.Length == 0 || image[sr][sc] == newColor) {
+            return image;
+        }
+        
+        DFS(image, sr, sc, image[sr][sc], newColor);
+        return image;
+    }
+    
+    private void DFS(int[][] image, int r, int c, int oldColor, int newColor) {
+        if (r < 0 || r >= image.Length || c < 0 || c >= image[0].Length || image[r][c] != oldColor) {
+            return;
+        }
+        
+        image[r][c] = newColor;
+        DFS(image, r + 1, c, oldColor, newColor);
+        DFS(image, r - 1, c, oldColor, newColor);
+        DFS(image, r, c + 1, oldColor, newColor);
+        DFS(image, r, c - 1, oldColor, newColor);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses depth-first search to traverse connected pixels</li>
+                    <li>Time complexity: O(m × n) where m and n are the dimensions of the image</li>
+                    <li>Space complexity: O(m × n) for the recursion stack in worst case</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

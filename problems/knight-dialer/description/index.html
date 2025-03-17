@@ -1,0 +1,371 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight Dialer - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Knight Dialer problem on LeetCode. Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="LeetCode, Knight Dialer, Algorithm, Dynamic Programming, Python, Java, C++, JavaScript, C#, Solution, Coding, Interview">
+    <meta property="og:title" content="Knight Dialer - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/knight-dialer/">
+    <meta property="og:description" content="Learn how to solve the Knight Dialer problem on LeetCode. Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/knight-dialer/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">935. Knight Dialer</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    The chess knight has a unique movement, it may move two squares vertically and one square horizontally, or two squares horizontally and one square vertically (with both forming the shape of an L). The possible movements of chess knight are shown in this diagaram:
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A chess knight can move as indicated in the chess diagram below:
+                </p>
+                <p class="text-gray-700 mb-4">
+                    We have a chess knight and a phone pad as shown below, the knight can only stand on a numeric cell (i.e. blue cell).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given an integer <code class="bg-gray-100 px-1 rounded">n</code>, return how many distinct phone numbers of length <code class="bg-gray-100 px-1 rounded">n</code> you can dial.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are allowed to place the knight on any numeric cell initially and then you should perform <code class="bg-gray-100 px-1 rounded">n - 1</code> jumps to dial a number of length <code class="bg-gray-100 px-1 rounded">n</code>. All jumps should be valid knight jumps.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    As the answer may be very large, return the answer modulo <code class="bg-gray-100 px-1 rounded">10^9 + 7</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: n = 1
+Output: 10
+Explanation: We need to dial a number of length 1, so placing the knight over any numeric cell of the 10 cells is sufficient.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: n = 2
+Output: 20
+Explanation: All the valid number we can dial are [04, 06, 16, 18, 27, 29, 34, 38, 40, 43, 49, 60, 61, 67, 72, 76, 81, 83, 92, 94]</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: n = 3
+Output: 46</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= n <= 5000</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def knightDialer(self, n: int) -> int:
+        # Define possible moves for each digit
+        moves = {
+            0: [4, 6],
+            1: [6, 8],
+            2: [7, 9],
+            3: [4, 8],
+            4: [0, 3, 9],
+            5: [],
+            6: [0, 1, 7],
+            7: [2, 6],
+            8: [1, 3],
+            9: [2, 4]
+        }
+        
+        # Initialize dp array
+        dp = [1] * 10
+        MOD = 10**9 + 7
+        
+        # For each step
+        for _ in range(n - 1):
+            # Create new dp array
+            new_dp = [0] * 10
+            # For each digit
+            for i in range(10):
+                # Add all possible moves
+                for move in moves[i]:
+                    new_dp[move] = (new_dp[move] + dp[i]) % MOD
+            dp = new_dp
+            
+        return sum(dp) % MOD</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each step n times.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only need a constant amount of space for the dp arrays.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private static final int MOD = 1000000007;
+    private static final int[][] MOVES = {
+        {4, 6},     // 0
+        {6, 8},     // 1
+        {7, 9},     // 2
+        {4, 8},     // 3
+        {0, 3, 9},  // 4
+        {},         // 5
+        {0, 1, 7},  // 6
+        {2, 6},     // 7
+        {1, 3},     // 8
+        {2, 4}      // 9
+    };
+    
+    public int knightDialer(int n) {
+        long[] dp = new long[10];
+        Arrays.fill(dp, 1);
+        
+        for (int step = 1; step < n; step++) {
+            long[] newDp = new long[10];
+            for (int i = 0; i < 10; i++) {
+                for (int move : MOVES[i]) {
+                    newDp[move] = (newDp[move] + dp[i]) % MOD;
+                }
+            }
+            dp = newDp;
+        }
+        
+        long sum = 0;
+        for (long count : dp) {
+            sum = (sum + count) % MOD;
+        }
+        return (int) sum;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each step n times.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only need a constant amount of space for the dp arrays.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    static const int MOD = 1000000007;
+    static const vector<vector<int>> MOVES;
+    
+public:
+    int knightDialer(int n) {
+        vector<long> dp(10, 1);
+        
+        for (int step = 1; step < n; step++) {
+            vector<long> newDp(10, 0);
+            for (int i = 0; i < 10; i++) {
+                for (int move : MOVES[i]) {
+                    newDp[move] = (newDp[move] + dp[i]) % MOD;
+                }
+            }
+            dp = newDp;
+        }
+        
+        long sum = 0;
+        for (long count : dp) {
+            sum = (sum + count) % MOD;
+        }
+        return (int) sum;
+    }
+};
+
+const vector<vector<int>> Solution::MOVES = {
+    {4, 6},     // 0
+    {6, 8},     // 1
+    {7, 9},     // 2
+    {4, 8},     // 3
+    {0, 3, 9},  // 4
+    {},         // 5
+    {0, 1, 7},  // 6
+    {2, 6},     // 7
+    {1, 3},     // 8
+    {2, 4}      // 9
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each step n times.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only need a constant amount of space for the dp arrays.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ * @return {number}
+ */
+var knightDialer = function(n) {
+    const MOD = 1000000007;
+    const MOVES = [
+        [4, 6],     // 0
+        [6, 8],     // 1
+        [7, 9],     // 2
+        [4, 8],     // 3
+        [0, 3, 9],  // 4
+        [],         // 5
+        [0, 1, 7],  // 6
+        [2, 6],     // 7
+        [1, 3],     // 8
+        [2, 4]      // 9
+    ];
+    
+    let dp = new Array(10).fill(1);
+    
+    for (let step = 1; step < n; step++) {
+        const newDp = new Array(10).fill(0);
+        for (let i = 0; i < 10; i++) {
+            for (const move of MOVES[i]) {
+                newDp[move] = (newDp[move] + dp[i]) % MOD;
+            }
+        }
+        dp = newDp;
+    }
+    
+    return dp.reduce((sum, count) => (sum + count) % MOD, 0);
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each step n times.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only need a constant amount of space for the dp arrays.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private const int MOD = 1000000007;
+    private static readonly int[][] MOVES = new int[][] {
+        new int[] {4, 6},     // 0
+        new int[] {6, 8},     // 1
+        new int[] {7, 9},     // 2
+        new int[] {4, 8},     // 3
+        new int[] {0, 3, 9},  // 4
+        new int[] {},         // 5
+        new int[] {0, 1, 7},  // 6
+        new int[] {2, 6},     // 7
+        new int[] {1, 3},     // 8
+        new int[] {2, 4}      // 9
+    };
+    
+    public int KnightDialer(int n) {
+        long[] dp = new long[10];
+        Array.Fill(dp, 1);
+        
+        for (int step = 1; step < n; step++) {
+            long[] newDp = new long[10];
+            for (int i = 0; i < 10; i++) {
+                foreach (int move in MOVES[i]) {
+                    newDp[move] = (newDp[move] + dp[i]) % MOD;
+                }
+            }
+            dp = newDp;
+        }
+        
+        return (int)(dp.Sum() % MOD);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each step n times.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only need a constant amount of space for the dp arrays.</p>
+                </div>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "935. Knight Dialer",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "dateModified": "2023-10-27",
+          "description": "Learn how to solve the Knight Dialer problem on LeetCode. Find optimized Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/knight-dialer/"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://leetcodee.com/logo.png" //replace with your logo
+            }
+          }
+        }
+      </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

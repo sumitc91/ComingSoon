@@ -1,0 +1,366 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximum Width of Binary Tree - LeetCodee Solution</title>
+    <meta name="description" content="Find the maximum width of a binary tree.  LeetCodee provides Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="LeetCode, maximum width of binary tree, binary tree, algorithm, data structure, python, java, c++, javascript, c#, coding, programming, solution, tutorial">
+    <link rel="canonical" href="https://leetcodee.com/problems/maximum-width-of-binary-tree/">
+    <meta property="og:title" content="Maximum Width of Binary Tree - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/maximum-width-of-binary-tree/">
+    <meta property="og:description" content="Find the maximum width of a binary tree.  LeetCodee provides Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:image" content="https://leetcodee.com/logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "662. Maximum Width of Binary Tree",
+      "image": "https://leetcodee.com/logo.png",
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png"
+        }
+      },
+      "description": "Given the root of a binary tree, return the maximum width of the given tree. The maximum width of a tree is the maximum width among all levels.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/maximum-width-of-binary-tree/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">662. Maximum Width of Binary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">root</code> of a binary tree, return <em>the <strong>maximum width</strong> of the given tree</em>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The <strong>maximum width</strong> of a tree is the maximum <strong>width</strong> among all levels.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The <strong>width</strong> of one level is defined as the length between the end-nodes (the leftmost and rightmost non-null nodes), where the null nodes between the end-nodes that would be present in a complete binary tree extending down to that level are also counted into the length calculation.
+                </p>
+                <p class="text-gray-700">
+                    It is <strong>guaranteed</strong> that the answer will in the range of a <strong>32-bit</strong> signed integer.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,3,2,5,3,null,9]
+Output: 4
+Explanation: The maximum width exists in the third level with length 4 (5,3,null,9).</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,3,2,5,null,null,9,6,null,7]
+Output: 7
+Explanation: The maximum width exists in the fourth level with length 7 (6,null,null,null,null,null,7).</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,3,2,5]
+Output: 2
+Explanation: The maximum width exists in the second level with length 2 (3,2).</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 3000]</li>
+                    <li>-100 ≤ Node.val ≤ 100</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        
+        # Use level order traversal with position indexing
+        max_width = 0
+        queue = deque([(root, 0)])  # (node, position)
+        
+        while queue:
+            level_size = len(queue)
+            _, level_start = queue[0]
+            
+            # Process all nodes at current level
+            for i in range(level_size):
+                node, position = queue.popleft()
+                
+                # Add children with their positions
+                if node.left:
+                    queue.append((node.left, position * 2))
+                if node.right:
+                    queue.append((node.right, position * 2 + 1))
+                
+                # Update max width if this is last node in level
+                if i == level_size - 1:
+                    max_width = max(max_width, position - level_start + 1)
+        
+        return max_width</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using DFS):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        # Dictionary to store leftmost position at each level
+        first_pos = {}
+        self.max_width = 0
+        
+        def dfs(node: TreeNode, level: int, pos: int) -> None:
+            if not node:
+                return
+            
+            # Record leftmost position at this level
+            if level not in first_pos:
+                first_pos[level] = pos
+            
+            # Update max width using current position and leftmost position
+            self.max_width = max(self.max_width, pos - first_pos[level] + 1)
+            
+            # Traverse children with updated positions
+            dfs(node.left, level + 1, pos * 2)
+            dfs(node.right, level + 1, pos * 2 + 1)
+        
+        dfs(root, 0, 0)
+        return self.max_width</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses BFS with O(n) time and space</li>
+                    <li>Second solution uses DFS with O(n) time and O(h) space</li>
+                    <li>Both solutions handle integer overflow by tracking relative positions</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        
+        int maxWidth = 0;
+        Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+        queue.offer(new Pair<>(root, 0));
+        
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            int levelStart = queue.peek().getValue();
+            
+            for (int i = 0; i < levelSize; i++) {
+                Pair<TreeNode, Integer> pair = queue.poll();
+                TreeNode node = pair.getKey();
+                int position = pair.getValue();
+                
+                if (node.left != null) {
+                    queue.offer(new Pair<>(node.left, position * 2L));
+                }
+                if (node.right != null) {
+                    queue.offer(new Pair<>(node.right, position * 2L + 1));
+                }
+                
+                if (i == levelSize - 1) {
+                    maxWidth = Math.max(maxWidth, position - levelStart + 1);
+                }
+            }
+        }
+        
+        return maxWidth;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        if (!root) {
+            return 0;
+        }
+        
+        int maxWidth = 0;
+        queue<pair<TreeNode*, long long>> q;
+        q.push({root, 0});
+        
+        while (!q.empty()) {
+            int levelSize = q.size();
+            long long levelStart = q.front().second;
+            
+            for (int i = 0; i < levelSize; i++) {
+                auto [node, position] = q.front();
+                q.pop();
+                
+                if (node->left) {
+                    q.push({node->left, position * 2LL});
+                }
+                if (node->right) {
+                    q.push({node->right, position * 2LL + 1});
+                }
+                
+                if (i == levelSize - 1) {
+                    maxWidth = max(maxWidth, int(position - levelStart + 1));
+                }
+            }
+        }
+        
+        return maxWidth;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var widthOfBinaryTree = function(root) {
+    if (!root) {
+        return 0;
+    }
+    
+    let maxWidth = 0;
+    const queue = [[root, 0n]];  // Use BigInt for position
+    
+    while (queue.length) {
+        const levelSize = queue.length;
+        const levelStart = queue[0][1];
+        
+        for (let i = 0; i < levelSize; i++) {
+            const [node, position] = queue.shift();
+            
+            if (node.left) {
+                queue.push([node.left, position * 2n]);
+            }
+            if (node.right) {
+                queue.push([node.right, position * 2n + 1n]);
+            }
+            
+            if (i === levelSize - 1) {
+                maxWidth = Math.max(maxWidth, Number(position - levelStart + 1n));
+            }
+        }
+    }
+    
+    return maxWidth;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int WidthOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        
+        int maxWidth = 0;
+        Queue<(TreeNode node, long position)> queue = new Queue<(TreeNode, long)>();
+        queue.Enqueue((root, 0));
+        
+        while (queue.Count > 0) {
+            int levelSize = queue.Count;
+            long levelStart = queue.Peek().position;
+            
+            for (int i = 0; i < levelSize; i++) {
+                var (node, position) = queue.Dequeue();
+                
+                if (node.left != null) {
+                    queue.Enqueue((node.left, position * 2));
+                }
+                if (node.right != null) {
+                    queue.Enqueue((node.right, position * 2 + 1));
+                }
+                
+                if (i == levelSize - 1) {
+                    maxWidth = Math.Max(maxWidth, (int)(position - levelStart + 1));
+                }
+            }
+        }
+        
+        return maxWidth;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses level order traversal with position tracking</li>
+                    <li>Handles large numbers using long/BigInt to prevent overflow</li>
+                    <li>Time complexity: O(n), Space complexity: O(w) where w is max width</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

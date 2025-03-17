@@ -1,0 +1,351 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindromic Substrings - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of palindromic substrings in a given string.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 647.">
+    <meta name="keywords" content="LeetCode, Palindromic Substrings, Algorithm, Python, Java, C++, JavaScript, C#, Solution, Coding, Programming, Dynamic Programming, String">
+    <meta property="og:title" content="Palindromic Substrings - LeetCodee Solution">
+    <meta property="og:description" content="Find the number of palindromic substrings in a given string.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 647.">
+    <meta property="og:url" content="https://leetcodee.com/problems/palindromic-substrings/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/palindromic-substrings/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">647. Palindromic Substrings</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a string <code class="bg-gray-100 px-1 rounded">s</code>, return the number of palindromic substrings in it.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A string is a palindrome when it reads the same backward as forward.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A substring is a contiguous sequence of characters within the string.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "abc"
+Output: 3
+Explanation: All palindromic substrings are: "a", "b", "c".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "aaa"
+Output: 6
+Explanation: All palindromic substrings are: "a", "a", "a", "aa", "aa", "aaa".</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 1000</li>
+                    <li>s consists of lowercase English letters.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        count = 0
+        
+        # Helper function to count palindromes with center at i,j
+        def countPalindromes(left: int, right: int) -> int:
+            count = 0
+            while left >= 0 and right < n and s[left] == s[right]:
+                count += 1
+                left -= 1
+                right += 1
+            return count
+        
+        # Count palindromes for each possible center
+        for i in range(n):
+            # Odd length palindromes
+            count += countPalindromes(i, i)
+            # Even length palindromes
+            count += countPalindromes(i, i + 1)
+        
+        return count</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Dynamic Programming):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        dp = [[False] * n for _ in range(n)]
+        count = 0
+        
+        # All single characters are palindromes
+        for i in range(n):
+            dp[i][i] = True
+            count += 1
+        
+        # Check for palindromes of length 2 and more
+        for length in range(2, n + 1):
+            for start in range(n - length + 1):
+                end = start + length - 1
+                
+                if length == 2:
+                    if s[start] == s[end]:
+                        dp[start][end] = True
+                        count += 1
+                else:
+                    if s[start] == s[end] and dp[start + 1][end - 1]:
+                        dp[start][end] = True
+                        count += 1
+        
+        return count</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses center expansion with O(n²) time and O(1) space</li>
+                    <li>Second solution uses DP with O(n²) time and O(n²) space</li>
+                    <li>Center expansion is more space efficient for this problem</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private String s;
+    private int n;
+    
+    private int countPalindromes(int left, int right) {
+        int count = 0;
+        while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+    
+    public int countSubstrings(String s) {
+        this.s = s;
+        this.n = s.length();
+        int count = 0;
+        
+        // Count palindromes for each possible center
+        for (int i = 0; i < n; i++) {
+            // Odd length palindromes
+            count += countPalindromes(i, i);
+            // Even length palindromes
+            count += countPalindromes(i, i + 1);
+        }
+        
+        return count;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int countPalindromes(const string& s, int left, int right) {
+        int count = 0;
+        while (left >= 0 && right < s.length() && s[left] == s[right]) {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+    
+public:
+    int countSubstrings(string s) {
+        int count = 0;
+        
+        // Count palindromes for each possible center
+        for (int i = 0; i < s.length(); i++) {
+            // Odd length palindromes
+            count += countPalindromes(s, i, i);
+            // Even length palindromes
+            count += countPalindromes(s, i, i + 1);
+        }
+        
+        return count;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {number}
+ */
+var countSubstrings = function(s) {
+    const n = s.length;
+    let count = 0;
+    
+    // Helper function to count palindromes with center at left,right
+    const countPalindromes = (left, right) => {
+        let count = 0;
+        while (left >= 0 && right < n && s[left] === s[right]) {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    };
+    
+    // Count palindromes for each possible center
+    for (let i = 0; i < n; i++) {
+        // Odd length palindromes
+        count += countPalindromes(i, i);
+        // Even length palindromes
+        count += countPalindromes(i, i + 1);
+    }
+    
+    return count;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private string s;
+    private int n;
+    
+    private int CountPalindromes(int left, int right) {
+        int count = 0;
+        while (left >= 0 && right < n && s[left] == s[right]) {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+    
+    public int CountSubstrings(string s) {
+        this.s = s;
+        this.n = s.Length;
+        int count = 0;
+        
+        // Count palindromes for each possible center
+        for (int i = 0; i < n; i++) {
+            // Odd length palindromes
+            count += CountPalindromes(i, i);
+            // Even length palindromes
+            count += CountPalindromes(i, i + 1);
+        }
+        
+        return count;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using LINQ):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public int CountSubstrings(string s) {
+        return Enumerable.Range(0, s.Length)
+            .SelectMany(i => new[] { (i, i), (i, i + 1) })
+            .Sum(t => CountPalindromes(s, t.Item1, t.Item2));
+    }
+    
+    private int CountPalindromes(string s, int left, int right) {
+        int count = 0;
+        while (left >= 0 && right < s.Length && s[left] == s[right]) {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses traditional imperative approach</li>
+                        <li>Second solution uses functional approach with LINQ</li>
+                        <li>Both solutions have same time complexity of O(n²)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "647. Palindromic Substrings",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the number of palindromic substrings in a given string. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/palindromic-substrings/"
+      }
+    }
+    </script>
+</body>
+</html>

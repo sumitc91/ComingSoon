@@ -1,0 +1,337 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Binary Tree - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for Print Binary Tree problem.  Find optimized Python, Java, C++, JavaScript, and C# code with explanations and complexity analysis.">
+    <meta name="keywords" content="leetcode, print binary tree, binary tree, algorithm, data structure, python, java, c++, javascript, c#, solution, code, example, tutorial">
+    <meta property="og:title" content="Print Binary Tree - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/print-binary-tree/">
+    <meta property="og:description" content="LeetCodee solution for Print Binary Tree problem.  Find optimized Python, Java, C++, JavaScript, and C# code with explanations and complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/print-binary-tree/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Print Binary Tree - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "LeetCodee solution for Print Binary Tree problem.  Find optimized Python, Java, C++, JavaScript, and C# code with explanations and complexity analysis.",
+      "articleBody": "Given the root of a binary tree, construct a 0-indexed m x n string matrix res that represents a formatted layout of the tree. The formatted layout matrix should be constructed using the following rules: The height of the tree is height and the number of rows m should be equal to height + 1. The number of columns n should be equal to 2<sup>height+1</sup> - 1. Place the root node in the middle of the top row (more formally, at location res[0][(n-1)/2]). For each node that has been placed in the matrix at position res[r][c], place its left child at res[r+1][c-2<sup>height-r-1</sup>] and its right child at res[r+1][c+2<sup>height-r-1</sup>]. Continue this process until all the nodes in the tree have been placed. Any empty cells should contain the empty string \"\". Return the constructed matrix res.",
+      "keywords": "leetcode, print binary tree, binary tree, algorithm, data structure, python, java, c++, javascript, c#, solution, code, example, tutorial"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">655. Print Binary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">root</code> of a binary tree, construct a 0-indexed m x n string matrix <code class="bg-gray-100 px-1 rounded">res</code> that represents a formatted layout of the tree. The formatted layout matrix should be constructed using the following rules:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                    <li>The height of the tree is <code class="bg-gray-100 px-1 rounded">height</code> and the number of rows <code class="bg-gray-100 px-1 rounded">m</code> should be equal to <code class="bg-gray-100 px-1 rounded">height + 1</code>.</li>
+                    <li>The number of columns <code class="bg-gray-100 px-1 rounded">n</code> should be equal to <code class="bg-gray-100 px-1 rounded">2<sup>height+1</sup> - 1</code>.</li>
+                    <li>Place the root node in the middle of the top row (more formally, at location <code class="bg-gray-100 px-1 rounded">res[0][(n-1)/2]</code>).</li>
+                    <li>For each node that has been placed in the matrix at position <code class="bg-gray-100 px-1 rounded">res[r][c]</code>, place its left child at <code class="bg-gray-100 px-1 rounded">res[r+1][c-2<sup>height-r-1</sup>]</code> and its right child at <code class="bg-gray-100 px-1 rounded">res[r+1][c+2<sup>height-r-1</sup>]</code>.</li>
+                    <li>Continue this process until all the nodes in the tree have been placed.</li>
+                    <li>Any empty cells should contain the empty string <code class="bg-gray-100 px-1 rounded">""</code>.</li>
+                </ul>
+                <p class="text-gray-700">Return the constructed matrix <code class="bg-gray-100 px-1 rounded">res</code>.</p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,2]
+Output: 
+[["","1",""],
+ ["2","",""]]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,2,3,null,4]
+Output: 
+[["","","","1","","",""],
+ ["","2","","","3","",""],
+ ["","","4","","","",""]]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 2<sup>10</sup>]</li>
+                    <li>-99 ≤ Node.val ≤ 99</li>
+                    <li>The depth of the tree will be in the range [1, 10]</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def printTree(self, root: Optional[TreeNode]) -> List[List[str]]:
+        def get_height(node: TreeNode) -> int:
+            if not node:
+                return 0
+            return 1 + max(get_height(node.left), get_height(node.right))
+        
+        def fill_matrix(node: TreeNode, row: int, col: int, height: int):
+            if not node:
+                return
+            
+            # Convert node value to string and place in matrix
+            res[row][col] = str(node.val)
+            
+            # Calculate offset for next level
+            offset = 2 ** (height - row - 1)
+            
+            # Recursively fill left and right subtrees
+            fill_matrix(node.left, row + 1, col - offset, height)
+            fill_matrix(node.right, row + 1, col + offset, height)
+        
+        # Get height of tree
+        height = get_height(root) - 1
+        
+        # Calculate dimensions
+        m = height + 1
+        n = 2 ** (height + 1) - 1
+        
+        # Initialize matrix with empty strings
+        res = [[""] * n for _ in range(m)]
+        
+        # Fill matrix starting from root at middle of first row
+        fill_matrix(root, 0, (n - 1) // 2, height)
+        
+        return res</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Time complexity: O(height × 2<sup>height</sup>)</li>
+                    <li>Space complexity: O(height × 2<sup>height</sup>)</li>
+                    <li>Uses recursive DFS to fill the matrix</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private List<List<String>> res;
+    
+    public List<List<String>> printTree(TreeNode root) {
+        int height = getHeight(root) - 1;
+        int m = height + 1;
+        int n = (1 << (height + 1)) - 1;
+        
+        res = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            List<String> row = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                row.add("");
+            }
+            res.add(row);
+        }
+        
+        fillMatrix(root, 0, (n - 1) / 2, height);
+        return res;
+    }
+    
+    private int getHeight(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + Math.max(getHeight(node.left), getHeight(node.right));
+    }
+    
+    private void fillMatrix(TreeNode node, int row, int col, int height) {
+        if (node == null) {
+            return;
+        }
+        
+        res.get(row).set(col, String.valueOf(node.val));
+        
+        int offset = 1 << (height - row - 1);
+        fillMatrix(node.left, row + 1, col - offset, height);
+        fillMatrix(node.right, row + 1, col + offset, height);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<vector<string>> printTree(TreeNode* root) {
+        int height = getHeight(root) - 1;
+        int m = height + 1;
+        int n = (1 << (height + 1)) - 1;
+        
+        vector<vector<string>> res(m, vector<string>(n, ""));
+        fillMatrix(root, 0, (n - 1) / 2, height, res);
+        
+        return res;
+    }
+    
+private:
+    int getHeight(TreeNode* node) {
+        if (!node) {
+            return 0;
+        }
+        return 1 + max(getHeight(node->left), getHeight(node->right));
+    }
+    
+    void fillMatrix(TreeNode* node, int row, int col, int height, vector<vector<string>>& res) {
+        if (!node) {
+            return;
+        }
+        
+        res[row][col] = to_string(node->val);
+        
+        int offset = 1 << (height - row - 1);
+        fillMatrix(node->left, row + 1, col - offset, height, res);
+        fillMatrix(node->right, row + 1, col + offset, height, res);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @return {string[][]}
+ */
+var printTree = function(root) {
+    const getHeight = (node) => {
+        if (!node) {
+            return 0;
+        }
+        return 1 + Math.max(getHeight(node.left), getHeight(node.right));
+    };
+    
+    const fillMatrix = (node, row, col, height, res) => {
+        if (!node) {
+            return;
+        }
+        
+        res[row][col] = node.val.toString();
+        
+        const offset = Math.pow(2, height - row - 1);
+        fillMatrix(node.left, row + 1, col - offset, height, res);
+        fillMatrix(node.right, row + 1, col + offset, height, res);
+    };
+    
+    const height = getHeight(root) - 1;
+    const m = height + 1;
+    const n = Math.pow(2, height + 1) - 1;
+    
+    const res = Array(m).fill().map(() => Array(n).fill(""));
+    fillMatrix(root, 0, Math.floor((n - 1) / 2), height, res);
+    
+    return res;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private IList<IList<string>> res;
+    
+    public IList<IList<string>> PrintTree(TreeNode root) {
+        int height = GetHeight(root) - 1;
+        int m = height + 1;
+        int n = (1 << (height + 1)) - 1;
+        
+        res = new List<IList<string>>();
+        for (int i = 0; i < m; i++) {
+            res.Add(Enumerable.Repeat("", n).ToList());
+        }
+        
+        FillMatrix(root, 0, (n - 1) / 2, height);
+        return res;
+    }
+    
+    private int GetHeight(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + Math.Max(GetHeight(node.left), GetHeight(node.right));
+    }
+    
+    private void FillMatrix(TreeNode node, int row, int col, int height) {
+        if (node == null) {
+            return;
+        }
+        
+        res[row][col] = node.val.ToString();
+        
+        int offset = 1 << (height - row - 1);
+        FillMatrix(node.left, row + 1, col - offset, height);
+        FillMatrix(node.right, row + 1, col + offset, height);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses bit shifting for efficient power of 2 calculations</li>
+                    <li>LINQ is used for initializing the matrix with empty strings</li>
+                    <li>Matrix dimensions are calculated based on tree height</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

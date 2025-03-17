@@ -1,0 +1,305 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Completeness of a Binary Tree - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to efficiently determine if a binary tree is complete with our detailed guide and solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, complete binary tree, algorithm, data structure, binary tree, python, java, c++, javascript, c#, solution, tutorial, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/check-completeness-of-a-binary-tree/">
+    <meta property="og:title" content="Check Completeness of a Binary Tree - LeetCodee Solution">
+    <meta property="og:description" content="Learn how to efficiently determine if a binary tree is complete with our detailed guide and solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/check-completeness-of-a-binary-tree/">
+    <meta property="og:site_name" content="LeetCodee">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Check Completeness of a Binary Tree",
+        "author": {
+            "@type": "Organization",
+            "name": "LeetCodee"
+        },
+        "datePublished": "2023-10-27",
+        "description": "Learn how to efficiently determine if a binary tree is complete with our detailed guide and solutions in Python, Java, C++, JavaScript, and C#.",
+        "articleBody": "Given the root of a binary tree, determine if it is a complete binary tree.\n\nIn a complete binary tree, every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/check-completeness-of-a-binary-tree/"
+        }
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">958. Check Completeness of a Binary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the root of a binary tree, determine if it is a complete binary tree.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    In a complete binary tree, every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,2,3,4,5,6]
+Output: true
+Explanation: Every level before the last is full (ie. levels with node-values {1} and {2, 3}), and all nodes in the last level ({4, 5, 6}) are as far left as possible.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,2,3,4,5,null,7]
+Output: false
+Explanation: The node with value 7 isn't as far left as possible.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">The number of nodes in the tree is in the range [1, 100].</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= Node.val <= 1000</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def isCompleteTree(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return True
+            
+        queue = deque([root])
+        seen_null = False
+        
+        while queue:
+            node = queue.popleft()
+            
+            if node is None:
+                seen_null = True
+            else:
+                if seen_null:
+                    return False
+                queue.append(node.left)
+                queue.append(node.right)
+        
+        return True</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(w)</h4>
+                    <p class="text-gray-700">Where w is the maximum width of the tree. In the worst case, the queue can contain all nodes at the last level.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean isCompleteTree(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        boolean seenNull = false;
+        
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            
+            if (node == null) {
+                seenNull = true;
+            } else {
+                if (seenNull) {
+                    return false;
+                }
+                queue.offer(node.left);
+                queue.offer(node.right);
+            }
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(w)</h4>
+                    <p class="text-gray-700">Where w is the maximum width of the tree. In the worst case, the queue can contain all nodes at the last level.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool isCompleteTree(TreeNode* root) {
+        if (!root) {
+            return true;
+        }
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        bool seenNull = false;
+        
+        while (!q.empty()) {
+            TreeNode* node = q.front();
+            q.pop();
+            
+            if (!node) {
+                seenNull = true;
+            } else {
+                if (seenNull) {
+                    return false;
+                }
+                q.push(node->left);
+                q.push(node->right);
+            }
+        }
+        
+        return true;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(w)</h4>
+                    <p class="text-gray-700">Where w is the maximum width of the tree. In the worst case, the queue can contain all nodes at the last level.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isCompleteTree = function(root) {
+    if (!root) {
+        return true;
+    }
+    
+    const queue = [root];
+    let seenNull = false;
+    
+    while (queue.length > 0) {
+        const node = queue.shift();
+        
+        if (!node) {
+            seenNull = true;
+        } else {
+            if (seenNull) {
+                return false;
+            }
+            queue.push(node.left);
+            queue.push(node.right);
+        }
+    }
+    
+    return true;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(w)</h4>
+                    <p class="text-gray-700">Where w is the maximum width of the tree. In the worst case, the queue can contain all nodes at the last level.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool IsCompleteTree(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        queue.Enqueue(root);
+        bool seenNull = false;
+        
+        while (queue.Count > 0) {
+            TreeNode node = queue.Dequeue();
+            
+            if (node == null) {
+                seenNull = true;
+            } else {
+                if (seenNull) {
+                    return false;
+                }
+                queue.Enqueue(node.left);
+                queue.Enqueue(node.right);
+            }
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We need to visit each node once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(w)</h4>
+                    <p class="text-gray-700">Where w is the maximum width of the tree. In the worst case, the queue can contain all nodes at the last level.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

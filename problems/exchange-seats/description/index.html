@@ -1,0 +1,341 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Seats - LeetCodee Solution</title>
+    <meta name="description" content="Find efficient solutions and explanations for the LeetCode Exchange Seats problem.  Includes MySQL, PostgreSQL, Oracle, MS SQL Server, and C# solutions.">
+    <meta name="keywords" content="LeetCode, Exchange Seats, SQL, MySQL, PostgreSQL, Oracle, MS SQL Server, C#, database, solution, tutorial, coding">
+    <link rel="canonical" href="https://leetcodee.com/problems/exchange-seats/">
+    <meta property="og:title" content="Exchange Seats - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/exchange-seats/">
+    <meta property="og:description" content="Find efficient solutions and explanations for the LeetCode Exchange Seats problem.  Includes MySQL, PostgreSQL, Oracle, MS SQL Server, and C# solutions.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Exchange Seats - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-01-26",
+      "dateModified": "2024-01-26",
+      "description": "Find efficient solutions and explanations for the LeetCode Exchange Seats problem. Includes MySQL, PostgreSQL, Oracle, MS SQL Server, and C# solutions.",
+      "keywords": "LeetCode, Exchange Seats, SQL, MySQL, PostgreSQL, Oracle, MS SQL Server, C#, database, solution, tutorial, coding",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/exchange-seats/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">626. Exchange Seats</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#mysql" class="ml-2 text-blue-600 hover:text-blue-800">MySQL</a>
+                <a href="#postgresql" class="ml-2 text-blue-600 hover:text-blue-800">PostgreSQL</a>
+                <a href="#oracle" class="ml-2 text-blue-600 hover:text-blue-800">Oracle</a>
+                <a href="#mssql" class="ml-2 text-blue-600 hover:text-blue-800">MS SQL Server</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Table: <code class="bg-gray-100 px-1 rounded">Seat</code>
+                </p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| student     | varchar |
++-------------+---------+
+id is the primary key (unique value) column for this table.
+Each row of this table indicates the name and the ID of a student.
+id is a continuous increment.</pre>
+                <p class="text-gray-700 mb-4">
+                    Write a solution to swap the seat id of every two adjacent students. If the number of students is odd, the id of the last student is not swapped.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the result table ordered by id in ascending order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example:</h2>
+                <p class="text-gray-700 mb-2">Input:</p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
+Seat table:
++----+---------+
+| id | student |
++----+---------+
+| 1  | Abbot   |
+| 2  | Doris   |
+| 3  | Emerson |
+| 4  | Green   |
+| 5  | Jeames  |
++----+---------+</pre>
+                <p class="text-gray-700 mb-2">Output:</p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
++----+---------+
+| id | student |
++----+---------+
+| 1  | Doris   |
+| 2  | Abbot   |
+| 3  | Green   |
+| 4  | Emerson |
+| 5  | Jeames  |
++----+---------+</pre>
+            </div>
+
+            <!-- MySQL Solution -->
+            <div id="mysql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MySQL Solution</h3>
+                <pre class="language-sql"><code>SELECT 
+    CASE
+        WHEN id % 2 != 0 AND id != (SELECT COUNT(*) FROM Seat)
+            THEN id + 1
+        WHEN id % 2 != 0 AND id = (SELECT COUNT(*) FROM Seat)
+            THEN id
+        ELSE id - 1
+    END AS id,
+    student
+FROM Seat
+ORDER BY id;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using COALESCE:</h4>
+                    <pre class="language-sql"><code>SELECT 
+    s1.id,
+    COALESCE(
+        CASE
+            WHEN s1.id % 2 != 0 THEN s2.student
+            ELSE s3.student
+        END,
+        s1.student
+    ) as student
+FROM Seat s1
+LEFT JOIN Seat s2 ON s1.id + 1 = s2.id
+LEFT JOIN Seat s3 ON s1.id - 1 = s3.id
+ORDER BY s1.id;</code></pre>
+                </div>
+            </div>
+
+            <!-- PostgreSQL Solution -->
+            <div id="postgresql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">PostgreSQL Solution</h3>
+                <pre class="language-sql"><code>WITH total_count AS (
+    SELECT COUNT(*) as cnt FROM Seat
+)
+SELECT 
+    CASE
+        WHEN id % 2 != 0 AND id != (SELECT cnt FROM total_count)
+            THEN id + 1
+        WHEN id % 2 != 0 AND id = (SELECT cnt FROM total_count)
+            THEN id
+        ELSE id - 1
+    END AS id,
+    student
+FROM Seat
+ORDER BY id;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using LEAD/LAG:</h4>
+                    <pre class="language-sql"><code>WITH seated AS (
+    SELECT 
+        id,
+        student,
+        LEAD(student) OVER (ORDER BY id) as next_student,
+        LAG(student) OVER (ORDER BY id) as prev_student
+    FROM Seat
+)
+SELECT 
+    id,
+    CASE
+        WHEN id % 2 = 1 AND next_student IS NOT NULL THEN next_student
+        WHEN id % 2 = 0 THEN prev_student
+        ELSE student
+    END as student
+FROM seated
+ORDER BY id;</code></pre>
+                </div>
+            </div>
+
+            <!-- Oracle Solution -->
+            <div id="oracle" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Oracle Solution</h3>
+                <pre class="language-sql"><code>SELECT 
+    CASE
+        WHEN MOD(id, 2) != 0 AND id != (SELECT COUNT(*) FROM Seat)
+            THEN id + 1
+        WHEN MOD(id, 2) != 0 AND id = (SELECT COUNT(*) FROM Seat)
+            THEN id
+        ELSE id - 1
+    END AS id,
+    student
+FROM Seat
+ORDER BY id;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using DECODE:</h4>
+                    <pre class="language-sql"><code>SELECT 
+    DECODE(
+        MOD(id, 2),
+        1,
+        DECODE(
+            LEAD(id) OVER (ORDER BY id),
+            NULL, id,
+            id + 1
+        ),
+        id - 1
+    ) AS id,
+    DECODE(
+        MOD(id, 2),
+        1,
+        DECODE(
+            LEAD(student) OVER (ORDER BY id),
+            NULL, student,
+            LEAD(student) OVER (ORDER BY id)
+        ),
+        LAG(student) OVER (ORDER BY id)
+    ) AS student
+FROM Seat
+ORDER BY id;</code></pre>
+                </div>
+            </div>
+
+            <!-- MS SQL Server Solution -->
+            <div id="mssql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MS SQL Server Solution</h3>
+                <pre class="language-sql"><code>SELECT 
+    CASE
+        WHEN id % 2 != 0 AND id != (SELECT COUNT(*) FROM Seat)
+            THEN id + 1
+        WHEN id % 2 != 0 AND id = (SELECT COUNT(*) FROM Seat)
+            THEN id
+        ELSE id - 1
+    END AS id,
+    student
+FROM Seat
+ORDER BY id;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using ROW_NUMBER:</h4>
+                    <pre class="language-sql"><code>WITH CTE AS (
+    SELECT 
+        id,
+        student,
+        ROW_NUMBER() OVER (ORDER BY id) as rn,
+        COUNT(*) OVER () as total
+    FROM Seat
+)
+SELECT 
+    id,
+    CASE 
+        WHEN rn % 2 = 1 AND rn < total THEN LEAD(student) OVER (ORDER BY id)
+        WHEN rn % 2 = 0 THEN LAG(student) OVER (ORDER BY id)
+        ELSE student
+    END as student
+FROM CTE
+ORDER BY id;</code></pre>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<IDictionary<string, object>> Execute(string connectionString) {
+        var result = new List<IDictionary<string, object>>();
+        
+        string sql = @"
+            SELECT 
+                CASE
+                    WHEN id % 2 != 0 AND id != (SELECT COUNT(*) FROM Seat)
+                        THEN id + 1
+                    WHEN id % 2 != 0 AND id = (SELECT COUNT(*) FROM Seat)
+                        THEN id
+                    ELSE id - 1
+                END AS id,
+                student
+            FROM Seat
+            ORDER BY id;";
+            
+        // Using Dapper
+        using (var connection = new SqlConnection(connectionString)) {
+            result = connection.Query(sql)
+                .Select(row => new Dictionary<string, object> {
+                    ["id"] = row.id,
+                    ["student"] = row.student
+                })
+                .ToList();
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Entity Framework:</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public IQueryable<SeatResult> Execute(SeatContext context) {
+        var totalSeats = context.Seats.Count();
+        
+        return context.Seats
+            .Select(s => new SeatResult {
+                Id = (s.Id % 2 != 0 && s.Id != totalSeats) 
+                    ? s.Id + 1 
+                    : (s.Id % 2 != 0 && s.Id == totalSeats)
+                        ? s.Id
+                        : s.Id - 1,
+                Student = s.Student
+            })
+            .OrderBy(s => s.Id);
+    }
+    
+    public class SeatResult {
+        public int Id { get; set; }
+        public string Student { get; set; }
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Both raw SQL and LINQ approaches are shown</li>
+                        <li>Dapper provides lightweight data access</li>
+                        <li>Entity Framework offers full ORM capabilities</li>
+                        <li>Both solutions maintain the original order requirement</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

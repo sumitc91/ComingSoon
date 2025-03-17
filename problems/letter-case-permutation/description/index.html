@@ -1,0 +1,251 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Case Permutation - LeetCodee Solution</title>
+    <meta name="description" content="Find all possible letter case permutations of a given string.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, letter case permutation, algorithm, solution, python, java, cpp, javascript, c#, coding, interview">
+    <meta property="og:title" content="Letter Case Permutation - LeetCodee Solution">
+    <meta property="og:description" content="Find all possible letter case permutations of a given string.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/letter-case-permutation/">
+    <meta name="canonical" content="https://leetcodee.com/problems/letter-case-permutation/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">784. Letter Case Permutation</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
+                </p>
+                <p class="text-gray-700">
+                    Return a list of all possible strings we could create. Return the output in any order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "a1b2"
+Output: ["a1b2","a1B2","A1b2","A1B2"]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "3z4"
+Output: ["3z4","3Z4"]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 12</li>
+                    <li>s consists of lowercase English letters, uppercase English letters and digits.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        result = ['']
+        
+        for char in s:
+            if char.isalpha():
+                result = [i + j for i in result for j in [char.lower(), char.upper()]]
+            else:
+                result = [i + char for i in result]
+                
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses iterative approach to build permutations</li>
+                    <li>For each letter, creates two versions (upper and lower case)</li>
+                    <li>Time complexity: O(2^n) where n is the number of letters</li>
+                    <li>Space complexity: O(2^n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<String> letterCasePermutation(String s) {
+        List<String> result = new ArrayList<>();
+        backtrack(s.toCharArray(), 0, result);
+        return result;
+    }
+    
+    private void backtrack(char[] chars, int index, List<String> result) {
+        if (index == chars.length) {
+            result.add(new String(chars));
+            return;
+        }
+        
+        if (Character.isLetter(chars[index])) {
+            chars[index] = Character.toLowerCase(chars[index]);
+            backtrack(chars, index + 1, result);
+            chars[index] = Character.toUpperCase(chars[index]);
+            backtrack(chars, index + 1, result);
+        } else {
+            backtrack(chars, index + 1, result);
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<string> letterCasePermutation(string s) {
+        vector<string> result;
+        backtrack(s, 0, "", result);
+        return result;
+    }
+    
+private:
+    void backtrack(const string& s, int index, string current, vector<string>& result) {
+        if (index == s.length()) {
+            result.push_back(current);
+            return;
+        }
+        
+        if (isalpha(s[index])) {
+            backtrack(s, index + 1, current + (char)tolower(s[index]), result);
+            backtrack(s, index + 1, current + (char)toupper(s[index]), result);
+        } else {
+            backtrack(s, index + 1, current + s[index], result);
+        }
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {string[]}
+ */
+var letterCasePermutation = function(s) {
+    const result = [''];
+    
+    for (const char of s) {
+        const temp = [];
+        if (char.match(/[a-zA-Z]/)) {
+            for (const str of result) {
+                temp.push(str + char.toLowerCase());
+                temp.push(str + char.toUpperCase());
+            }
+        } else {
+            for (const str of result) {
+                temp.push(str + char);
+            }
+        }
+        result.length = 0;
+        result.push(...temp);
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<string> LetterCasePermutation(string s) {
+        var result = new List<string>();
+        Backtrack(s.ToCharArray(), 0, result);
+        return result;
+    }
+    
+    private void Backtrack(char[] chars, int index, List<string> result) {
+        if (index == chars.Length) {
+            result.Add(new string(chars));
+            return;
+        }
+        
+        if (char.IsLetter(chars[index])) {
+            chars[index] = char.ToLower(chars[index]);
+            Backtrack(chars, index + 1, result);
+            chars[index] = char.ToUpper(chars[index]);
+            Backtrack(chars, index + 1, result);
+        } else {
+            Backtrack(chars, index + 1, result);
+        }
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses backtracking to generate all permutations</li>
+                    <li>For each letter, tries both lowercase and uppercase versions</li>
+                    <li>Time complexity: O(2^n) where n is the number of letters</li>
+                    <li>Space complexity: O(2^n) to store all permutations</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "784. Letter Case Permutation",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "description": "Find all possible letter case permutations of a given string. Solutions in Python, Java, C++, Javascript and C# are provided.",
+          "articleBody": "Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string. Return a list of all possible strings we could create. Return the output in any order.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/letter-case-permutation/"
+          }
+        }
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

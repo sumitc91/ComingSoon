@@ -1,0 +1,298 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Tree Pruning - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions and explanations for LeetCode problem 814: Binary Tree Pruning.  Learn how to prune a binary tree, removing subtrees without the value 1. Includes Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, binary tree pruning, algorithm, data structure, python, java, c++, javascript, c#, solution, coding, programming, tutorial, example">
+    <meta name="canonical" content="https://leetcodee.com/problems/binary-tree-pruning/">
+    <meta property="og:title" content="Binary Tree Pruning - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/binary-tree-pruning/">
+    <meta property="og:description" content="Efficient solutions and explanations for LeetCode problem 814: Binary Tree Pruning.  Learn how to prune a binary tree, removing subtrees without the value 1. Includes Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:image" content="https://leetcodee.com/images/leetcode_logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Binary Tree Pruning - LeetCodee Solution",
+        "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+        },
+        "datePublished": "2023-10-27",
+        "dateModified": "2023-10-27",
+        "description": "Efficient solutions and explanations for LeetCode problem 814: Binary Tree Pruning.  Learn how to prune a binary tree, removing subtrees without the value 1. Includes Python, Java, C++, JavaScript, and C# code examples.",
+        "articleBody": "Given the root of a binary tree, return the same tree where every subtree (of the given tree) not containing a 1 has been removed.\nA subtree of a node node is node plus every node that is a descendant of node.",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/binary-tree-pruning/"
+        },
+        "image": "https://leetcodee.com/images/leetcode_logo.png"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">814. Binary Tree Pruning</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the root of a binary tree, return the same tree where every subtree (of the given tree) not containing a 1 has been removed.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A subtree of a node node is node plus every node that is a descendant of node.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,null,0,0,1]
+Output: [1,null,0,null,1]
+Explanation: 
+Only the red nodes satisfy the property "every subtree not containing a 1".
+The diagram on the right represents the answer.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,0,1,0,0,0,1]
+Output: [1,null,1,null,1]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,1,0,1,1,0,1,0]
+Output: [1,1,0,1,1,null,1]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 200]</li>
+                    <li>Node.val is either 0 or 1</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def pruneTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+            
+        # Recursively prune left and right subtrees
+        root.left = self.pruneTree(root.left)
+        root.right = self.pruneTree(root.right)
+        
+        # If current node is 0 and has no children, remove it
+        if root.val == 0 and not root.left and not root.right:
+            return None
+            
+        return root</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses post-order traversal to process children before parent</li>
+                    <li>Removes nodes with value 0 that have no children containing 1</li>
+                    <li>Time complexity: O(n) where n is number of nodes</li>
+                    <li>Space complexity: O(h) where h is height of tree</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode pruneTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        
+        root.left = pruneTree(root.left);
+        root.right = pruneTree(root.right);
+        
+        if (root.val == 0 && root.left == null && root.right == null) {
+            return null;
+        }
+        
+        return root;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* pruneTree(TreeNode* root) {
+        if (!root) {
+            return nullptr;
+        }
+        
+        root->left = pruneTree(root->left);
+        root->right = pruneTree(root->right);
+        
+        if (root->val == 0 && !root->left && !root->right) {
+            return nullptr;
+        }
+        
+        return root;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var pruneTree = function(root) {
+    if (!root) {
+        return null;
+    }
+    
+    root.left = pruneTree(root.left);
+    root.right = pruneTree(root.right);
+    
+    if (root.val === 0 && !root.left && !root.right) {
+        return null;
+    }
+    
+    return root;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode PruneTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        
+        root.left = PruneTree(root.left);
+        root.right = PruneTree(root.right);
+        
+        if (root.val == 0 && root.left == null && root.right == null) {
+            return null;
+        }
+        
+        return root;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive post-order traversal</li>
+                    <li>Removes leaf nodes with value 0</li>
+                    <li>Time complexity: O(n) where n is number of nodes</li>
+                    <li>Space complexity: O(h) where h is height of tree</li>
+                </ul>
+            </div>
+             <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

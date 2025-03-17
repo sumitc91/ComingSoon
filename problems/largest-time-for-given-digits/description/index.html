@@ -1,0 +1,337 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Largest Time for Given Digits - LeetCodee Solution</title>
+    <meta name="description" content="Find the largest 24-hour time that can be made from a given array of 4 digits.  Includes Python, Java, C++, JavaScript, and C# solutions with time and space complexity analysis.">
+    <meta name="keywords" content="leetcode, largest time, algorithm, solution, python, java, cpp, javascript, c#, coding, programming, time complexity, space complexity">
+    <meta property="og:title" content="Largest Time for Given Digits - LeetCodee Solution">
+    <meta property="og:description" content="Find the largest 24-hour time that can be made from a given array of 4 digits. Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:url" content="https://leetcodee.com/problems/largest-time-for-given-digits/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/largest-time-for-given-digits/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">949. Largest Time for Given Digits</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an array of 4 digits, return the largest 24 hour time that can be made.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The smallest 24 hour time is 00:00, and the largest is 23:59. Starting from 00:00, a time is larger if more time has elapsed since midnight.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the answer as a string of length 5 in the format "HH:MM". If no valid time can be made, return an empty string.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [1,2,3,4]
+Output: "23:41"</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [5,5,5,5]
+Output: ""</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [0,0,0,0]
+Output: "00:00"</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 4:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [0,4,0,0]
+Output: "04:00"</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">arr.length == 4</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= arr[i] <= 9</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def largestTimeFromDigits(self, arr: List[int]) -> str:
+        # Try all possible permutations
+        max_time = -1
+        for h1, h2, m1, m2 in itertools.permutations(arr):
+            hours = 10 * h1 + h2
+            minutes = 10 * m1 + m2
+            
+            # Check if time is valid
+            if 0 <= hours < 24 and 0 <= minutes < 60:
+                time = hours * 60 + minutes
+                max_time = max(max_time, time)
+        
+        if max_time == -1:
+            return ""
+            
+        # Convert back to string format
+        hours = max_time // 60
+        minutes = max_time % 60
+        return f"{hours:02d}:{minutes:02d}"</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we only have 4 digits, there are only 24 possible permutations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String largestTimeFromDigits(int[] arr) {
+        // Try all possible permutations
+        int maxTime = -1;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (j == i) continue;
+                for (int k = 0; k < 4; k++) {
+                    if (k == i || k == j) continue;
+                    int l = 6 - i - j - k;  // The remaining index
+                    
+                    int hours = 10 * arr[i] + arr[j];
+                    int minutes = 10 * arr[k] + arr[l];
+                    
+                    // Check if time is valid
+                    if (hours < 24 && minutes < 60) {
+                        maxTime = Math.max(maxTime, hours * 60 + minutes);
+                    }
+                }
+            }
+        }
+        
+        if (maxTime == -1) {
+            return "";
+        }
+        
+        // Convert back to string format
+        int hours = maxTime / 60;
+        int minutes = maxTime % 60;
+        return String.format("%02d:%02d", hours, minutes);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we only have 4 digits, there are only 24 possible permutations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string largestTimeFromDigits(vector<int>& arr) {
+        // Try all possible permutations
+        int maxTime = -1;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (j == i) continue;
+                for (int k = 0; k < 4; k++) {
+                    if (k == i || k == j) continue;
+                    int l = 6 - i - j - k;  // The remaining index
+                    
+                    int hours = 10 * arr[i] + arr[j];
+                    int minutes = 10 * arr[k] + arr[l];
+                    
+                    // Check if time is valid
+                    if (hours < 24 && minutes < 60) {
+                        maxTime = max(maxTime, hours * 60 + minutes);
+                    }
+                }
+            }
+        }
+        
+        if (maxTime == -1) {
+            return "";
+        }
+        
+        // Convert back to string format
+        int hours = maxTime / 60;
+        int minutes = maxTime % 60;
+        char result[6];
+        sprintf(result, "%02d:%02d", hours, minutes);
+        return string(result);
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we only have 4 digits, there are only 24 possible permutations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} arr
+ * @return {string}
+ */
+var largestTimeFromDigits = function(arr) {
+    // Try all possible permutations
+    let maxTime = -1;
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (j === i) continue;
+            for (let k = 0; k < 4; k++) {
+                if (k === i || k === j) continue;
+                const l = 6 - i - j - k;  // The remaining index
+                
+                const hours = 10 * arr[i] + arr[j];
+                const minutes = 10 * arr[k] + arr[l];
+                
+                // Check if time is valid
+                if (hours < 24 && minutes < 60) {
+                    maxTime = Math.max(maxTime, hours * 60 + minutes);
+                }
+            }
+        }
+    }
+    
+    if (maxTime === -1) {
+        return "";
+    }
+    
+    // Convert back to string format
+    const hours = Math.floor(maxTime / 60);
+    const minutes = maxTime % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we only have 4 digits, there are only 24 possible permutations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string LargestTimeFromDigits(int[] arr) {
+        // Try all possible permutations
+        int maxTime = -1;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (j == i) continue;
+                for (int k = 0; k < 4; k++) {
+                    if (k == i || k == j) continue;
+                    int l = 6 - i - j - k;  // The remaining index
+                    
+                    int hours = 10 * arr[i] + arr[j];
+                    int minutes = 10 * arr[k] + arr[l];
+                    
+                    // Check if time is valid
+                    if (hours < 24 && minutes < 60) {
+                        maxTime = Math.Max(maxTime, hours * 60 + minutes);
+                    }
+                }
+            }
+        }
+        
+        if (maxTime == -1) {
+            return "";
+        }
+        
+        // Convert back to string format
+        int hours = maxTime / 60;
+        int minutes = maxTime % 60;
+        return $"{hours:D2}:{minutes:D2}";
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we only have 4 digits, there are only 24 possible permutations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "949. Largest Time for Given Digits",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the largest 24-hour time that can be made from a given array of 4 digits. Includes solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "Given an array of 4 digits, return the largest 24 hour time that can be made.  The smallest 24 hour time is 00:00, and the largest is 23:59. Starting from 00:00, a time is larger if more time has elapsed since midnight. Return the answer as a string of length 5 in the format \"HH:MM\". If no valid time can be made, return an empty string.",
+      "mainEntityOfPage": "https://leetcodee.com/problems/largest-time-for-given-digits/"
+    }
+    </script>
+</body>
+</html>

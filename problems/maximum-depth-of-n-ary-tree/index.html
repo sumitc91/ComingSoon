@@ -1,0 +1,423 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximum Depth of N-ary Tree - LeetCodee Solution</title>
+    <meta name="description" content="Find the maximum depth of an N-ary tree.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples and detailed explanations.">
+    <meta name="keywords" content="LeetCode, N-ary Tree, Maximum Depth, Tree Traversal, Depth-First Search, DFS, Algorithm, Python, Java, C++, JavaScript, C#, Solution, Coding, Programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/maximum-depth-of-n-ary-tree/">
+    <meta property="og:title" content="Maximum Depth of N-ary Tree - LeetCodee Solution">
+    <meta property="og:description" content="Find the maximum depth of an N-ary tree.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples and detailed explanations.">
+    <meta property="og:url" content="https://leetcodee.com/problems/maximum-depth-of-n-ary-tree/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "559. Maximum Depth of N-ary Tree",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-10-27",
+      "dateModified": "2024-10-27",
+      "description": "Find the maximum depth of an N-ary tree.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples and detailed explanations.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" // Replace with your logo URL
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/maximum-depth-of-n-ary-tree/"
+      },
+      "keywords": "LeetCode, N-ary Tree, Maximum Depth, Tree Traversal, Depth-First Search, DFS, Algorithm, Python, Java, C++, JavaScript, C#, Solution, Coding, Programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">559. Maximum Depth of N-ary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a n-ary tree, find its maximum depth.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    <strong>Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).</strong>
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,null,3,2,4,null,5,6]
+Output: 3</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: root = [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
+Output: 5</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The total number of nodes is in the range <code class="bg-gray-100 px-1 rounded">[0, 10⁴]</code></li>
+                    <li>The depth of the n-ary tree is less than or equal to <code class="bg-gray-100 px-1 rounded">1000</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution:
+    def maxDepth(self, root: 'Node') -> int:
+        if not root:
+            return 0
+        
+        # If no children, return 1 for the root itself
+        if not root.children:
+            return 1
+        
+        # Get maximum depth from all children
+        max_child_depth = 0
+        for child in root.children:
+            max_child_depth = max(max_child_depth, self.maxDepth(child))
+        
+        # Add 1 for the current node
+        return max_child_depth + 1</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the tree, for the recursion stack.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+    public int maxDepth(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        
+        // If no children, return 1 for the root itself
+        if (root.children == null || root.children.isEmpty()) {
+            return 1;
+        }
+        
+        // Get maximum depth from all children
+        int maxChildDepth = 0;
+        for (Node child : root.children) {
+            maxChildDepth = Math.max(maxChildDepth, maxDepth(child));
+        }
+        
+        // Add 1 for the current node
+        return maxChildDepth + 1;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the tree, for the recursion stack.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+    }
+
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+public:
+    int maxDepth(Node* root) {
+        if (!root) {
+            return 0;
+        }
+        
+        // If no children, return 1 for the root itself
+        if (root->children.empty()) {
+            return 1;
+        }
+        
+        // Get maximum depth from all children
+        int maxChildDepth = 0;
+        for (Node* child : root->children) {
+            maxChildDepth = max(maxChildDepth, maxDepth(child));
+        }
+        
+        // Add 1 for the current node
+        return maxChildDepth + 1;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the tree, for the recursion stack.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * // Definition for a Node.
+ * function Node(val,children) {
+ *    this.val = val;
+ *    this.children = children;
+ * };
+ */
+
+/**
+ * @param {Node|null} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    if (!root) {
+        return 0;
+    }
+    
+    // If no children, return 1 for the root itself
+    if (!root.children || root.children.length === 0) {
+        return 1;
+    }
+    
+    // Get maximum depth from all children
+    let maxChildDepth = 0;
+    for (const child of root.children) {
+        maxChildDepth = Math.max(maxChildDepth, maxDepth(child));
+    }
+    
+    // Add 1 for the current node
+    return maxChildDepth + 1;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the tree, for the recursion stack.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>/*
+// Definition for a Node.
+public class Node {
+    public int val;
+    public IList<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val,IList<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+}
+*/
+
+public class Solution {
+    public int MaxDepth(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        
+        // If no children, return 1 for the root itself
+        if (root.children == null || root.children.Count == 0) {
+            return 1;
+        }
+        
+        // Get maximum depth from all children
+        int maxChildDepth = 0;
+        foreach (Node child in root.children) {
+            maxChildDepth = Math.Max(maxChildDepth, MaxDepth(child));
+        }
+        
+        // Add 1 for the current node
+        return maxChildDepth + 1;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of nodes in the tree. We visit each node exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(h)</h4>
+                    <p class="text-gray-700">Where h is the height of the tree, for the recursion stack.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses recursive depth-first search (DFS):
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Tree traversal</li>
+                            <li>Recursion</li>
+                            <li>Depth tracking</li>
+                            <li>Child iteration</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Handle base cases</li>
+                            <li>Process children</li>
+                            <li>Track maximum</li>
+                            <li>Add current level</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Null checks</li>
+                        <li>Child iteration</li>
+                        <li>Maximum tracking</li>
+                        <li>Depth calculation</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Early termination</li>
+                        <li>Memory efficiency</li>
+                        <li>Stack management</li>
+                        <li>Base case handling</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Empty tree</li>
+                        <li>Single node</li>
+                        <li>Maximum children</li>
+                        <li>Maximum depth</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

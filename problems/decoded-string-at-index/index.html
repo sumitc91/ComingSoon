@@ -1,0 +1,317 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoded String at Index - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 880: Decoded String at Index.  Optimized for speed and memory efficiency.">
+    <meta name="keywords" content="leetcode, leetcode solution, decoded string at index, python, java, c++, javascript, c#, algorithm, coding, programming, solution, efficient, optimized">
+    <meta property="og:title" content="Decoded String at Index - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/decoded-string-at-index/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 880: Decoded String at Index.  Optimized for speed and memory efficiency.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/decoded-string-at-index/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Decoded String at Index - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-01-26",
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 880: Decoded String at Index. Optimized for speed and memory efficiency.",
+      "articleBody": "You are given an encoded string s. To decode the string to a tape, the encoded string is read one character at a time and the following steps are taken:\n\nIf the character read is a letter, that letter is written onto the tape.\nIf the character read is a digit d, the entire current tape is repeatedly written d-1 more times in total.\n\nGiven an integer k, return the kth letter (1-indexed) in the decoded string.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/decoded-string-at-index/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">880. Decoded String at Index</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an encoded string s. To decode the string to a tape, the encoded string is read one character at a time and the following steps are taken:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>If the character read is a letter, that letter is written onto the tape.</li>
+                    <li>If the character read is a digit d, the entire current tape is repeatedly written d-1 more times in total.</li>
+                </ul>
+                <p class="text-gray-700">
+                    Given an integer k, return the k<sup>th</sup> letter (1-indexed) in the decoded string.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "leet2code3", k = 10
+Output: "o"
+Explanation: The decoded string is "leetleetcodeleetleetcodeleetleetcode".
+The 10th letter in the string is "o".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "ha22", k = 5
+Output: "h"
+Explanation: The decoded string is "hahahaha".
+The 5th letter is "h".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "a2345678999999999999999", k = 1
+Output: "a"
+Explanation: The decoded string is "a" repeated 8301530446056247680 times.
+The 1st letter is "a".</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>2 ≤ s.length ≤ 100</li>
+                    <li>s consists of lowercase English letters and digits 2 through 9</li>
+                    <li>s starts with a letter</li>
+                    <li>1 ≤ k ≤ 10⁹</li>
+                    <li>The decoded string is guaranteed to have less than 2⁶³ letters</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def decodeAtIndex(self, s: str, k: int) -> str:
+        size = 0
+        
+        # Calculate size of decoded string
+        for char in s:
+            if char.isdigit():
+                size *= int(char)
+            else:
+                size += 1
+        
+        # Work backwards to find kth character
+        for char in reversed(s):
+            k %= size
+            if k == 0 and char.isalpha():
+                return char
+                
+            if char.isdigit():
+                size //= int(char)
+            else:
+                size -= 1</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses reverse traversal to avoid memory issues</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String decodeAtIndex(String s, int k) {
+        long size = 0;
+        
+        // Calculate size of decoded string
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) {
+                size *= c - '0';
+            } else {
+                size++;
+            }
+        }
+        
+        // Work backwards to find kth character
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char c = s.charAt(i);
+            k %= size;
+            if (k == 0 && Character.isLetter(c)) {
+                return String.valueOf(c);
+            }
+            
+            if (Character.isDigit(c)) {
+                size /= c - '0';
+            } else {
+                size--;
+            }
+        }
+        
+        return "";
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string decodeAtIndex(string s, int k) {
+        long long size = 0;
+        
+        // Calculate size of decoded string
+        for (char c : s) {
+            if (isdigit(c)) {
+                size *= c - '0';
+            } else {
+                size++;
+            }
+        }
+        
+        // Work backwards to find kth character
+        for (int i = s.length() - 1; i >= 0; i--) {
+            k %= size;
+            if (k == 0 && isalpha(s[i])) {
+                return string(1, s[i]);
+            }
+            
+            if (isdigit(s[i])) {
+                size /= s[i] - '0';
+            } else {
+                size--;
+            }
+        }
+        
+        return "";
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @param {number} k
+ * @return {string}
+ */
+var decodeAtIndex = function(s, k) {
+    let size = 0;
+    
+    // Calculate size of decoded string
+    for (let char of s) {
+        if (/\d/.test(char)) {
+            size *= Number(char);
+        } else {
+            size++;
+        }
+    }
+    
+    // Work backwards to find kth character
+    for (let i = s.length - 1; i >= 0; i--) {
+        k %= size;
+        if (k === 0 && /[a-z]/.test(s[i])) {
+            return s[i];
+        }
+        
+        if (/\d/.test(s[i])) {
+            size /= Number(s[i]);
+        } else {
+            size--;
+        }
+    }
+    
+    return "";
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string DecodeAtIndex(string s, int k) {
+        long size = 0;
+        
+        // Calculate size of decoded string
+        foreach (char c in s) {
+            if (char.IsDigit(c)) {
+                size *= c - '0';
+            } else {
+                size++;
+            }
+        }
+        
+        // Work backwards to find kth character
+        for (int i = s.Length - 1; i >= 0; i--) {
+            k = (int)(k % size);
+            if (k == 0 && char.IsLetter(s[i])) {
+                return s[i].ToString();
+            }
+            
+            if (char.IsDigit(s[i])) {
+                size /= s[i] - '0';
+            } else {
+                size--;
+            }
+        }
+        
+        return "";
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses modulo to handle large string sizes</li>
+                    <li>Avoids generating actual decoded string</li>
+                    <li>Handles integer overflow with long arithmetic</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</body>
+</html>

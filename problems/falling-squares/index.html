@@ -1,0 +1,304 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Squares - LeetCodee Solution</title>
+    <meta name="description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 699: Falling Squares.  Learn how to efficiently solve this challenging algorithm problem.">
+    <meta name="keywords" content="LeetCode, Falling Squares, algorithm, solution, Python, Java, C++, JavaScript, C#, coding, programming, data structures">
+    <meta name="canonical" content="https://leetcodee.com/problems/falling-squares/">
+    <meta property="og:title" content="Falling Squares - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/falling-squares/">
+    <meta property="og:description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 699: Falling Squares.  Learn how to efficiently solve this challenging algorithm problem.">
+    <meta property="og:image" content="https://leetcodee.com/og-image.jpg">  <!-- Replace with actual OG image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "699. Falling Squares",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27",  <!-- Replace with actual modification date -->
+      "description": "Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 699: Falling Squares. Learn how to efficiently solve this challenging algorithm problem.",
+      "image": "https://leetcodee.com/og-image.jpg",  <!-- Replace with actual image URL -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/falling-squares/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">699. Falling Squares</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There are several squares being dropped onto the X-axis of a 2D plane. You are given a 2D integer array <code class="bg-gray-100 px-1 rounded">positions</code> where <code class="bg-gray-100 px-1 rounded">positions[i] = [lefti, sideLengthi]</code> represents the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> square with a side length of <code class="bg-gray-100 px-1 rounded">sideLengthi</code> that is dropped with its left edge aligned with X coordinate <code class="bg-gray-100 px-1 rounded">lefti</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Each square is dropped one at a time from a height above any landed squares. It then falls downward (negative Y direction) until it either lands on an existing square or on the X-axis. A square brushing the side of another square during its fall is not considered landing on it. Once it lands, it freezes in place and cannot be moved.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    After each square is dropped, you must record the height of the current tallest stack of squares.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return an integer array <code class="bg-gray-100 px-1 rounded">ans</code> where <code class="bg-gray-100 px-1 rounded">ans[i]</code> represents the height described above after dropping the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> square.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: positions = [[1,2],[2,3],[6,1]]
+Output: [2,5,5]
+Explanation:
+After the first drop, the tallest stack is 2 units high.
+After the second drop, the tallest stack is 5 units high (from [2,3]).
+After the third drop, the tallest stack is still 5 units high.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: positions = [[100,100],[200,100]]
+Output: [100,100]
+Explanation:
+After the first drop, the tallest stack is 100 units high.
+After the second drop, the tallest stack is still 100 units high.
+The second square does not land on the first square.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ positions.length ≤ 1000</li>
+                    <li>1 ≤ lefti ≤ 10<sup>8</sup></li>
+                    <li>1 ≤ sideLengthi ≤ 10<sup>6</sup></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def fallingSquares(self, positions: List[List[int]]) -> List[int]:
+        heights = []  # Store height at each position
+        max_height = 0  # Track maximum height
+        result = []
+        
+        for left, side in positions:
+            right = left + side
+            curr_height = side
+            
+            # Check intersection with previous squares
+            for i, (prev_left, prev_right, height) in enumerate(heights):
+                if right > prev_left and left < prev_right:
+                    curr_height = max(curr_height, height + side)
+            
+            heights.append((left, right, currHeight))
+            max_height = max(max_height, curr_height)
+            result.append(max_height)
+        
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a list to track heights at each position</li>
+                    <li>Checks for intersections with previous squares</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<Integer> fallingSquares(int[][] positions) {
+        List<int[]> heights = new ArrayList<>();  // [left, right, height]
+        List<Integer> result = new ArrayList<>();
+        int maxHeight = 0;
+        
+        for (int[] pos : positions) {
+            int left = pos[0];
+            int side = pos[1];
+            int right = left + side;
+            int currHeight = side;
+            
+            // Check intersection with previous squares
+            for (int[] h : heights) {
+                if (right > h[0] && left < h[1]) {
+                    currHeight = Math.max(currHeight, h[2] + side);
+                }
+            }
+            
+            heights.add(new int[]{left, right, currHeight});
+            maxHeight = Math.max(maxHeight, currHeight);
+            result.add(maxHeight);
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<int> fallingSquares(vector<vector<int>>& positions) {
+        vector<tuple<int, int, int>> heights;  // left, right, height
+        vector<int> result;
+        int maxHeight = 0;
+        
+        for (const auto& pos : positions) {
+            int left = pos[0];
+            int side = pos[1];
+            int right = left + side;
+            int currHeight = side;
+            
+            // Check intersection with previous squares
+            for (const auto& [prevLeft, prevRight, height] : heights) {
+                if (right > prevLeft && left < prevRight) {
+                    currHeight = max(currHeight, height + side);
+                }
+            }
+            
+            heights.emplace_back(left, right, currHeight);
+            maxHeight = max(maxHeight, currHeight);
+            result.push_back(maxHeight);
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} positions
+ * @return {number[]}
+ */
+var fallingSquares = function(positions) {
+    const heights = [];  // [left, right, height]
+    const result = [];
+    let maxHeight = 0;
+    
+    for (const [left, side] of positions) {
+        const right = left + side;
+        let currHeight = side;
+        
+        // Check intersection with previous squares
+        for (const [prevLeft, prevRight, height] of heights) {
+            if (right > prevLeft && left < prevRight) {
+                currHeight = Math.max(currHeight, height + side);
+            }
+        }
+        
+        heights.push([left, right, currHeight]);
+        maxHeight = Math.max(maxHeight, currHeight);
+        result.push(maxHeight);
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<int> FallingSquares(int[][] positions) {
+        List<(int left, int right, int height)> heights = new List<(int, int, int)>();
+        List<int> result = new List<int>();
+        int maxHeight = 0;
+        
+        foreach (var pos in positions) {
+            int left = pos[0];
+            int side = pos[1];
+            int right = left + side;
+            int currHeight = side;
+            
+            // Check intersection with previous squares
+            foreach (var (prevLeft, prevRight, height) in heights) {
+                if (right > prevLeft && left < prevRight) {
+                    currHeight = Math.Max(currHeight, height + side);
+                }
+            }
+            
+            heights.Add((left, right, currHeight));
+            maxHeight = Math.Max(maxHeight, currHeight);
+            result.Add(maxHeight);
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a list to store height information for each square</li>
+                    <li>Checks for intersections with previously placed squares</li>
+                    <li>Time complexity: O(n²) where n is the number of squares</li>
+                    <li>Space complexity: O(n) to store heights and result</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="7679296777"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

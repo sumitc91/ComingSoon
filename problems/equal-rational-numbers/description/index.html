@@ -1,0 +1,318 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equal Rational Numbers - LeetCodee Solution</title>
+    <meta name="description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 972: Equal Rational Numbers.  Learn how to determine if two strings representing rational numbers are equal.">
+    <meta name="keywords" content="leetcode, leetcode solution, equal rational numbers, rational numbers, python, java, c++, javascript, c#, algorithm, data structure, programming, problem 972">
+    <meta property="og:title" content="Equal Rational Numbers - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/equal-rational-numbers/">
+    <meta property="og:description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 972: Equal Rational Numbers.  Learn how to determine if two strings representing rational numbers are equal.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/equal-rational-numbers/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "972. Equal Rational Numbers",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 972: Equal Rational Numbers. Learn how to determine if two strings representing rational numbers are equal.",
+      "image": "https://leetcodee.com/logo.png",  
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/equal-rational-numbers/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">972. Equal Rational Numbers</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given two strings s and t, each of which represents a non-negative rational number, return true if and only if they represent the same number. The strings may use parentheses to denote the repeating part of the rational number.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A rational number can be represented using up to three parts:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>An integer part</li>
+                    <li>A non-repeating part</li>
+                    <li>A repeating part</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    The number will be represented in one of the following three ways:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><IntegerPart> (e.g., "0", "12")</li>
+                    <li><IntegerPart><.><NonRepeatingPart> (e.g., "0.5", "2.12", "2.0001")</li>
+                    <li><IntegerPart><.><NonRepeatingPart><(><RepeatingPart><)> (e.g., "0.1(6)", "2.0(66)", "2.0(0)")</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "0.(52)", t = "0.5(25)"
+Output: true
+Explanation: Because "0.(52)" represents 0.52525252..., and "0.5(25)" represents 0.5252525252..., they represent the same number.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "0.1666(6)", t = "0.166(66)"
+Output: true</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "0.9(9)", t = "1."
+Output: true
+Explanation: "0.9(9)" represents 0.999999999... repeated forever, which equals 1.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= s.length, t.length <= 10000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">s and t consist of digits, '.', '(', and ')'.</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">It is guaranteed that s and t represent valid rational numbers.</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def isRationalEqual(self, s: str, t: str) -> bool:
+        def convert(s: str) -> float:
+            if '(' not in s:
+                return float(s)
+            
+            base, rep = s.split('(')
+            rep = rep[:-1]
+            base = float(base)
+            
+            if not rep:
+                return base
+                
+            n = len(rep)
+            return base + float(rep) / (10**n - 1)
+            
+        return abs(convert(s) - convert(t)) < 1e-10</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each character in the input strings.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean isRationalEqual(String s, String t) {
+        return Math.abs(convert(s) - convert(t)) < 1e-10;
+    }
+    
+    private double convert(String s) {
+        if (!s.contains("(")) {
+            return Double.parseDouble(s);
+        }
+        
+        String[] parts = s.split("\\(");
+        double base = Double.parseDouble(parts[0]);
+        String rep = parts[1].substring(0, parts[1].length() - 1);
+        
+        if (rep.isEmpty()) {
+            return base;
+        }
+        
+        int n = rep.length();
+        return base + Double.parseDouble(rep) / (Math.pow(10, n) - 1);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each character in the input strings.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    double convert(string s) {
+        size_t pos = s.find('(');
+        if (pos == string::npos) {
+            return stod(s);
+        }
+        
+        string base = s.substr(0, pos);
+        string rep = s.substr(pos + 1, s.length() - pos - 2);
+        
+        if (rep.empty()) {
+            return stod(base);
+        }
+        
+        int n = rep.length();
+        return stod(base) + stod(rep) / (pow(10, n) - 1);
+    }
+    
+public:
+    bool isRationalEqual(string s, string t) {
+        return abs(convert(s) - convert(t)) < 1e-10;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each character in the input strings.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isRationalEqual = function(s, t) {
+    function convert(s) {
+        if (!s.includes('(')) {
+            return parseFloat(s);
+        }
+        
+        const [base, rep] = s.split('(');
+        const repeating = rep.slice(0, -1);
+        
+        if (!repeating) {
+            return parseFloat(base);
+        }
+        
+        const n = repeating.length;
+        return parseFloat(base) + parseFloat(repeating) / (Math.pow(10, n) - 1);
+    }
+    
+    return Math.abs(convert(s) - convert(t)) < 1e-10;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each character in the input strings.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool IsRationalEqual(string s, string t) {
+        return Math.Abs(Convert(s) - Convert(t)) < 1e-10;
+    }
+    
+    private double Convert(string s) {
+        int pos = s.IndexOf('(');
+        if (pos == -1) {
+            return double.Parse(s);
+        }
+        
+        string basePart = s.Substring(0, pos);
+        string rep = s.Substring(pos + 1, s.Length - pos - 2);
+        
+        if (string.IsNullOrEmpty(rep)) {
+            return double.Parse(basePart);
+        }
+        
+        int n = rep.Length;
+        return double.Parse(basePart) + double.Parse(rep) / (Math.Pow(10, n) - 1);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to process each character in the input strings.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

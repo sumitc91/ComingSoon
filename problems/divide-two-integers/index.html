@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divide Two Integers - LeetCode</title>
+<meta name="description" content="Solve the Divide Two Integers problem on LeetCode.  Find efficient solutions and discuss optimal approaches.">
+<meta name="keywords" content="LeetCode, Divide Two Integers, algorithm, coding, solution, programming, interview, competitive programming, integer division">
+<link rel="canonical" href="https://leetcodee.com/problems/divide-two-integers/">
+
+<meta property="og:title" content="Divide Two Integers - LeetCode">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://leetcodee.com/problems/divide-two-integers/">
+<meta property="og:description" content="Solve the Divide Two Integers problem on LeetCode. Find efficient solutions and discuss optimal approaches.">
+<meta property="og:image" content="https://leetcodee.com/images/leetcode-logo.png">  <!-- Replace with actual image URL -->
+
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F7SQYSXXMM');
+</script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Divide Two Integers",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCode"
+  },
+  "datePublished": "2024-07-27",  <!-- Replace with actual publication date -->
+  "dateModified": "2024-07-27", <!-- Replace with actual modification date -->
+  "publisher": {
+    "@type": "Organization",
+    "name": "LeetCode",
+    "url": "https://leetcodee.com"
+  },
+  "description": "Solve the Divide Two Integers problem on LeetCode. Find efficient solutions and discuss optimal approaches.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://leetcodee.com/problems/divide-two-integers/"
+  }
+}
+</script>
+
+<style>
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+}
+.ad-container {
+  margin: 20px 0;
+}
+</style>
+</head>
+<body>
+
+<h1>Divide Two Integers</h1>
+<p>Given two integers <code>dividend</code> and <code>divisor</code>, divide two integers without using multiplication, division, and mod operator.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: dividend = 10, divisor = 3
+Output: 3
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: dividend = 7, divisor = -3
+Output: -2
+</code></pre>
+
+<div class="ad-container">
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="YOUR_AD_SLOT_HERE"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<p><strong>Solution (Python):</strong></p>
+<pre><code class="language-python">
+def divide(dividend, divisor):
+    sign = -1 if ((dividend < 0) ^ (divisor < 0)) else 1
+    dividend = abs(dividend)
+    divisor = abs(divisor)
+    quotient = 0
+    while dividend >= divisor:
+        temp = divisor
+        multiple = 1
+        while dividend >= (temp << 1):
+            temp <<= 1
+            multiple <<= 1
+        dividend -= temp
+        quotient += multiple
+    return sign * quotient
+
+</code></pre>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Least Operators to Express Number - LeetCodee Solution</title>
+    <meta name="description" content="Find the least number of operators to express a target number using a given integer x.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta name="keywords" content="leetcode, least operators, express number, algorithm, solution, python, java, c++, javascript, c#, coding, programming, tutorial">
+    <meta property="og:title" content="Least Operators to Express Number - LeetCodee Solution">
+    <meta property="og:description" content="Find the least number of operators to express a target number using a given integer x.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta property="og:url" content="https://leetcodee.com/problems/least-operators-to-express-number/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/least-operators-to-express-number/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">964. Least Operators to Express Number</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a single positive integer x, we will write an expression of the form x (op1) x (op2) x (op3) x ... where each operator op1, op2, etc. is either addition, subtraction, multiplication, or division (+, -, *, or /). For example, with x = 3, we might write 3 * 3 / 3 + 3 - 3 which is a value of 3.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    When writing such an expression, we adhere to the following conventions:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>The division operator (/) returns rational numbers.</li>
+                    <li>There are no parentheses placed anywhere.</li>
+                    <li>We use the usual order of operations: multiplication and division happen before addition and subtraction.</li>
+                    <li>It's not allowed to use the unary negation operator (-). For example, "x - x" is a valid expression as it only uses subtraction, but "-x + x" is not because it uses negation.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Let's call a (not necessarily complete) expression written by these rules a valid expression. You are given a positive integer n and a positive integer x. Return the least number of operators to write a valid expression that evaluates to n.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: x = 3, target = 19
+Output: 5
+Explanation: 3 * 3 + 3 * 3 + 3 / 3. The expression contains 5 operators.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: x = 5, target = 501
+Output: 8
+Explanation: 5 * 5 * 5 * 5 - 5 * 5 * 5 + 5 / 5. The expression contains 8 operators.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: x = 100, target = 100000000
+Output: 3
+Explanation: 100 * 100 * 100 * 100. The expression contains 3 operators.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">2 <= x <= 100</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= target <= 2 * 10^8</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def leastOpsExpressTarget(self, x: int, target: int) -> int:
+        def solve(n: int) -> int:
+            if n < x:
+                return min(2 * n - 1, 2 * (x - n))
+            
+            k = 0
+            while x ** k <= n:
+                k += 1
+            k -= 1
+            
+            if x ** k == n:
+                return k - 1
+            
+            # Try using k operators
+            res = k - 1 + solve(n - x ** k)
+            
+            # Try using k+1 operators
+            if x ** (k + 1) - n < n:
+                res = min(res, k + solve(x ** (k + 1) - n))
+            
+            return res
+        
+        return solve(target)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion depth is bounded by log(target) since we're dividing by x each time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion stack depth is bounded by log(target).</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int leastOpsExpressTarget(int x, int target) {
+        return solve(x, target);
+    }
+    
+    private int solve(int x, int n) {
+        if (n < x) {
+            return Math.min(2 * n - 1, 2 * (x - n));
+        }
+        
+        int k = 0;
+        while (Math.pow(x, k) <= n) {
+            k++;
+        }
+        k--;
+        
+        if (Math.pow(x, k) == n) {
+            return k - 1;
+        }
+        
+        // Try using k operators
+        int res = k - 1 + solve(x, n - (int)Math.pow(x, k));
+        
+        // Try using k+1 operators
+        if (Math.pow(x, k + 1) - n < n) {
+            res = Math.min(res, k + solve(x, (int)Math.pow(x, k + 1) - n));
+        }
+        
+        return res;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion depth is bounded by log(target) since we're dividing by x each time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion stack depth is bounded by log(target).</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int leastOpsExpressTarget(int x, int target) {
+        return solve(x, target);
+    }
+    
+private:
+    int solve(int x, int n) {
+        if (n < x) {
+            return min(2 * n - 1, 2 * (x - n));
+        }
+        
+        int k = 0;
+        while (pow(x, k) <= n) {
+            k++;
+        }
+        k--;
+        
+        if (pow(x, k) == n) {
+            return k - 1;
+        }
+        
+        // Try using k operators
+        int res = k - 1 + solve(x, n - pow(x, k));
+        
+        // Try using k+1 operators
+        if (pow(x, k + 1) - n < n) {
+            res = min(res, k + solve(x, pow(x, k + 1) - n));
+        }
+        
+        return res;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion depth is bounded by log(target) since we're dividing by x each time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion stack depth is bounded by log(target).</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} x
+ * @param {number} target
+ * @return {number}
+ */
+var leastOpsExpressTarget = function(x, target) {
+    function solve(n) {
+        if (n < x) {
+            return Math.min(2 * n - 1, 2 * (x - n));
+        }
+        
+        let k = 0;
+        while (Math.pow(x, k) <= n) {
+            k++;
+        }
+        k--;
+        
+        if (Math.pow(x, k) === n) {
+            return k - 1;
+        }
+        
+        // Try using k operators
+        let res = k - 1 + solve(n - Math.pow(x, k));
+        
+        // Try using k+1 operators
+        if (Math.pow(x, k + 1) - n < n) {
+            res = Math.min(res, k + solve(Math.pow(x, k + 1) - n));
+        }
+        
+        return res;
+    }
+    
+    return solve(target);
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion depth is bounded by log(target) since we're dividing by x each time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion stack depth is bounded by log(target).</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int LeastOpsExpressTarget(int x, int target) {
+        return Solve(x, target);
+    }
+    
+    private int Solve(int x, int n) {
+        if (n < x) {
+            return Math.Min(2 * n - 1, 2 * (x - n));
+        }
+        
+        int k = 0;
+        while (Math.Pow(x, k) <= n) {
+            k++;
+        }
+        k--;
+        
+        if (Math.Pow(x, k) == n) {
+            return k - 1;
+        }
+        
+        // Try using k operators
+        int res = k - 1 + Solve(x, n - (int)Math.Pow(x, k));
+        
+        // Try using k+1 operators
+        if (Math.Pow(x, k + 1) - n < n) {
+            res = Math.Min(res, k + Solve(x, (int)Math.Pow(x, k + 1) - n));
+        }
+        
+        return res;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion depth is bounded by log(target) since we're dividing by x each time.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log target)</h4>
+                    <p class="text-gray-700">The recursion stack depth is bounded by log(target).</p>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "964. Least Operators to Express Number",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the least number of operators to express a target number using a given integer x. Includes Python, Java, C++, JavaScript, and C# solutions.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/least-operators-to-express-number/"
+      }
+    }
+    </script>
+</body>
+</html>

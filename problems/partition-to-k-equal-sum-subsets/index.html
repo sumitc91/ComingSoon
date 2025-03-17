@@ -1,0 +1,411 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partition to K Equal Sum Subsets - LeetCodee Solution</title>
+    <meta name="description" content="Find the LeetCodee solution for the 'Partition to K Equal Sum Subsets' problem.  Includes Python, Java, C++, JavaScript, and C# code examples with detailed explanations and implementation notes.">
+    <meta name="keywords" content="leetcode, leetcode solution, partition to k equal sum subsets, dynamic programming, backtracking, python, java, c++, javascript, c#, algorithm, data structures">
+    <meta property="og:title" content="Partition to K Equal Sum Subsets - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/partition-to-k-equal-sum-subsets/">
+    <meta property="og:description" content="Find the LeetCodee solution for the 'Partition to K Equal Sum Subsets' problem.  Includes Python, Java, C++, JavaScript, and C# code examples with detailed explanations and implementation notes.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/partition-to-k-equal-sum-subsets/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">698. Partition to K Equal Sum Subsets</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an integer array <code class="bg-gray-100 px-1 rounded">nums</code> and an integer <code class="bg-gray-100 px-1 rounded">k</code>, return <code class="bg-gray-100 px-1 rounded">true</code> if it is possible to divide this array into <code class="bg-gray-100 px-1 rounded">k</code> non-empty subsets whose sums are all equal.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [4,3,2,3,5,2,1], k = 4
+Output: true
+Explanation: It is possible to divide it into 4 subsets (5), (1, 4), (2,3), (2,3) with equal sums.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,3,4], k = 3
+Output: false</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ k ≤ nums.length ≤ 16</li>
+                    <li>1 ≤ nums[i] ≤ 10<sup>4</sup></li>
+                    <li>The frequency of each element is in the range [1, 4]</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+        total_sum = sum(nums)
+        if total_sum % k != 0:
+            return False
+        
+        target = total_sum // k
+        nums.sort(reverse=True)  # Sort in descending order for optimization
+        if nums[0] > target:
+            return False
+        
+        used = [False] * len(nums)
+        
+        def backtrack(index: int, count: int, curr_sum: int) -> bool:
+            if count == k:
+                return True
+            
+            if curr_sum == target:
+                return backtrack(0, count + 1, 0)
+            
+            for i in range(index, len(nums)):
+                if used[i] or curr_sum + nums[i] > target:
+                    continue
+                
+                if i > 0 and not used[i-1] and nums[i] == nums[i-1]:
+                    continue
+                
+                used[i] = True
+                if backtrack(i + 1, count, curr_sum + nums[i]):
+                    return True
+                used[i] = False
+                
+                if curr_sum == 0:
+                    break
+            
+            return False
+        
+        return backtrack(0, 0, 0)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses backtracking with optimization techniques</li>
+                    <li>Sorts array in descending order to handle larger numbers first</li>
+                    <li>Time complexity: O(k * 2^n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int totalSum = 0;
+        for (int num : nums) {
+            totalSum += num;
+        }
+        
+        if (totalSum % k != 0) {
+            return false;
+        }
+        
+        int target = totalSum / k;
+        Arrays.sort(nums);
+        reverse(nums);
+        if (nums[0] > target) {
+            return false;
+        }
+        
+        boolean[] used = new boolean[nums.length];
+        return backtrack(nums, k, target, 0, 0, 0, used);
+    }
+    
+    private boolean backtrack(int[] nums, int k, int target, int index, int count, int currSum, boolean[] used) {
+        if (count == k) {
+            return true;
+        }
+        
+        if (currSum == target) {
+            return backtrack(nums, k, target, 0, count + 1, 0, used);
+        }
+        
+        for (int i = index; i < nums.length; i++) {
+            if (used[i] || currSum + nums[i] > target) {
+                continue;
+            }
+            
+            if (i > 0 && !used[i-1] && nums[i] == nums[i-1]) {
+                continue;
+            }
+            
+            used[i] = true;
+            if (backtrack(nums, k, target, i + 1, count, currSum + nums[i], used)) {
+                return true;
+            }
+            used[i] = false;
+            
+            if (currSum == 0) {
+                break;
+            }
+        }
+        
+        return false;
+    }
+    
+    private void reverse(int[] nums) {
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int totalSum = accumulate(nums.begin(), nums.end(), 0);
+        if (totalSum % k != 0) {
+            return false;
+        }
+        
+        int target = totalSum / k;
+        sort(nums.rbegin(), nums.rend());  // Sort in descending order
+        if (nums[0] > target) {
+            return false;
+        }
+        
+        vector<bool> used(nums.size(), false);
+        return backtrack(nums, k, target, 0, 0, 0, used);
+    }
+    
+private:
+    bool backtrack(vector<int>& nums, int k, int target, int index, int count, int currSum, vector<bool>& used) {
+        if (count == k) {
+            return true;
+        }
+        
+        if (currSum == target) {
+            return backtrack(nums, k, target, 0, count + 1, 0, used);
+        }
+        
+        for (int i = index; i < nums.size(); i++) {
+            if (used[i] || currSum + nums[i] > target) {
+                continue;
+            }
+            
+            if (i > 0 && !used[i-1] && nums[i] == nums[i-1]) {
+                continue;
+            }
+            
+            used[i] = true;
+            if (backtrack(nums, k, target, i + 1, count, currSum + nums[i], used)) {
+                return true;
+            }
+            used[i] = false;
+            
+            if (currSum == 0) {
+                break;
+            }
+        }
+        
+        return false;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
+var canPartitionKSubsets = function(nums, k) {
+    const totalSum = nums.reduce((a, b) => a + b, 0);
+    if (totalSum % k !== 0) {
+        return false;
+    }
+    
+    const target = totalSum / k;
+    nums.sort((a, b) => b - a);  // Sort in descending order
+    if (nums[0] > target) {
+        return false;
+    }
+    
+    const used = new Array(nums.length).fill(false);
+    
+    function backtrack(index, count, currSum) {
+        if (count === k) {
+            return true;
+        }
+        
+        if (currSum === target) {
+            return backtrack(0, count + 1, 0);
+        }
+        
+        for (let i = index; i < nums.length; i++) {
+            if (used[i] || currSum + nums[i] > target) {
+                continue;
+            }
+            
+            if (i > 0 && !used[i-1] && nums[i] === nums[i-1]) {
+                continue;
+            }
+            
+            used[i] = true;
+            if (backtrack(i + 1, count, currSum + nums[i])) {
+                return true;
+            }
+            used[i] = false;
+            
+            if (currSum === 0) {
+                break;
+            }
+        }
+        
+        return false;
+    }
+    
+    return backtrack(0, 0, 0);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool CanPartitionKSubsets(int[] nums, int k) {
+        int totalSum = nums.Sum();
+        if (totalSum % k != 0) {
+            return false;
+        }
+        
+        int target = totalSum / k;
+        Array.Sort(nums);
+        Array.Reverse(nums);
+        if (nums[0] > target) {
+            return false;
+        }
+        
+        bool[] used = new bool[nums.Length];
+        return Backtrack(nums, k, target, 0, 0, 0, used);
+    }
+    
+    private bool Backtrack(int[] nums, int k, int target, int index, int count, int currSum, bool[] used) {
+        if (count == k) {
+            return true;
+        }
+        
+        if (currSum == target) {
+            return Backtrack(nums, k, target, 0, count + 1, 0, used);
+        }
+        
+        for (int i = index; i < nums.Length; i++) {
+            if (used[i] || currSum + nums[i] > target) {
+                continue;
+            }
+            
+            if (i > 0 && !used[i-1] && nums[i] == nums[i-1]) {
+                continue;
+            }
+            
+            used[i] = true;
+            if (Backtrack(nums, k, target, i + 1, count, currSum + nums[i], used)) {
+                return true;
+            }
+            used[i] = false;
+            
+            if (currSum == 0) {
+                break;
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses backtracking with pruning techniques for optimization</li>
+                    <li>Sorts array in descending order to handle larger numbers first</li>
+                    <li>Uses a boolean array to track used elements</li>
+                    <li>Time complexity: O(k * 2^n) in worst case</li>
+                    <li>Space complexity: O(n) for recursion stack and used array</li>
+                </ul>
+            </div>
+             <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Partition to K Equal Sum Subsets - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-08-24",
+      "description": "Find the LeetCodee solution for the 'Partition to K Equal Sum Subsets' problem. Includes Python, Java, C++, JavaScript, and C# code examples with detailed explanations and implementation notes.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/partition-to-k-equal-sum-subsets/"
+      },
+      "wordCount": 700 // Replace with actual word count
+    }
+    </script>
+</body>
+</html>

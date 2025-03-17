@@ -1,0 +1,245 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number of Subarrays with Bounded Maximum - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 795: Number of Subarrays with Bounded Maximum.  Includes detailed explanations and optimized code.">
+    <meta name="keywords" content="leetcode, leetcode solution, 795, number of subarrays with bounded maximum, python, java, cpp, javascript, c#, algorithm, coding, interview">
+    <link rel="canonical" href="https://leetcodee.com/problems/number-of-subarrays-with-bounded-maximum/">
+    <meta property="og:title" content="Number of Subarrays with Bounded Maximum - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/number-of-subarrays-with-bounded-maximum/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 795: Number of Subarrays with Bounded Maximum.  Includes detailed explanations and optimized code.">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Number of Subarrays with Bounded Maximum",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 795: Number of Subarrays with Bounded Maximum. Includes detailed explanations and optimized code.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/number-of-subarrays-with-bounded-maximum/"
+      }
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">795. Number of Subarrays with Bounded Maximum</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an integer array nums and two integers left and right, return the number of contiguous non-empty subarrays such that the value of the maximum array element in that subarray is in the range [left, right].
+                </p>
+                <p class="text-gray-700">
+                    The test cases are generated so that the answer will fit in a 32-bit integer.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [2,1,4,3], left = 2, right = 3
+Output: 3
+Explanation: There are three subarrays that meet the requirements: [2], [2,1], [3].</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [2,9,2,5,6], left = 2, right = 8
+Output: 7</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 10^5</li>
+                    <li>0 ≤ nums[i] ≤ 10^9</li>
+                    <li>0 ≤ left ≤ right ≤ 10^9</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def numSubarrayBoundedMax(self, nums: List[int], left: int, right: int) -> int:
+        def count_subarrays(nums: List[int], bound: int) -> int:
+            count = 0
+            curr = 0
+            for num in nums:
+                if num <= bound:
+                    curr += 1
+                    count += curr
+                else:
+                    curr = 0
+            return count
+        
+        return count_subarrays(nums, right) - count_subarrays(nums, left - 1)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a helper function to count subarrays with maximum ≤ bound</li>
+                    <li>Returns difference between counts for right and left-1 bounds</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int numSubarrayBoundedMax(int[] nums, int left, int right) {
+        return countSubarrays(nums, right) - countSubarrays(nums, left - 1);
+    }
+    
+    private int countSubarrays(int[] nums, int bound) {
+        int count = 0;
+        int curr = 0;
+        for (int num : nums) {
+            if (num <= bound) {
+                curr++;
+                count += curr;
+            } else {
+                curr = 0;
+            }
+        }
+        return count;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int countSubarrays(const vector<int>& nums, int bound) {
+        int count = 0;
+        int curr = 0;
+        for (int num : nums) {
+            if (num <= bound) {
+                curr++;
+                count += curr;
+            } else {
+                curr = 0;
+            }
+        }
+        return count;
+    }
+    
+public:
+    int numSubarrayBoundedMax(vector<int>& nums, int left, int right) {
+        return countSubarrays(nums, right) - countSubarrays(nums, left - 1);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function numSubarrayBoundedMax(nums, left, right) {
+    function countSubarrays(nums, bound) {
+        let count = 0;
+        let curr = 0;
+        for (const num of nums) {
+            if (num <= bound) {
+                curr++;
+                count += curr;
+            } else {
+                curr = 0;
+            }
+        }
+        return count;
+    }
+    
+    return countSubarrays(nums, right) - countSubarrays(nums, left - 1);
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int NumSubarrayBoundedMax(int[] nums, int left, int right) {
+        return CountSubarrays(nums, right) - CountSubarrays(nums, left - 1);
+    }
+    
+    private int CountSubarrays(int[] nums, int bound) {
+        int count = 0;
+        int curr = 0;
+        foreach (int num in nums) {
+            if (num <= bound) {
+                curr++;
+                count += curr;
+            } else {
+                curr = 0;
+            }
+        }
+        return count;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a helper function to count subarrays with maximum ≤ bound</li>
+                    <li>Returns difference between counts for right and left-1 bounds</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+             <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1068871795581451"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

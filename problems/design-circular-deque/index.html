@@ -1,0 +1,675 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Circular Deque - LeetCodee Solution</title>
+    <meta name="description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 641: Design Circular Deque. Includes detailed explanations and alternative approaches.">
+    <meta name="keywords" content="leetcode, leetcode solution, design circular deque, circular deque, deque, data structure, algorithm, python, java, c++, javascript, c#, coding interview, problem solving">
+    <link rel="canonical" href="https://leetcodee.com/problems/design-circular-deque/">
+    <meta property="og:title" content="Design Circular Deque - LeetCodee Solution">
+    <meta property="og:description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 641: Design Circular Deque. Includes detailed explanations and alternative approaches.">
+    <meta property="og:url" content="https://leetcodee.com/problems/design-circular-deque/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Design Circular Deque - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 641: Design Circular Deque. Includes detailed explanations and alternative approaches.",
+      "keywords": "leetcode, leetcode solution, design circular deque, circular deque, deque, data structure, algorithm, python, java, c++, javascript, c#, coding interview, problem solving",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/design-circular-deque/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">641. Design Circular Deque</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Design your implementation of the circular double-ended queue (deque).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement the <code class="bg-gray-100 px-1 rounded">MyCircularDeque</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">MyCircularDeque(int k)</code> Initializes the deque with a maximum size of k.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean insertFront()</code> Adds an item at the front of Deque. Returns true if the operation is successful, or false otherwise.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean insertLast()</code> Adds an item at the rear of Deque. Returns true if the operation is successful, or false otherwise.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean deleteFront()</code> Deletes an item from the front of Deque. Returns true if the operation is successful, or false otherwise.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean deleteLast()</code> Deletes an item from the rear of Deque. Returns true if the operation is successful, or false otherwise.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">int getFront()</code> Returns the front item from the Deque. Returns -1 if the deque is empty.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">int getRear()</code> Returns the last item from Deque. Returns -1 if the deque is empty.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean isEmpty()</code> Returns true if the deque is empty, or false otherwise.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean isFull()</code> Returns true if the deque is full, or false otherwise.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["MyCircularDeque", "insertLast", "insertLast", "insertFront", "insertFront", "getRear", "isFull", "deleteLast", "insertFront", "getFront"]
+[[3], [1], [2], [3], [4], [], [], [], [4], []]
+Output
+[null, true, true, true, false, 2, true, true, true, 4]
+
+Explanation
+MyCircularDeque myCircularDeque = new MyCircularDeque(3);
+myCircularDeque.insertLast(1);  // return True
+myCircularDeque.insertLast(2);  // return True
+myCircularDeque.insertFront(3); // return True
+myCircularDeque.insertFront(4); // return False, the queue is full.
+myCircularDeque.getRear();      // return 2
+myCircularDeque.isFull();       // return True
+myCircularDeque.deleteLast();   // return True
+myCircularDeque.insertFront(4); // return True
+myCircularDeque.getFront();     // return 4</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ k ≤ 1000</li>
+                    <li>0 ≤ value ≤ 1000</li>
+                    <li>At most 2000 calls will be made to insertFront, insertLast, deleteFront, deleteLast, getFront, getRear, isEmpty, isFull.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class MyCircularDeque:
+    def __init__(self, k: int):
+        self.capacity = k
+        self.size = 0
+        self.front = 0
+        self.rear = k - 1
+        self.data = [0] * k
+
+    def insertFront(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        self.front = (self.front - 1) % self.capacity
+        self.data[self.front] = value
+        self.size += 1
+        return True
+
+    def insertLast(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        self.rear = (self.rear + 1) % self.capacity
+        self.data[self.rear] = value
+        self.size += 1
+        return True
+
+    def deleteFront(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.front = (self.front + 1) % self.capacity
+        self.size -= 1
+        return True
+
+    def deleteLast(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.rear = (self.rear - 1) % self.capacity
+        self.size -= 1
+        return True
+
+    def getFront(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.data[self.front]
+
+    def getRear(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.data[self.rear]
+
+    def isEmpty(self) -> bool:
+        return self.size == 0
+
+    def isFull(self) -> bool:
+        return self.size == self.capacity</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Doubly Linked List):</h4>
+                    <pre class="language-python"><code>class Node:
+    def __init__(self, val=0, prev=None, next=None):
+        self.val = val
+        self.prev = prev
+        self.next = next
+
+class MyCircularDeque:
+    def __init__(self, k: int):
+        self.capacity = k
+        self.size = 0
+        self.head = Node()
+        self.tail = Node()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def insertFront(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        node = Node(value, self.head, self.head.next)
+        self.head.next.prev = node
+        self.head.next = node
+        self.size += 1
+        return True
+
+    def insertLast(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        node = Node(value, self.tail.prev, self.tail)
+        self.tail.prev.next = node
+        self.tail.prev = node
+        self.size += 1
+        return True
+
+    def deleteFront(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.head.next = self.head.next.next
+        self.head.next.prev = self.head
+        self.size -= 1
+        return True
+
+    def deleteLast(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.tail.prev = self.tail.prev.prev
+        self.tail.prev.next = self.tail
+        self.size -= 1
+        return True
+
+    def getFront(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.head.next.val
+
+    def getRear(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.tail.prev.val
+
+    def isEmpty(self) -> bool:
+        return self.size == 0
+
+    def isFull(self) -> bool:
+        return self.size == self.capacity</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses array with circular indexing</li>
+                    <li>Second solution uses doubly linked list</li>
+                    <li>Array solution has O(1) memory overhead</li>
+                    <li>Linked list solution has better memory utilization for sparse deques</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class MyCircularDeque {
+    private final int[] data;
+    private final int capacity;
+    private int size;
+    private int front;
+    private int rear;
+    
+    public MyCircularDeque(int k) {
+        this.capacity = k;
+        this.data = new int[k];
+        this.size = 0;
+        this.front = 0;
+        this.rear = k - 1;
+    }
+    
+    public boolean insertFront(int value) {
+        if (isFull()) {
+            return false;
+        }
+        front = (front - 1 + capacity) % capacity;
+        data[front] = value;
+        size++;
+        return true;
+    }
+    
+    public boolean insertLast(int value) {
+        if (isFull()) {
+            return false;
+        }
+        rear = (rear + 1) % capacity;
+        data[rear] = value;
+        size++;
+        return true;
+    }
+    
+    public boolean deleteFront() {
+        if (isEmpty()) {
+            return false;
+        }
+        front = (front + 1) % capacity;
+        size--;
+        return true;
+    }
+    
+    public boolean deleteLast() {
+        if (isEmpty()) {
+            return false;
+        }
+        rear = (rear - 1 + capacity) % capacity;
+        size--;
+        return true;
+    }
+    
+    public int getFront() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return data[front];
+    }
+    
+    public int getRear() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return data[rear];
+    }
+    
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    
+    public boolean isFull() {
+        return size == capacity;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class MyCircularDeque {
+private:
+    vector<int> data;
+    int capacity;
+    int size;
+    int front;
+    int rear;
+    
+public:
+    MyCircularDeque(int k) : capacity(k), size(0), front(0), rear(k-1) {
+        data.resize(k);
+    }
+    
+    bool insertFront(int value) {
+        if (isFull()) {
+            return false;
+        }
+        front = (front - 1 + capacity) % capacity;
+        data[front] = value;
+        size++;
+        return true;
+    }
+    
+    bool insertLast(int value) {
+        if (isFull()) {
+            return false;
+        }
+        rear = (rear + 1) % capacity;
+        data[rear] = value;
+        size++;
+        return true;
+    }
+    
+    bool deleteFront() {
+        if (isEmpty()) {
+            return false;
+        }
+        front = (front + 1) % capacity;
+        size--;
+        return true;
+    }
+    
+    bool deleteLast() {
+        if (isEmpty()) {
+            return false;
+        }
+        rear = (rear - 1 + capacity) % capacity;
+        size--;
+        return true;
+    }
+    
+    int getFront() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return data[front];
+    }
+    
+    int getRear() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return data[rear];
+    }
+    
+    bool isEmpty() {
+        return size == 0;
+    }
+    
+    bool isFull() {
+        return size == capacity;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} k
+ */
+var MyCircularDeque = function(k) {
+    this.capacity = k;
+    this.size = 0;
+    this.front = 0;
+    this.rear = k - 1;
+    this.data = new Array(k);
+};
+
+/** 
+ * @param {number} value
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.insertFront = function(value) {
+    if (this.isFull()) {
+        return false;
+    }
+    this.front = (this.front - 1 + this.capacity) % this.capacity;
+    this.data[this.front] = value;
+    this.size++;
+    return true;
+};
+
+/** 
+ * @param {number} value
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.insertLast = function(value) {
+    if (this.isFull()) {
+        return false;
+    }
+    this.rear = (this.rear + 1) % this.capacity;
+    this.data[this.rear] = value;
+    this.size++;
+    return true;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.deleteFront = function() {
+    if (this.isEmpty()) {
+        return false;
+    }
+    this.front = (this.front + 1) % this.capacity;
+    this.size--;
+    return true;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.deleteLast = function() {
+    if (this.isEmpty()) {
+        return false;
+    }
+    this.rear = (this.rear - 1 + this.capacity) % this.capacity;
+    this.size--;
+    return true;
+};
+
+/**
+ * @return {number}
+ */
+MyCircularDeque.prototype.getFront = function() {
+    if (this.isEmpty()) {
+        return -1;
+    }
+    return this.data[this.front];
+};
+
+/**
+ * @return {number}
+ */
+MyCircularDeque.prototype.getRear = function() {
+    if (this.isEmpty()) {
+        return -1;
+    }
+    return this.data[this.rear];
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.isEmpty = function() {
+    return this.size === 0;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.isFull = function() {
+    return this.size === this.capacity;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class MyCircularDeque {
+    private readonly int[] data;
+    private readonly int capacity;
+    private int size;
+    private int front;
+    private int rear;
+    
+    public MyCircularDeque(int k) {
+        capacity = k;
+        data = new int[k];
+        size = 0;
+        front = 0;
+        rear = k - 1;
+    }
+    
+    public bool InsertFront(int value) {
+        if (IsFull()) {
+            return false;
+        }
+        front = (front - 1 + capacity) % capacity;
+        data[front] = value;
+        size++;
+        return true;
+    }
+    
+    public bool InsertLast(int value) {
+        if (IsFull()) {
+            return false;
+        }
+        rear = (rear + 1) % capacity;
+        data[rear] = value;
+        size++;
+        return true;
+    }
+    
+    public bool DeleteFront() {
+        if (IsEmpty()) {
+            return false;
+        }
+        front = (front + 1) % capacity;
+        size--;
+        return true;
+    }
+    
+    public bool DeleteLast() {
+        if (IsEmpty()) {
+            return false;
+        }
+        rear = (rear - 1 + capacity) % capacity;
+        size--;
+        return true;
+    }
+    
+    public int GetFront() {
+        if (IsEmpty()) {
+            return -1;
+        }
+        return data[front];
+    }
+    
+    public int GetRear() {
+        if (IsEmpty()) {
+            return -1;
+        }
+        return data[rear];
+    }
+    
+    public bool IsEmpty() {
+        return size == 0;
+    }
+    
+    public bool IsFull() {
+        return size == capacity;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using LinkedList):</h4>
+                    <pre class="language-csharp"><code>public class MyCircularDeque {
+    private readonly LinkedList<int> data;
+    private readonly int capacity;
+    
+    public MyCircularDeque(int k) {
+        capacity = k;
+        data = new LinkedList<int>();
+    }
+    
+    public bool InsertFront(int value) {
+        if (IsFull()) {
+            return false;
+        }
+        data.AddFirst(value);
+        return true;
+    }
+    
+    public bool InsertLast(int value) {
+        if (IsFull()) {
+            return false;
+        }
+        data.AddLast(value);
+        return true;
+    }
+    
+    public bool DeleteFront() {
+        if (IsEmpty()) {
+            return false;
+        }
+        data.RemoveFirst();
+        return true;
+    }
+    
+    public bool DeleteLast() {
+        if (IsEmpty()) {
+            return false;
+        }
+        data.RemoveLast();
+        return true;
+    }
+    
+    public int GetFront() {
+        if (IsEmpty()) {
+            return -1;
+        }
+        return data.First.Value;
+    }
+    
+    public int GetRear() {
+        if (IsEmpty()) {
+            return -1;
+        }
+        return data.Last.Value;
+    }
+    
+    public bool IsEmpty() {
+        return data.Count == 0;
+    }
+    
+    public bool IsFull() {
+        return data.Count == capacity;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses array with circular indexing</li>
+                        <li>Second solution uses built-in LinkedList</li>
+                        <li>Array solution has better cache locality</li>
+                        <li>LinkedList solution has simpler implementation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

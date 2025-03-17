@@ -1,0 +1,356 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefix and Suffix Search - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for Prefix and Suffix Search problem.  Find the index of a word with a given prefix and suffix. Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="leetcode, leetcodee, prefix and suffix search, algorithm, data structure, trie, python, java, c++, javascript, c#, coding solution, word filter">
+    <meta property="og:title" content="Prefix and Suffix Search - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/prefix-and-suffix-search/">
+    <meta property="og:description" content="LeetCodee solution for Prefix and Suffix Search problem.  Find the index of a word with a given prefix and suffix. Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/prefix-and-suffix-search/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">745. Prefix and Suffix Search</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Design a special dictionary that searches words by prefixes and suffixes.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implement the WordFilter class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>WordFilter(string[] words) Initializes the object with the words in the dictionary.</li>
+                    <li>f(string prefix, string suffix) Returns the index of the word in the dictionary, which has the prefix prefix and the suffix suffix. If there is more than one valid index, return the largest of them. If no such word exists, return -1.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input
+["WordFilter", "f"]
+[[["apple"]], ["a", "e"]]
+Output
+[null, 0]
+Explanation
+WordFilter wordFilter = new WordFilter(["apple"]);
+wordFilter.f("a", "e"); // return 0, because the word at index 0 has prefix "a" and suffix "e".</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ words.length ≤ 15000</li>
+                    <li>1 ≤ words[i].length ≤ 10</li>
+                    <li>1 ≤ prefix.length, suffix.length ≤ 10</li>
+                    <li>words[i], prefix and suffix consist of lower-case English letters only.</li>
+                    <li>At most 15000 calls will be made to the function f.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class WordFilter:
+    def __init__(self, words: List[str]):
+        self.trie = {}
+        for idx, word in enumerate(words):
+            word = word + '#' + word
+            for i in range(len(word)):
+                curr = self.trie
+                curr['index'] = idx
+                for j in range(i, len(word)):
+                    c = word[j]
+                    if c not in curr:
+                        curr[c] = {}
+                    curr = curr[c]
+                    curr['index'] = idx
+
+    def f(self, prefix: str, suffix: str) -> int:
+        curr = self.trie
+        search = suffix + '#' + prefix
+        
+        for c in search:
+            if c not in curr:
+                return -1
+            curr = curr[c]
+            
+        return curr['index']</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a trie data structure to store words with their prefixes and suffixes</li>
+                    <li>Time complexity: O(N * L^2) for initialization, O(P + S) for search where N is number of words, L is max word length, P is prefix length, and S is suffix length</li>
+                    <li>Space complexity: O(N * L^2) for storing the trie</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class WordFilter {
+    private TrieNode root;
+    
+    public WordFilter(String[] words) {
+        root = new TrieNode();
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            String wrapped = word + "#" + word;
+            for (int j = 0; j < word.length(); j++) {
+                TrieNode curr = root;
+                curr.index = i;
+                for (int k = j; k < wrapped.length(); k++) {
+                    char c = wrapped.charAt(k);
+                    curr.children.putIfAbsent(c, new TrieNode());
+                    curr = curr.children.get(c);
+                    curr.index = i;
+                }
+            }
+        }
+    }
+    
+    public int f(String prefix, String suffix) {
+        TrieNode curr = root;
+        String search = suffix + "#" + prefix;
+        
+        for (char c : search.toCharArray()) {
+            if (!curr.children.containsKey(c)) {
+                return -1;
+            }
+            curr = curr.children.get(c);
+        }
+        
+        return curr.index;
+    }
+    
+    private class TrieNode {
+        Map<Character, TrieNode> children;
+        int index;
+        
+        TrieNode() {
+            children = new HashMap<>();
+            index = -1;
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class WordFilter {
+private:
+    struct TrieNode {
+        unordered_map<char, TrieNode*> children;
+        int index;
+        
+        TrieNode() : index(-1) {}
+    };
+    
+    TrieNode* root;
+    
+public:
+    WordFilter(vector<string>& words) {
+        root = new TrieNode();
+        for (int i = 0; i < words.size(); i++) {
+            string word = words[i];
+            string wrapped = word + "#" + word;
+            for (int j = 0; j < word.length(); j++) {
+                TrieNode* curr = root;
+                curr->index = i;
+                for (int k = j; k < wrapped.length(); k++) {
+                    char c = wrapped[k];
+                    if (!curr->children.count(c)) {
+                        curr->children[c] = new TrieNode();
+                    }
+                    curr = curr->children[c];
+                    curr->index = i;
+                }
+            }
+        }
+    }
+    
+    int f(string prefix, string suffix) {
+        TrieNode* curr = root;
+        string search = suffix + "#" + prefix;
+        
+        for (char c : search) {
+            if (!curr->children.count(c)) {
+                return -1;
+            }
+            curr = curr->children[c];
+        }
+        
+        return curr->index;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>class WordFilter {
+    constructor(words) {
+        this.trie = {};
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i];
+            const wrapped = word + '#' + word;
+            for (let j = 0; j < word.length; j++) {
+                let curr = this.trie;
+                curr.index = i;
+                for (let k = j; k < wrapped.length; k++) {
+                    const c = wrapped[k];
+                    if (!curr[c]) {
+                        curr[c] = {};
+                    }
+                    curr = curr[c];
+                    curr.index = i;
+                }
+            }
+        }
+    }
+    
+    f(prefix, suffix) {
+        let curr = this.trie;
+        const search = suffix + '#' + prefix;
+        
+        for (const c of search) {
+            if (!curr[c]) {
+                return -1;
+            }
+            curr = curr[c];
+        }
+        
+        return curr.index;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class WordFilter {
+    private class TrieNode {
+        public Dictionary<char, TrieNode> children;
+        public int index;
+        
+        public TrieNode() {
+            children = new Dictionary<char, TrieNode>();
+            index = -1;
+        }
+    }
+    
+    private TrieNode root;
+    
+    public WordFilter(string[] words) {
+        root = new TrieNode();
+        for (int i = 0; i < words.Length; i++) {
+            string word = words[i];
+            string wrapped = word + "#" + word;
+            for (int j = 0; j < word.Length; j++) {
+                TrieNode curr = root;
+                curr.index = i;
+                for (int k = j; k < wrapped.Length; k++) {
+                    char c = wrapped[k];
+                    if (!curr.children.ContainsKey(c)) {
+                        curr.children[c] = new TrieNode();
+                    }
+                    curr = curr.children[c];
+                    curr.index = i;
+                }
+            }
+        }
+    }
+    
+    public int F(string prefix, string suffix) {
+        TrieNode curr = root;
+        string search = suffix + "#" + prefix;
+        
+        foreach (char c in search) {
+            if (!curr.children.ContainsKey(c)) {
+                return -1;
+            }
+            curr = curr.children[c];
+        }
+        
+        return curr.index;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a trie data structure to store words with their prefixes and suffixes</li>
+                    <li>Time complexity: O(N * L^2) for initialization, O(P + S) for search where N is number of words, L is max word length, P is prefix length, and S is suffix length</li>
+                    <li>Space complexity: O(N * L^2) for storing the trie</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "745. Prefix and Suffix Search",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "dateModified": "2023-10-27",
+          "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "url": "https://leetcodee.com"
+          },
+          "description": "LeetCodee solution for Prefix and Suffix Search problem.  Find the index of a word with a given prefix and suffix. Includes Python, Java, C++, JavaScript, and C# solutions.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/prefix-and-suffix-search/"
+          },
+          "keywords":"leetcode, leetcodee, prefix and suffix search, algorithm, data structure, trie, python, java, c++, javascript, c#, coding solution, word filter"
+        }
+      </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Nesting - LeetCodee Solution</title>
+    <meta name="description" content="Find the length of the longest array nesting in a given integer array.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, array nesting, algorithm, solution, python, java, cpp, javascript, c#, coding, programming, data structures">
+    <meta name="canonical" content="https://leetcodee.com/problems/array-nesting/">
+    <meta property="og:title" content="Array Nesting - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/array-nesting/">
+    <meta property="og:description" content="Find the length of the longest array nesting in a given integer array.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Array Nesting - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-07-27",
+      "description": "Find the length of the longest array nesting in a given integer array. LeetCodee provides solutions in various programming languages.",
+      "articleBody": "You are given an integer array `nums` of length `n` where `nums` contains all the integers in the range `[0, n - 1]` inclusive. A set `s` is an array nesting if: `s[0] = nums[x]` for some index `x`. For each index `i > 0`, `s[i] = nums[s[i-1]]`. Return the length of the longest array nesting.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/array-nesting/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">565. Array Nesting</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array <code class="bg-gray-100 px-1 rounded">nums</code> of length <code class="bg-gray-100 px-1 rounded">n</code> where <code class="bg-gray-100 px-1 rounded">nums</code> contains all the integers in the range <code class="bg-gray-100 px-1 rounded">[0, n - 1]</code> inclusive.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A set <code class="bg-gray-100 px-1 rounded">s</code> is an array nesting if:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">s[0] = nums[x]</code> for some index <code class="bg-gray-100 px-1 rounded">x</code></li>
+                    <li>For each index <code class="bg-gray-100 px-1 rounded">i > 0</code>, <code class="bg-gray-100 px-1 rounded">s[i] = nums[s[i-1]]</code></li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Return <em>the length of the longest array nesting</em>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: nums = [5,4,0,3,1,6,2]
+Output: 4
+Explanation: 
+nums[0] = 5, nums[1] = 4, nums[2] = 0, nums[3] = 3, nums[4] = 1, nums[5] = 6, nums[6] = 2.
+One of the longest sets s you can create is: s = [0,5,6,2] where:
+s[0] = 0
+s[1] = nums[s[0]] = nums[0] = 5
+s[2] = nums[s[1]] = nums[5] = 6
+s[3] = nums[s[2]] = nums[6] = 2
+s[4] = nums[s[3]] = nums[2] = 0 (cycle)</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: nums = [0,1,2]
+Output: 1</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= nums.length <= 10⁵</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= nums[i] < nums.length</code></li>
+                    <li>All the values of <code class="bg-gray-100 px-1 rounded">nums</code> are unique.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def arrayNesting(self, nums: List[int]) -> int:
+        max_length = 0
+        visited = set()
+        
+        for i in range(len(nums)):
+            if i not in visited:
+                curr = i
+                curr_length = 0
+                
+                # Follow the chain until we hit a cycle
+                while curr not in visited:
+                    visited.add(curr)
+                    curr = nums[curr]
+                    curr_length += 1
+                
+                max_length = max(max_length, curr_length)
+        
+        return max_length</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of the array. Each element is visited exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the visited elements set.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int arrayNesting(int[] nums) {
+        int maxLength = 0;
+        boolean[] visited = new boolean[nums.length];
+        
+        for (int i = 0; i < nums.length; i++) {
+            if (!visited[i]) {
+                int curr = i;
+                int currLength = 0;
+                
+                // Follow the chain until we hit a cycle
+                while (!visited[curr]) {
+                    visited[curr] = true;
+                    curr = nums[curr];
+                    currLength++;
+                }
+                
+                maxLength = Math.max(maxLength, currLength);
+            }
+        }
+        
+        return maxLength;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of the array. Each element is visited exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the visited elements array.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int arrayNesting(vector<int>& nums) {
+        int maxLength = 0;
+        vector<bool> visited(nums.size(), false);
+        
+        for (int i = 0; i < nums.size(); i++) {
+            if (!visited[i]) {
+                int curr = i;
+                int currLength = 0;
+                
+                // Follow the chain until we hit a cycle
+                while (!visited[curr]) {
+                    visited[curr] = true;
+                    curr = nums[curr];
+                    currLength++;
+                }
+                
+                maxLength = max(maxLength, currLength);
+            }
+        }
+        
+        return maxLength;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of the array. Each element is visited exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the visited elements vector.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var arrayNesting = function(nums) {
+    let maxLength = 0;
+    const visited = new Set();
+    
+    for (let i = 0; i < nums.length; i++) {
+        if (!visited.has(i)) {
+            let curr = i;
+            let currLength = 0;
+            
+            // Follow the chain until we hit a cycle
+            while (!visited.has(curr)) {
+                visited.add(curr);
+                curr = nums[curr];
+                currLength++;
+            }
+            
+            maxLength = Math.max(maxLength, currLength);
+        }
+    }
+    
+    return maxLength;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of the array. Each element is visited exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the visited elements set.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int ArrayNesting(int[] nums) {
+        int maxLength = 0;
+        bool[] visited = new bool[nums.Length];
+        
+        for (int i = 0; i < nums.Length; i++) {
+            if (!visited[i]) {
+                int curr = i;
+                int currLength = 0;
+                
+                // Follow the chain until we hit a cycle
+                while (!visited[curr]) {
+                    visited[curr] = true;
+                    curr = nums[curr];
+                    currLength++;
+                }
+                
+                maxLength = Math.Max(maxLength, currLength);
+            }
+        }
+        
+        return maxLength;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the length of the array. Each element is visited exactly once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">For storing the visited elements array.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses cycle detection in a directed graph:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Cycle detection</li>
+                            <li>Visited tracking</li>
+                            <li>Length counting</li>
+                            <li>Optimization</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Track visited</li>
+                            <li>Follow chains</li>
+                            <li>Count length</li>
+                            <li>Find maximum</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Visited set/array</li>
+                        <li>Chain following</li>
+                        <li>Length tracking</li>
+                        <li>Maximum updating</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Early termination</li>
+                        <li>Space efficiency</li>
+                        <li>Single traversal</li>
+                        <li>Cycle detection</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Single element</li>
+                        <li>All cycles</li>
+                        <li>No cycles</li>
+                        <li>Maximum length</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

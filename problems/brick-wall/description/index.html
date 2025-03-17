@@ -1,0 +1,358 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brick Wall - LeetCodee Solution</title>
+    <meta name="description" content="Find the optimal vertical line to cross the least number of bricks in a given brick wall.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="LeetCode, Brick Wall, solution, algorithm, Python, Java, C++, JavaScript, C#, coding, programming, data structures, arrays, hashmap">
+    <meta property="og:title" content="Brick Wall - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/brick-wall/">
+    <meta property="og:description" content="Find the optimal vertical line to cross the least number of bricks in a given brick wall.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/brick-wall/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "554. Brick Wall",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-07-27",
+      "dateModified": "2024-07-27",
+      "description": "Find the optimal vertical line to cross the least number of bricks in a given brick wall. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "keywords": "LeetCode, Brick Wall, solution, algorithm, Python, Java, C++, JavaScript, C#, coding, programming, data structures, arrays, hashmap",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/brick-wall/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">554. Brick Wall</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There is a rectangular brick wall in front of you with <code class="bg-gray-100 px-1 rounded">n</code> rows of bricks. The <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> row has some number of bricks each of the same height (i.e., one unit) but they can be of different widths. The total width of each row is the same.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Draw a vertical line from the top to the bottom and cross the least bricks. If your line goes through the edge of a brick, then the brick is not considered as crossed. You need to find out how many bricks are crossed by your line in the best case.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: wall = [[1,2,2,1],[3,1,2],[1,3,2],[2,4],[3,1,2],[1,3,1,1]]
+Output: 2
+Explanation: The vertical line can be drawn at x = 2.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: wall = [[1],[1],[1]]
+Output: 3</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">n == wall.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= n <= 10⁴</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= wall[i].length <= 10⁴</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= sum(wall[i].length) <= 2 * 10⁴</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">sum(wall[i])</code> is the same for each row <code class="bg-gray-100 px-1 rounded">i</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= wall[i][j] <= 2³¹ - 1</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def leastBricks(self, wall: List[List[int]]) -> int:
+        edges = defaultdict(int)
+        
+        # Count the frequency of edges at each position
+        for row in wall:
+            pos = 0
+            for brick in row[:-1]:  # Skip the last brick in each row
+                pos += brick
+                edges[pos] += 1
+        
+        # If no edges found, return the height of the wall
+        if not edges:
+            return len(wall)
+        
+        # Return wall height minus the maximum frequency of edges
+        return len(wall) - max(edges.values())</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of bricks in the wall.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m)</h4>
+                    <p class="text-gray-700">Where m is the width of the wall (number of possible edge positions).</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int leastBricks(List<List<Integer>> wall) {
+        Map<Integer, Integer> edges = new HashMap<>();
+        
+        // Count the frequency of edges at each position
+        for (List<Integer> row : wall) {
+            int pos = 0;
+            for (int i = 0; i < row.size() - 1; i++) {  // Skip the last brick
+                pos += row.get(i);
+                edges.put(pos, edges.getOrDefault(pos, 0) + 1);
+            }
+        }
+        
+        // If no edges found, return the height of the wall
+        if (edges.isEmpty()) {
+            return wall.size();
+        }
+        
+        // Return wall height minus the maximum frequency of edges
+        int maxEdges = Collections.max(edges.values());
+        return wall.size() - maxEdges;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of bricks in the wall.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m)</h4>
+                    <p class="text-gray-700">Where m is the width of the wall (number of possible edge positions).</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int leastBricks(vector<vector<int>>& wall) {
+        unordered_map<int, int> edges;
+        
+        // Count the frequency of edges at each position
+        for (const auto& row : wall) {
+            int pos = 0;
+            for (int i = 0; i < row.size() - 1; i++) {  // Skip the last brick
+                pos += row[i];
+                edges[pos]++;
+            }
+        }
+        
+        // If no edges found, return the height of the wall
+        if (edges.empty()) {
+            return wall.size();
+        }
+        
+        // Return wall height minus the maximum frequency of edges
+        int maxEdges = 0;
+        for (const auto& [pos, count] : edges) {
+            maxEdges = max(maxEdges, count);
+        }
+        return wall.size() - maxEdges;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of bricks in the wall.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m)</h4>
+                    <p class="text-gray-700">Where m is the width of the wall (number of possible edge positions).</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} wall
+ * @return {number}
+ */
+var leastBricks = function(wall) {
+    const edges = new Map();
+    
+    // Count the frequency of edges at each position
+    for (const row of wall) {
+        let pos = 0;
+        for (let i = 0; i < row.length - 1; i++) {  // Skip the last brick
+            pos += row[i];
+            edges.set(pos, (edges.get(pos) || 0) + 1);
+        }
+    }
+    
+    // If no edges found, return the height of the wall
+    if (edges.size === 0) {
+        return wall.length;
+    }
+    
+    // Return wall height minus the maximum frequency of edges
+    const maxEdges = Math.max(...edges.values());
+    return wall.length - maxEdges;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of bricks in the wall.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m)</h4>
+                    <p class="text-gray-700">Where m is the width of the wall (number of possible edge positions).</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int LeastBricks(IList<IList<int>> wall) {
+        Dictionary<int, int> edges = new Dictionary<int, int>();
+        
+        // Count the frequency of edges at each position
+        foreach (var row in wall) {
+            int pos = 0;
+            for (int i = 0; i < row.Count - 1; i++) {  // Skip the last brick
+                pos += row[i];
+                if (!edges.ContainsKey(pos)) {
+                    edges[pos] = 0;
+                }
+                edges[pos]++;
+            }
+        }
+        
+        // If no edges found, return the height of the wall
+        if (edges.Count == 0) {
+            return wall.Count;
+        }
+        
+        // Return wall height minus the maximum frequency of edges
+        int maxEdges = edges.Values.Max();
+        return wall.Count - maxEdges;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the total number of bricks in the wall.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m)</h4>
+                    <p class="text-gray-700">Where m is the width of the wall (number of possible edge positions).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses a hash map to track brick edges:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Edge counting</li>
+                            <li>Position tracking</li>
+                            <li>Frequency analysis</li>
+                            <li>Optimal line placement</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Track edge positions</li>
+                            <li>Count frequencies</li>
+                            <li>Find maximum edges</li>
+                            <li>Calculate crossed bricks</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Hash map usage</li>
+                        <li>Position calculation</li>
+                        <li>Edge counting</li>
+                        <li>Result computation</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Skip last brick</li>
+                        <li>Early termination</li>
+                        <li>Space efficiency</li>
+                        <li>Hash map lookup</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Single row</li>
+                        <li>Single brick</li>
+                        <li>No gaps</li>
+                        <li>Maximum width</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

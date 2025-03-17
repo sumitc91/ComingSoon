@@ -1,0 +1,296 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advantage Shuffle - LeetCodee Solution</title>
+    <meta name="description" content="Find the optimal solution and code examples for LeetCode problem 870: Advantage Shuffle. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta name="keywords" content="leetcode, advantage shuffle, algorithm, solution, python, java, cpp, javascript, c#, coding, competitive programming, arrays, sorting">
+    <meta property="og:title" content="Advantage Shuffle - LeetCodee Solution">
+    <meta property="og:description" content="Find the optimal solution and code examples for LeetCode problem 870: Advantage Shuffle. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta property="og:url" content="https://leetcodee.com/problems/advantage-shuffle/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/advantage-shuffle/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">870. Advantage Shuffle</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given two integer arrays nums1 and nums2 both of the same length. The advantage of nums1 with respect to nums2 is the number of indices i for which nums1[i] > nums2[i].
+                </p>
+                <p class="text-gray-700">
+                    Return any permutation of nums1 that maximizes its advantage with respect to nums2.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums1 = [2,7,11,15], nums2 = [1,10,4,11]
+Output: [2,11,7,15]
+Explanation: The advantage is max by placing:
+2 > 1
+11 > 10
+7 > 4
+15 > 11</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums1 = [12,24,8,32], nums2 = [13,25,32,11]
+Output: [24,32,8,12]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums1.length ≤ 10⁵</li>
+                    <li>nums2.length == nums1.length</li>
+                    <li>0 ≤ nums1[i], nums2[i] ≤ 10⁹</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def advantageCount(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # Sort nums1 in ascending order
+        nums1.sort()
+        
+        # Create array of indices sorted by nums2 values in descending order
+        indices = sorted(range(len(nums2)), key=lambda i: -nums2[i])
+        
+        # For each number in nums2 (from largest to smallest)
+        # Use the largest number in nums1 that's greater than it
+        # If no such number exists, use the smallest number in nums1
+        left, right = 0, len(nums1) - 1
+        result = [0] * len(nums1)
+        
+        for i in indices:
+            if nums1[right] > nums2[i]:
+                result[i] = nums1[right]
+                right -= 1
+            else:
+                result[i] = nums1[left]
+                left += 1
+        
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses greedy approach with sorting</li>
+                    <li>Time complexity: O(n log n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int[] advantageCount(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+        
+        // Sort nums1
+        Arrays.sort(nums1);
+        
+        // Create array of indices sorted by nums2 values
+        Integer[] indices = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            indices[i] = i;
+        }
+        Arrays.sort(indices, (a, b) -> nums2[b] - nums2[a]);
+        
+        // Match numbers using two pointers
+        int[] result = new int[n];
+        int left = 0, right = n - 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (nums1[right] > nums2[indices[i]]) {
+                result[indices[i]] = nums1[right--];
+            } else {
+                result[indices[i]] = nums1[left++];
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums1.size();
+        
+        // Sort nums1
+        sort(nums1.begin(), nums1.end());
+        
+        // Create array of indices sorted by nums2 values
+        vector<int> indices(n);
+        iota(indices.begin(), indices.end(), 0);
+        sort(indices.begin(), indices.end(),
+             [&](int i, int j) { return nums2[i] > nums2[j]; });
+        
+        // Match numbers using two pointers
+        vector<int> result(n);
+        int left = 0, right = n - 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (nums1[right] > nums2[indices[i]]) {
+                result[indices[i]] = nums1[right--];
+            } else {
+                result[indices[i]] = nums1[left++];
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var advantageCount = function(nums1, nums2) {
+    const n = nums1.length;
+    
+    // Sort nums1
+    nums1.sort((a, b) => a - b);
+    
+    // Create array of indices sorted by nums2 values
+    const indices = Array.from({length: n}, (_, i) => i);
+    indices.sort((a, b) => nums2[b] - nums2[a]);
+    
+    // Match numbers using two pointers
+    const result = new Array(n);
+    let left = 0, right = n - 1;
+    
+    for (let i = 0; i < n; i++) {
+        if (nums1[right] > nums2[indices[i]]) {
+            result[indices[i]] = nums1[right--];
+        } else {
+            result[indices[i]] = nums1[left++];
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int[] AdvantageCount(int[] nums1, int[] nums2) {
+        int n = nums1.Length;
+        
+        // Sort nums1
+        Array.Sort(nums1);
+        
+        // Create array of indices sorted by nums2 values
+        var indices = Enumerable.Range(0, n).ToArray();
+        Array.Sort(indices, (a, b) => nums2[b].CompareTo(nums2[a]));
+        
+        // Match numbers using two pointers
+        int[] result = new int[n];
+        int left = 0, right = n - 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (nums1[right] > nums2[indices[i]]) {
+                result[indices[i]] = nums1[right--];
+            } else {
+                result[indices[i]] = nums1[left++];
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses sorting and two-pointer technique</li>
+                    <li>Time complexity: O(n log n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Advantage Shuffle - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-01-26",
+      "description": "Find the optimal solution and code examples for LeetCode problem 870: Advantage Shuffle. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.",
+      "articleBody": "You are given two integer arrays nums1 and nums2 both of the same length. The advantage of nums1 with respect to nums2 is the number of indices i for which nums1[i] > nums2[i]. Return any permutation of nums1 that maximizes its advantage with respect to nums2.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/advantage-shuffle/"
+      }
+    }
+    </script>
+</body>
+</html>

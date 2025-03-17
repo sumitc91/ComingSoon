@@ -1,0 +1,352 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bag of Tokens - LeetCodee Solution</title>
+    <meta name="description" content="Solve the LeetCode Bag of Tokens problem with optimized Python, Java, C++, JavaScript, and C# solutions.  Includes detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, bag of tokens, algorithm, solution, python, java, cpp, javascript, c#, coding, programming, tutorial, time complexity, space complexity">
+    <meta property="og:title" content="Bag of Tokens - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/bag-of-tokens/">
+    <meta property="og:description" content="Solve the LeetCode Bag of Tokens problem with optimized Python, Java, C++, JavaScript, and C# solutions.  Includes detailed explanations and time/space complexity analysis.">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/bag-of-tokens/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">948. Bag of Tokens</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You have an initial power of P, an initial score of 0, and a bag of tokens where tokens[i] is the value of the ith token (0-indexed).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Your goal is to maximize your total score by potentially playing each token in one of two ways:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>If your current power is at least tokens[i], you may play the ith token face up, losing tokens[i] power and gaining 1 score.</li>
+                    <li>If your current score is at least 1, you may play the ith token face down, gaining tokens[i] power and losing 1 score.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Each token may be played at most once and in any order. Return the maximum possible score you can achieve after playing any number of tokens.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: tokens = [100], P = 50
+Output: 0
+Explanation: Playing the only token in the bag is impossible because you either have too little power or too little score.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: tokens = [100,200], P = 150
+Output: 1
+Explanation: Play the 0th token (100) face up, your power becomes 50 and score becomes 1.
+There is no need to play the 1st token since you cannot play it face up to add to your score.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: tokens = [100,200,300,400], P = 200
+Output: 2
+Explanation: Play the tokens in this order to get a score of 2:
+1. Play the 0th token (100) face up, your power becomes 100 and score becomes 1.
+2. Play the 3rd token (400) face down, your power becomes 500 and score becomes 0.
+3. Play the 1st token (200) face up, your power becomes 300 and score becomes 1.
+4. Play the 2nd token (300) face up, your power becomes 0 and score becomes 2.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= tokens.length <= 1000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= tokens[i], P < 10^4</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def bagOfTokensScore(self, tokens: List[int], P: int) -> int:
+        # Sort tokens to use smallest for face up and largest for face down
+        tokens.sort()
+        left, right = 0, len(tokens) - 1
+        power = P
+        score = 0
+        max_score = 0
+        
+        while left <= right:
+            # Try to play face up if we have enough power
+            if power >= tokens[left]:
+                power -= tokens[left]
+                score += 1
+                left += 1
+                max_score = max(max_score, score)
+            # Try to play face down if we have score to spend
+            elif score > 0:
+                power += tokens[right]
+                score -= 1
+                right -= 1
+            else:
+                break
+                
+        return max_score</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the number of tokens. We need to sort the tokens first.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int bagOfTokensScore(int[] tokens, int P) {
+        // Sort tokens to use smallest for face up and largest for face down
+        Arrays.sort(tokens);
+        int left = 0, right = tokens.length - 1;
+        int power = P;
+        int score = 0;
+        int maxScore = 0;
+        
+        while (left <= right) {
+            // Try to play face up if we have enough power
+            if (power >= tokens[left]) {
+                power -= tokens[left];
+                score++;
+                left++;
+                maxScore = Math.max(maxScore, score);
+            }
+            // Try to play face down if we have score to spend
+            else if (score > 0) {
+                power += tokens[right];
+                score--;
+                right--;
+            }
+            else {
+                break;
+            }
+        }
+        
+        return maxScore;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the number of tokens. We need to sort the tokens first.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int P) {
+        // Sort tokens to use smallest for face up and largest for face down
+        sort(tokens.begin(), tokens.end());
+        int left = 0, right = tokens.size() - 1;
+        int power = P;
+        int score = 0;
+        int maxScore = 0;
+        
+        while (left <= right) {
+            // Try to play face up if we have enough power
+            if (power >= tokens[left]) {
+                power -= tokens[left];
+                score++;
+                left++;
+                maxScore = max(maxScore, score);
+            }
+            // Try to play face down if we have score to spend
+            else if (score > 0) {
+                power += tokens[right];
+                score--;
+                right--;
+            }
+            else {
+                break;
+            }
+        }
+        
+        return maxScore;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the number of tokens. We need to sort the tokens first.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} tokens
+ * @param {number} P
+ * @return {number}
+ */
+var bagOfTokensScore = function(tokens, P) {
+    // Sort tokens to use smallest for face up and largest for face down
+    tokens.sort((a, b) => a - b);
+    let left = 0, right = tokens.length - 1;
+    let power = P;
+    let score = 0;
+    let maxScore = 0;
+    
+    while (left <= right) {
+        // Try to play face up if we have enough power
+        if (power >= tokens[left]) {
+            power -= tokens[left];
+            score++;
+            left++;
+            maxScore = Math.max(maxScore, score);
+        }
+        // Try to play face down if we have score to spend
+        else if (score > 0) {
+            power += tokens[right];
+            score--;
+            right--;
+        }
+        else {
+            break;
+        }
+    }
+    
+    return maxScore;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the number of tokens. We need to sort the tokens first.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int BagOfTokensScore(int[] tokens, int P) {
+        // Sort tokens to use smallest for face up and largest for face down
+        Array.Sort(tokens);
+        int left = 0, right = tokens.Length - 1;
+        int power = P;
+        int score = 0;
+        int maxScore = 0;
+        
+        while (left <= right) {
+            // Try to play face up if we have enough power
+            if (power >= tokens[left]) {
+                power -= tokens[left];
+                score++;
+                left++;
+                maxScore = Math.Max(maxScore, score);
+            }
+            // Try to play face down if we have score to spend
+            else if (score > 0) {
+                power += tokens[right];
+                score--;
+                right--;
+            }
+            else {
+                break;
+            }
+        }
+        
+        return maxScore;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the number of tokens. We need to sort the tokens first.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "948. Bag of Tokens",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Solve the LeetCode Bag of Tokens problem with optimized Python, Java, C++, JavaScript, and C# solutions. Includes detailed explanations and time/space complexity analysis.",
+      "articleBody": "You have an initial power of P, an initial score of 0, and a bag of tokens where tokens[i] is the value of the ith token (0-indexed).\nYour goal is to maximize your total score by potentially playing each token in one of two ways:\nIf your current power is at least tokens[i], you may play the ith token face up, losing tokens[i] power and gaining 1 score.\nIf your current score is at least 1, you may play the ith token face down, gaining tokens[i] power and losing 1 score.\nEach token may be played at most once and in any order. Return the maximum possible score you can achieve after playing any number of tokens.",
+      "mainEntityOfPage": "https://leetcodee.com/problems/bag-of-tokens/"
+    }
+    </script>
+</body>
+</html>

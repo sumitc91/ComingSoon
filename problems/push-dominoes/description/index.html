@@ -1,0 +1,358 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push Dominoes - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the LeetCode Push Dominoes problem with optimized Python, Java, C++, JavaScript, and C# solutions.  Includes detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, push dominoes, algorithm, solution, python, java, c++, javascript, c#, coding, programming, data structures">
+    <meta property="og:title" content="Push Dominoes - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/push-dominoes/">
+    <meta property="og:description" content="Learn how to solve the LeetCode Push Dominoes problem with optimized Python, Java, C++, JavaScript, and C# solutions.  Includes detailed explanations and time/space complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/push-dominoes/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Push Dominoes - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Learn how to solve the LeetCode Push Dominoes problem with optimized Python, Java, C++, JavaScript, and C# solutions.  Includes detailed explanations and time/space complexity analysis.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/push-dominoes/"
+      },
+      "keywords": ["leetcode", "push dominoes", "algorithm", "solution", "python", "java", "c++", "javascript", "c#", "coding", "programming", "data structures"]
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">838. Push Dominoes</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There are n dominoes in a line, and we place each domino vertically upright. In the beginning, we simultaneously push some of the dominoes either to the left or to the right.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    After each second, each domino that is falling to the left pushes the adjacent domino on the left. Similarly, the dominoes falling to the right push their adjacent dominoes standing on the right.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    When a vertical domino has dominoes falling on it from both sides, it stays still due to the balance of the forces.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For the purposes of this question, we will consider that a falling domino expends no additional force to a falling or already fallen domino.
+                </p>
+                <p class="text-gray-700">
+                    You are given a string dominoes representing the initial state where:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mt-2 mb-4">
+                    <li>dominoes[i] = 'L', if the ith domino has been pushed to the left,</li>
+                    <li>dominoes[i] = 'R', if the ith domino has been pushed to the right, and</li>
+                    <li>dominoes[i] = '.', if the ith domino has not been pushed.</li>
+                </ul>
+                <p class="text-gray-700">
+                    Return a string representing the final state.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: dominoes = "RR.L"
+Output: "RR.L"
+Explanation: The first domino expends no additional force on the second domino.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: dominoes = ".L.R...LR..L.."
+Output: "LL.RR.LLRRLL.."</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == dominoes.length</li>
+                    <li>1 ≤ n ≤ 10⁵</li>
+                    <li>dominoes[i] is either 'L', 'R', or '.'</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def pushDominoes(self, dominoes: str) -> str:
+        n = len(dominoes)
+        forces = [0] * n
+        
+        # Process forces from left to right
+        force = 0
+        for i in range(n):
+            if dominoes[i] == 'R':
+                force = n
+            elif dominoes[i] == 'L':
+                force = 0
+            else:
+                force = max(force - 1, 0)
+            forces[i] += force
+        
+        # Process forces from right to left
+        force = 0
+        for i in range(n-1, -1, -1):
+            if dominoes[i] == 'L':
+                force = n
+            elif dominoes[i] == 'R':
+                force = 0
+            else:
+                force = max(force - 1, 0)
+            forces[i] -= force
+        
+        # Convert forces to final state
+        return ''.join('.' if f == 0 else 'R' if f > 0 else 'L' for f in forces)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses two passes to calculate forces from both directions</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String pushDominoes(String dominoes) {
+        int n = dominoes.length();
+        int[] forces = new int[n];
+        
+        // Process forces from left to right
+        int force = 0;
+        for (int i = 0; i < n; i++) {
+            char c = dominoes.charAt(i);
+            if (c == 'R') {
+                force = n;
+            } else if (c == 'L') {
+                force = 0;
+            } else {
+                force = Math.max(force - 1, 0);
+            }
+            forces[i] += force;
+        }
+        
+        // Process forces from right to left
+        force = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            char c = dominoes.charAt(i);
+            if (c == 'L') {
+                force = n;
+            } else if (c == 'R') {
+                force = 0;
+            } else {
+                force = Math.max(force - 1, 0);
+            }
+            forces[i] -= force;
+        }
+        
+        // Convert forces to final state
+        StringBuilder result = new StringBuilder();
+        for (int f : forces) {
+            result.append(f == 0 ? '.' : f > 0 ? 'R' : 'L');
+        }
+        return result.toString();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string pushDominoes(string dominoes) {
+        int n = dominoes.length();
+        vector<int> forces(n);
+        
+        // Process forces from left to right
+        int force = 0;
+        for (int i = 0; i < n; i++) {
+            if (dominoes[i] == 'R') {
+                force = n;
+            } else if (dominoes[i] == 'L') {
+                force = 0;
+            } else {
+                force = max(force - 1, 0);
+            }
+            forces[i] += force;
+        }
+        
+        // Process forces from right to left
+        force = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (dominoes[i] == 'L') {
+                force = n;
+            } else if (dominoes[i] == 'R') {
+                force = 0;
+            } else {
+                force = max(force - 1, 0);
+            }
+            forces[i] -= force;
+        }
+        
+        // Convert forces to final state
+        string result;
+        for (int f : forces) {
+            result += f == 0 ? '.' : f > 0 ? 'R' : 'L';
+        }
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} dominoes
+ * @return {string}
+ */
+var pushDominoes = function(dominoes) {
+    const n = dominoes.length;
+    const forces = new Array(n).fill(0);
+    
+    // Process forces from left to right
+    let force = 0;
+    for (let i = 0; i < n; i++) {
+        if (dominoes[i] === 'R') {
+            force = n;
+        } else if (dominoes[i] === 'L') {
+            force = 0;
+        } else {
+            force = Math.max(force - 1, 0);
+        }
+        forces[i] += force;
+    }
+    
+    // Process forces from right to left
+    force = 0;
+    for (let i = n - 1; i >= 0; i--) {
+        if (dominoes[i] === 'L') {
+            force = n;
+        } else if (dominoes[i] === 'R') {
+            force = 0;
+        } else {
+            force = Math.max(force - 1, 0);
+        }
+        forces[i] -= force;
+    }
+    
+    // Convert forces to final state
+    return forces.map(f => f === 0 ? '.' : f > 0 ? 'R' : 'L').join('');
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string PushDominoes(string dominoes) {
+        int n = dominoes.Length;
+        int[] forces = new int[n];
+        
+        // Process forces from left to right
+        int force = 0;
+        for (int i = 0; i < n; i++) {
+            if (dominoes[i] == 'R') {
+                force = n;
+            } else if (dominoes[i] == 'L') {
+                force = 0;
+            } else {
+                force = Math.Max(force - 1, 0);
+            }
+            forces[i] += force;
+        }
+        
+        // Process forces from right to left
+        force = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (dominoes[i] == 'L') {
+                force = n;
+            } else if (dominoes[i] == 'R') {
+                force = 0;
+            } else {
+                force = Math.Max(force - 1, 0);
+            }
+            forces[i] -= force;
+        }
+        
+        // Convert forces to final state
+        return new string(forces.Select(f => f == 0 ? '.' : f > 0 ? 'R' : 'L').ToArray());
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses LINQ for efficient array operations</li>
+                    <li>Two-pass approach for calculating net forces</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="7678596887"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimum Swaps To Make Sequences Increasing - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum swaps needed to make two integer arrays strictly increasing.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, minimum swaps, strictly increasing, arrays, algorithm, dynamic programming, python, java, cpp, javascript, csharp, solution, coding, interview">
+    <link rel="canonical" href="https://leetcodee.com/problems/minimum-swaps-to-make-sequences-increasing/">
+    <meta property="og:title" content="Minimum Swaps To Make Sequences Increasing - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/minimum-swaps-to-make-sequences-increasing/">
+    <meta property="og:description" content="Find the minimum swaps needed to make two integer arrays strictly increasing.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://leetcodee.com/logo.png">  <!-- Replace with actual logo URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Minimum Swaps To Make Sequences Increasing",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27",  <!-- Replace with actual modification date -->
+      "description": "Find the minimum swaps needed to make two integer arrays strictly increasing. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "keywords": "leetcode, minimum swaps, strictly increasing, arrays, algorithm, dynamic programming, python, java, cpp, javascript, csharp, solution, coding, interview",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/minimum-swaps-to-make-sequences-increasing/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">801. Minimum Swaps To Make Sequences Increasing</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given two integer arrays of the same length nums1 and nums2. In one operation, you are allowed to swap nums1[i] with nums2[i].
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, if nums1 = [1,2,3,8], and nums2 = [5,6,7,4], you can swap the element at i = 3 to obtain nums1 = [1,2,3,4] and nums2 = [5,6,7,8].
+                </p>
+                <p class="text-gray-700">
+                    Return the minimum number of needed operations to make nums1 and nums2 strictly increasing. The test cases are generated such that the given input always makes it possible.
+                </p>
+                <p class="text-gray-700 mt-4">
+                    Two arrays arr1 and arr2 are strictly increasing if and only if arr1[i] < arr1[i+1] and arr2[i] < arr2[i+1] for each i (0-based).
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums1 = [1,3,5,4], nums2 = [1,2,3,7]
+Output: 1
+Explanation: Swap nums1[3] and nums2[3]. Then the sequences are:
+nums1 = [1,3,5,7] and nums2 = [1,2,3,4]
+which are both strictly increasing.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums1 = [0,3,5,8,9], nums2 = [2,1,4,6,9]
+Output: 1</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>2 ≤ nums1.length ≤ 10^5</li>
+                    <li>nums2.length == nums1.length</li>
+                    <li>0 ≤ nums1[i], nums2[i] ≤ 2 * 10^5</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def minSwap(self, nums1: List[int], nums2: List[int]) -> int:
+        n = len(nums1)
+        keep = [float('inf')] * n
+        swap = [float('inf')] * n
+        
+        keep[0] = 0
+        swap[0] = 1
+        
+        for i in range(1, n):
+            if nums1[i] > nums1[i-1] and nums2[i] > nums2[i-1]:
+                keep[i] = keep[i-1]
+                swap[i] = swap[i-1] + 1
+                
+            if nums1[i] > nums2[i-1] and nums2[i] > nums1[i-1]:
+                keep[i] = min(keep[i], swap[i-1])
+                swap[i] = min(swap[i], keep[i-1] + 1)
+        
+        return min(keep[-1], swap[-1])</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with two arrays: keep and swap</li>
+                    <li>keep[i] represents minimum swaps needed if we don't swap at position i</li>
+                    <li>swap[i] represents minimum swaps needed if we swap at position i</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int minSwap(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+        int[] keep = new int[n];
+        int[] swap = new int[n];
+        Arrays.fill(keep, Integer.MAX_VALUE);
+        Arrays.fill(swap, Integer.MAX_VALUE);
+        
+        keep[0] = 0;
+        swap[0] = 1;
+        
+        for (int i = 1; i < n; i++) {
+            if (nums1[i] > nums1[i-1] && nums2[i] > nums2[i-1]) {
+                keep[i] = keep[i-1];
+                swap[i] = swap[i-1] + 1;
+            }
+            
+            if (nums1[i] > nums2[i-1] && nums2[i] > nums1[i-1]) {
+                keep[i] = Math.min(keep[i], swap[i-1]);
+                swap[i] = Math.min(swap[i], keep[i-1] + 1);
+            }
+        }
+        
+        return Math.min(keep[n-1], swap[n-1]);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int minSwap(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums1.size();
+        vector<int> keep(n, INT_MAX);
+        vector<int> swap(n, INT_MAX);
+        
+        keep[0] = 0;
+        swap[0] = 1;
+        
+        for (int i = 1; i < n; i++) {
+            if (nums1[i] > nums1[i-1] && nums2[i] > nums2[i-1]) {
+                keep[i] = keep[i-1];
+                swap[i] = swap[i-1] + 1;
+            }
+            
+            if (nums1[i] > nums2[i-1] && nums2[i] > nums1[i-1]) {
+                keep[i] = min(keep[i], swap[i-1]);
+                swap[i] = min(swap[i], keep[i-1] + 1);
+            }
+        }
+        
+        return min(keep[n-1], swap[n-1]);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function minSwap(nums1, nums2) {
+    const n = nums1.length;
+    const keep = new Array(n).fill(Infinity);
+    const swap = new Array(n).fill(Infinity);
+    
+    keep[0] = 0;
+    swap[0] = 1;
+    
+    for (let i = 1; i < n; i++) {
+        if (nums1[i] > nums1[i-1] && nums2[i] > nums2[i-1]) {
+            keep[i] = keep[i-1];
+            swap[i] = swap[i-1] + 1;
+        }
+        
+        if (nums1[i] > nums2[i-1] && nums2[i] > nums1[i-1]) {
+            keep[i] = Math.min(keep[i], swap[i-1]);
+            swap[i] = Math.min(swap[i], keep[i-1] + 1);
+        }
+    }
+    
+    return Math.min(keep[n-1], swap[n-1]);
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int MinSwap(int[] nums1, int[] nums2) {
+        int n = nums1.Length;
+        int[] keep = new int[n];
+        int[] swap = new int[n];
+        Array.Fill(keep, int.MaxValue);
+        Array.Fill(swap, int.MaxValue);
+        
+        keep[0] = 0;
+        swap[0] = 1;
+        
+        for (int i = 1; i < n; i++) {
+            if (nums1[i] > nums1[i-1] && nums2[i] > nums2[i-1]) {
+                keep[i] = keep[i-1];
+                swap[i] = swap[i-1] + 1;
+            }
+            
+            if (nums1[i] > nums2[i-1] && nums2[i] > nums1[i-1]) {
+                keep[i] = Math.Min(keep[i], swap[i-1]);
+                swap[i] = Math.Min(swap[i], keep[i-1] + 1);
+            }
+        }
+        
+        return Math.Min(keep[n-1], swap[n-1]);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming approach</li>
+                    <li>Maintains two arrays to track minimum swaps needed</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

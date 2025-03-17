@@ -1,0 +1,284 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimum ASCII Delete Sum for Two Strings - LeetCodee Solution</title>
+    <meta name="description" content="Find the lowest ASCII sum of deleted characters to make two strings equal.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, minimum ascii delete sum, dynamic programming, python, java, c++, javascript, c#, algorithm, solution, coding, programming">
+    <meta property="og:title" content="Minimum ASCII Delete Sum for Two Strings - LeetCodee Solution">
+    <meta property="og:description" content="Find the lowest ASCII sum of deleted characters to make two strings equal.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/minimum-ascii-delete-sum-for-two-strings/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/minimum-ascii-delete-sum-for-two-strings/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">712. Minimum ASCII Delete Sum for Two Strings</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given two strings <code class="bg-gray-100 px-1 rounded">s1</code> and <code class="bg-gray-100 px-1 rounded">s2</code>, return the lowest ASCII sum of deleted characters to make two strings equal.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s1 = "sea", s2 = "eat"
+Output: 231
+Explanation: Deleting "s" from "sea" adds the ASCII value of "s" (115) to the sum.
+Deleting "t" from "eat" adds 116 to the sum.
+At the end, both strings are equal, and 115 + 116 = 231 is the minimum sum possible to achieve this.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s1 = "delete", s2 = "leet"
+Output: 403
+Explanation: Deleting "dee" from "delete" to turn the string into "let",
+adds 100[d] + 101[e] + 101[e] to the sum.
+Deleting "e" from "leet" adds 101[e] to the sum.
+At the end, both strings are equal to "let", and the answer is 100+101+101+101 = 403.
+If instead we turned both strings into "lee" or "eet", we would get answers of 433 or 417, which are higher.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s1.length, s2.length ≤ 1000</li>
+                    <li>s1 and s2 consist of lowercase English letters</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def minimumDeleteSum(self, s1: str, s2: str) -> int:
+        m, n = len(s1), len(s2)
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+        
+        # Initialize first row and column
+        for i in range(1, m + 1):
+            dp[i][0] = dp[i-1][0] + ord(s1[i-1])
+        for j in range(1, n + 1):
+            dp[0][j] = dp[0][j-1] + ord(s2[j-1])
+        
+        # Fill dp table
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if s1[i-1] == s2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    dp[i][j] = min(dp[i-1][j] + ord(s1[i-1]),
+                                 dp[i][j-1] + ord(s2[j-1]))
+        
+        return dp[m][n]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming approach</li>
+                    <li>Time complexity: O(m * n) where m and n are lengths of input strings</li>
+                    <li>Space complexity: O(m * n) for the dp table</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int minimumDeleteSum(String s1, String s2) {
+        int m = s1.length(), n = s2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        
+        // Initialize first row and column
+        for (int i = 1; i <= m; i++) {
+            dp[i][0] = dp[i-1][0] + s1.charAt(i-1);
+        }
+        for (int j = 1; j <= n; j++) {
+            dp[0][j] = dp[0][j-1] + s2.charAt(j-1);
+        }
+        
+        // Fill dp table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s1.charAt(i-1) == s2.charAt(j-1)) {
+                    dp[i][j] = dp[i-1][j-1];
+                } else {
+                    dp[i][j] = Math.min(dp[i-1][j] + s1.charAt(i-1),
+                                      dp[i][j-1] + s2.charAt(j-1));
+                }
+            }
+        }
+        
+        return dp[m][n];
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int minimumDeleteSum(string s1, string s2) {
+        int m = s1.length(), n = s2.length();
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        
+        // Initialize first row and column
+        for (int i = 1; i <= m; i++) {
+            dp[i][0] = dp[i-1][0] + s1[i-1];
+        }
+        for (int j = 1; j <= n; j++) {
+            dp[0][j] = dp[0][j-1] + s2[j-1];
+        }
+        
+        // Fill dp table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s1[i-1] == s2[j-1]) {
+                    dp[i][j] = dp[i-1][j-1];
+                } else {
+                    dp[i][j] = min(dp[i-1][j] + s1[i-1],
+                                 dp[i][j-1] + s2[j-1]);
+                }
+            }
+        }
+        
+        return dp[m][n];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {number}
+ */
+var minimumDeleteSum = function(s1, s2) {
+    const m = s1.length, n = s2.length;
+    const dp = Array(m + 1).fill().map(() => Array(n + 1).fill(0));
+    
+    // Initialize first row and column
+    for (let i = 1; i <= m; i++) {
+        dp[i][0] = dp[i-1][0] + s1.charCodeAt(i-1);
+    }
+    for (let j = 1; j <= n; j++) {
+        dp[0][j] = dp[0][j-1] + s2.charCodeAt(j-1);
+    }
+    
+    // Fill dp table
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (s1[i-1] === s2[j-1]) {
+                dp[i][j] = dp[i-1][j-1];
+            } else {
+                dp[i][j] = Math.min(dp[i-1][j] + s1.charCodeAt(i-1),
+                                  dp[i][j-1] + s2.charCodeAt(j-1));
+            }
+        }
+    }
+    
+    return dp[m][n];
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int MinimumDeleteSum(string s1, string s2) {
+        int m = s1.Length, n = s2.Length;
+        int[,] dp = new int[m + 1, n + 1];
+        
+        // Initialize first row and column
+        for (int i = 1; i <= m; i++) {
+            dp[i, 0] = dp[i-1, 0] + s1[i-1];
+        }
+        for (int j = 1; j <= n; j++) {
+            dp[0, j] = dp[0, j-1] + s2[j-1];
+        }
+        
+        // Fill dp table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s1[i-1] == s2[j-1]) {
+                    dp[i, j] = dp[i-1, j-1];
+                } else {
+                    dp[i, j] = Math.Min(dp[i-1, j] + s1[i-1],
+                                      dp[i, j-1] + s2[j-1]);
+                }
+            }
+        }
+        
+        return dp[m, n];
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming approach</li>
+                    <li>Time complexity: O(m * n) where m and n are lengths of input strings</li>
+                    <li>Space complexity: O(m * n) for the dp table</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "712. Minimum ASCII Delete Sum for Two Strings",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2023-10-27",
+  "dateModified": "2023-10-27",
+  "description": "Find the lowest ASCII sum of deleted characters to make two strings equal. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+  "articleBody": "Given two strings s1 and s2, return the lowest ASCII sum of deleted characters to make two strings equal.  This problem can be efficiently solved using dynamic programming.",
+  "mainEntityOfPage": "https://leetcodee.com/problems/minimum-ascii-delete-sum-for-two-strings/"
+}
+</script>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitwise ORs of Subarrays - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of unique bitwise ORs of all contiguous subarrays.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, bitwise OR, subarray, algorithm, solution, python, java, cpp, javascript, c#, coding, programming, tutorial">
+    <meta property="og:title" content="Bitwise ORs of Subarrays - LeetCodee Solution">
+    <meta property="og:description" content="Find the number of unique bitwise ORs of all contiguous subarrays.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/bitwise-ors-of-subarrays/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/bitwise-ors-of-subarrays/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">898. Bitwise ORs of Subarrays</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    We have an array <code class="bg-gray-100 px-1 rounded">arr</code> of non-negative integers.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For every (contiguous) subarray <code class="bg-gray-100 px-1 rounded">sub = [arr[i], arr[i + 1], ..., arr[j]]</code> (with <code class="bg-gray-100 px-1 rounded">i <= j</code>), we take the bitwise OR of all the elements in <code class="bg-gray-100 px-1 rounded">sub</code>, obtaining a result <code class="bg-gray-100 px-1 rounded">arr[i] | arr[i + 1] | ... | arr[j]</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the number of possible results. Results that occur more than once are only counted once in the final answer.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [0]
+Output: 1
+Explanation: There is only one possible result: 0.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [1,1,2]
+Output: 3
+Explanation: The possible subarrays are [1], [1], [2], [1, 1], [1, 2], [1, 1, 2].
+These yield the results 1, 1, 2, 1, 3, 3.
+There are 3 unique values, so the answer is 3.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [1,2,4]
+Output: 6
+Explanation: The possible results are 1, 2, 3, 4, 6, and 7.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= arr.length <= 5 * 10⁴</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= arr[i] <= 10⁹</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def subarrayBitwiseORs(self, arr: List[int]) -> int:
+        # Set to store unique results
+        results = set()
+        # Current set of possible OR results
+        curr = {0}
+        
+        for num in arr:
+            # Create new set for current number
+            curr = {num | x for x in curr} | {num}
+            # Add all results to the final set
+            results.update(curr)
+            
+        return len(results)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">Where n is the length of the array. The log factor comes from the maximum possible number of unique results.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">To store all possible unique results.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int subarrayBitwiseORs(int[] arr) {
+        Set<Integer> results = new HashSet<>();
+        Set<Integer> curr = new HashSet<>();
+        curr.add(0);
+        
+        for (int num : arr) {
+            Set<Integer> next = new HashSet<>();
+            for (int x : curr) {
+                next.add(num | x);
+            }
+            next.add(num);
+            curr = next;
+            results.addAll(curr);
+        }
+        
+        return results.size();
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">Where n is the length of the array. The log factor comes from the maximum possible number of unique results.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">To store all possible unique results.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int subarrayBitwiseORs(vector<int>& arr) {
+        unordered_set<int> results;
+        unordered_set<int> curr;
+        curr.insert(0);
+        
+        for (int num : arr) {
+            unordered_set<int> next;
+            for (int x : curr) {
+                next.insert(num | x);
+            }
+            next.insert(num);
+            curr = next;
+            results.insert(curr.begin(), curr.end());
+        }
+        
+        return results.size();
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">Where n is the length of the array. The log factor comes from the maximum possible number of unique results.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">To store all possible unique results.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+var subarrayBitwiseORs = function(arr) {
+    const results = new Set();
+    let curr = new Set([0]);
+    
+    for (const num of arr) {
+        const next = new Set();
+        for (const x of curr) {
+            next.add(num | x);
+        }
+        next.add(num);
+        curr = next;
+        for (const x of curr) {
+            results.add(x);
+        }
+    }
+    
+    return results.size;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">Where n is the length of the array. The log factor comes from the maximum possible number of unique results.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">To store all possible unique results.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int SubarrayBitwiseORs(int[] arr) {
+        HashSet<int> results = new HashSet<int>();
+        HashSet<int> curr = new HashSet<int>();
+        curr.Add(0);
+        
+        foreach (int num in arr) {
+            HashSet<int> next = new HashSet<int>();
+            foreach (int x in curr) {
+                next.Add(num | x);
+            }
+            next.Add(num);
+            curr = next;
+            foreach (int x in curr) {
+                results.Add(x);
+            }
+        }
+        
+        return results.Count;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">Where n is the length of the array. The log factor comes from the maximum possible number of unique results.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n * log(max(arr)))</h4>
+                    <p class="text-gray-700">To store all possible unique results.</p>
+                </div>
+            </div>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Bitwise ORs of Subarrays",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-07-27",
+      "description": "Find the number of unique bitwise ORs of all contiguous subarrays.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "articleBody": "We have an array arr of non-negative integers. For every (contiguous) subarray sub = [arr[i], arr[i + 1], ..., arr[j]] (with i <= j), we take the bitwise OR of all the elements in sub, obtaining a result arr[i] | arr[i + 1] | ... | arr[j]. Return the number of possible results. Results that occur more than once are only counted once in the final answer."
+    }
+    </script>
+</body>
+</html>

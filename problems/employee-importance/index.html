@@ -1,0 +1,328 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Importance - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 690: Employee Importance.  Learn how to calculate the total importance of an employee and their subordinates using Depth-First Search (DFS).">
+    <meta name="keywords" content="leetcode, leetcode solution, employee importance, depth-first search, dfs, algorithm, python, java, cpp, javascript, c#, coding, programming, solution, tutorial">
+    <meta property="og:title" content="Employee Importance - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/employee-importance/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 690: Employee Importance.  Learn how to calculate the total importance of an employee and their subordinates using Depth-First Search (DFS).">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/employee-importance/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "690. Employee Importance",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 690: Employee Importance. Learn how to calculate the total importance of an employee and their subordinates using Depth-First Search (DFS).",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/employee-importance/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">690. Employee Importance</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You have a data structure of employee information, including the employee's unique ID, importance value, and direct subordinates' IDs.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given an array of employees <code class="bg-gray-100 px-1 rounded">employees</code> where:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">employees[i].id</code> is the ID of the i<sup>th</sup> employee</li>
+                    <li><code class="bg-gray-100 px-1 rounded">employees[i].importance</code> is the importance value of the i<sup>th</sup> employee</li>
+                    <li><code class="bg-gray-100 px-1 rounded">employees[i].subordinates</code> is a list of the IDs of the direct subordinates of the i<sup>th</sup> employee</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Given an employee ID <code class="bg-gray-100 px-1 rounded">id</code>, return the total importance value of this employee and all their direct and indirect subordinates.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: employees = [[1,5,[2,3]],[2,3,[]],[3,3,[]]], id = 1
+Output: 11
+Explanation: Employee 1 has an importance value of 5 and has two direct subordinates: 2 and 3.
+They both have an importance value of 3.
+So the total importance value of employee 1 is 5 + 3 + 3 = 11.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: employees = [[1,2,[5]],[5,-3,[]]], id = 5
+Output: -3</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ employees.length ≤ 2000</li>
+                    <li>1 ≤ employees[i].id ≤ 2000</li>
+                    <li>All employees[i].id are unique</li>
+                    <li>-100 ≤ employees[i].importance ≤ 100</li>
+                    <li>One employee has at most one direct leader and may have several subordinates</li>
+                    <li>The IDs in employees[i].subordinates are valid IDs</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>"""
+# Definition for Employee.
+class Employee:
+    def __init__(self, id: int, importance: int, subordinates: List[int]):
+        self.id = id
+        self.importance = importance
+        self.subordinates = subordinates
+"""
+
+class Solution:
+    def getImportance(self, employees: List['Employee'], id: int) -> int:
+        # Create a dictionary to store employee objects by their ID
+        emp_dict = {emp.id: emp for emp in employees}
+        
+        def dfs(emp_id: int) -> int:
+            employee = emp_dict[emp_id]
+            total = employee.importance
+            
+            # Add importance of all subordinates recursively
+            for sub_id in employee.subordinates:
+                total += dfs(sub_id)
+                
+            return total
+        
+        return dfs(id)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses depth-first search (DFS) to traverse the employee hierarchy</li>
+                    <li>Creates a dictionary for O(1) employee lookup by ID</li>
+                    <li>Time complexity: O(N) where N is the total number of employees in the hierarchy</li>
+                    <li>Space complexity: O(N) for the dictionary and recursion stack</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>/*
+// Definition for Employee.
+class Employee {
+    public int id;
+    public int importance;
+    public List<Integer> subordinates;
+};
+*/
+
+class Solution {
+    Map<Integer, Employee> employeeMap;
+    
+    public int getImportance(List<Employee> employees, int id) {
+        employeeMap = new HashMap<>();
+        for (Employee emp : employees) {
+            employeeMap.put(emp.id, emp);
+        }
+        
+        return dfs(id);
+    }
+    
+    private int dfs(int empId) {
+        Employee employee = employeeMap.get(empId);
+        int total = employee.importance;
+        
+        for (int subId : employee.subordinates) {
+            total += dfs(subId);
+        }
+        
+        return total;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>/*
+// Definition for Employee.
+class Employee {
+public:
+    int id;
+    int importance;
+    vector<int> subordinates;
+};
+*/
+
+class Solution {
+public:
+    unordered_map<int, Employee*> empMap;
+    
+    int getImportance(vector<Employee*> employees, int id) {
+        for (Employee* emp : employees) {
+            empMap[emp->id] = emp;
+        }
+        
+        return dfs(id);
+    }
+    
+private:
+    int dfs(int empId) {
+        Employee* emp = empMap[empId];
+        int total = emp->importance;
+        
+        for (int subId : emp->subordinates) {
+            total += dfs(subId);
+        }
+        
+        return total;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * Definition for Employee.
+ * function Employee(id, importance, subordinates) {
+ *     this.id = id;
+ *     this.importance = importance;
+ *     this.subordinates = subordinates;
+ * }
+ */
+
+/**
+ * @param {Employee[]} employees
+ * @param {number} id
+ * @return {number}
+ */
+var GetImportance = function(employees, id) {
+    const empMap = new Map();
+    for (const emp of employees) {
+        empMap.set(emp.id, emp);
+    }
+    
+    function dfs(empId) {
+        const emp = empMap.get(empId);
+        let total = emp.importance;
+        
+        for (const subId of emp.subordinates) {
+            total += dfs(subId);
+        }
+        
+        return total;
+    }
+    
+    return dfs(id);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>/*
+// Definition for Employee.
+class Employee {
+    public int id;
+    public int importance;
+    public IList<int> subordinates;
+}
+*/
+
+class Solution {
+    private Dictionary<int, Employee> empDict;
+    
+    public int GetImportance(IList<Employee> employees, int id) {
+        empDict = new Dictionary<int, Employee>();
+        foreach (var emp in employees) {
+            empDict[emp.id] = emp;
+        }
+        
+        return DFS(id);
+    }
+    
+    private int DFS(int empId) {
+        Employee emp = empDict[empId];
+        int total = emp.importance;
+        
+        foreach (int subId in emp.subordinates) {
+            total += DFS(subId);
+        }
+        
+        return total;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses depth-first search to calculate total importance</li>
+                    <li>Stores employees in a dictionary/map for efficient lookup</li>
+                    <li>Time complexity: O(N) where N is the number of employees</li>
+                    <li>Space complexity: O(N) for the dictionary and recursion stack</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

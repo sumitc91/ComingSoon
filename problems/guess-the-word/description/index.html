@@ -1,0 +1,435 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Word - LeetCodee Solution</title>
+    <meta name="description" content="Find the secret word within 10 guesses using this LeetCodee solution.  Optimized algorithms in Python, Java, C++, JavaScript, and C# are provided with detailed explanations.">
+    <meta name="keywords" content="leetcode, guess the word, algorithm, python, java, c++, javascript, c#, solution, coding, programming, interview, problem solving">
+    <meta property="og:title" content="Guess the Word - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/guess-the-word/">
+    <meta property="og:description" content="Find the secret word within 10 guesses using this LeetCodee solution.  Optimized algorithms in Python, Java, C++, JavaScript, and C# are provided with detailed explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/guess-the-word/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "843. Guess the Word",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the secret word within 10 guesses using this LeetCodee solution.  Optimized algorithms in Python, Java, C++, JavaScript, and C# are provided with detailed explanations.",
+      "keywords": "leetcode, guess the word, algorithm, python, java, c++, javascript, c#, solution, coding, programming, interview, problem solving",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/guess-the-word/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">843. Guess the Word</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an array of unique strings wordlist where wordlist[i] is 6 letters long, and one word in this list is chosen as secret.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You may call Master.guess(word) to guess a word. The guessed word should have type string and must be from the original list with 6 lowercase letters.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    This function returns an integer type, representing the number of exact matches (value and position) of your guess to the secret word. Also, if your guess is not in the given wordlist, it will return -1 instead.
+                </p>
+                <p class="text-gray-700">
+                    For each test case, you have exactly 10 guesses to guess the word. At the end of any number of calls, if you have made 10 or more calls to Master.guess and at least one of these guesses was secret, you pass the test case.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: secret = "acckzz", wordlist = ["acckzz","ccbazz","eiowzz","abcczz"]
+Output: You made the correct guess at some point.
+Explanation:
+master.guess("aaaaaa") returns -1, because "aaaaaa" is not in wordlist.
+master.guess("acckzz") returns 6, because "acckzz" is secret and has all 6 matches.
+master.guess("ccbazz") returns 3, because "ccbazz" has 3 matches.
+master.guess("eiowzz") returns 2, because "eiowzz" has 2 matches.
+master.guess("abcczz") returns 4, because "abcczz" has 4 matches.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: secret = "hamada", wordlist = ["hamada","khaled"]
+Output: You guessed the secret word correctly.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ wordlist.length ≤ 100</li>
+                    <li>wordlist[i].length == 6</li>
+                    <li>wordlist[i] consists of lowercase English letters</li>
+                    <li>All words in wordlist are unique</li>
+                    <li>secret exists in wordlist</li>
+                    <li>At most 10 calls will be made to Master.guess</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findSecretWord(self, wordlist: List[str], master: 'Master') -> None:
+        def matches(word1: str, word2: str) -> int:
+            return sum(c1 == c2 for c1, c2 in zip(word1, word2))
+        
+        def getMostCommonWord(candidates: List[str], possible: List[str]) -> str:
+            if not candidates:
+                return possible[0]
+            
+            counts = [[0] * 26 for _ in range(6)]
+            for word in possible:
+                for i, c in enumerate(word):
+                    counts[i][ord(c) - ord('a')] += 1
+            
+            maxScore = 0
+            bestWord = candidates[0]
+            
+            for word in candidates:
+                score = 0
+                for i, c in enumerate(word):
+                    score += counts[i][ord(c) - ord('a')]
+                if score > maxScore:
+                    maxScore = score
+                    bestWord = word
+            
+            return bestWord
+        
+        n = len(wordlist)
+        possible = wordlist[:]
+        
+        for _ in range(10):
+            guess = getMostCommonWord(possible[:], possible)
+            matches_count = master.guess(guess)
+            
+            if matches_count == 6:
+                return
+            
+            possible = [w for w in possible if matches(w, guess) == matches_count]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses minimax strategy to minimize worst-case scenarios</li>
+                    <li>Maintains a list of possible words based on match counts</li>
+                    <li>Time complexity: O(N²) where N is the length of wordlist</li>
+                    <li>Space complexity: O(N)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public void findSecretWord(String[] wordlist, Master master) {
+        List<String> possible = new ArrayList<>(Arrays.asList(wordlist));
+        
+        for (int i = 0; i < 10 && !possible.isEmpty(); i++) {
+            String guess = getMostCommonWord(possible, possible);
+            int matches = master.guess(guess);
+            
+            if (matches == 6) return;
+            
+            List<String> newPossible = new ArrayList<>();
+            for (String word : possible) {
+                if (matches(word, guess) == matches) {
+                    newPossible.add(word);
+                }
+            }
+            possible = newPossible;
+        }
+    }
+    
+    private int matches(String word1, String word2) {
+        int matches = 0;
+        for (int i = 0; i < 6; i++) {
+            if (word1.charAt(i) == word2.charAt(i)) {
+                matches++;
+            }
+        }
+        return matches;
+    }
+    
+    private String getMostCommonWord(List<String> candidates, List<String> possible) {
+        if (candidates.isEmpty()) {
+            return possible.get(0);
+        }
+        
+        int[][] counts = new int[6][26];
+        for (String word : possible) {
+            for (int i = 0; i < 6; i++) {
+                counts[i][word.charAt(i) - 'a']++;
+            }
+        }
+        
+        int maxScore = 0;
+        String bestWord = candidates.get(0);
+        
+        for (String word : candidates) {
+            int score = 0;
+            for (int i = 0; i < 6; i++) {
+                score += counts[i][word.charAt(i) - 'a'];
+            }
+            if (score > maxScore) {
+                maxScore = score;
+                bestWord = word;
+            }
+        }
+        
+        return bestWord;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    void findSecretWord(vector<string>& wordlist, Master& master) {
+        vector<string> possible(wordlist.begin(), wordlist.end());
+        
+        for (int i = 0; i < 10 && !possible.empty(); i++) {
+            string guess = getMostCommonWord(possible, possible);
+            int matches = master.guess(guess);
+            
+            if (matches == 6) return;
+            
+            vector<string> newPossible;
+            for (const string& word : possible) {
+                if (getMatches(word, guess) == matches) {
+                    newPossible.push_back(word);
+                }
+            }
+            possible = newPossible;
+        }
+    }
+    
+private:
+    int getMatches(const string& word1, const string& word2) {
+        int matches = 0;
+        for (int i = 0; i < 6; i++) {
+            if (word1[i] == word2[i]) {
+                matches++;
+            }
+        }
+        return matches;
+    }
+    
+    string getMostCommonWord(const vector<string>& candidates, const vector<string>& possible) {
+        if (candidates.empty()) {
+            return possible[0];
+        }
+        
+        vector<vector<int>> counts(6, vector<int>(26, 0));
+        for (const string& word : possible) {
+            for (int i = 0; i < 6; i++) {
+                counts[i][word[i] - 'a']++;
+            }
+        }
+        
+        int maxScore = 0;
+        string bestWord = candidates[0];
+        
+        for (const string& word : candidates) {
+            int score = 0;
+            for (int i = 0; i < 6; i++) {
+                score += counts[i][word[i] - 'a'];
+            }
+            if (score > maxScore) {
+                maxScore = score;
+                bestWord = word;
+            }
+        }
+        
+        return bestWord;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} wordlist
+ * @param {Master} master
+ * @return {void}
+ */
+var findSecretWord = function(wordlist, master) {
+    const matches = (word1, word2) => {
+        let count = 0;
+        for (let i = 0; i < 6; i++) {
+            if (word1[i] === word2[i]) count++;
+        }
+        return count;
+    };
+    
+    const getMostCommonWord = (candidates, possible) => {
+        if (!candidates.length) return possible[0];
+        
+        const counts = Array(6).fill().map(() => Array(26).fill(0));
+        for (const word of possible) {
+            for (let i = 0; i < 6; i++) {
+                counts[i][word.charCodeAt(i) - 97]++;
+            }
+        }
+        
+        let maxScore = 0;
+        let bestWord = candidates[0];
+        
+        for (const word of candidates) {
+            let score = 0;
+            for (let i = 0; i < 6; i++) {
+                score += counts[i][word.charCodeAt(i) - 97];
+            }
+            if (score > maxScore) {
+                maxScore = score;
+                bestWord = word;
+            }
+        }
+        
+        return bestWord;
+    };
+    
+    let possible = [...wordlist];
+    
+    for (let i = 0; i < 10 && possible.length; i++) {
+        const guess = getMostCommonWord(possible, possible);
+        const matchCount = master.guess(guess);
+        
+        if (matchCount === 6) return;
+        
+        possible = possible.filter(word => matches(word, guess) === matchCount);
+    }
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public void FindSecretWord(string[] wordlist, Master master) {
+        var possible = new List<string>(wordlist);
+        
+        for (int i = 0; i < 10 && possible.Count > 0; i++) {
+            string guess = GetMostCommonWord(possible, possible);
+            int matches = master.Guess(guess);
+            
+            if (matches == 6) return;
+            
+            possible = possible.Where(w => Matches(w, guess) == matches).ToList();
+        }
+    }
+    
+    private int Matches(string word1, string word2) {
+        return word1.Zip(word2, (c1, c2) => c1 == c2 ? 1 : 0).Sum();
+    }
+    
+    private string GetMostCommonWord(List<string> candidates, List<string> possible) {
+        if (!candidates.Any()) {
+            return possible[0];
+        }
+        
+        var counts = new int[6][];
+        for (int i = 0; i < 6; i++) {
+            counts[i] = new int[26];
+        }
+        
+        foreach (var word in possible) {
+            for (int i = 0; i < 6; i++) {
+                counts[i][word[i] - 'a']++;
+            }
+        }
+        
+        int maxScore = 0;
+        string bestWord = candidates[0];
+        
+        foreach (var word in candidates) {
+            int score = 0;
+            for (int i = 0; i < 6; i++) {
+                score += counts[i][word[i] - 'a'];
+            }
+            if (score > maxScore) {
+                maxScore = score;
+                bestWord = word;
+            }
+        }
+        
+        return bestWord;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses LINQ for efficient filtering and matching</li>
+                    <li>Implements minimax strategy with frequency analysis</li>
+                    <li>Time complexity: O(N²)</li>
+                    <li>Space complexity: O(N)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

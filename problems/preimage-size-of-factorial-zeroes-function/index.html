@@ -1,0 +1,324 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preimage Size of Factorial Zeroes Function - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of non-negative integers x such that the number of trailing zeroes in x! is equal to k.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, leetcode solution, preimage size of factorial zeroes function, factorial, trailing zeroes, algorithm, python, java, c++, javascript, c#, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/preimage-size-of-factorial-zeroes-function/">
+    <meta property="og:title" content="Preimage Size of Factorial Zeroes Function - LeetCodee Solution">
+    <meta property="og:description" content="Find the number of non-negative integers x such that the number of trailing zeroes in x! is equal to k.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/preimage-size-of-factorial-zeroes-function/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Preimage Size of Factorial Zeroes Function - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find the number of non-negative integers x such that the number of trailing zeroes in x! is equal to k.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/preimage-size-of-factorial-zeroes-function/"
+      },
+      "keywords": "leetcode, leetcode solution, preimage size of factorial zeroes function, factorial, trailing zeroes, algorithm, python, java, c++, javascript, c#, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">793. Preimage Size of Factorial Zeroes Function</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Let f(x) be the number of zeroes at the end of x!. Recall that x! = 1 * 2 * 3 * ... * x and by convention, 0! = 1.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, f(3) = 0 because 3! = 6 has no zeroes at the end, while f(11) = 2 because 11! = 39916800 has 2 zeroes at the end.
+                </p>
+                <p class="text-gray-700">
+                    Given an integer k, return the number of non-negative integers x have the property that f(x) = k.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: k = 0
+Output: 5
+Explanation: 0!, 1!, 2!, 3!, and 4! end with k = 0 zeroes.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: k = 5
+Output: 0
+Explanation: There is no x such that x! ends in k = 5 zeroes.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: k = 3
+Output: 5</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>0 ≤ k ≤ 10^9</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def preimageSizeFZF(self, k: int) -> int:
+        def trailingZeroes(n: int) -> int:
+            count = 0
+            while n:
+                n //= 5
+                count += n
+            return count
+            
+        def search(k: int) -> int:
+            left, right = 0, 5 * (k + 1)
+            while left <= right:
+                mid = (left + right) // 2
+                zeros = trailingZeroes(mid)
+                if zeros == k:
+                    return mid
+                elif zeros < k:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            return -1
+            
+        # Find the first number with k trailing zeros
+        first = search(k)
+        if first == -1:
+            return 0
+            
+        # Find the first number with k+1 trailing zeros
+        last = search(k + 1)
+        if last == -1:
+            last = 5 * (k + 1)
+            
+        return last - first</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses binary search to find numbers with k trailing zeros</li>
+                    <li>Counts trailing zeros by counting factors of 5</li>
+                    <li>Returns difference between first number with k+1 zeros and first number with k zeros</li>
+                    <li>Time complexity: O(log k)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int preimageSizeFZF(int k) {
+        long left = search(k);
+        if (left == -1) return 0;
+        long right = search(k + 1);
+        if (right == -1) right = 5L * (k + 1);
+        return (int)(right - left);
+    }
+    
+    private long search(int k) {
+        long left = 0, right = 5L * (k + 1);
+        while (left <= right) {
+            long mid = left + (right - left) / 2;
+            long zeros = trailingZeroes(mid);
+            if (zeros == k) return mid;
+            else if (zeros < k) left = mid + 1;
+            else right = mid - 1;
+        }
+        return -1;
+    }
+    
+    private long trailingZeroes(long n) {
+        long count = 0;
+        while (n > 0) {
+            n /= 5;
+            count += n;
+        }
+        return count;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    long long trailingZeroes(long long n) {
+        long long count = 0;
+        while (n > 0) {
+            n /= 5;
+            count += n;
+        }
+        return count;
+    }
+    
+    long long search(int k) {
+        long long left = 0, right = 5LL * (k + 1);
+        while (left <= right) {
+            long long mid = left + (right - left) / 2;
+            long long zeros = trailingZeroes(mid);
+            if (zeros == k) return mid;
+            else if (zeros < k) left = mid + 1;
+            else right = mid - 1;
+        }
+        return -1;
+    }
+    
+public:
+    int preimageSizeFZF(int k) {
+        long long left = search(k);
+        if (left == -1) return 0;
+        long long right = search(k + 1);
+        if (right == -1) right = 5LL * (k + 1);
+        return right - left;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function preimageSizeFZF(k) {
+    function trailingZeroes(n) {
+        let count = 0;
+        while (n > 0) {
+            n = Math.floor(n / 5);
+            count += n;
+        }
+        return count;
+    }
+    
+    function search(k) {
+        let left = 0, right = 5 * (k + 1);
+        while (left <= right) {
+            const mid = Math.floor(left + (right - left) / 2);
+            const zeros = trailingZeroes(mid);
+            if (zeros === k) return mid;
+            else if (zeros < k) left = mid + 1;
+            else right = mid - 1;
+        }
+        return -1;
+    }
+    
+    const left = search(k);
+    if (left === -1) return 0;
+    const right = search(k + 1);
+    if (right === -1) return 5 * (k + 1) - left;
+    return right - left;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int PreimageSizeFZF(int k) {
+        long left = Search(k);
+        if (left == -1) return 0;
+        long right = Search(k + 1);
+        if (right == -1) right = 5L * (k + 1);
+        return (int)(right - left);
+    }
+    
+    private long Search(int k) {
+        long left = 0, right = 5L * (k + 1);
+        while (left <= right) {
+            long mid = left + (right - left) / 2;
+            long zeros = TrailingZeroes(mid);
+            if (zeros == k) return mid;
+            else if (zeros < k) left = mid + 1;
+            else right = mid - 1;
+        }
+        return -1;
+    }
+    
+    private long TrailingZeroes(long n) {
+        long count = 0;
+        while (n > 0) {
+            n /= 5;
+            count += n;
+        }
+        return count;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses binary search to find numbers with k trailing zeros</li>
+                    <li>Counts trailing zeros by counting factors of 5</li>
+                    <li>Returns difference between first number with k+1 zeros and first number with k zeros</li>
+                    <li>Time complexity: O(log k)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

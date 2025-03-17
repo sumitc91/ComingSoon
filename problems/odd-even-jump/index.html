@@ -1,0 +1,409 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odd Even Jump - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of good starting indices in an array where you can reach the end through a series of odd and even jumps.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta name="keywords" content="leetcode, odd even jump, algorithm, solution, python, java, cpp, javascript, c#, coding, interview, dynamic programming">
+    <meta property="og:title" content="Odd Even Jump - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/odd-even-jump/">
+    <meta property="og:description" content="Find the number of good starting indices in an array where you can reach the end through a series of odd and even jumps.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/odd-even-jump/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Odd Even Jump - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the number of good starting indices in an array where you can reach the end through a series of odd and even jumps.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations.",
+      "articleBody": "You are given an integer array arr. From some starting index, you can make a series of jumps. The (1st, 3rd, 5th, ...) jumps in the series are called odd-numbered jumps, and the (2nd, 4th, 6th, ...) jumps in the series are called even-numbered jumps. Note that the jumps are numbered, not the indices.\n\nYou may from index i jump forward to index j (with i < j) in the following way:\n\nDuring odd-numbered jumps (i.e., jumps 1, 3, 5, ...), you jump to the index j such that arr[i] <= arr[j] and arr[j] is the smallest possible value. If there are multiple such indices j, you can only jump to the smallest such index j.\nDuring even-numbered jumps (i.e., jumps 2, 4, 6, ...), you jump to the index j such that arr[i] >= arr[j] and arr[j] is the largest possible value. If there are multiple such indices j, you can only jump to the smallest such index j.\nIt may be the case that for some index i, there are no legal jumps.\nA starting index is good if, starting from that index, you can reach the end of the array (index arr.length - 1) by jumping some number of times (possibly 0 or more than once).\n\nReturn the number of good starting indices.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/odd-even-jump/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">975. Odd Even Jump</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array arr. From some starting index, you can make a series of jumps. The (1st, 3rd, 5th, ...) jumps in the series are called odd-numbered jumps, and the (2nd, 4th, 6th, ...) jumps in the series are called even-numbered jumps. Note that the jumps are numbered, not the indices.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You may from index i jump forward to index j (with i < j) in the following way:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>During odd-numbered jumps (i.e., jumps 1, 3, 5, ...), you jump to the index j such that arr[i] <= arr[j] and arr[j] is the smallest possible value. If there are multiple such indices j, you can only jump to the smallest such index j.</li>
+                    <li>During even-numbered jumps (i.e., jumps 2, 4, 6, ...), you jump to the index j such that arr[i] >= arr[j] and arr[j] is the largest possible value. If there are multiple such indices j, you can only jump to the smallest such index j.</li>
+                    <li>It may be the case that for some index i, there are no legal jumps.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    A starting index is good if, starting from that index, you can reach the end of the array (index arr.length - 1) by jumping some number of times (possibly 0 or more than once).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the number of good starting indices.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [10,13,12,14,15]
+Output: 2
+Explanation:
+From starting index i = 0, we can make our 1st jump to i = 2 (since arr[2] is the smallest among arr[1], arr[2], arr[3], arr[4] that is greater or equal to arr[0]), then we cannot jump any more.
+From starting index i = 1 and i = 2, we can make our 1st jump to i = 3, then we cannot jump any more.
+From starting index i = 3, we can make our 1st jump to i = 4, so we have reached the end.
+From starting index i = 4, we have reached the end already.
+In total, there are 2 different starting indices i = 3 and i = 4, where we can reach the end with some number of jumps.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [2,3,1,1,4]
+Output: 3
+Explanation:
+From starting index i = 0, we make jumps to i = 1, i = 2, i = 3:
+During our 1st jump (odd-numbered), we first jump to i = 1 because arr[1] is the smallest value in [arr[1], arr[2], arr[3], arr[4]] that is greater than or equal to arr[0].
+During our 2nd jump (even-numbered), we jump from i = 1 to i = 2 because arr[2] is the largest value in [arr[2], arr[3], arr[4]] that is less than or equal to arr[1]. arr[3] is also the largest value, but 2 is a smaller index, so we can only jump to i = 2 and not i = 3
+During our 3rd jump (odd-numbered), we jump from i = 2 to i = 3 because arr[3] is the smallest value in [arr[3], arr[4]] that is greater than or equal to arr[2].
+We can't jump from i = 3 to i = 4, so the starting index i = 0 is not good.
+In a similar way, we can deduce that:
+From starting index i = 1, we jump to i = 4, so we reach the end.
+From starting index i = 2, we jump to i = 3, and then we can't jump anymore.
+From starting index i = 3, we jump to i = 4, so we reach the end.
+From starting index i = 4, we are already at the end.
+In total, there are 3 different starting indices i = 1, i = 3, and i = 4, where we can reach the end with some number of jumps.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [5,1,3,4,2]
+Output: 3
+Explanation: We can reach the end from starting indices 1, 2, and 4.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= arr.length <= 2 * 10^4</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= arr[i] < 10^5</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def oddEvenJumps(self, arr: List[int]) -> int:
+        n = len(arr)
+        next_higher = [0] * n
+        next_lower = [0] * n
+        stack = []
+        
+        # Find next higher for odd jumps
+        for i in range(n):
+            while stack and arr[stack[-1]] <= arr[i]:
+                next_higher[stack.pop()] = i
+            stack.append(i)
+            
+        stack = []
+        # Find next lower for even jumps
+        for i in range(n):
+            while stack and arr[stack[-1]] >= arr[i]:
+                next_lower[stack.pop()] = i
+            stack.append(i)
+            
+        odd = [False] * n
+        even = [False] * n
+        odd[-1] = even[-1] = True
+        
+        for i in range(n-2, -1, -1):
+            if next_higher[i]:
+                odd[i] = even[next_higher[i]]
+            if next_lower[i]:
+                even[i] = odd[next_lower[i]]
+                
+        return sum(odd)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">We need to process each element and maintain a sorted order.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the next higher and lower indices for each position.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int oddEvenJumps(int[] arr) {
+        int n = arr.length;
+        int[] nextHigher = new int[n];
+        int[] nextLower = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        
+        // Find next higher for odd jumps
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] <= arr[i]) {
+                nextHigher[stack.pop()] = i;
+            }
+            stack.push(i);
+        }
+        
+        stack.clear();
+        // Find next lower for even jumps
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+                nextLower[stack.pop()] = i;
+            }
+            stack.push(i);
+        }
+        
+        boolean[] odd = new boolean[n];
+        boolean[] even = new boolean[n];
+        odd[n-1] = even[n-1] = true;
+        
+        for (int i = n-2; i >= 0; i--) {
+            if (nextHigher[i] != 0) {
+                odd[i] = even[nextHigher[i]];
+            }
+            if (nextLower[i] != 0) {
+                even[i] = odd[nextLower[i]];
+            }
+        }
+        
+        int count = 0;
+        for (boolean b : odd) {
+            if (b) count++;
+        }
+        return count;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">We need to process each element and maintain a sorted order.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the next higher and lower indices for each position.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int oddEvenJumps(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> nextHigher(n, 0);
+        vector<int> nextLower(n, 0);
+        stack<int> st;
+        
+        // Find next higher for odd jumps
+        for (int i = 0; i < n; i++) {
+            while (!st.empty() && arr[st.top()] <= arr[i]) {
+                nextHigher[st.top()] = i;
+                st.pop();
+            }
+            st.push(i);
+        }
+        
+        while (!st.empty()) st.pop();
+        
+        // Find next lower for even jumps
+        for (int i = 0; i < n; i++) {
+            while (!st.empty() && arr[st.top()] >= arr[i]) {
+                nextLower[st.top()] = i;
+                st.pop();
+            }
+            st.push(i);
+        }
+        
+        vector<bool> odd(n, false);
+        vector<bool> even(n, false);
+        odd[n-1] = even[n-1] = true;
+        
+        for (int i = n-2; i >= 0; i--) {
+            if (nextHigher[i]) {
+                odd[i] = even[nextHigher[i]];
+            }
+            if (nextLower[i]) {
+                even[i] = odd[nextLower[i]];
+            }
+        }
+        
+        return count(odd.begin(), odd.end(), true);
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">We need to process each element and maintain a sorted order.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the next higher and lower indices for each position.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+var oddEvenJumps = function(arr) {
+    const n = arr.length;
+    const nextHigher = new Array(n).fill(0);
+    const nextLower = new Array(n).fill(0);
+    const stack = [];
+    
+    // Find next higher for odd jumps
+    for (let i = 0; i < n; i++) {
+        while (stack.length > 0 && arr[stack[stack.length - 1]] <= arr[i]) {
+            nextHigher[stack.pop()] = i;
+        }
+        stack.push(i);
+    }
+    
+    stack.length = 0;
+    // Find next lower for even jumps
+    for (let i = 0; i < n; i++) {
+        while (stack.length > 0 && arr[stack[stack.length - 1]] >= arr[i]) {
+            nextLower[stack.pop()] = i;
+        }
+        stack.push(i);
+    }
+    
+    const odd = new Array(n).fill(false);
+    const even = new Array(n).fill(false);
+    odd[n-1] = even[n-1] = true;
+    
+    for (let i = n-2; i >= 0; i--) {
+        if (nextHigher[i]) {
+            odd[i] = even[nextHigher[i]];
+        }
+        if (nextLower[i]) {
+            even[i] = odd[nextLower[i]];
+        }
+    }
+    
+    return odd.filter(Boolean).length;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">We need to process each element and maintain a sorted order.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the next higher and lower indices for each position.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int OddEvenJumps(int[] arr) {
+        int n = arr.Length;
+        int[] nextHigher = new int[n];
+        int[] nextLower = new int[n];
+        Stack<int> stack = new Stack<int>();
+        
+        // Find next higher for odd jumps
+        for (int i = 0; i < n; i++) {
+            while (stack.Count > 0 && arr[stack.Peek()] <= arr[i]) {
+                nextHigher[stack.Pop()] = i;
+            }
+            stack.Push(i);
+        }
+        
+        stack.Clear();
+        // Find next lower for even jumps
+        for (int i = 0; i < n; i++) {
+            while (stack.Count > 0 && arr[stack.Peek()] >= arr[i]) {
+                nextLower[stack.Pop()] = i;
+            }
+            stack.Push(i);
+        }
+        
+        bool[] odd = new bool[n];
+        bool[] even = new bool[n];
+        odd[n-1] = even[n-1] = true;
+        
+        for (int i = n-2; i >= 0; i--) {
+            if (nextHigher[i] != 0) {
+                odd[i] = even[nextHigher[i]];
+            }
+            if (nextLower[i] != 0) {
+                even[i] = odd[nextLower[i]];
+            }
+        }
+        
+        return odd.Count(x => x);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">We need to process each element and maintain a sorted order.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We store the next higher and lower indices for each position.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

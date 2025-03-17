@@ -1,0 +1,307 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Length of Longest Fibonacci Subsequence - LeetCodee Solution</title>
+    <meta name="description" content="Find the length of the longest Fibonacci-like subsequence in a strictly increasing array.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, fibonacci, subsequence, algorithm, python, java, c++, javascript, c#, coding, solution, tutorial">
+    <link rel="canonical" href="https://leetcodee.com/problems/length-of-longest-fibonacci-subsequence/">
+    <meta property="og:title" content="Length of Longest Fibonacci Subsequence - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/length-of-longest-fibonacci-subsequence/">
+    <meta property="og:description" content="Find the length of the longest Fibonacci-like subsequence in a strictly increasing array.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Length of Longest Fibonacci Subsequence - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the length of the longest Fibonacci-like subsequence in a strictly increasing array.  Solutions in Python, Java, C++, JavaScript, and C#.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/length-of-longest-fibonacci-subsequence/"
+      },
+      "keywords": "leetcode, fibonacci, subsequence, algorithm, python, java, c++, javascript, c#, coding, solution, tutorial"
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">873. Length of Longest Fibonacci Subsequence</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A sequence x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub> is Fibonacci-like if:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>n ≥ 3</li>
+                    <li>x<sub>i</sub> + x<sub>i+1</sub> = x<sub>i+2</sub> for all i + 2 ≤ n</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Given a strictly increasing array arr of positive integers forming a sequence, return the length of the longest Fibonacci-like subsequence of arr. If one does not exist, return 0.
+                </p>
+                <p class="text-gray-700">
+                    A subsequence is derived from another sequence by deleting some or no elements without changing the order of the remaining elements.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: arr = [1,2,3,4,5,6,7,8]
+Output: 5
+Explanation: The longest Fibonacci-like subsequence is [1,2,3,5,8].</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: arr = [1,3,7,11,12,14,18]
+Output: 3
+Explanation: The longest Fibonacci-like subsequence is [1,11,12], [3,11,14] or [7,11,18].</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>3 ≤ arr.length ≤ 1000</li>
+                    <li>1 ≤ arr[i] < arr[i + 1] ≤ 10⁹</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def lenLongestFibSubseq(self, arr: List[int]) -> int:
+        s = set(arr)
+        n = len(arr)
+        max_len = 0
+        
+        # Try all possible pairs as first two numbers
+        for i in range(n):
+            for j in range(i + 1, n):
+                # Current first two numbers
+                x, y = arr[i], arr[j]
+                length = 2
+                
+                # Keep finding next Fibonacci number
+                while x + y in s:
+                    x, y = y, x + y
+                    length += 1
+                
+                max_len = max(max_len, length)
+        
+        return max_len if max_len >= 3 else 0</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses set for O(1) lookup of next Fibonacci number</li>
+                    <li>Time complexity: O(n² * log M) where M is the maximum value in arr</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int lenLongestFibSubseq(int[] arr) {
+        int n = arr.length;
+        Set<Integer> set = new HashSet<>();
+        for (int num : arr) {
+            set.add(num);
+        }
+        
+        int maxLen = 0;
+        
+        // Try all possible pairs as first two numbers
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                // Current first two numbers
+                int x = arr[i], y = arr[j];
+                int length = 2;
+                
+                // Keep finding next Fibonacci number
+                while (set.contains(x + y)) {
+                    int temp = y;
+                    y = x + y;
+                    x = temp;
+                    length++;
+                }
+                
+                maxLen = Math.max(maxLen, length);
+            }
+        }
+        
+        return maxLen >= 3 ? maxLen : 0;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int lenLongestFibSubseq(vector<int>& arr) {
+        int n = arr.size();
+        unordered_set<int> s(arr.begin(), arr.end());
+        int maxLen = 0;
+        
+        // Try all possible pairs as first two numbers
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                // Current first two numbers
+                int x = arr[i], y = arr[j];
+                int length = 2;
+                
+                // Keep finding next Fibonacci number
+                while (s.count(x + y)) {
+                    int temp = y;
+                    y = x + y;
+                    x = temp;
+                    length++;
+                }
+                
+                maxLen = max(maxLen, length);
+            }
+        }
+        
+        return maxLen >= 3 ? maxLen : 0;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+var lenLongestFibSubseq = function(arr) {
+    const s = new Set(arr);
+    const n = arr.length;
+    let maxLen = 0;
+    
+    // Try all possible pairs as first two numbers
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+            // Current first two numbers
+            let x = arr[i], y = arr[j];
+            let length = 2;
+            
+            // Keep finding next Fibonacci number
+            while (s.has(x + y)) {
+                const temp = y;
+                y = x + y;
+                x = temp;
+                length++;
+            }
+            
+            maxLen = Math.max(maxLen, length);
+        }
+    }
+    
+    return maxLen >= 3 ? maxLen : 0;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int LenLongestFibSubseq(int[] arr) {
+        int n = arr.Length;
+        var set = new HashSet<int>(arr);
+        int maxLen = 0;
+        
+        // Try all possible pairs as first two numbers
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                // Current first two numbers
+                int x = arr[i], y = arr[j];
+                int length = 2;
+                
+                // Keep finding next Fibonacci number
+                while (set.Contains(x + y)) {
+                    int temp = y;
+                    y = x + y;
+                    x = temp;
+                    length++;
+                }
+                
+                maxLen = Math.Max(maxLen, length);
+            }
+        }
+        
+        return maxLen >= 3 ? maxLen : 0;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses HashSet for O(1) lookup of next Fibonacci number</li>
+                    <li>Time complexity: O(n² * log M)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

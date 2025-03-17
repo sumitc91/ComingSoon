@@ -1,0 +1,303 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array of Doubled Pairs - LeetCodee Solution</title>
+    <meta name="description" content="Find out if you can reorder an array such that arr[2 * i + 1] = 2 * arr[2 * i] for every 0 <= i < len(arr) / 2. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, array of doubled pairs, algorithm, solution, python, java, c++, javascript, c#, coding, problem solving, data structures, time complexity, space complexity">
+    <meta property="og:title" content="Array of Doubled Pairs - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/array-of-doubled-pairs/">
+    <meta property="og:description" content="Find out if you can reorder an array such that arr[2 * i + 1] = 2 * arr[2 * i] for every 0 <= i < len(arr) / 2. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/array-of-doubled-pairs/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">954. Array of Doubled Pairs</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an integer array of even length arr, return true if it is possible to reorder arr such that arr[2 * i + 1] = 2 * arr[2 * i] for every 0 <= i < len(arr) / 2, or false otherwise.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [3,1,3,6]
+Output: false</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [2,1,2,6]
+Output: false</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [4,-2,2,-4]
+Output: true
+Explanation: We can take two groups, [-2,-4] and [2,4] to form [-2,-4,2,4] or [2,4,-2,-4].</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">2 <= arr.length <= 3 * 10^4</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">arr.length is even.</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">-10^5 <= arr[i] <= 10^5</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def canReorderDoubled(self, arr: List[int]) -> bool:
+        # Count frequency of each number
+        count = Counter(arr)
+        
+        # Sort by absolute value to handle negative numbers
+        for x in sorted(arr, key=abs):
+            if count[x] == 0:
+                continue
+            if count[2 * x] == 0:
+                return False
+            count[x] -= 1
+            count[2 * x] -= 1
+        
+        return True</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the length of arr. We need to sort the array and process each element once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the frequency count of each number.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean canReorderDoubled(int[] arr) {
+        Map<Integer, Integer> count = new HashMap<>();
+        for (int x : arr) {
+            count.put(x, count.getOrDefault(x, 0) + 1);
+        }
+        
+        // Sort by absolute value to handle negative numbers
+        Integer[] sorted = Arrays.stream(arr).boxed().toArray(Integer[]::new);
+        Arrays.sort(sorted, (a, b) -> Math.abs(a) - Math.abs(b));
+        
+        for (int x : sorted) {
+            if (count.get(x) == 0) {
+                continue;
+            }
+            if (count.getOrDefault(2 * x, 0) == 0) {
+                return false;
+            }
+            count.put(x, count.get(x) - 1);
+            count.put(2 * x, count.get(2 * x) - 1);
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the length of arr. We need to sort the array and process each element once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the frequency count of each number.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool canReorderDoubled(vector<int>& arr) {
+        unordered_map<int, int> count;
+        for (int x : arr) {
+            count[x]++;
+        }
+        
+        // Sort by absolute value to handle negative numbers
+        sort(arr.begin(), arr.end(), [](int a, int b) {
+            return abs(a) < abs(b);
+        });
+        
+        for (int x : arr) {
+            if (count[x] == 0) {
+                continue;
+            }
+            if (count[2 * x] == 0) {
+                return false;
+            }
+            count[x]--;
+            count[2 * x]--;
+        }
+        
+        return true;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the length of arr. We need to sort the array and process each element once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the frequency count of each number.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var canReorderDoubled = function(arr) {
+    const count = new Map();
+    for (const x of arr) {
+        count.set(x, (count.get(x) || 0) + 1);
+    }
+    
+    // Sort by absolute value to handle negative numbers
+    arr.sort((a, b) => Math.abs(a) - Math.abs(b));
+    
+    for (const x of arr) {
+        if (count.get(x) === 0) {
+            continue;
+        }
+        if (count.get(2 * x) === 0) {
+            return false;
+        }
+        count.set(x, count.get(x) - 1);
+        count.set(2 * x, count.get(2 * x) - 1);
+    }
+    
+    return true;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the length of arr. We need to sort the array and process each element once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the frequency count of each number.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool CanReorderDoubled(int[] arr) {
+        var count = new Dictionary<int, int>();
+        foreach (int x in arr) {
+            if (!count.ContainsKey(x)) {
+                count[x] = 0;
+            }
+            count[x]++;
+        }
+        
+        // Sort by absolute value to handle negative numbers
+        Array.Sort(arr, (a, b) => Math.Abs(a).CompareTo(Math.Abs(b)));
+        
+        foreach (int x in arr) {
+            if (count[x] == 0) {
+                continue;
+            }
+            if (!count.ContainsKey(2 * x) || count[2 * x] == 0) {
+                return false;
+            }
+            count[x]--;
+            count[2 * x]--;
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n log n)</h4>
+                    <p class="text-gray-700">Where n is the length of arr. We need to sort the array and process each element once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the frequency count of each number.</p>
+                </div>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "954. Array of Doubled Pairs",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "dateModified": "2023-10-27",
+          "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "url": "https://leetcodee.com"
+          },
+          "description": "Find out if you can reorder an array such that arr[2 * i + 1] = 2 * arr[2 * i] for every 0 <= i < len(arr) / 2. Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/array-of-doubled-pairs/"
+          },
+          "keywords": "leetcode, array of doubled pairs, algorithm, solution, python, java, c++, javascript, c#, coding, problem solving, data structures, time complexity, space complexity"
+        }
+      </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

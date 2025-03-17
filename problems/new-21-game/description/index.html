@@ -1,0 +1,291 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New 21 Game - LeetCodee Solution</title>
+    <meta name="description" content="Find the probability that Alice has n or fewer points in the New 21 Game.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, new 21 game, algorithm, solution, python, java, cpp, javascript, c#, dynamic programming, probability">
+    <meta property="og:title" content="New 21 Game - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/new-21-game/">
+    <meta property="og:description" content="Find the probability that Alice has n or fewer points in the New 21 Game.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/new-21-game/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "New 21 Game - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the probability that Alice has n or fewer points in the New 21 Game.  Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "Alice plays the following game, loosely based on the card game \"21\". Alice starts with 0 points and draws numbers while she has less than k points. During each draw, she gains an integer number of points randomly from the range [1, maxPts]. Each draw is independent and the outcomes have equal probabilities. Alice stops drawing numbers when she gets k or more points. Return the probability that Alice has n or fewer points.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/new-21-game/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">837. New 21 Game</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Alice plays the following game, loosely based on the card game "21".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Alice starts with 0 points and draws numbers while she has less than k points. During each draw, she gains an integer number of points randomly from the range [1, maxPts]. Each draw is independent and the outcomes have equal probabilities.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Alice stops drawing numbers when she gets k or more points.
+                </p>
+                <p class="text-gray-700">
+                    Return the probability that Alice has n or fewer points.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 10, k = 1, maxPts = 10
+Output: 1.00000
+Explanation: Alice gets a single card, then stops. In this case, the probability of getting 10 or fewer points is 1.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 6, k = 1, maxPts = 10
+Output: 0.60000
+Explanation: Alice gets a single card, then stops. The probability of getting 1, 2, 3, 4, 5, or 6 points is 0.6.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 21, k = 17, maxPts = 10
+Output: 0.73278</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>0 ≤ k ≤ n ≤ 10⁴</li>
+                    <li>1 ≤ maxPts ≤ 10⁴</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def new21Game(self, n: int, k: int, maxPts: int) -> float:
+        if k == 0 or n >= k + maxPts:
+            return 1.0
+            
+        # dp[i] represents the probability of getting i points
+        dp = [0.0] * (n + 1)
+        dp[0] = 1.0
+        
+        # windowSum is the sum of probabilities in the sliding window
+        windowSum = 1.0
+        
+        # Calculate probabilities for each point value
+        for i in range(1, n + 1):
+            dp[i] = windowSum / maxPts
+            
+            # Update sliding window
+            if i < k:
+                windowSum += dp[i]
+            if i >= maxPts:
+                windowSum -= dp[i - maxPts]
+        
+        # Sum up probabilities from k to n
+        return sum(dp[k:])</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with sliding window</li>
+                    <li>Maintains a window sum for efficient probability calculation</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public double new21Game(int n, int k, int maxPts) {
+        if (k == 0 || n >= k + maxPts) {
+            return 1.0;
+        }
+        
+        double[] dp = new double[n + 1];
+        dp[0] = 1.0;
+        double windowSum = 1.0;
+        
+        for (int i = 1; i <= n; i++) {
+            dp[i] = windowSum / maxPts;
+            
+            if (i < k) {
+                windowSum += dp[i];
+            }
+            if (i >= maxPts) {
+                windowSum -= dp[i - maxPts];
+            }
+        }
+        
+        double probability = 0.0;
+        for (int i = k; i <= n; i++) {
+            probability += dp[i];
+        }
+        
+        return probability;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    double new21Game(int n, int k, int maxPts) {
+        if (k == 0 || n >= k + maxPts) {
+            return 1.0;
+        }
+        
+        vector<double> dp(n + 1);
+        dp[0] = 1.0;
+        double windowSum = 1.0;
+        
+        for (int i = 1; i <= n; i++) {
+            dp[i] = windowSum / maxPts;
+            
+            if (i < k) {
+                windowSum += dp[i];
+            }
+            if (i >= maxPts) {
+                windowSum -= dp[i - maxPts];
+            }
+        }
+        
+        return accumulate(dp.begin() + k, dp.begin() + n + 1, 0.0);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ * @param {number} k
+ * @param {number} maxPts
+ * @return {number}
+ */
+var new21Game = function(n, k, maxPts) {
+    if (k === 0 || n >= k + maxPts) {
+        return 1.0;
+    }
+    
+    const dp = new Array(n + 1).fill(0);
+    dp[0] = 1.0;
+    let windowSum = 1.0;
+    
+    for (let i = 1; i <= n; i++) {
+        dp[i] = windowSum / maxPts;
+        
+        if (i < k) {
+            windowSum += dp[i];
+        }
+        if (i >= maxPts) {
+            windowSum -= dp[i - maxPts];
+        }
+    }
+    
+    return dp.slice(k).reduce((sum, prob) => sum + prob, 0);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public double New21Game(int n, int k, int maxPts) {
+        if (k == 0 || n >= k + maxPts) {
+            return 1.0;
+        }
+        
+        double[] dp = new double[n + 1];
+        dp[0] = 1.0;
+        double windowSum = 1.0;
+        
+        for (int i = 1; i <= n; i++) {
+            dp[i] = windowSum / maxPts;
+            
+            if (i < k) {
+                windowSum += dp[i];
+            }
+            if (i >= maxPts) {
+                windowSum -= dp[i - maxPts];
+            }
+        }
+        
+        return dp.Skip(k).Take(n - k + 1).Sum();
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses LINQ for efficient array operations</li>
+                    <li>Maintains a sliding window for probability calculation</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

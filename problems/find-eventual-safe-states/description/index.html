@@ -1,0 +1,331 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Eventual Safe States - LeetCodee Solution</title>
+    <meta name="description" content="Find Eventual Safe States LeetCode solution in Python, Java, C++, JavaScript, and C#.  Learn how to solve this graph problem efficiently with detailed explanations and code examples.">
+    <meta name="keywords" content="leetcode, leetcode solution, graph, dfs, cycle detection, safe nodes, python, java, c++, javascript, c#, algorithm, data structure">
+    <meta property="og:title" content="Find Eventual Safe States - LeetCodee Solution">
+    <meta property="og:description" content="Find Eventual Safe States LeetCode solution in Python, Java, C++, JavaScript, and C#.  Learn how to solve this graph problem efficiently with detailed explanations and code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/find-eventual-safe-states/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/find-eventual-safe-states/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">802. Find Eventual Safe States</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There is a directed graph of n nodes with each node labeled from 0 to n - 1. The graph is represented by a 0-indexed 2D integer array graph where graph[i] is an integer array of nodes adjacent to node i, meaning there is an edge from node i to each node in graph[i].
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A node is a terminal node if there are no outgoing edges. A node is a safe node if every possible path starting from that node leads to a terminal node (or another safe node).
+                </p>
+                <p class="text-gray-700">
+                    Return an array containing all the safe nodes of the graph. The answer should be sorted in ascending order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: graph = [[1,2],[2,3],[5],[0],[5],[],[]]
+Output: [2,4,5,6]
+Explanation: The given graph is shown above.
+Nodes 5 and 6 are terminal nodes as there are no outgoing edges from either of them.
+Every path starting at nodes 2, 4, 5, and 6 all lead to either node 5 or 6.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: graph = [[1,2,3,4],[1,2],[3,4],[0,4],[]]
+Output: [4]
+Explanation: Only node 4 is a terminal node, and every path starting at node 4 leads to node 4.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == graph.length</li>
+                    <li>1 ≤ n ≤ 10^4</li>
+                    <li>0 ≤ graph[i].length ≤ n</li>
+                    <li>0 ≤ graph[i][j] ≤ n - 1</li>
+                    <li>graph[i] is sorted in ascending order</li>
+                    <li>graph[i] does not contain duplicates</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
+        n = len(graph)
+        safe = {}
+        
+        def dfs(i, visited):
+            if i in visited:
+                return i in safe
+            if i in safe:
+                return safe[i]
+                
+            visited.add(i)
+            safe[i] = True
+            
+            for nei in graph[i]:
+                if not dfs(nei, visited):
+                    safe[i] = False
+                    break
+                    
+            return safe[i]
+        
+        return [i for i in range(n) if dfs(i, set())]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS with cycle detection to find safe nodes</li>
+                    <li>A node is safe if all its paths lead to terminal nodes</li>
+                    <li>Time complexity: O(V + E) where V is number of vertices and E is number of edges</li>
+                    <li>Space complexity: O(V)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private boolean[] safe;
+    private boolean[] visited;
+    private boolean[] inStack;
+    
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        int n = graph.length;
+        safe = new boolean[n];
+        visited = new boolean[n];
+        inStack = new boolean[n];
+        List<Integer> result = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            if (dfs(i, graph)) {
+                result.add(i);
+            }
+        }
+        
+        return result;
+    }
+    
+    private boolean dfs(int node, int[][] graph) {
+        if (inStack[node]) return false;
+        if (visited[node]) return safe[node];
+        
+        visited[node] = true;
+        inStack[node] = true;
+        
+        for (int next : graph[node]) {
+            if (!dfs(next, graph)) {
+                return false;
+            }
+        }
+        
+        inStack[node] = false;
+        safe[node] = true;
+        return true;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<bool> safe(n, false);
+        vector<bool> visited(n, false);
+        vector<bool> inStack(n, false);
+        vector<int> result;
+        
+        for (int i = 0; i < n; i++) {
+            if (dfs(i, graph, safe, visited, inStack)) {
+                result.push_back(i);
+            }
+        }
+        
+        return result;
+    }
+    
+private:
+    bool dfs(int node, vector<vector<int>>& graph, vector<bool>& safe,
+             vector<bool>& visited, vector<bool>& inStack) {
+        if (inStack[node]) return false;
+        if (visited[node]) return safe[node];
+        
+        visited[node] = true;
+        inStack[node] = true;
+        
+        for (int next : graph[node]) {
+            if (!dfs(next, graph, safe, visited, inStack)) {
+                return false;
+            }
+        }
+        
+        inStack[node] = false;
+        safe[node] = true;
+        return true;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function eventualSafeNodes(graph) {
+    const n = graph.length;
+    const safe = new Array(n).fill(false);
+    const visited = new Array(n).fill(false);
+    const inStack = new Array(n).fill(false);
+    const result = [];
+    
+    function dfs(node) {
+        if (inStack[node]) return false;
+        if (visited[node]) return safe[node];
+        
+        visited[node] = true;
+        inStack[node] = true;
+        
+        for (const next of graph[node]) {
+            if (!dfs(next)) {
+                return false;
+            }
+        }
+        
+        inStack[node] = false;
+        safe[node] = true;
+        return true;
+    }
+    
+    for (let i = 0; i < n; i++) {
+        if (dfs(i)) {
+            result.push(i);
+        }
+    }
+    
+    return result;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private bool[] safe;
+    private bool[] visited;
+    private bool[] inStack;
+    
+    public IList<int> EventualSafeNodes(int[][] graph) {
+        int n = graph.Length;
+        safe = new bool[n];
+        visited = new bool[n];
+        inStack = new bool[n];
+        var result = new List<int>();
+        
+        for (int i = 0; i < n; i++) {
+            if (DFS(i, graph)) {
+                result.Add(i);
+            }
+        }
+        
+        return result;
+    }
+    
+    private bool DFS(int node, int[][] graph) {
+        if (inStack[node]) return false;
+        if (visited[node]) return safe[node];
+        
+        visited[node] = true;
+        inStack[node] = true;
+        
+        foreach (int next in graph[node]) {
+            if (!DFS(next, graph)) {
+                return false;
+            }
+        }
+        
+        inStack[node] = false;
+        safe[node] = true;
+        return true;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS with cycle detection</li>
+                    <li>Maintains three arrays: safe, visited, and inStack for tracking node states</li>
+                    <li>Time complexity: O(V + E)</li>
+                    <li>Space complexity: O(V)</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "802. Find Eventual Safe States",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2024-07-26",
+  "dateModified": "2024-07-26",
+  "description": "Find Eventual Safe States LeetCode solution in Python, Java, C++, JavaScript, and C#. Learn how to solve this graph problem efficiently.",
+  "keywords": "leetcode, leetcode solution, graph, dfs, cycle detection, safe nodes, python, java, c++, javascript, c#, algorithm, data structure",
+  "publisher": {
+    "@type": "Organization",
+    "name": "LeetCodee",
+    "url": "https://leetcodee.com"
+  }
+}
+</script>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

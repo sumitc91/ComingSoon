@@ -1,0 +1,376 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open the Lock - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum number of turns required to open a lock with 4 circular wheels, avoiding deadends.  Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="LeetCode, Open the Lock, Algorithm, Breadth-First Search, BFS, Python, Java, C++, JavaScript, C#, Solution, Coding, Programming">
+    <meta property="og:title" content="Open the Lock - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/open-the-lock/">
+    <meta property="og:description" content="Find the minimum number of turns required to open a lock with 4 circular wheels, avoiding deadends.  Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/open-the-lock/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">752. Open the Lock</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You have a lock in front of you with 4 circular wheels. Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'. The wheels can rotate freely and wrap around: for example we can turn '9' to be '0', or '0' to be '9'. Each move consists of turning one wheel one slot.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The lock initially starts at '0000', a string representing the state of the 4 wheels.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given a list of deadends dead ends, meaning if the lock displays any of these codes, the wheels of the lock will stop turning and you will be unable to open it.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given a target representing the value of the wheels that will unlock the lock, return the minimum total number of turns required to open the lock, or -1 if it is impossible.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: deadends = ["0201","0101","0102","1212","2002"], target = "0202"
+Output: 6
+Explanation:
+A sequence of valid moves would be "0000" -> "1000" -> "1100" -> "1200" -> "1201" -> "1202" -> "0202".
+Note that a sequence like "0000" -> "0001" -> "0002" -> "0102" -> "0202" would be invalid,
+because the wheels of the lock become stuck after the display becomes the dead end "0102".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: deadends = ["8888"], target = "0009"
+Output: 1
+Explanation:
+We can turn the last wheel in reverse to move from "0000" -> "0009".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: deadends = ["8887","8889","8878","8898","8788","8988","7888","9888"], target = "8888"
+Output: -1
+Explanation:
+We cannot reach the target without getting stuck.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ deadends.length ≤ 500</li>
+                    <li>deadends[i].length == 4</li>
+                    <li>target.length == 4</li>
+                    <li>target will not be in the list deadends</li>
+                    <li>target and deadends[i] consist of digits only</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def openLock(self, deadends: List[str], target: str) -> int:
+        def get_neighbors(node: str) -> List[str]:
+            neighbors = []
+            for i in range(4):
+                num = int(node[i])
+                # Turn clockwise
+                neighbors.append(node[:i] + str((num + 1) % 10) + node[i+1:])
+                # Turn counter-clockwise
+                neighbors.append(node[:i] + str((num - 1) % 10) + node[i+1:])
+            return neighbors
+        
+        # Convert deadends to set for O(1) lookup
+        deadends = set(deadends)
+        if "0000" in deadends:
+            return -1
+            
+        # BFS
+        queue = deque([("0000", 0)])
+        seen = {"0000"}
+        
+        while queue:
+            node, turns = queue.popleft()
+            if node == target:
+                return turns
+                
+            for neighbor in get_neighbors(node):
+                if neighbor not in seen and neighbor not in deadends:
+                    seen.add(neighbor)
+                    queue.append((neighbor, turns + 1))
+        
+        return -1</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses BFS to find the shortest path to the target</li>
+                    <li>Generates neighbors by turning each wheel clockwise and counter-clockwise</li>
+                    <li>Time complexity: O(10^4) = O(10000) in worst case</li>
+                    <li>Space complexity: O(10000) for storing seen states</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int openLock(String[] deadends, String target) {
+        Set<String> deadSet = new HashSet<>(Arrays.asList(deadends));
+        if (deadSet.contains("0000")) {
+            return -1;
+        }
+        
+        Queue<Pair<String, Integer>> queue = new LinkedList<>();
+        queue.offer(new Pair<>("0000", 0));
+        Set<String> seen = new HashSet<>();
+        seen.add("0000");
+        
+        while (!queue.isEmpty()) {
+            Pair<String, Integer> current = queue.poll();
+            String node = current.getKey();
+            int turns = current.getValue();
+            
+            if (node.equals(target)) {
+                return turns;
+            }
+            
+            for (String neighbor : getNeighbors(node)) {
+                if (!seen.contains(neighbor) && !deadSet.contains(neighbor)) {
+                    seen.add(neighbor);
+                    queue.offer(new Pair<>(neighbor, turns + 1));
+                }
+            }
+        }
+        
+        return -1;
+    }
+    
+    private List<String> getNeighbors(String node) {
+        List<String> neighbors = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            int num = node.charAt(i) - '0';
+            // Turn clockwise
+            neighbors.add(node.substring(0, i) + ((num + 1) % 10) + node.substring(i + 1));
+            // Turn counter-clockwise
+            neighbors.add(node.substring(0, i) + ((num + 9) % 10) + node.substring(i + 1));
+        }
+        return neighbors;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    vector<string> getNeighbors(const string& node) {
+        vector<string> neighbors;
+        for (int i = 0; i < 4; i++) {
+            int num = node[i] - '0';
+            // Turn clockwise
+            string next = node;
+            next[i] = '0' + ((num + 1) % 10);
+            neighbors.push_back(next);
+            // Turn counter-clockwise
+            next[i] = '0' + ((num + 9) % 10);
+            neighbors.push_back(next);
+        }
+        return neighbors;
+    }
+    
+public:
+    int openLock(vector<string>& deadends, string target) {
+        unordered_set<string> deadSet(deadends.begin(), deadends.end());
+        if (deadSet.count("0000")) {
+            return -1;
+        }
+        
+        queue<pair<string, int>> q;
+        q.push({"0000", 0});
+        unordered_set<string> seen;
+        seen.insert("0000");
+        
+        while (!q.empty()) {
+            auto [node, turns] = q.front();
+            q.pop();
+            
+            if (node == target) {
+                return turns;
+            }
+            
+            for (const string& neighbor : getNeighbors(node)) {
+                if (!seen.count(neighbor) && !deadSet.count(neighbor)) {
+                    seen.insert(neighbor);
+                    q.push({neighbor, turns + 1});
+                }
+            }
+        }
+        
+        return -1;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function openLock(deadends, target) {
+    const deadSet = new Set(deadends);
+    if (deadSet.has("0000")) {
+        return -1;
+    }
+    
+    const queue = [["0000", 0]];
+    const seen = new Set(["0000"]);
+    
+    function getNeighbors(node) {
+        const neighbors = [];
+        for (let i = 0; i < 4; i++) {
+            const num = parseInt(node[i]);
+            // Turn clockwise
+            neighbors.push(node.slice(0, i) + ((num + 1) % 10) + node.slice(i + 1));
+            // Turn counter-clockwise
+            neighbors.push(node.slice(0, i) + ((num + 9) % 10) + node.slice(i + 1));
+        }
+        return neighbors;
+    }
+    
+    while (queue.length > 0) {
+        const [node, turns] = queue.shift();
+        if (node === target) {
+            return turns;
+        }
+        
+        for (const neighbor of getNeighbors(node)) {
+            if (!seen.has(neighbor) && !deadSet.has(neighbor)) {
+                seen.add(neighbor);
+                queue.push([neighbor, turns + 1]);
+            }
+        }
+    }
+    
+    return -1;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int OpenLock(string[] deadends, string target) {
+        var deadSet = new HashSet<string>(deadends);
+        if (deadSet.Contains("0000")) {
+            return -1;
+        }
+        
+        var queue = new Queue<(string node, int turns)>();
+        queue.Enqueue(("0000", 0));
+        var seen = new HashSet<string> { "0000" };
+        
+        while (queue.Count > 0) {
+            var (node, turns) = queue.Dequeue();
+            if (node == target) {
+                return turns;
+            }
+            
+            foreach (var neighbor in GetNeighbors(node)) {
+                if (!seen.Contains(neighbor) && !deadSet.Contains(neighbor)) {
+                    seen.Add(neighbor);
+                    queue.Enqueue((neighbor, turns + 1));
+                }
+            }
+        }
+        
+        return -1;
+    }
+    
+    private IEnumerable<string> GetNeighbors(string node) {
+        for (int i = 0; i < 4; i++) {
+            int num = node[i] - '0';
+            // Turn clockwise
+            yield return node.Substring(0, i) + ((num + 1) % 10) + node.Substring(i + 1);
+            // Turn counter-clockwise
+            yield return node.Substring(0, i) + ((num + 9) % 10) + node.Substring(i + 1);
+        }
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses BFS to find the shortest path to the target</li>
+                    <li>Generates neighbors by turning each wheel clockwise and counter-clockwise</li>
+                    <li>Time complexity: O(10^4) = O(10000) in worst case</li>
+                    <li>Space complexity: O(10000) for storing seen states</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "752. Open the Lock",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "dateModified": "2023-10-27",
+          "publisher": {
+            "@type": "Organization",
+            "name": "LeetCodee",
+            "url": "https://leetcodee.com"
+          },
+          "description": "Find the minimum number of turns required to open a lock with 4 circular wheels, avoiding deadends. Includes Python, Java, C++, JavaScript, and C# solutions.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/open-the-lock/"
+          },
+          "wordCount": 500
+        }
+      </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

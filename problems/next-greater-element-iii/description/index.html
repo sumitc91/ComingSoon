@@ -1,0 +1,428 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Greater Element III - LeetCodee Solution</title>
+    <meta name="description" content="Find the smallest integer greater than n with the same digits. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, next greater element iii, solution, algorithm, python, java, c++, javascript, c#, coding, interview">
+    <meta property="og:title" content="Next Greater Element III - LeetCodee Solution">
+    <meta property="og:description" content="Find the smallest integer greater than n with the same digits. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/next-greater-element-iii/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/next-greater-element-iii/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "556. Next Greater Element III",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-10-27",
+      "dateModified": "2024-10-27",
+      "description": "Given a positive integer n, find the smallest integer which has exactly the same digits existing in the integer n and is greater in value than n. If no such positive integer exists, return -1.",
+      "keywords": "leetcode, next greater element iii, solution, algorithm, python, java, c++, javascript, c#, coding, interview",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/next-greater-element-iii/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">556. Next Greater Element III</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a positive integer <code class="bg-gray-100 px-1 rounded">n</code>, find the smallest integer which has exactly the same digits existing in the integer <code class="bg-gray-100 px-1 rounded">n</code> and is greater in value than <code class="bg-gray-100 px-1 rounded">n</code>. If no such positive integer exists, return <code class="bg-gray-100 px-1 rounded">-1</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    <strong>Note</strong> that the returned integer should fit in <strong>32-bit integer</strong>, if there is a valid answer but it does not fit in <strong>32-bit integer</strong>, return <code class="bg-gray-100 px-1 rounded">-1</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: n = 12
+Output: 21</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: n = 21
+Output: -1</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= n <= 2³¹ - 1</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def nextGreaterElement(self, n: int) -> int:
+        # Convert to list of digits
+        digits = list(str(n))
+        length = len(digits)
+        
+        # Find first pair from right where left < right
+        i = length - 2
+        while i >= 0 and digits[i] >= digits[i + 1]:
+            i -= 1
+            
+        # If no such pair found, return -1
+        if i < 0:
+            return -1
+            
+        # Find smallest digit on right side of i that is greater than digits[i]
+        j = length - 1
+        while digits[j] <= digits[i]:
+            j -= 1
+            
+        # Swap the digits
+        digits[i], digits[j] = digits[j], digits[i]
+        
+        # Reverse the subarray to the right of i
+        left = i + 1
+        right = length - 1
+        while left < right:
+            digits[left], digits[right] = digits[right], digits[left]
+            left += 1
+            right -= 1
+            
+        # Convert back to integer and check constraints
+        result = int(''.join(digits))
+        return result if result <= 2**31 - 1 else -1</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log n)</h4>
+                    <p class="text-gray-700">Where n is the input number. We need to process each digit.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log n)</h4>
+                    <p class="text-gray-700">For storing the digits array.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int nextGreaterElement(int n) {
+        char[] digits = String.valueOf(n).toCharArray();
+        int length = digits.length;
+        
+        // Find first pair from right where left < right
+        int i = length - 2;
+        while (i >= 0 && digits[i] >= digits[i + 1]) {
+            i--;
+        }
+        
+        // If no such pair found, return -1
+        if (i < 0) {
+            return -1;
+        }
+        
+        // Find smallest digit on right side of i that is greater than digits[i]
+        int j = length - 1;
+        while (digits[j] <= digits[i]) {
+            j--;
+        }
+        
+        // Swap the digits
+        char temp = digits[i];
+        digits[i] = digits[j];
+        digits[j] = temp;
+        
+        // Reverse the subarray to the right of i
+        reverse(digits, i + 1, length - 1);
+        
+        // Convert back to integer and check constraints
+        try {
+            return Integer.parseInt(new String(digits));
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+    
+    private void reverse(char[] arr, int start, int end) {
+        while (start < end) {
+            char temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log n)</h4>
+                    <p class="text-gray-700">Where n is the input number. We need to process each digit.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log n)</h4>
+                    <p class="text-gray-700">For storing the digits array.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int nextGreaterElement(int n) {
+        string digits = to_string(n);
+        int length = digits.length();
+        
+        // Find first pair from right where left < right
+        int i = length - 2;
+        while (i >= 0 && digits[i] >= digits[i + 1]) {
+            i--;
+        }
+        
+        // If no such pair found, return -1
+        if (i < 0) {
+            return -1;
+        }
+        
+        // Find smallest digit on right side of i that is greater than digits[i]
+        int j = length - 1;
+        while (digits[j] <= digits[i]) {
+            j--;
+        }
+        
+        // Swap the digits
+        swap(digits[i], digits[j]);
+        
+        // Reverse the subarray to the right of i
+        reverse(digits.begin() + i + 1, digits.end());
+        
+        // Convert back to integer and check constraints
+        long result = stol(digits);
+        return result > INT_MAX ? -1 : result;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log n)</h4>
+                    <p class="text-gray-700">Where n is the input number. We need to process each digit.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log n)</h4>
+                    <p class="text-gray-700">For storing the digits string.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ * @return {number}
+ */
+var nextGreaterElement = function(n) {
+    const digits = String(n).split('');
+    const length = digits.length;
+    
+    // Find first pair from right where left < right
+    let i = length - 2;
+    while (i >= 0 && digits[i] >= digits[i + 1]) {
+        i--;
+    }
+    
+    // If no such pair found, return -1
+    if (i < 0) {
+        return -1;
+    }
+    
+    // Find smallest digit on right side of i that is greater than digits[i]
+    let j = length - 1;
+    while (digits[j] <= digits[i]) {
+        j--;
+    }
+    
+    // Swap the digits
+    [digits[i], digits[j]] = [digits[j], digits[i]];
+    
+    // Reverse the subarray to the right of i
+    const left = i + 1;
+    const right = length - 1;
+    while (left < right) {
+        [digits[left], digits[right]] = [digits[right], digits[left]];
+        left++;
+        right--;
+    }
+    
+    // Convert back to integer and check constraints
+    const result = parseInt(digits.join(''));
+    return result <= 2**31 - 1 ? result : -1;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log n)</h4>
+                    <p class="text-gray-700">Where n is the input number. We need to process each digit.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log n)</h4>
+                    <p class="text-gray-700">For storing the digits array.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int NextGreaterElement(int n) {
+        char[] digits = n.ToString().ToCharArray();
+        int length = digits.Length;
+        
+        // Find first pair from right where left < right
+        int i = length - 2;
+        while (i >= 0 && digits[i] >= digits[i + 1]) {
+            i--;
+        }
+        
+        // If no such pair found, return -1
+        if (i < 0) {
+            return -1;
+        }
+        
+        // Find smallest digit on right side of i that is greater than digits[i]
+        int j = length - 1;
+        while (digits[j] <= digits[i]) {
+            j--;
+        }
+        
+        // Swap the digits
+        char temp = digits[i];
+        digits[i] = digits[j];
+        digits[j] = temp;
+        
+        // Reverse the subarray to the right of i
+        Array.Reverse(digits, i + 1, length - i - 1);
+        
+        // Convert back to integer and check constraints
+        try {
+            return int.Parse(new string(digits));
+        } catch {
+            return -1;
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(log n)</h4>
+                    <p class="text-gray-700">Where n is the input number. We need to process each digit.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(log n)</h4>
+                    <p class="text-gray-700">For storing the digits array.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses the concept of finding the next permutation:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Permutation pattern</li>
+                            <li>Digit manipulation</li>
+                            <li>Integer constraints</li>
+                            <li>Optimization techniques</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Find decreasing pair</li>
+                            <li>Find swap position</li>
+                            <li>Perform swap</li>
+                            <li>Reverse remainder</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>String conversion</li>
+                        <li>Array manipulation</li>
+                        <li>Integer parsing</li>
+                        <li>Boundary checks</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Early termination</li>
+                        <li>In-place reversal</li>
+                        <li>Efficient swapping</li>
+                        <li>Overflow handling</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Single digit</li>
+                        <li>Descending digits</li>
+                        <li>Integer overflow</li>
+                        <li>Maximum value</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

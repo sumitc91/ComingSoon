@@ -1,0 +1,250 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monotonic Array - LeetCodee Solution</title>
+    <meta name="description" content="Find the most efficient solution to the LeetCode Monotonic Array problem.  Includes Python, Java, C++, JavaScript, and C# code examples with detailed explanations.">
+    <meta name="keywords" content="leetcode, monotonic array, solution, python, java, cpp, javascript, c#, algorithm, coding, interview">
+    <meta name="canonical" content="https://leetcodee.com/problems/monotonic-array/">
+    <meta property="og:title" content="Monotonic Array - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/monotonic-array/">
+    <meta property="og:description" content="Find the most efficient solution to the LeetCode Monotonic Array problem. Includes Python, Java, C++, JavaScript, and C# code examples with detailed explanations.">
+    <meta property="og:image" content="https://leetcodee.com/leetcodee_logo.jpg">  <!-- Replace with actual image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Monotonic Array - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27",  <!-- Replace with actual modification date -->
+      "description": "Find the most efficient solution to the LeetCode Monotonic Array problem. Includes Python, Java, C++, JavaScript, and C# code examples with detailed explanations.",
+      "image": "https://leetcodee.com/leetcodee_logo.jpg",  <!-- Replace with actual image URL -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/monotonic-array/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">896. Monotonic Array</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    An array is monotonic if it is either monotone increasing or monotone decreasing.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    An array nums is monotone increasing if for all i <= j, nums[i] <= nums[j]. An array nums is monotone decreasing if for all i <= j, nums[i] >= nums[j].
+                </p>
+                <p class="text-gray-700">
+                    Given an integer array nums, return true if the given array is monotonic, or false otherwise.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,2,3]
+Output: true</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [6,5,4,4]
+Output: true</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,3,2]
+Output: false</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 <= nums.length <= 10⁵</li>
+                    <li>-10⁵ <= nums[i] <= 10⁵</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def isMonotonic(self, nums: List[int]) -> bool:
+        increasing = decreasing = True
+        
+        for i in range(1, len(nums)):
+            if nums[i] < nums[i-1]:
+                increasing = False
+            if nums[i] > nums[i-1]:
+                decreasing = False
+            if not increasing and not decreasing:
+                return False
+                
+        return True</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Single pass solution</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean isMonotonic(int[] nums) {
+        boolean increasing = true;
+        boolean decreasing = true;
+        
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] < nums[i-1])
+                increasing = false;
+            if (nums[i] > nums[i-1])
+                decreasing = false;
+            if (!increasing && !decreasing)
+                return false;
+        }
+        
+        return true;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool isMonotonic(vector<int>& nums) {
+        bool increasing = true;
+        bool decreasing = true;
+        
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] < nums[i-1])
+                increasing = false;
+            if (nums[i] > nums[i-1])
+                decreasing = false;
+            if (!increasing && !decreasing)
+                return false;
+        }
+        
+        return true;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var isMonotonic = function(nums) {
+    let increasing = true;
+    let decreasing = true;
+    
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] < nums[i-1])
+            increasing = false;
+        if (nums[i] > nums[i-1])
+            decreasing = false;
+        if (!increasing && !decreasing)
+            return false;
+    }
+    
+    return true;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool IsMonotonic(int[] nums) {
+        bool increasing = true;
+        bool decreasing = true;
+        
+        for (int i = 1; i < nums.Length; i++) {
+            if (nums[i] < nums[i-1])
+                increasing = false;
+            if (nums[i] > nums[i-1])
+                decreasing = false;
+            if (!increasing && !decreasing)
+                return false;
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Early termination when neither increasing nor decreasing</li>
+                    <li>Handles equal elements correctly</li>
+                    <li>Efficient single pass approach</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

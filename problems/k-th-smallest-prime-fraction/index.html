@@ -1,0 +1,348 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-th Smallest Prime Fraction - LeetCodee Solution</title>
+    <meta name="description" content="Find the k-th smallest prime fraction from a sorted array of prime numbers and 1.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, prime fraction, kth smallest, algorithm, solution, python, java, c++, javascript, csharp, coding, programming, tutorial">
+    <link rel="canonical" href="https://leetcodee.com/problems/k-th-smallest-prime-fraction/">
+    <meta property="og:title" content="K-th Smallest Prime Fraction - LeetCodee Solution">
+    <meta property="og:description" content="Find the k-th smallest prime fraction from a sorted array of prime numbers and 1.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/k-th-smallest-prime-fraction/">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "K-th Smallest Prime Fraction",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the k-th smallest prime fraction from a sorted array of prime numbers and 1.  Optimized LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "keywords": "leetcode, prime fraction, kth smallest, algorithm, solution, python, java, c++, javascript, csharp, coding, programming, tutorial",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/k-th-smallest-prime-fraction/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">786. K-th Smallest Prime Fraction</h1>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given a sorted integer array arr containing 1 and prime numbers, where all the integers of arr are unique. You are also given an integer k.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For every i and j where 0 ≤ i < j < arr.length, we consider the fraction arr[i] / arr[j].
+                </p>
+                <p class="text-gray-700">
+                    Return the kth smallest fraction considered. Return your answer as an array of integers of size 2, where answer[0] == arr[i] and answer[1] == arr[j].
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: arr = [1,2,3,5], k = 3
+Output: [2,5]
+Explanation: The fractions to be considered in sorted order are:
+1/5, 1/3, 2/5, 1/2, 3/5, 2/3.
+The third fraction is 2/5.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: arr = [1,7], k = 1
+Output: [1,7]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>2 ≤ arr.length ≤ 1000</li>
+                    <li>1 ≤ arr[i] ≤ 3 * 10^4</li>
+                    <li>arr[0] == 1</li>
+                    <li>arr[i] is a prime number for i > 0</li>
+                    <li>All the numbers of arr are unique and sorted in strictly increasing order</li>
+                    <li>1 ≤ k ≤ arr.length * (arr.length - 1) / 2</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def kthSmallestPrimeFraction(self, arr: List[int], k: int) -> List[int]:
+        def count_smaller(x):
+            count = 0
+            best = [0, 1]
+            for i in range(len(arr)):
+                for j in range(i + 1, len(arr)):
+                    if arr[i] / arr[j] <= x:
+                        count += 1
+                        if arr[i] / arr[j] > best[0] / best[1]:
+                            best = [arr[i], arr[j]]
+            return count, best
+            
+        left, right = 0, 1
+        while left < right:
+            mid = (left + right) / 2
+            count, best = count_smaller(mid)
+            if count == k:
+                return best
+            elif count < k:
+                left = mid
+            else:
+                right = mid
+                
+        return best</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses binary search on the fraction value</li>
+                    <li>Counts fractions smaller than or equal to target</li>
+                    <li>Keeps track of best fraction seen so far</li>
+                    <li>Time complexity: O(n^2 log M) where M is the maximum possible fraction</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int[] kthSmallestPrimeFraction(int[] arr, int k) {
+        double left = 0, right = 1;
+        int[] result = new int[2];
+        
+        while (left < right) {
+            double mid = (left + right) / 2;
+            int[] count = countSmaller(arr, mid, result);
+            
+            if (count[0] == k) {
+                return result;
+            } else if (count[0] < k) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        
+        return result;
+    }
+    
+    private int[] countSmaller(int[] arr, double target, int[] best) {
+        int count = 0;
+        best[0] = 0;
+        best[1] = 1;
+        
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if ((double)arr[i] / arr[j] <= target) {
+                    count++;
+                    if ((double)arr[i] / arr[j] > (double)best[0] / best[1]) {
+                        best[0] = arr[i];
+                        best[1] = arr[j];
+                    }
+                }
+            }
+        }
+        
+        return new int[]{count};
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    pair<int, vector<int>> countSmaller(const vector<int>& arr, double target) {
+        int count = 0;
+        vector<int> best = {0, 1};
+        
+        for (int i = 0; i < arr.size(); i++) {
+            for (int j = i + 1; j < arr.size(); j++) {
+                if ((double)arr[i] / arr[j] <= target) {
+                    count++;
+                    if ((double)arr[i] / arr[j] > (double)best[0] / best[1]) {
+                        best = {arr[i], arr[j]};
+                    }
+                }
+            }
+        }
+        
+        return {count, best};
+    }
+    
+public:
+    vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k) {
+        double left = 0, right = 1;
+        vector<int> result = {0, 1};
+        
+        while (left < right) {
+            double mid = (left + right) / 2;
+            auto [count, best] = countSmaller(arr, mid);
+            
+            if (count == k) {
+                return best;
+            } else if (count < k) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function kthSmallestPrimeFraction(arr, k) {
+    let left = 0, right = 1;
+    let result = [0, 1];
+    
+    while (left < right) {
+        const mid = (left + right) / 2;
+        const [count, best] = countSmaller(arr, mid);
+        
+        if (count === k) {
+            return best;
+        } else if (count < k) {
+            left = mid;
+        } else {
+            right = mid;
+        }
+    }
+    
+    return result;
+}
+
+function countSmaller(arr, target) {
+    let count = 0;
+    let best = [0, 1];
+    
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[i] / arr[j] <= target) {
+                count++;
+                if (arr[i] / arr[j] > best[0] / best[1]) {
+                    best = [arr[i], arr[j]];
+                }
+            }
+        }
+    }
+    
+    return [count, best];
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int[] KthSmallestPrimeFraction(int[] arr, int k) {
+        double left = 0, right = 1;
+        int[] result = new int[2];
+        
+        while (left < right) {
+            double mid = (left + right) / 2;
+            var (count, best) = CountSmaller(arr, mid);
+            
+            if (count == k) {
+                return best;
+            } else if (count < k) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        
+        return result;
+    }
+    
+    private (int count, int[] best) CountSmaller(int[] arr, double target) {
+        int count = 0;
+        int[] best = new int[] { 0, 1 };
+        
+        for (int i = 0; i < arr.Length; i++) {
+            for (int j = i + 1; j < arr.Length; j++) {
+                if ((double)arr[i] / arr[j] <= target) {
+                    count++;
+                    if ((double)arr[i] / arr[j] > (double)best[0] / best[1]) {
+                        best = new int[] { arr[i], arr[j] };
+                    }
+                }
+            }
+        }
+        
+        return (count, best);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses binary search on the fraction value</li>
+                    <li>Counts fractions smaller than or equal to target</li>
+                    <li>Keeps track of best fraction seen so far</li>
+                    <li>Time complexity: O(n^2 log M) where M is the maximum possible fraction</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count Different Palindromic Subsequences - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for problem 730. Count Different Palindromic Subsequences.  Find the number of different non-empty palindromic subsequences in a given string. Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="LeetCode, LeetCodee, algorithm, solution, dynamic programming, palindrome, subsequence, python, java, c++, javascript, csharp, 730, Count Different Palindromic Subsequences">
+    <meta property="og:title" content="Count Different Palindromic Subsequences - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/count-different-palindromic-subsequences/">
+    <meta property="og:description" content="LeetCodee solution for problem 730. Count Different Palindromic Subsequences.  Find the number of different non-empty palindromic subsequences in a given string. Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/count-different-palindromic-subsequences/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">730. Count Different Palindromic Subsequences</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a string s, return the number of different non-empty palindromic subsequences in s. Since the answer may be very large, return it modulo 10^9 + 7.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A subsequence of a string is obtained by deleting zero or more characters from the string.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A sequence is palindromic if it reads the same forwards and backwards.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Two sequences a1, a2, ... and b1, b2, ... are different if there is some i for which ai ≠ bi.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "bccb"
+Output: 6
+Explanation: The 6 different non-empty palindromic subsequences are 'b', 'c', 'bb', 'cc', 'bcb', 'bccb'.
+Note that 'bcb' is counted only once, even though it occurs twice.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "abcdabcdabcdabcd"
+Output: 104860361
+Explanation: There are 3104860382 different non-empty palindromic subsequences, which is 104860361 modulo 10^9 + 7.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 1000</li>
+                    <li>s[i] is either 'a', 'b', 'c', or 'd'</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def countPalindromicSubsequences(self, s: str) -> int:
+        n = len(s)
+        MOD = 10**9 + 7
+        
+        # dp[i][j] represents the number of different palindromic subsequences in s[i:j+1]
+        dp = [[0] * n for _ in range(n)]
+        
+        # Base case: single character
+        for i in range(n):
+            dp[i][i] = 1
+            
+        # For length > 1
+        for length in range(2, n + 1):
+            for i in range(n - length + 1):
+                j = i + length - 1
+                
+                if s[i] == s[j]:
+                    # Count palindromes with same characters at both ends
+                    left = i + 1
+                    right = j - 1
+                    
+                    # Find the next occurrence of s[i] from left and right
+                    while left <= right and s[left] != s[i]:
+                        left += 1
+                    while left <= right and s[right] != s[i]:
+                        right -= 1
+                        
+                    if left > right:
+                        # No same character found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 + 2
+                    elif left == right:
+                        # One same character found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 + 1
+                    else:
+                        # Multiple same characters found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 - dp[left + 1][right - 1]
+                else:
+                    # Characters are different
+                    dp[i][j] = dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1]
+                    
+                dp[i][j] = (dp[i][j] + MOD) % MOD
+                
+        return dp[0][n - 1]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with a 2D table</li>
+                    <li>Time complexity: O(n^2)</li>
+                    <li>Space complexity: O(n^2)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private static final int MOD = 1_000_000_007;
+    
+    public int countPalindromicSubsequences(String s) {
+        int n = s.length();
+        int[][] dp = new int[n][n];
+        
+        // Base case: single character
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = 1;
+        }
+        
+        // For length > 1
+        for (int length = 2; length <= n; length++) {
+            for (int i = 0; i < n - length + 1; i++) {
+                int j = i + length - 1;
+                
+                if (s.charAt(i) == s.charAt(j)) {
+                    int left = i + 1;
+                    int right = j - 1;
+                    
+                    // Find the next occurrence of s[i] from left and right
+                    while (left <= right && s.charAt(left) != s.charAt(i)) {
+                        left++;
+                    }
+                    while (left <= right && s.charAt(right) != s.charAt(i)) {
+                        right--;
+                    }
+                    
+                    if (left > right) {
+                        // No same character found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 + 2;
+                    } else if (left == right) {
+                        // One same character found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 + 1;
+                    } else {
+                        // Multiple same characters found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 - dp[left + 1][right - 1];
+                    }
+                } else {
+                    // Characters are different
+                    dp[i][j] = dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1];
+                }
+                
+                dp[i][j] = (dp[i][j] + MOD) % MOD;
+            }
+        }
+        
+        return dp[0][n - 1];
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    static const int MOD = 1e9 + 7;
+    
+public:
+    int countPalindromicSubsequences(string s) {
+        int n = s.length();
+        vector<vector<int>> dp(n, vector<int>(n, 0));
+        
+        // Base case: single character
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = 1;
+        }
+        
+        // For length > 1
+        for (int length = 2; length <= n; length++) {
+            for (int i = 0; i < n - length + 1; i++) {
+                int j = i + length - 1;
+                
+                if (s[i] == s[j]) {
+                    int left = i + 1;
+                    int right = j - 1;
+                    
+                    // Find the next occurrence of s[i] from left and right
+                    while (left <= right && s[left] != s[i]) {
+                        left++;
+                    }
+                    while (left <= right && s[right] != s[i]) {
+                        right--;
+                    }
+                    
+                    if (left > right) {
+                        // No same character found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 + 2;
+                    } else if (left == right) {
+                        // One same character found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 + 1;
+                    } else {
+                        // Multiple same characters found in between
+                        dp[i][j] = dp[i + 1][j - 1] * 2 - dp[left + 1][right - 1];
+                    }
+                } else {
+                    // Characters are different
+                    dp[i][j] = dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1];
+                }
+                
+                dp[i][j] = (dp[i][j] + MOD) % MOD;
+            }
+        }
+        
+        return dp[0][n - 1];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {number}
+ */
+var countPalindromicSubsequences = function(s) {
+    const MOD = 1e9 + 7;
+    const n = s.length;
+    const dp = Array(n).fill().map(() => Array(n).fill(0));
+    
+    // Base case: single character
+    for (let i = 0; i < n; i++) {
+        dp[i][i] = 1;
+    }
+    
+    // For length > 1
+    for (let length = 2; length <= n; length++) {
+        for (let i = 0; i < n - length + 1; i++) {
+            const j = i + length - 1;
+            
+            if (s[i] === s[j]) {
+                let left = i + 1;
+                let right = j - 1;
+                
+                // Find the next occurrence of s[i] from left and right
+                while (left <= right && s[left] !== s[i]) {
+                    left++;
+                }
+                while (left <= right && s[right] !== s[i]) {
+                    right--;
+                }
+                
+                if (left > right) {
+                    // No same character found in between
+                    dp[i][j] = dp[i + 1][j - 1] * 2 + 2;
+                } else if (left === right) {
+                    // One same character found in between
+                    dp[i][j] = dp[i + 1][j - 1] * 2 + 1;
+                } else {
+                    // Multiple same characters found in between
+                    dp[i][j] = dp[i + 1][j - 1] * 2 - dp[left + 1][right - 1];
+                }
+            } else {
+                // Characters are different
+                dp[i][j] = dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1];
+            }
+            
+            dp[i][j] = ((dp[i][j] % MOD) + MOD) % MOD;
+        }
+    }
+    
+    return dp[0][n - 1];
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private const int MOD = 1_000_000_007;
+    
+    public int CountPalindromicSubsequences(string s) {
+        int n = s.Length;
+        int[,] dp = new int[n, n];
+        
+        // Base case: single character
+        for (int i = 0; i < n; i++) {
+            dp[i, i] = 1;
+        }
+        
+        // For length > 1
+        for (int length = 2; length <= n; length++) {
+            for (int i = 0; i < n - length + 1; i++) {
+                int j = i + length - 1;
+                
+                if (s[i] == s[j]) {
+                    int left = i + 1;
+                    int right = j - 1;
+                    
+                    // Find the next occurrence of s[i] from left and right
+                    while (left <= right && s[left] != s[i]) {
+                        left++;
+                    }
+                    while (left <= right && s[right] != s[i]) {
+                        right--;
+                    }
+                    
+                    if (left > right) {
+                        // No same character found in between
+                        dp[i, j] = dp[i + 1, j - 1] * 2 + 2;
+                    } else if (left == right) {
+                        // One same character found in between
+                        dp[i, j] = dp[i + 1, j - 1] * 2 + 1;
+                    } else {
+                        // Multiple same characters found in between
+                        dp[i, j] = dp[i + 1, j - 1] * 2 - dp[left + 1, right - 1];
+                    }
+                } else {
+                    // Characters are different
+                    dp[i, j] = dp[i + 1, j] + dp[i, j - 1] - dp[i + 1, j - 1];
+                }
+                
+                dp[i, j] = (dp[i, j] + MOD) % MOD;
+            }
+        }
+        
+        return dp[0, n - 1];
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with a 2D table</li>
+                    <li>Time complexity: O(n^2)</li>
+                    <li>Space complexity: O(n^2)</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "730. Count Different Palindromic Subsequences",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2023-10-27",
+  "dateModified": "2023-10-27",
+  "publisher": {
+    "@type": "Organization",
+    "name": "LeetCodee",
+    "url": "https://leetcodee.com"
+  },
+  "description": "LeetCodee solution for problem 730. Count Different Palindromic Subsequences.  Find the number of different non-empty palindromic subsequences in a given string. Includes Python, Java, C++, JavaScript, and C# solutions.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://leetcodee.com/problems/count-different-palindromic-subsequences/"
+  },
+  "wordCount": 800
+}
+</script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

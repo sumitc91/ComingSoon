@@ -1,0 +1,336 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Possible Full Binary Trees - LeetCodee Solution</title>
+    <meta name="description" content="Find all possible full binary trees with n nodes.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 894.">
+    <meta name="keywords" content="leetcode, full binary tree, algorithm, data structure, python, java, c++, javascript, c#, solution, tutorial, coding, programming, tree">
+    <link rel="canonical" href="https://leetcodee.com/problems/all-possible-full-binary-trees/">
+    <meta property="og:title" content="All Possible Full Binary Trees - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/all-possible-full-binary-trees/">
+    <meta property="og:description" content="Find all possible full binary trees with n nodes.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 894.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">894. All Possible Full Binary Trees</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an integer n, return a list of all possible full binary trees with n nodes. Each node of each tree in the answer must have Node.val == 0.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Each element of the answer is the root node of one possible tree. You may return the final list of trees in any order.
+                </p>
+                <p class="text-gray-700">
+                    A full binary tree is a binary tree where each node has exactly 0 or 2 children.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 7
+Output: [[0,0,0,null,null,0,0,null,null,0,0],[0,0,0,null,null,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0]]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 3
+Output: [[0,0,0]]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ n ≤ 20</li>
+                    <li>n is odd</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def allPossibleFBT(self, n: int) -> List[Optional[TreeNode]]:
+        # Memoization dictionary
+        memo = {}
+        
+        def backtrack(n):
+            # Base cases
+            if n % 2 == 0:
+                return []
+            if n == 1:
+                return [TreeNode(0)]
+            if n in memo:
+                return memo[n]
+            
+            res = []
+            # Try all possible combinations of left and right subtrees
+            for left in range(1, n, 2):
+                right = n - 1 - left
+                # Get all possible left and right subtrees
+                leftTrees = backtrack(left)
+                rightTrees = backtrack(right)
+                
+                # Create all possible combinations
+                for l in leftTrees:
+                    for r in rightTrees:
+                        root = TreeNode(0)
+                        root.left = l
+                        root.right = r
+                        res.append(root)
+            
+            memo[n] = res
+            return res
+        
+        return backtrack(n)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with memoization</li>
+                    <li>Time complexity: O(2^n)</li>
+                    <li>Space complexity: O(2^n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    Map<Integer, List<TreeNode>> memo = new HashMap<>();
+    
+    public List<TreeNode> allPossibleFBT(int n) {
+        if (n % 2 == 0) return new ArrayList<>();
+        if (n == 1) return Arrays.asList(new TreeNode(0));
+        if (memo.containsKey(n)) return memo.get(n);
+        
+        List<TreeNode> res = new ArrayList<>();
+        for (int left = 1; left < n; left += 2) {
+            int right = n - 1 - left;
+            for (TreeNode l : allPossibleFBT(left)) {
+                for (TreeNode r : allPossibleFBT(right)) {
+                    TreeNode root = new TreeNode(0);
+                    root.left = l;
+                    root.right = r;
+                    res.add(root);
+                }
+            }
+        }
+        
+        memo.put(n, res);
+        return res;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+class Solution {
+    unordered_map<int, vector<TreeNode*>> memo;
+public:
+    vector<TreeNode*> allPossibleFBT(int n) {
+        if (n % 2 == 0) return {};
+        if (n == 1) return {new TreeNode(0)};
+        if (memo.count(n)) return memo[n];
+        
+        vector<TreeNode*> res;
+        for (int left = 1; left < n; left += 2) {
+            int right = n - 1 - left;
+            for (TreeNode* l : allPossibleFBT(left)) {
+                for (TreeNode* r : allPossibleFBT(right)) {
+                    TreeNode* root = new TreeNode(0);
+                    root->left = l;
+                    root->right = r;
+                    res.push_back(root);
+                }
+            }
+        }
+        
+        return memo[n] = res;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number} n
+ * @return {TreeNode[]}
+ */
+var allPossibleFBT = function(n) {
+    const memo = new Map();
+    
+    const backtrack = (n) => {
+        if (n % 2 === 0) return [];
+        if (n === 1) return [new TreeNode(0)];
+        if (memo.has(n)) return memo.get(n);
+        
+        const res = [];
+        for (let left = 1; left < n; left += 2) {
+            const right = n - 1 - left;
+            const leftTrees = backtrack(left);
+            const rightTrees = backtrack(right);
+            
+            for (const l of leftTrees) {
+                for (const r of rightTrees) {
+                    const root = new TreeNode(0);
+                    root.left = l;
+                    root.right = r;
+                    res.push(root);
+                }
+            }
+        }
+        
+        memo.set(n, res);
+        return res;
+    };
+    
+    return backtrack(n);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class TreeNode {
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class Solution {
+    private Dictionary<int, IList<TreeNode>> memo = new Dictionary<int, IList<TreeNode>>();
+    
+    public IList<TreeNode> AllPossibleFBT(int n) {
+        if (n % 2 == 0) return new List<TreeNode>();
+        if (n == 1) return new List<TreeNode> { new TreeNode(0) };
+        if (memo.ContainsKey(n)) return memo[n];
+        
+        var res = new List<TreeNode>();
+        for (int left = 1; left < n; left += 2) {
+            int right = n - 1 - left;
+            foreach (var l in AllPossibleFBT(left)) {
+                foreach (var r in AllPossibleFBT(right)) {
+                    var root = new TreeNode(0);
+                    root.left = l;
+                    root.right = r;
+                    res.Add(root);
+                }
+            }
+        }
+        
+        memo[n] = res;
+        return res;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dictionary for memoization</li>
+                    <li>Recursive approach with dynamic programming</li>
+                    <li>Handles even numbers efficiently</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "894. All Possible Full Binary Trees",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find all possible full binary trees with n nodes. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "Given an integer n, return a list of all possible full binary trees with n nodes. Each node of each tree in the answer must have Node.val == 0. Each element of the answer is the root node of one possible tree. You may return the final list of trees in any order. A full binary tree is a binary tree where each node has exactly 0 or 2 children.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/all-possible-full-binary-trees/"
+      }
+    }
+    </script>
+</body>
+</html>

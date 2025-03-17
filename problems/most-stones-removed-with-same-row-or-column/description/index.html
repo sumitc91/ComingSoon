@@ -1,0 +1,415 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Stones Removed with Same Row or Column - LeetCodee Solution</title>
+    <meta name="description" content="Find the largest possible number of stones that can be removed from a 2D plane, given their coordinates. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, leetcode solution, most stones removed, union-find, graph, algorithm, python, java, c++, javascript, c#, coding, programming">
+    <meta property="og:title" content="Most Stones Removed with Same Row or Column - LeetCodee Solution">
+    <meta property="og:description" content="Find the largest possible number of stones that can be removed from a 2D plane, given their coordinates. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/most-stones-removed-with-same-row-or-column/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/most-stones-removed-with-same-row-or-column/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">947. Most Stones Removed with Same Row or Column</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    On a 2D plane, we place n stones at some integer coordinate points. Each coordinate point may have at most one stone.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A stone can be removed if it shares either the same row or the same column as another stone that has not been removed.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given an array stones of length n where stones[i] = [xi, yi] represents the location of the ith stone, return the largest possible number of stones that can be removed.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: stones = [[0,0],[0,1],[1,0],[1,2],[2,1],[2,2]]
+Output: 5
+Explanation: One way to remove 5 stones is as follows:
+1. Remove stone [2,2] because it shares the same row as [2,1].
+2. Remove stone [2,1] because it shares the same column as [0,1].
+3. Remove stone [1,2] because it shares the same row as [1,0].
+4. Remove stone [1,0] because it shares the same column as [0,0].
+5. Remove stone [0,1] because it shares the same row as [0,0].
+Stone [0,0] cannot be removed since it does not share a row/column with another stone still on the plane.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: stones = [[0,0],[0,2],[1,1],[2,0],[2,2]]
+Output: 3
+Explanation: One way to make 3 moves is as follows:
+1. Remove stone [2,2] because it shares the same row as [2,0].
+2. Remove stone [2,0] because it shares the same column as [0,0].
+3. Remove stone [0,2] because it shares the same row as [0,0].
+Stones [0,0] and [1,1] cannot be removed since they do not share a row/column with another stone still on the plane.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: stones = [[0,0]]
+Output: 0
+Explanation: [0,0] is the only stone on the plane, so you cannot remove it.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= stones.length <= 1000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= xi, yi <= 10^4</code></li>
+                    <li>No two stones are at the same coordinate point.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def removeStones(self, stones: List[List[int]]) -> int:
+        def find(x):
+            if x != parent[x]:
+                parent[x] = find(parent[x])
+            return parent[x]
+        
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px != py:
+                parent[px] = py
+                size[py] += size[px]
+        
+        # Map row/column to a unique ID
+        row_map = {}
+        col_map = {}
+        parent = {}
+        size = {}
+        
+        for i, (x, y) in enumerate(stones):
+            # Create unique IDs for row and column
+            row_id = f"r{x}"
+            col_id = f"c{y}"
+            
+            # Initialize parent and size for new IDs
+            if row_id not in parent:
+                parent[row_id] = row_id
+                size[row_id] = 1
+            if col_id not in parent:
+                parent[col_id] = col_id
+                size[col_id] = 1
+            
+            # Union row and column
+            union(row_id, col_id)
+        
+        # Count number of connected components
+        components = set(find(x) for x in parent)
+        return len(stones) - len(components)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of stones. We use path compression in our Union-Find implementation.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store parent and size arrays for our Union-Find data structure.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private Map<String, String> parent = new HashMap<>();
+    private Map<String, Integer> size = new HashMap<>();
+    
+    public int removeStones(int[][] stones) {
+        for (int[] stone : stones) {
+            String row = "r" + stone[0];
+            String col = "c" + stone[1];
+            
+            if (!parent.containsKey(row)) {
+                parent.put(row, row);
+                size.put(row, 1);
+            }
+            if (!parent.containsKey(col)) {
+                parent.put(col, col);
+                size.put(col, 1);
+            }
+            
+            union(row, col);
+        }
+        
+        Set<String> components = new HashSet<>();
+        for (String key : parent.keySet()) {
+            components.add(find(key));
+        }
+        
+        return stones.length - components.size();
+    }
+    
+    private String find(String x) {
+        if (!x.equals(parent.get(x))) {
+            parent.put(x, find(parent.get(x)));
+        }
+        return parent.get(x);
+    }
+    
+    private void union(String x, String y) {
+        String px = find(x);
+        String py = find(y);
+        if (!px.equals(py)) {
+            parent.put(px, py);
+            size.put(py, size.get(py) + size.get(px));
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of stones. We use path compression in our Union-Find implementation.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store parent and size maps for our Union-Find data structure.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int removeStones(vector<vector<int>>& stones) {
+        unordered_map<string, string> parent;
+        unordered_map<string, int> size;
+        
+        for (const auto& stone : stones) {
+            string row = "r" + to_string(stone[0]);
+            string col = "c" + to_string(stone[1]);
+            
+            if (parent.find(row) == parent.end()) {
+                parent[row] = row;
+                size[row] = 1;
+            }
+            if (parent.find(col) == parent.end()) {
+                parent[col] = col;
+                size[col] = 1;
+            }
+            
+            union_set(row, col, parent, size);
+        }
+        
+        unordered_set<string> components;
+        for (const auto& p : parent) {
+            components.insert(find(p.first, parent));
+        }
+        
+        return stones.size() - components.size();
+    }
+    
+private:
+    string find(string x, unordered_map<string, string>& parent) {
+        if (x != parent[x]) {
+            parent[x] = find(parent[x], parent);
+        }
+        return parent[x];
+    }
+    
+    void union_set(string x, string y, unordered_map<string, string>& parent, unordered_map<string, int>& size) {
+        string px = find(x, parent);
+        string py = find(y, parent);
+        if (px != py) {
+            parent[px] = py;
+            size[py] += size[px];
+        }
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of stones. We use path compression in our Union-Find implementation.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store parent and size maps for our Union-Find data structure.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} stones
+ * @return {number}
+ */
+var removeStones = function(stones) {
+    const parent = new Map();
+    const size = new Map();
+    
+    function find(x) {
+        if (x !== parent.get(x)) {
+            parent.set(x, find(parent.get(x)));
+        }
+        return parent.get(x);
+    }
+    
+    function union(x, y) {
+        const px = find(x);
+        const py = find(y);
+        if (px !== py) {
+            parent.set(px, py);
+            size.set(py, size.get(py) + size.get(px));
+        }
+    }
+    
+    for (const [x, y] of stones) {
+        const row = `r${x}`;
+        const col = `c${y}`;
+        
+        if (!parent.has(row)) {
+            parent.set(row, row);
+            size.set(row, 1);
+        }
+        if (!parent.has(col)) {
+            parent.set(col, col);
+            size.set(col, 1);
+        }
+        
+        union(row, col);
+    }
+    
+    const components = new Set();
+    for (const [key] of parent) {
+        components.add(find(key));
+    }
+    
+    return stones.length - components.size;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of stones. We use path compression in our Union-Find implementation.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store parent and size maps for our Union-Find data structure.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private Dictionary<string, string> parent = new Dictionary<string, string>();
+    private Dictionary<string, int> size = new Dictionary<string, int>();
+    
+    public int RemoveStones(int[][] stones) {
+        foreach (var stone in stones) {
+            string row = "r" + stone[0];
+            string col = "c" + stone[1];
+            
+            if (!parent.ContainsKey(row)) {
+                parent[row] = row;
+                size[row] = 1;
+            }
+            if (!parent.ContainsKey(col)) {
+                parent[col] = col;
+                size[col] = 1;
+            }
+            
+            Union(row, col);
+        }
+        
+        var components = new HashSet<string>();
+        foreach (var key in parent.Keys) {
+            components.Add(Find(key));
+        }
+        
+        return stones.Length - components.Count;
+    }
+    
+    private string Find(string x) {
+        if (x != parent[x]) {
+            parent[x] = Find(parent[x]);
+        }
+        return parent[x];
+    }
+    
+    private void Union(string x, string y) {
+        string px = Find(x);
+        string py = Find(y);
+        if (px != py) {
+            parent[px] = py;
+            size[py] += size[px];
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">Where n is the number of stones. We use path compression in our Union-Find implementation.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store parent and size dictionaries for our Union-Find data structure.</p>
+                </div>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "947. Most Stones Removed with Same Row or Column",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "description": "Find the largest possible number of stones that can be removed from a 2D plane, given their coordinates. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/most-stones-removed-with-same-row-or-column/"
+          }
+        }
+      </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

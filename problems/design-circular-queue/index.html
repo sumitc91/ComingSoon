@@ -1,0 +1,584 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Circular Queue - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to design and implement a circular queue in Python, Java, C++, JavaScript, and C#.  This LeetCodee solution explains the problem, provides example code, and analyzes time/space complexity.">
+    <meta name="keywords" content="LeetCode, circular queue, data structures, algorithms, Python, Java, C++, JavaScript, C#, coding interview, solution, tutorial, ring buffer, FIFO">
+    <link rel="canonical" href="https://leetcodee.com/problems/design-circular-queue/">
+    <meta property="og:title" content="Design Circular Queue - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/design-circular-queue/">
+    <meta property="og:description" content="Learn how to design and implement a circular queue in Python, Java, C++, JavaScript, and C#.  This LeetCodee solution explains the problem, provides example code, and analyzes time/space complexity.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Design Circular Queue - LeetCodee Solution",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Learn how to design and implement a circular queue in Python, Java, C++, JavaScript, and C#. This LeetCodee solution explains the problem, provides example code, and analyzes time/space complexity.",
+      "keywords": "LeetCode, circular queue, data structures, algorithms, Python, Java, C++, JavaScript, C#, coding interview, solution, tutorial, ring buffer, FIFO",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/design-circular-queue/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">622. Design Circular Queue</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Design your implementation of the circular queue. The circular queue is a linear data structure in which the operations are performed based on FIFO (First In First Out) principle, and the last position is connected back to the first position to make a circle. It is also called "Ring Buffer".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    One of the benefits of the circular queue is that we can make use of the spaces in front of the queue. In a normal queue, once the queue becomes full, we cannot insert the next element even if there is a space in front of the queue. But using the circular queue, we can use the space to store new values.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Implementation the <code class="bg-gray-100 px-1 rounded">MyCircularQueue</code> class:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">MyCircularQueue(k)</code> Initializes the object with the size of the queue to be k.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">int Front()</code> Gets the front item from the queue. If the queue is empty, return -1.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">int Rear()</code> Gets the last item from the queue. If the queue is empty, return -1.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean enQueue(int value)</code> Inserts an element into the circular queue. Return true if the operation is successful.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean deQueue()</code> Deletes an element from the circular queue. Return true if the operation is successful.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean isEmpty()</code> Checks whether the circular queue is empty or not.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">boolean isFull()</code> Checks whether the circular queue is full or not.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example:</h2>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
+Input
+["MyCircularQueue", "enQueue", "enQueue", "enQueue", "enQueue", "Rear", "isFull", "deQueue", "enQueue", "Rear"]
+[[3], [1], [2], [3], [4], [], [], [], [4], []]
+Output
+[null, true, true, true, false, 3, true, true, true, 4]
+
+Explanation
+MyCircularQueue myCircularQueue = new MyCircularQueue(3);
+myCircularQueue.enQueue(1); // return True
+myCircularQueue.enQueue(2); // return True
+myCircularQueue.enQueue(3); // return True
+myCircularQueue.enQueue(4); // return False
+myCircularQueue.Rear();     // return 3
+myCircularQueue.isFull();   // return True
+myCircularQueue.deQueue();  // return True
+myCircularQueue.enQueue(4); // return True
+myCircularQueue.Rear();     // return 4</pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= k <= 1000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= value <= 1000</code></li>
+                    <li>At most <code class="bg-gray-100 px-1 rounded">3000</code> calls will be made to <code class="bg-gray-100 px-1 rounded">enQueue</code>, <code class="bg-gray-100 px-1 rounded">deQueue</code>, <code class="bg-gray-100 px-1 rounded">Front</code>, <code class="bg-gray-100 px-1 rounded">Rear</code>, <code class="bg-gray-100 px-1 rounded">isEmpty</code>, and <code class="bg-gray-100 px-1 rounded">isFull</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class MyCircularQueue:
+    def __init__(self, k: int):
+        self.size = k
+        self.queue = [0] * k
+        self.front = 0
+        self.rear = -1
+        self.count = 0
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        self.rear = (self.rear + 1) % self.size
+        self.queue[self.rear] = value
+        self.count += 1
+        return True
+
+    def deQueue(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.front = (self.front + 1) % self.size
+        self.count -= 1
+        return True
+
+    def Front(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.queue[self.front]
+
+    def Rear(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.queue[self.rear]
+
+    def isEmpty(self) -> bool:
+        return self.count == 0
+
+    def isFull(self) -> bool:
+        return self.count == self.size</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity:</h4>
+                    <ul class="list-disc list-inside text-gray-700">
+                        <li>Initialization: O(k)</li>
+                        <li>All other operations: O(1)</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(k)</h4>
+                    <p class="text-gray-700">Where k is the size of the queue.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Details:</h4>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                        <li>Uses a fixed-size array to store elements</li>
+                        <li>Maintains front and rear pointers</li>
+                        <li>Uses modulo arithmetic for circular behavior</li>
+                        <li>Keeps track of count for easy empty/full checks</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class MyCircularQueue {
+    private int[] queue;
+    private int front;
+    private int rear;
+    private int count;
+    private int size;
+
+    public MyCircularQueue(int k) {
+        this.size = k;
+        this.queue = new int[k];
+        this.front = 0;
+        this.rear = -1;
+        this.count = 0;
+    }
+    
+    public boolean enQueue(int value) {
+        if (isFull()) {
+            return false;
+        }
+        rear = (rear + 1) % size;
+        queue[rear] = value;
+        count++;
+        return true;
+    }
+    
+    public boolean deQueue() {
+        if (isEmpty()) {
+            return false;
+        }
+        front = (front + 1) % size;
+        count--;
+        return true;
+    }
+    
+    public int Front() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return queue[front];
+    }
+    
+    public int Rear() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return queue[rear];
+    }
+    
+    public boolean isEmpty() {
+        return count == 0;
+    }
+    
+    public boolean isFull() {
+        return count == size;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class MyCircularQueue {
+private:
+    vector<int> queue;
+    int front;
+    int rear;
+    int count;
+    int size;
+    
+public:
+    MyCircularQueue(int k) {
+        size = k;
+        queue.resize(k);
+        front = 0;
+        rear = -1;
+        count = 0;
+    }
+    
+    bool enQueue(int value) {
+        if (isFull()) {
+            return false;
+        }
+        rear = (rear + 1) % size;
+        queue[rear] = value;
+        count++;
+        return true;
+    }
+    
+    bool deQueue() {
+        if (isEmpty()) {
+            return false;
+        }
+        front = (front + 1) % size;
+        count--;
+        return true;
+    }
+    
+    int Front() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return queue[front];
+    }
+    
+    int Rear() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return queue[rear];
+    }
+    
+    bool isEmpty() {
+        return count == 0;
+    }
+    
+    bool isFull() {
+        return count == size;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} k
+ */
+class MyCircularQueue {
+    constructor(k) {
+        this.size = k;
+        this.queue = new Array(k);
+        this.front = 0;
+        this.rear = -1;
+        this.count = 0;
+    }
+    
+    /** 
+     * @param {number} value
+     * @return {boolean}
+     */
+    enQueue(value) {
+        if (this.isFull()) {
+            return false;
+        }
+        this.rear = (this.rear + 1) % this.size;
+        this.queue[this.rear] = value;
+        this.count++;
+        return true;
+    }
+    
+    /**
+     * @return {boolean}
+     */
+    deQueue() {
+        if (this.isEmpty()) {
+            return false;
+        }
+        this.front = (this.front + 1) % this.size;
+        this.count--;
+        return true;
+    }
+    
+    /**
+     * @return {number}
+     */
+    Front() {
+        if (this.isEmpty()) {
+            return -1;
+        }
+        return this.queue[this.front];
+    }
+    
+    /**
+     * @return {number}
+     */
+    Rear() {
+        if (this.isEmpty()) {
+            return -1;
+        }
+        return this.queue[this.rear];
+    }
+    
+    /**
+     * @return {boolean}
+     */
+    isEmpty() {
+        return this.count === 0;
+    }
+    
+    /**
+     * @return {boolean}
+     */
+    isFull() {
+        return this.count === this.size;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Implementation using Linked List:</h4>
+                    <pre class="language-javascript"><code>class Node {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+class MyCircularQueue {
+    constructor(k) {
+        this.capacity = k;
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+    
+    enQueue(value) {
+        if (this.isFull()) {
+            return false;
+        }
+        const newNode = new Node(value);
+        if (this.isEmpty()) {
+            this.head = this.tail = newNode;
+        } else {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        }
+        this.size++;
+        return true;
+    }
+    
+    deQueue() {
+        if (this.isEmpty()) {
+            return false;
+        }
+        this.head = this.head.next;
+        this.size--;
+        if (this.isEmpty()) {
+            this.tail = null;
+        }
+        return true;
+    }
+    
+    Front() {
+        return this.isEmpty() ? -1 : this.head.value;
+    }
+    
+    Rear() {
+        return this.isEmpty() ? -1 : this.tail.value;
+    }
+    
+    isEmpty() {
+        return this.size === 0;
+    }
+    
+    isFull() {
+        return this.size === this.capacity;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Comparison:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Array implementation has O(1) access but fixed size</li>
+                        <li>Linked List implementation is more flexible but uses more memory</li>
+                        <li>Array implementation is generally faster due to cache locality</li>
+                        <li>Linked List implementation avoids the need for modulo arithmetic</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class MyCircularQueue {
+    private int[] queue;
+    private int front;
+    private int rear;
+    private int count;
+    private int size;
+    
+    public MyCircularQueue(int k) {
+        size = k;
+        queue = new int[k];
+        front = 0;
+        rear = -1;
+        count = 0;
+    }
+    
+    public bool EnQueue(int value) {
+        if (IsFull()) {
+            return false;
+        }
+        rear = (rear + 1) % size;
+        queue[rear] = value;
+        count++;
+        return true;
+    }
+    
+    public bool DeQueue() {
+        if (IsEmpty()) {
+            return false;
+        }
+        front = (front + 1) % size;
+        count--;
+        return true;
+    }
+    
+    public int Front() {
+        if (IsEmpty()) {
+            return -1;
+        }
+        return queue[front];
+    }
+    
+    public int Rear() {
+        if (IsEmpty()) {
+            return -1;
+        }
+        return queue[rear];
+    }
+    
+    public bool IsEmpty() {
+        return count == 0;
+    }
+    
+    public bool IsFull() {
+        return count == size;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using LinkedList:</h4>
+                    <pre class="language-csharp"><code>public class MyCircularQueue {
+    private LinkedList<int> queue;
+    private int capacity;
+    
+    public MyCircularQueue(int k) {
+        capacity = k;
+        queue = new LinkedList<int>();
+    }
+    
+    public bool EnQueue(int value) {
+        if (IsFull()) {
+            return false;
+        }
+        queue.AddLast(value);
+        return true;
+    }
+    
+    public bool DeQueue() {
+        if (IsEmpty()) {
+            return false;
+        }
+        queue.RemoveFirst();
+        return true;
+    }
+    
+    public int Front() {
+        if (IsEmpty()) {
+            return -1;
+        }
+        return queue.First.Value;
+    }
+    
+    public int Rear() {
+        if (IsEmpty()) {
+            return -1;
+        }
+        return queue.Last.Value;
+    }
+    
+    public bool IsEmpty() {
+        return queue.Count == 0;
+    }
+    
+    public bool IsFull() {
+        return queue.Count == capacity;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Array implementation provides O(1) operations with better memory usage</li>
+                        <li>LinkedList implementation is more flexible but uses more memory</li>
+                        <li>Both implementations maintain the circular nature of the queue</li>
+                        <li>Array implementation uses modulo arithmetic for wrapping around</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>
