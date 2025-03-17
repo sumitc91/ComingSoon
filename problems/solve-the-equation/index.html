@@ -1,0 +1,532 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solve the Equation - LeetCodee Solution</title>
+    <meta name="description" content="Find the solution to the equation x+5-3+x=6+x-2 and other similar equations. Explore Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta name="keywords" content="leetcode, solve the equation, algorithm, solution, python, java, c++, javascript, c#, coding, programming, equation solver">
+    <meta name="canonical" content="https://leetcodee.com/problems/solve-the-equation/">
+    <meta property="og:title" content="Solve the Equation - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/solve-the-equation/">
+    <meta property="og:description" content="Find the solution to the equation x+5-3+x=6+x-2 and other similar equations. Explore Python, Java, C++, JavaScript, and C# solutions with detailed explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Solve the Equation - LeetCodee Solution",
+        "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+        },
+        "datePublished": "2023-10-27",
+        "description": "Find the solution to the equation x+5-3+x=6+x-2 and other similar equations. Explore Python, Java, C++, JavaScript, and C# solutions with detailed explanations.",
+        "articleBody": "Solve a given equation and return the value of <code>x</code> in the form of a string <code>\"x=#value\"</code>. The equation contains only <code>'+'</code>, <code>'-'</code> operation, the variable <code>x</code> and its coefficient. If there is no solution for the equation, return <code>\"No solution\"</code>. If there are infinite solutions, return <code>\"Infinite solutions\"</code>. If there is exactly one solution for the equation, we ensure that the value of <code>x</code> is an integer.",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/solve-the-equation/"
+        }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">640. Solve the Equation</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Solve a given equation and return the value of <code class="bg-gray-100 px-1 rounded">x</code> in the form of a string <code class="bg-gray-100 px-1 rounded">"x=#value"</code>. The equation contains only <code class="bg-gray-100 px-1 rounded">'+'</code>, <code class="bg-gray-100 px-1 rounded">'-'</code> operation, the variable <code class="bg-gray-100 px-1 rounded">x</code> and its coefficient.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If there is no solution for the equation, return <code class="bg-gray-100 px-1 rounded">"No solution"</code>. If there are infinite solutions, return <code class="bg-gray-100 px-1 rounded">"Infinite solutions"</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If there is exactly one solution for the equation, we ensure that the value of <code class="bg-gray-100 px-1 rounded">x</code> is an integer.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: equation = "x+5-3+x=6+x-2"
+Output: "x=2"</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: equation = "x=x"
+Output: "Infinite solutions"</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: equation = "2x=x"
+Output: "x=0"</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>3 ≤ equation.length ≤ 1000</li>
+                    <li>equation has exactly one '='</li>
+                    <li>equation consists of integers with an absolute value in the range [0, 100] without any leading zeros, and the variable 'x'</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def solveEquation(self, equation: str) -> str:
+        def parse(s: str) -> tuple[int, int]:
+            x_coef = const = 0
+            num = 0
+            sign = 1
+            i = 0
+            
+            while i < len(s):
+                if s[i] == '+':
+                    sign = 1
+                    i += 1
+                elif s[i] == '-':
+                    sign = -1
+                    i += 1
+                else:
+                    # Parse number
+                    j = i
+                    while j < len(s) and (s[j].isdigit() or s[j] == 'x'):
+                        j += 1
+                    
+                    term = s[i:j]
+                    if term == 'x':
+                        x_coef += sign
+                    elif term.endswith('x'):
+                        x_coef += sign * int(term[:-1])
+                    else:
+                        const += sign * int(term)
+                    
+                    i = j
+                    
+            return x_coef, const
+        
+        # Split equation into left and right sides
+        left, right = equation.split('=')
+        
+        # Parse both sides
+        left_x, left_const = parse(left)
+        right_x, right_const = parse(right)
+        
+        # Move all terms to left side
+        x_coef = left_x - right_x
+        const = right_const - left_const
+        
+        if x_coef == 0 and const == 0:
+            return "Infinite solutions"
+        if x_coef == 0:
+            return "No solution"
+            
+        return f"x={const // x_coef}"</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Regular Expressions):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def solveEquation(self, equation: str) -> str:
+        import re
+        
+        def evaluate(expr: str) -> tuple[int, int]:
+            # Add '+' before negative terms for consistent splitting
+            expr = expr.replace('-', '+-')
+            if expr.startswith('+'): 
+                expr = expr[1:]
+                
+            # Split into terms
+            terms = expr.split('+')
+            x_coef = const = 0
+            
+            for term in terms:
+                if not term: continue  # Skip empty terms
+                if term == 'x':
+                    x_coef += 1
+                elif term == '-x':
+                    x_coef -= 1
+                elif 'x' in term:
+                    x_coef += int(term[:-1])
+                else:
+                    const += int(term)
+                    
+            return x_coef, const
+        
+        # Split equation and evaluate both sides
+        left, right = equation.split('=')
+        left_x, left_const = evaluate(left)
+        right_x, right_const = evaluate(right)
+        
+        # Move all terms to left side
+        x_coef = left_x - right_x
+        const = right_const - left_const
+        
+        if x_coef == 0 and const == 0:
+            return "Infinite solutions"
+        if x_coef == 0:
+            return "No solution"
+            
+        return f"x={const // x_coef}"</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses iterative parsing</li>
+                    <li>Second solution uses string manipulation and splitting</li>
+                    <li>Both handle all edge cases correctly</li>
+                    <li>Time complexity is O(n) for both solutions</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private static class Term {
+        int xCoef;
+        int constant;
+        
+        Term(int xCoef, int constant) {
+            this.xCoef = xCoef;
+            this.constant = constant;
+        }
+    }
+    
+    private Term parse(String s) {
+        int xCoef = 0, constant = 0;
+        int num = 0;
+        int sign = 1;
+        int i = 0;
+        
+        while (i < s.length()) {
+            char c = s.charAt(i);
+            if (c == '+') {
+                sign = 1;
+                i++;
+            } else if (c == '-') {
+                sign = -1;
+                i++;
+            } else {
+                // Parse number
+                StringBuilder term = new StringBuilder();
+                while (i < s.length() && (Character.isDigit(s.charAt(i)) || s.charAt(i) == 'x')) {
+                    term.append(s.charAt(i));
+                    i++;
+                }
+                
+                String termStr = term.toString();
+                if (termStr.equals("x")) {
+                    xCoef += sign;
+                } else if (termStr.endsWith("x")) {
+                    xCoef += sign * Integer.parseInt(termStr.substring(0, termStr.length() - 1));
+                } else {
+                    constant += sign * Integer.parseInt(termStr);
+                }
+            }
+        }
+        
+        return new Term(xCoef, constant);
+    }
+    
+    public String solveEquation(String equation) {
+        String[] parts = equation.split("=");
+        Term left = parse(parts[0]);
+        Term right = parse(parts[1]);
+        
+        int xCoef = left.xCoef - right.xCoef;
+        int constant = right.constant - left.constant;
+        
+        if (xCoef == 0 && constant == 0) {
+            return "Infinite solutions";
+        }
+        if (xCoef == 0) {
+            return "No solution";
+        }
+        
+        return "x=" + (constant / xCoef);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+    struct Term {
+        int xCoef;
+        int constant;
+        Term(int x = 0, int c = 0) : xCoef(x), constant(c) {}
+    };
+    
+    Term parse(const string& s) {
+        Term result;
+        int num = 0;
+        int sign = 1;
+        size_t i = 0;
+        
+        while (i < s.length()) {
+            if (s[i] == '+') {
+                sign = 1;
+                i++;
+            } else if (s[i] == '-') {
+                sign = -1;
+                i++;
+            } else {
+                // Parse number
+                size_t j = i;
+                while (j < s.length() && (isdigit(s[j]) || s[j] == 'x')) {
+                    j++;
+                }
+                
+                string term = s.substr(i, j - i);
+                if (term == "x") {
+                    result.xCoef += sign;
+                } else if (term.back() == 'x') {
+                    result.xCoef += sign * stoi(term.substr(0, term.length() - 1));
+                } else {
+                    result.constant += sign * stoi(term);
+                }
+                
+                i = j;
+            }
+        }
+        
+        return result;
+    }
+    
+public:
+    string solveEquation(string equation) {
+        auto pos = equation.find('=');
+        Term left = parse(equation.substr(0, pos));
+        Term right = parse(equation.substr(pos + 1));
+        
+        int xCoef = left.xCoef - right.xCoef;
+        int constant = right.constant - left.constant;
+        
+        if (xCoef == 0 && constant == 0) {
+            return "Infinite solutions";
+        }
+        if (xCoef == 0) {
+            return "No solution";
+        }
+        
+        return "x=" + to_string(constant / xCoef);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} equation
+ * @return {string}
+ */
+var solveEquation = function(equation) {
+    function parse(s) {
+        let xCoef = 0, constant = 0;
+        let sign = 1;
+        let i = 0;
+        
+        while (i < s.length) {
+            if (s[i] === '+') {
+                sign = 1;
+                i++;
+            } else if (s[i] === '-') {
+                sign = -1;
+                i++;
+            } else {
+                // Parse number
+                let j = i;
+                while (j < s.length && (s[j].match(/[0-9x]/) !== null)) {
+                    j++;
+                }
+                
+                const term = s.slice(i, j);
+                if (term === 'x') {
+                    xCoef += sign;
+                } else if (term.endsWith('x')) {
+                    xCoef += sign * parseInt(term.slice(0, -1));
+                } else {
+                    constant += sign * parseInt(term);
+                }
+                
+                i = j;
+            }
+        }
+        
+        return { xCoef, constant };
+    }
+    
+    const [left, right] = equation.split('=');
+    const leftTerm = parse(left);
+    const rightTerm = parse(right);
+    
+    const xCoef = leftTerm.xCoef - rightTerm.xCoef;
+    const constant = rightTerm.constant - leftTerm.constant;
+    
+    if (xCoef === 0 && constant === 0) {
+        return "Infinite solutions";
+    }
+    if (xCoef === 0) {
+        return "No solution";
+    }
+    
+    return `x=${Math.floor(constant / xCoef)}`;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private class Term {
+        public int XCoef { get; set; }
+        public int Constant { get; set; }
+        
+        public Term(int xCoef = 0, int constant = 0) {
+            XCoef = xCoef;
+            Constant = constant;
+        }
+    }
+    
+    private Term Parse(string s) {
+        var result = new Term();
+        int sign = 1;
+        int i = 0;
+        
+        while (i < s.Length) {
+            if (s[i] == '+') {
+                sign = 1;
+                i++;
+            } else if (s[i] == '-') {
+                sign = -1;
+                i++;
+            } else {
+                // Parse number
+                int j = i;
+                while (j < s.Length && (char.IsDigit(s[j]) || s[j] == 'x')) {
+                    j++;
+                }
+                
+                string term = s.Substring(i, j - i);
+                if (term == "x") {
+                    result.XCoef += sign;
+                } else if (term.EndsWith("x")) {
+                    result.XCoef += sign * int.Parse(term.Substring(0, term.Length - 1));
+                } else {
+                    result.Constant += sign * int.Parse(term);
+                }
+                
+                i = j;
+            }
+        }
+        
+        return result;
+    }
+    
+    public string SolveEquation(string equation) {
+        var parts = equation.Split('=');
+        var left = Parse(parts[0]);
+        var right = Parse(parts[1]);
+        
+        int xCoef = left.XCoef - right.XCoef;
+        int constant = right.Constant - left.Constant;
+        
+        if (xCoef == 0 && constant == 0) {
+            return "Infinite solutions";
+        }
+        if (xCoef == 0) {
+            return "No solution";
+        }
+        
+        return $"x={constant / xCoef}";
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using LINQ):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public string SolveEquation(string equation) {
+        var sides = equation.Split('=')
+            .Select(side => {
+                // Add '+' before negative terms for consistent splitting
+                side = side.Replace("-", "+-");
+                if (side.StartsWith("+")) side = side.Substring(1);
+                
+                var terms = side.Split('+').Where(t => t.Length > 0);
+                var xCoef = terms.Where(t => t.Contains('x'))
+                    .Sum(t => t == "x" ? 1 : 
+                           t == "-x" ? -1 : 
+                           int.Parse(t.TrimEnd('x')));
+                var constant = terms.Where(t => !t.Contains('x'))
+                    .Sum(t => int.Parse(t));
+                    
+                return (xCoef, constant);
+            })
+            .ToArray();
+            
+        int xCoef = sides[0].xCoef - sides[1].xCoef;
+        int constant = sides[1].constant - sides[0].constant;
+        
+        if (xCoef == 0 && constant == 0) return "Infinite solutions";
+        if (xCoef == 0) return "No solution";
+        
+        return $"x={constant / xCoef}";
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses OOP approach with Term class</li>
+                        <li>Second solution uses functional approach with LINQ</li>
+                        <li>Both handle all edge cases and coefficient signs</li>
+                        <li>Time complexity is O(n) for both solutions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

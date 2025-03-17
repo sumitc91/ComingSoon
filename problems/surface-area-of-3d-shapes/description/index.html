@@ -1,0 +1,277 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surface Area of 3D Shapes - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 892: Surface Area of 3D Shapes.  Includes detailed explanations and optimized code.">
+    <meta name="keywords" content="leetcode, leetcode solution, surface area of 3d shapes, algorithm, python, java, c++, javascript, c#, coding, programming, problem 892, grid, cubes">
+    <link rel="canonical" href="https://leetcodee.com/problems/surface-area-of-3d-shapes/">
+    <meta property="og:title" content="Surface Area of 3D Shapes - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/surface-area-of-3d-shapes/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 892: Surface Area of 3D Shapes.  Includes detailed explanations and optimized code.">
+    <meta property="og:image" content="https://leetcodee.com/leetcodee_logo.png">  <!-- Replace with actual logo URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Surface Area of 3D Shapes - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-01-26",  <!-- Update with actual publication date -->
+      "dateModified": "2024-01-26",  <!-- Update with actual modification date -->
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 892: Surface Area of 3D Shapes. Includes detailed explanations and optimized code.",
+      "articleBody": "You are given an n x n grid where you have placed some 1 x 1 x 1 cubes. Each value v = grid[i][j] represents a tower of v cubes placed on top of cell (i, j).\n\nAfter placing these cubes, you need to calculate the total surface area of the resulting shape.\n\n...[rest of the problem description and solutions]",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">892. Surface Area of 3D Shapes</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an n x n grid where you have placed some 1 x 1 x 1 cubes. Each value v = grid[i][j] represents a tower of v cubes placed on top of cell (i, j).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    After placing these cubes, you need to calculate the total surface area of the resulting shape.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,2],[3,4]]
+Output: 34</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[1,1,1],[1,0,1],[1,1,1]]
+Output: 32</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = [[2,2,2],[2,1,2],[2,2,2]]
+Output: 46</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>n == grid.length == grid[i].length</li>
+                    <li>1 ≤ n ≤ 50</li>
+                    <li>0 ≤ grid[i][j] ≤ 50</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def surfaceArea(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        area = 0
+        
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j]:
+                    # Add all 6 faces of cubes at this position
+                    area += 2 + grid[i][j] * 4
+                    
+                    # Subtract the faces that are covered
+                    # By adjacent cubes in the same column
+                    if i > 0:
+                        area -= min(grid[i][j], grid[i-1][j]) * 2
+                    if j > 0:
+                        area -= min(grid[i][j], grid[i][j-1]) * 2
+                        
+        return area</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Calculates visible faces</li>
+                    <li>Time complexity: O(n²)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int surfaceArea(int[][] grid) {
+        int n = grid.length;
+        int area = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] > 0) {
+                    // Add all 6 faces of cubes at this position
+                    area += 2 + grid[i][j] * 4;
+                    
+                    // Subtract the faces that are covered
+                    if (i > 0)
+                        area -= Math.min(grid[i][j], grid[i-1][j]) * 2;
+                    if (j > 0)
+                        area -= Math.min(grid[i][j], grid[i][j-1]) * 2;
+                }
+            }
+        }
+        
+        return area;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int surfaceArea(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int area = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j]) {
+                    // Add all 6 faces of cubes at this position
+                    area += 2 + grid[i][j] * 4;
+                    
+                    // Subtract the faces that are covered
+                    if (i > 0)
+                        area -= min(grid[i][j], grid[i-1][j]) * 2;
+                    if (j > 0)
+                        area -= min(grid[i][j], grid[i][j-1]) * 2;
+                }
+            }
+        }
+        
+        return area;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var surfaceArea = function(grid) {
+    const n = grid.length;
+    let area = 0;
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j]) {
+                // Add all 6 faces of cubes at this position
+                area += 2 + grid[i][j] * 4;
+                
+                // Subtract the faces that are covered
+                if (i > 0)
+                    area -= Math.min(grid[i][j], grid[i-1][j]) * 2;
+                if (j > 0)
+                    area -= Math.min(grid[i][j], grid[i][j-1]) * 2;
+            }
+        }
+    }
+    
+    return area;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int SurfaceArea(int[][] grid) {
+        int n = grid.Length;
+        int area = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] > 0) {
+                    // Add all 6 faces of cubes at this position
+                    area += 2 + grid[i][j] * 4;
+                    
+                    // Subtract the faces that are covered
+                    if (i > 0)
+                        area -= Math.Min(grid[i][j], grid[i-1][j]) * 2;
+                    if (j > 0)
+                        area -= Math.Min(grid[i][j], grid[i][j-1]) * 2;
+                }
+            }
+        }
+        
+        return area;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Handles each cell independently</li>
+                    <li>Accounts for shared faces</li>
+                    <li>Optimized for grid traversal</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Linked List in Parts - LeetCodee Solution</title>
+    <meta name="description" content="Find the optimal solution to the LeetCode problem 725: Split Linked List in Parts.  Includes Python, Java, C++, JavaScript, and C# code examples with detailed explanations.">
+    <meta name="keywords" content="leetcode, leetcode solution, split linked list in parts, linked list, algorithm, data structure, python, java, c++, javascript, c#, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/split-linked-list-in-parts/">
+    <meta property="og:title" content="Split Linked List in Parts - LeetCodee Solution">
+    <meta property="og:description" content="Find the optimal solution to the LeetCode problem 725: Split Linked List in Parts.  Includes Python, Java, C++, JavaScript, and C# code examples with detailed explanations.">
+    <meta property="og:url" content="https://leetcodee.com/problems/split-linked-list-in-parts/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "725. Split Linked List in Parts",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts.",
+      "articleBody": "Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts.  The length of each part should be as equal as possible: no two parts should have a size differing by more than one. This may lead to some parts being null. The parts should be in the order of occurrence in the input list, and parts occurring earlier should always have a size greater than or equal to parts occurring later. Return an array of the k parts.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/split-linked-list-in-parts/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">725. Split Linked List in Parts</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">head</code> of a singly linked list and an integer <code class="bg-gray-100 px-1 rounded">k</code>, split the linked list into <code class="bg-gray-100 px-1 rounded">k</code> consecutive linked list parts.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The length of each part should be as equal as possible: no two parts should have a size differing by more than one. This may lead to some parts being null.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The parts should be in the order of occurrence in the input list, and parts occurring earlier should always have a size greater than or equal to parts occurring later.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return an array of the <code class="bg-gray-100 px-1 rounded">k</code> parts.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: head = [1,2,3], k = 5
+Output: [[1],[2],[3],[],[]]
+Explanation:
+The first element output[0] has output[0].val = 1, output[0].next = null.
+The last element output[4] is null, but it's string representation as a ListNode is [].</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: head = [1,2,3,4,5,6,7,8,9,10], k = 3
+Output: [[1,2,3,4],[5,6,7],[8,9,10]]
+Explanation:
+The input has been split into consecutive parts with size difference at most 1, and earlier parts are a larger size than the later parts.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the list is in the range [0, 1000]</li>
+                    <li>0 ≤ Node.val ≤ 1000</li>
+                    <li>1 ≤ k ≤ 50</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def splitListToParts(self, head: Optional[ListNode], k: int) -> List[Optional[ListNode]]:
+        # Get length of linked list
+        length = 0
+        curr = head
+        while curr:
+            length += 1
+            curr = curr.next
+            
+        # Calculate base size and extra nodes
+        base_size = length // k
+        extra = length % k
+        
+        # Split the list
+        result = []
+        curr = head
+        
+        for i in range(k):
+            if not curr:
+                result.append(None)
+                continue
+                
+            result.append(curr)
+            size = base_size + (1 if i < extra else 0)
+            
+            for _ in range(size - 1):
+                curr = curr.next
+                
+            if curr:
+                curr.next, curr = None, curr.next
+                
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First calculates total length, then splits into k parts</li>
+                    <li>Time complexity: O(n) where n is the number of nodes</li>
+                    <li>Space complexity: O(k) for the result array</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public ListNode[] splitListToParts(ListNode head, int k) {
+        // Get length of linked list
+        int length = 0;
+        ListNode curr = head;
+        while (curr != null) {
+            length++;
+            curr = curr.next;
+        }
+        
+        // Calculate base size and extra nodes
+        int baseSize = length / k;
+        int extra = length % k;
+        
+        // Split the list
+        ListNode[] result = new ListNode[k];
+        curr = head;
+        
+        for (int i = 0; i < k; i++) {
+            if (curr == null) {
+                result[i] = null;
+                continue;
+            }
+            
+            result[i] = curr;
+            int size = baseSize + (i < extra ? 1 : 0);
+            
+            for (int j = 0; j < size - 1; j++) {
+                curr = curr.next;
+            }
+            
+            if (curr != null) {
+                ListNode next = curr.next;
+                curr.next = null;
+                curr = next;
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<ListNode*> splitListToParts(ListNode* head, int k) {
+        // Get length of linked list
+        int length = 0;
+        ListNode* curr = head;
+        while (curr != nullptr) {
+            length++;
+            curr = curr->next;
+        }
+        
+        // Calculate base size and extra nodes
+        int baseSize = length / k;
+        int extra = length % k;
+        
+        // Split the list
+        vector<ListNode*> result(k, nullptr);
+        curr = head;
+        
+        for (int i = 0; i < k; i++) {
+            if (curr == nullptr) {
+                continue;
+            }
+            
+            result[i] = curr;
+            int size = baseSize + (i < extra ? 1 : 0);
+            
+            for (int j = 0; j < size - 1; j++) {
+                curr = curr->next;
+            }
+            
+            if (curr != nullptr) {
+                ListNode* next = curr->next;
+                curr->next = nullptr;
+                curr = next;
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode[]}
+ */
+var splitListToParts = function(head, k) {
+    // Get length of linked list
+    let length = 0;
+    let curr = head;
+    while (curr !== null) {
+        length++;
+        curr = curr.next;
+    }
+    
+    // Calculate base size and extra nodes
+    const baseSize = Math.floor(length / k);
+    const extra = length % k;
+    
+    // Split the list
+    const result = new Array(k).fill(null);
+    curr = head;
+    
+    for (let i = 0; i < k; i++) {
+        if (curr === null) {
+            continue;
+        }
+        
+        result[i] = curr;
+        const size = baseSize + (i < extra ? 1 : 0);
+        
+        for (let j = 0; j < size - 1; j++) {
+            curr = curr.next;
+        }
+        
+        if (curr !== null) {
+            const next = curr.next;
+            curr.next = null;
+            curr = next;
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public ListNode[] SplitListToParts(ListNode head, int k) {
+        // Get length of linked list
+        int length = 0;
+        ListNode curr = head;
+        while (curr != null) {
+            length++;
+            curr = curr.next;
+        }
+        
+        // Calculate base size and extra nodes
+        int baseSize = length / k;
+        int extra = length % k;
+        
+        // Split the list
+        ListNode[] result = new ListNode[k];
+        curr = head;
+        
+        for (int i = 0; i < k; i++) {
+            if (curr == null) {
+                continue;
+            }
+            
+            result[i] = curr;
+            int size = baseSize + (i < extra ? 1 : 0);
+            
+            for (int j = 0; j < size - 1; j++) {
+                curr = curr.next;
+            }
+            
+            if (curr != null) {
+                ListNode next = curr.next;
+                curr.next = null;
+                curr = next;
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First calculates total length, then splits into k parts</li>
+                    <li>Time complexity: O(n) where n is the number of nodes</li>
+                    <li>Space complexity: O(k) for the result array</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score of Parentheses - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 856: Score of Parentheses.  Includes detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, score of parentheses, parentheses, algorithm, solution, python, java, c++, javascript, c#, coding, programming, stack, data structure">
+    <meta property="og:title" content="Score of Parentheses - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/score-of-parentheses/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 856: Score of Parentheses.  Includes detailed explanations and time/space complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/score-of-parentheses/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">856. Score of Parentheses</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a balanced parentheses string s, return the score of the string.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The score of a balanced parentheses string is based on the following rule:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>"()" has score 1</li>
+                    <li>AB has score A + B, where A and B are balanced parentheses strings</li>
+                    <li>(A) has score 2 * A, where A is a balanced parentheses string</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "()"
+Output: 1</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "(())"
+Output: 2</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "(()(()))"
+Output: 6</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>2 ≤ s.length ≤ 50</li>
+                    <li>s consists of only '(' and ')'</li>
+                    <li>s is a balanced parentheses string</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def scoreOfParentheses(self, s: str) -> int:
+        stack = [0]  # Stack to keep track of scores at each depth
+        
+        for char in s:
+            if char == '(':
+                stack.append(0)  # New depth level
+            else:
+                curr = stack.pop()  # Score at current depth
+                stack[-1] += max(2 * curr, 1)  # Add to previous depth
+        
+        return stack[0]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses stack to track scores at different depths</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int scoreOfParentheses(String s) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);  // Initial score
+        
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                stack.push(0);  // New depth level
+            } else {
+                int curr = stack.pop();  // Score at current depth
+                int prev = stack.pop();  // Score at previous depth
+                stack.push(prev + Math.max(2 * curr, 1));
+            }
+        }
+        
+        return stack.pop();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int scoreOfParentheses(string s) {
+        stack<int> st;
+        st.push(0);  // Initial score
+        
+        for (char c : s) {
+            if (c == '(') {
+                st.push(0);  // New depth level
+            } else {
+                int curr = st.top();  // Score at current depth
+                st.pop();
+                int prev = st.top();  // Score at previous depth
+                st.pop();
+                st.push(prev + max(2 * curr, 1));
+            }
+        }
+        
+        return st.top();
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {number}
+ */
+var scoreOfParentheses = function(s) {
+    const stack = [0];  // Stack to keep track of scores at each depth
+    
+    for (const char of s) {
+        if (char === '(') {
+            stack.push(0);  // New depth level
+        } else {
+            const curr = stack.pop();  // Score at current depth
+            stack[stack.length - 1] += Math.max(2 * curr, 1);
+        }
+    }
+    
+    return stack[0];
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int ScoreOfParentheses(string s) {
+        Stack<int> stack = new Stack<int>();
+        stack.Push(0);  // Initial score
+        
+        foreach (char c in s) {
+            if (c == '(') {
+                stack.Push(0);  // New depth level
+            } else {
+                int curr = stack.Pop();  // Score at current depth
+                int prev = stack.Pop();  // Score at previous depth
+                stack.Push(prev + Math.Max(2 * curr, 1));
+            }
+        }
+        
+        return stack.Pop();
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses stack-based approach for nested parentheses</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              "headline": "856. Score of Parentheses",
+              "author": {
+                "@type": "Person",
+                "name": "LeetCodee"
+              },
+              "datePublished": "2023-10-27",
+              "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 856: Score of Parentheses. Includes detailed explanations and time/space complexity analysis.",
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://leetcodee.com/problems/score-of-parentheses/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "LeetCodee",
+                "url": "https://leetcodee.com"
+              }
+            }
+            </script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

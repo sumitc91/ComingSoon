@@ -1,0 +1,310 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trim a Binary Search Tree - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to trim a binary search tree to include only nodes within a specified range.  Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="LeetCode, Trim a Binary Search Tree, binary search tree, BST, algorithm, data structure, Python, Java, C++, JavaScript, C#, solution, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/trim-a-binary-search-tree/">
+    <meta property="og:title" content="Trim a Binary Search Tree - LeetCodee Solution">
+    <meta property="og:description" content="Learn how to trim a binary search tree to include only nodes within a specified range.  Find optimized Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:url" content="https://leetcodee.com/problems/trim-a-binary-search-tree/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "669. Trim a Binary Search Tree",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Given the root of a binary search tree and the lowest and highest boundaries as low and high, trim the tree so that all its elements lies in [low, high].",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/trim-a-binary-search-tree/"
+      },
+      "keywords": "LeetCode, Trim a Binary Search Tree, binary search tree, BST, algorithm, data structure, Python, Java, C++, JavaScript, C#, solution, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">669. Trim a Binary Search Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">root</code> of a binary search tree and the lowest and highest boundaries as <code class="bg-gray-100 px-1 rounded">low</code> and <code class="bg-gray-100 px-1 rounded">high</code>, trim the tree so that all its elements lies in <code class="bg-gray-100 px-1 rounded">[low, high]</code>. Trimming the tree should <strong>not</strong> change the relative structure of the elements that will remain in the tree (i.e., any node's descendant should remain a descendant). It can be proven that there is a <strong>unique answer</strong>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return <em>the root of the trimmed binary search tree</em>. Note that the root may change depending on the given bounds.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [1,0,2], low = 1, high = 2
+Output: [1,null,2]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [3,0,4,null,2,null,null,1], low = 1, high = 3
+Output: [3,2,null,1]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 10<sup>4</sup>]</li>
+                    <li>0 ≤ Node.val ≤ 10<sup>4</sup></li>
+                    <li>The value of each node in the tree is <strong>unique</strong></li>
+                    <li>root is guaranteed to be a valid binary search tree</li>
+                    <li>0 ≤ low ≤ high ≤ 10<sup>4</sup></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def trimBST(self, root: Optional[TreeNode], low: int, high: int) -> Optional[TreeNode]:
+        if not root:
+            return None
+        
+        # If root.val < low, trim left subtree completely
+        if root.val < low:
+            return self.trimBST(root.right, low, high)
+        
+        # If root.val > high, trim right subtree completely
+        if root.val > high:
+            return self.trimBST(root.left, low, high)
+        
+        # Root is within bounds, recursively trim both subtrees
+        root.left = self.trimBST(root.left, low, high)
+        root.right = self.trimBST(root.right, low, high)
+        
+        return root</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Iterative):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def trimBST(self, root: Optional[TreeNode], low: int, high: int) -> Optional[TreeNode]:
+        if not root:
+            return None
+        
+        # Find a valid root
+        while root and (root.val < low or root.val > high):
+            if root.val < low:
+                root = root.right
+            else:
+                root = root.left
+        
+        if not root:
+            return None
+        
+        # Trim left subtree
+        node = root
+        while node.left:
+            if node.left.val < low:
+                node.left = node.left.right
+            else:
+                node = node.left
+        
+        # Trim right subtree
+        node = root
+        while node.right:
+            if node.right.val > high:
+                node.right = node.right.left
+            else:
+                node = node.right
+        
+        return root</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses recursive approach</li>
+                    <li>Second solution uses iterative approach</li>
+                    <li>Both have O(n) time complexity and O(h) space complexity</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public TreeNode trimBST(TreeNode root, int low, int high) {
+        if (root == null) {
+            return null;
+        }
+        
+        // If root.val < low, trim left subtree completely
+        if (root.val < low) {
+            return trimBST(root.right, low, high);
+        }
+        
+        // If root.val > high, trim right subtree completely
+        if (root.val > high) {
+            return trimBST(root.left, low, high);
+        }
+        
+        // Root is within bounds, recursively trim both subtrees
+        root.left = trimBST(root.left, low, high);
+        root.right = trimBST(root.right, low, high);
+        
+        return root;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+        if (!root) {
+            return nullptr;
+        }
+        
+        // If root->val < low, trim left subtree completely
+        if (root->val < low) {
+            return trimBST(root->right, low, high);
+        }
+        
+        // If root->val > high, trim right subtree completely
+        if (root->val > high) {
+            return trimBST(root->left, low, high);
+        }
+        
+        // Root is within bounds, recursively trim both subtrees
+        root->left = trimBST(root->left, low, high);
+        root->right = trimBST(root->right, low, high);
+        
+        return root;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @param {number} low
+ * @param {number} high
+ * @return {TreeNode}
+ */
+var trimBST = function(root, low, high) {
+    if (!root) {
+        return null;
+    }
+    
+    // If root.val < low, trim left subtree completely
+    if (root.val < low) {
+        return trimBST(root.right, low, high);
+    }
+    
+    // If root.val > high, trim right subtree completely
+    if (root.val > high) {
+        return trimBST(root.left, low, high);
+    }
+    
+    // Root is within bounds, recursively trim both subtrees
+    root.left = trimBST(root.left, low, high);
+    root.right = trimBST(root.right, low, high);
+    
+    return root;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public TreeNode TrimBST(TreeNode root, int low, int high) {
+        if (root == null) {
+            return null;
+        }
+        
+        // If root.val < low, trim left subtree completely
+        if (root.val < low) {
+            return TrimBST(root.right, low, high);
+        }
+        
+        // If root.val > high, trim right subtree completely
+        if (root.val > high) {
+            return TrimBST(root.left, low, high);
+        }
+        
+        // Root is within bounds, recursively trim both subtrees
+        root.left = TrimBST(root.left, low, high);
+        root.right = TrimBST(root.right, low, high);
+        
+        return root;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses recursive approach for clean and concise code</li>
+                    <li>Time complexity: O(n) where n is number of nodes</li>
+                    <li>Space complexity: O(h) where h is height of tree</li>
+                </ul>
+            </div>
+             <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

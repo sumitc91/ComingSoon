@@ -1,0 +1,385 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Array into Consecutive Subsequences - LeetCodee Solution</title>
+    <meta name="description" content="Find out how to solve the LeetCode problem 659: Split Array into Consecutive Subsequences.  Optimized solutions in Python, Java, C++, JavaScript, and C# are provided with detailed explanations.">
+    <meta name="keywords" content="leetcode, leetcode solution, split array into consecutive subsequences, algorithm, data structures, python, java, c++, javascript, c#, coding interview, competitive programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/split-array-into-consecutive-subsequences/">
+    <meta property="og:title" content="Split Array into Consecutive Subsequences - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/split-array-into-consecutive-subsequences/">
+    <meta property="og:description" content="Find out how to solve the LeetCode problem 659: Split Array into Consecutive Subsequences.  Optimized solutions in Python, Java, C++, JavaScript, and C# are provided with detailed explanations.">
+    <meta property="og:image" content="https://leetcodee.com/your-image.jpg">  <!-- Replace with actual image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "659. Split Array into Consecutive Subsequences",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27",  <!-- Replace with actual modification date -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find out how to solve the LeetCode problem 659: Split Array into Consecutive Subsequences.  Optimized solutions in Python, Java, C++, JavaScript, and C# are provided with detailed explanations.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/split-array-into-consecutive-subsequences/"
+      },
+      "keywords": "leetcode, leetcode solution, split array into consecutive subsequences, algorithm, data structures, python, java, c++, javascript, c#, coding interview, competitive programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">659. Split Array into Consecutive Subsequences</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array <code class="bg-gray-100 px-1 rounded">nums</code> that is sorted in <strong>non-decreasing</strong> order.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Determine if it is possible to split <code class="bg-gray-100 px-1 rounded">nums</code> into one or more subsequences such that <strong>both</strong> of these conditions are true:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                    <li>Each subsequence is a consecutive increasing sequence (i.e. each integer is exactly one more than the previous integer).</li>
+                    <li>All subsequences have a length of 3 or more.</li>
+                </ul>
+                <p class="text-gray-700">Return <code class="bg-gray-100 px-1 rounded">true</code> if you can split <code class="bg-gray-100 px-1 rounded">nums</code> according to the above conditions, or <code class="bg-gray-100 px-1 rounded">false</code> otherwise.</p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,3,3,4,5]
+Output: true
+Explanation: nums can be split into the following subsequences:
+[1,2,3,4,5] and [3]
+[1,2,3] and [3,4,5]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,3,3,4,4,5,5]
+Output: true
+Explanation: nums can be split into the following subsequences:
+[1,2,3,4,5] and [3,4,5]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,3,4,4,5]
+Output: false
+Explanation: It is impossible to split nums into consecutive increasing subsequences of length 3 or more.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 10<sup>4</sup></li>
+                    <li>-1000 ≤ nums[i] ≤ 1000</li>
+                    <li>nums is sorted in non-decreasing order</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def isPossible(self, nums: List[int]) -> bool:
+        # Count frequency of each number
+        count = Counter(nums)
+        # Track end counts of sequences
+        end = Counter()
+        
+        # Try to add each number to an existing sequence
+        # or start a new sequence
+        for num in nums:
+            if count[num] == 0:
+                continue
+                
+            # If can append to existing sequence
+            if end[num - 1] > 0:
+                end[num - 1] -= 1
+                end[num] += 1
+            else:
+                # Try to start new sequence of length 3
+                if count[num + 1] == 0 or count[num + 2] == 0:
+                    return False
+                count[num + 1] -= 1
+                count[num + 2] -= 1
+                end[num + 2] += 1
+            
+            count[num] -= 1
+        
+        return True</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Priority Queue):</h4>
+                    <pre class="language-python"><code>from heapq import heappush, heappop
+
+class Solution:
+    def isPossible(self, nums: List[int]) -> bool:
+        sequences = []  # min heap of (end_val, length) tuples
+        
+        for num in nums:
+            # Remove sequences that can't be extended
+            while sequences and sequences[0][0] + 1 < num:
+                if sequences[0][1] < 3:
+                    return False
+                heappop(sequences)
+            
+            if not sequences or sequences[0][0] == num:
+                # Start new sequence
+                heappush(sequences, (num, 1))
+            else:  # sequences[0][0] + 1 == num
+                # Extend existing sequence
+                _, length = heappop(sequences)
+                heappush(sequences, (num, length + 1))
+        
+        # Check remaining sequences
+        return all(length >= 3 for _, length in sequences)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses two counters with O(n) time and space</li>
+                    <li>Second solution uses priority queue with O(nlogn) time</li>
+                    <li>Counter solution is more efficient for this problem</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean isPossible(int[] nums) {
+        Map<Integer, Integer> count = new HashMap<>();
+        Map<Integer, Integer> end = new HashMap<>();
+        
+        // Count frequency of each number
+        for (int num : nums) {
+            count.put(num, count.getOrDefault(num, 0) + 1);
+        }
+        
+        // Try to add each number to an existing sequence
+        // or start a new sequence
+        for (int num : nums) {
+            if (count.get(num) == 0) {
+                continue;
+            }
+            
+            // If can append to existing sequence
+            if (end.getOrDefault(num - 1, 0) > 0) {
+                end.put(num - 1, end.get(num - 1) - 1);
+                end.put(num, end.getOrDefault(num, 0) + 1);
+            } else {
+                // Try to start new sequence of length 3
+                if (count.getOrDefault(num + 1, 0) == 0 || 
+                    count.getOrDefault(num + 2, 0) == 0) {
+                    return false;
+                }
+                count.put(num + 1, count.get(num + 1) - 1);
+                count.put(num + 2, count.get(num + 2) - 1);
+                end.put(num + 2, end.getOrDefault(num + 2, 0) + 1);
+            }
+            
+            count.put(num, count.get(num) - 1);
+        }
+        
+        return true;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool isPossible(vector<int>& nums) {
+        unordered_map<int, int> count, end;
+        
+        // Count frequency of each number
+        for (int num : nums) {
+            count[num]++;
+        }
+        
+        // Try to add each number to an existing sequence
+        // or start a new sequence
+        for (int num : nums) {
+            if (count[num] == 0) {
+                continue;
+            }
+            
+            // If can append to existing sequence
+            if (end[num - 1] > 0) {
+                end[num - 1]--;
+                end[num]++;
+            } else {
+                // Try to start new sequence of length 3
+                if (count[num + 1] == 0 || count[num + 2] == 0) {
+                    return false;
+                }
+                count[num + 1]--;
+                count[num + 2]--;
+                end[num + 2]++;
+            }
+            
+            count[num]--;
+        }
+        
+        return true;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var isPossible = function(nums) {
+    const count = new Map();
+    const end = new Map();
+    
+    // Count frequency of each number
+    for (const num of nums) {
+        count.set(num, (count.get(num) || 0) + 1);
+    }
+    
+    // Try to add each number to an existing sequence
+    // or start a new sequence
+    for (const num of nums) {
+        if (count.get(num) === 0) {
+            continue;
+        }
+        
+        // If can append to existing sequence
+        if ((end.get(num - 1) || 0) > 0) {
+            end.set(num - 1, end.get(num - 1) - 1);
+            end.set(num, (end.get(num) || 0) + 1);
+        } else {
+            // Try to start new sequence of length 3
+            if ((count.get(num + 1) || 0) === 0 || 
+                (count.get(num + 2) || 0) === 0) {
+                return false;
+            }
+            count.set(num + 1, count.get(num + 1) - 1);
+            count.set(num + 2, count.get(num + 2) - 1);
+            end.set(num + 2, (end.get(num + 2) || 0) + 1);
+        }
+        
+        count.set(num, count.get(num) - 1);
+    }
+    
+    return true;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool IsPossible(int[] nums) {
+        Dictionary<int, int> count = new Dictionary<int, int>();
+        Dictionary<int, int> end = new Dictionary<int, int>();
+        
+        // Count frequency of each number
+        foreach (int num in nums) {
+            if (!count.ContainsKey(num)) {
+                count[num] = 0;
+            }
+            count[num]++;
+        }
+        
+        // Try to add each number to an existing sequence
+        // or start a new sequence
+        foreach (int num in nums) {
+            if (count[num] == 0) {
+                continue;
+            }
+            
+            // If can append to existing sequence
+            if (end.ContainsKey(num - 1) && end[num - 1] > 0) {
+                end[num - 1]--;
+                if (!end.ContainsKey(num)) {
+                    end[num] = 0;
+                }
+                end[num]++;
+            } else {
+                // Try to start new sequence of length 3
+                if (!count.ContainsKey(num + 1) || count[num + 1] == 0 ||
+                    !count.ContainsKey(num + 2) || count[num + 2] == 0) {
+                    return false;
+                }
+                count[num + 1]--;
+                count[num + 2]--;
+                if (!end.ContainsKey(num + 2)) {
+                    end[num + 2] = 0;
+                }
+                end[num + 2]++;
+            }
+            
+            count[num]--;
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses two dictionaries to track number frequencies and sequence ends</li>
+                    <li>Handles dictionary key existence checks explicitly</li>
+                    <li>Time complexity is O(n), space complexity is O(n)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

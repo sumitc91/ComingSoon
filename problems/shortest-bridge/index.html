@@ -1,0 +1,539 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortest Bridge - LeetCodee Solution</title>
+    <meta name="description" content="Find the shortest bridge to connect two islands in a binary matrix.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, shortest bridge, algorithm, solution, python, java, c++, javascript, c#, binary matrix, graph, bfs, dfs">
+    <meta name="canonical" content="https://leetcodee.com/problems/shortest-bridge/">
+    <meta property="og:title" content="Shortest Bridge - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/shortest-bridge/">
+    <meta property="og:description" content="Find the shortest bridge to connect two islands in a binary matrix.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Shortest Bridge - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the shortest bridge to connect two islands in a binary matrix. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/shortest-bridge/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" // Replace with your logo URL
+        }
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">934. Shortest Bridge</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an <code class="bg-gray-100 px-1 rounded">n x n</code> binary matrix <code class="bg-gray-100 px-1 rounded">grid</code> where <code class="bg-gray-100 px-1 rounded">1</code> represents land and <code class="bg-gray-100 px-1 rounded">0</code> represents water.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    An island is a 4-directionally connected group of <code class="bg-gray-100 px-1 rounded">1</code>'s not connected to any other <code class="bg-gray-100 px-1 rounded">1</code>'s. There are exactly two islands in <code class="bg-gray-100 px-1 rounded">grid</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You may change <code class="bg-gray-100 px-1 rounded">0</code>'s to <code class="bg-gray-100 px-1 rounded">1</code>'s to connect the two islands to form one island.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the smallest number of <code class="bg-gray-100 px-1 rounded">0</code>'s you must flip to connect the two islands.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: grid = [[0,1],[1,0]]
+Output: 1</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: grid = [[0,1,0],[0,0,0],[0,0,1]]
+Output: 2</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: grid = [[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]
+Output: 1</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">n == grid.length == grid[i].length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">2 <= n <= 100</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">grid[i][j]</code> is either <code class="bg-gray-100 px-1 rounded">0</code> or <code class="bg-gray-100 px-1 rounded">1</code>.</li>
+                    <li>There are exactly two islands in <code class="bg-gray-100 px-1 rounded">grid</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def shortestBridge(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        # Find first island
+        def find_first_island():
+            for i in range(n):
+                for j in range(n):
+                    if grid[i][j] == 1:
+                        return i, j
+            return -1, -1
+        
+        # DFS to mark first island
+        def mark_island(i, j):
+            if i < 0 or i >= n or j < 0 or j >= n or grid[i][j] != 1:
+                return
+            grid[i][j] = 2
+            for di, dj in [(0,1), (1,0), (0,-1), (-1,0)]:
+                mark_island(i + di, j + dj)
+        
+        # BFS to find shortest bridge
+        def find_bridge():
+            queue = []
+            for i in range(n):
+                for j in range(n):
+                    if grid[i][j] == 2:
+                        queue.append((i, j, 0))
+            
+            visited = set()
+            while queue:
+                i, j, dist = queue.pop(0)
+                if (i, j) in visited:
+                    continue
+                visited.add((i, j))
+                
+                if grid[i][j] == 1:
+                    return dist - 1
+                
+                for di, dj in [(0,1), (1,0), (0,-1), (-1,0)]:
+                    ni, nj = i + di, j + dj
+                    if 0 <= ni < n and 0 <= nj < n and (ni, nj) not in visited:
+                        queue.append((ni, nj, dist + 1))
+            return 0
+        
+        # Main logic
+        i, j = find_first_island()
+        mark_island(i, j)
+        return find_bridge()</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need to traverse the grid to find islands and build the bridge.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need space for the queue and visited set in BFS.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int n;
+    private int[][] grid;
+    
+    public int shortestBridge(int[][] grid) {
+        this.grid = grid;
+        this.n = grid.length;
+        
+        // Find first island
+        int[] first = findFirstIsland();
+        if (first == null) return 0;
+        
+        // Mark first island
+        markIsland(first[0], first[1]);
+        
+        // Find shortest bridge
+        return findBridge();
+    }
+    
+    private int[] findFirstIsland() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null;
+    }
+    
+    private void markIsland(int i, int j) {
+        if (i < 0 || i >= n || j < 0 || j >= n || grid[i][j] != 1) {
+            return;
+        }
+        grid[i][j] = 2;
+        markIsland(i + 1, j);
+        markIsland(i - 1, j);
+        markIsland(i, j + 1);
+        markIsland(i, j - 1);
+    }
+    
+    private int findBridge() {
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[n][n];
+        
+        // Add all cells of first island to queue
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    queue.offer(new int[]{i, j, 0});
+                }
+            }
+        }
+        
+        int[][] dirs = {{0,1}, {1,0}, {0,-1}, {-1,0}};
+        while (!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            int i = curr[0], j = curr[1], dist = curr[2];
+            
+            if (visited[i][j]) continue;
+            visited[i][j] = true;
+            
+            if (grid[i][j] == 1) {
+                return dist - 1;
+            }
+            
+            for (int[] dir : dirs) {
+                int ni = i + dir[0], nj = j + dir[1];
+                if (ni >= 0 && ni < n && nj >= 0 && nj < n && !visited[ni][nj]) {
+                    queue.offer(new int[]{ni, nj, dist + 1});
+                }
+            }
+        }
+        return 0;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need to traverse the grid to find islands and build the bridge.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need space for the queue and visited array in BFS.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int n;
+    vector<vector<int>> grid;
+    
+    pair<int,int> findFirstIsland() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    return {i, j};
+                }
+            }
+        }
+        return {-1, -1};
+    }
+    
+    void markIsland(int i, int j) {
+        if (i < 0 || i >= n || j < 0 || j >= n || grid[i][j] != 1) {
+            return;
+        }
+        grid[i][j] = 2;
+        markIsland(i + 1, j);
+        markIsland(i - 1, j);
+        markIsland(i, j + 1);
+        markIsland(i, j - 1);
+    }
+    
+    int findBridge() {
+        queue<vector<int>> q;
+        vector<vector<bool>> visited(n, vector<bool>(n, false));
+        
+        // Add all cells of first island to queue
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    q.push({i, j, 0});
+                }
+            }
+        }
+        
+        vector<vector<int>> dirs = {{0,1}, {1,0}, {0,-1}, {-1,0}};
+        while (!q.empty()) {
+            auto curr = q.front();
+            q.pop();
+            int i = curr[0], j = curr[1], dist = curr[2];
+            
+            if (visited[i][j]) continue;
+            visited[i][j] = true;
+            
+            if (grid[i][j] == 1) {
+                return dist - 1;
+            }
+            
+            for (auto& dir : dirs) {
+                int ni = i + dir[0], nj = j + dir[1];
+                if (ni >= 0 && ni < n && nj >= 0 && nj < n && !visited[ni][nj]) {
+                    q.push({ni, nj, dist + 1});
+                }
+            }
+        }
+        return 0;
+    }
+    
+public:
+    int shortestBridge(vector<vector<int>>& grid) {
+        this->grid = grid;
+        this->n = grid.size();
+        
+        auto first = findFirstIsland();
+        if (first.first == -1) return 0;
+        
+        markIsland(first.first, first.second);
+        return findBridge();
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need to traverse the grid to find islands and build the bridge.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need space for the queue and visited array in BFS.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var shortestBridge = function(grid) {
+    const n = grid.length;
+    
+    function findFirstIsland() {
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                if (grid[i][j] === 1) {
+                    return [i, j];
+                }
+            }
+        }
+        return [-1, -1];
+    }
+    
+    function markIsland(i, j) {
+        if (i < 0 || i >= n || j < 0 || j >= n || grid[i][j] !== 1) {
+            return;
+        }
+        grid[i][j] = 2;
+        markIsland(i + 1, j);
+        markIsland(i - 1, j);
+        markIsland(i, j + 1);
+        markIsland(i, j - 1);
+    }
+    
+    function findBridge() {
+        const queue = [];
+        const visited = Array(n).fill().map(() => Array(n).fill(false));
+        
+        // Add all cells of first island to queue
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                if (grid[i][j] === 2) {
+                    queue.push([i, j, 0]);
+                }
+            }
+        }
+        
+        const dirs = [[0,1], [1,0], [0,-1], [-1,0]];
+        while (queue.length > 0) {
+            const [i, j, dist] = queue.shift();
+            
+            if (visited[i][j]) continue;
+            visited[i][j] = true;
+            
+            if (grid[i][j] === 1) {
+                return dist - 1;
+            }
+            
+            for (const [di, dj] of dirs) {
+                const ni = i + di, nj = j + dj;
+                if (ni >= 0 && ni < n && nj >= 0 && nj < n && !visited[ni][nj]) {
+                    queue.push([ni, nj, dist + 1]);
+                }
+            }
+        }
+        return 0;
+    }
+    
+    const [i, j] = findFirstIsland();
+    if (i === -1) return 0;
+    
+    markIsland(i, j);
+    return findBridge();
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need to traverse the grid to find islands and build the bridge.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need space for the queue and visited array in BFS.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int n;
+    private int[][] grid;
+    
+    public int ShortestBridge(int[][] grid) {
+        this.grid = grid;
+        this.n = grid.Length;
+        
+        var first = FindFirstIsland();
+        if (first == null) return 0;
+        
+        MarkIsland(first[0], first[1]);
+        return FindBridge();
+    }
+    
+    private int[] FindFirstIsland() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    return new int[] { i, j };
+                }
+            }
+        }
+        return null;
+    }
+    
+    private void MarkIsland(int i, int j) {
+        if (i < 0 || i >= n || j < 0 || j >= n || grid[i][j] != 1) {
+            return;
+        }
+        grid[i][j] = 2;
+        MarkIsland(i + 1, j);
+        MarkIsland(i - 1, j);
+        MarkIsland(i, j + 1);
+        MarkIsland(i, j - 1);
+    }
+    
+    private int FindBridge() {
+        var queue = new Queue<(int i, int j, int dist)>();
+        var visited = new bool[n, n];
+        
+        // Add all cells of first island to queue
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    queue.Enqueue((i, j, 0));
+                }
+            }
+        }
+        
+        var dirs = new (int di, int dj)[] { (0,1), (1,0), (0,-1), (-1,0) };
+        while (queue.Count > 0) {
+            var (i, j, dist) = queue.Dequeue();
+            
+            if (visited[i,j]) continue;
+            visited[i,j] = true;
+            
+            if (grid[i][j] == 1) {
+                return dist - 1;
+            }
+            
+            foreach (var (di, dj) in dirs) {
+                int ni = i + di, nj = j + dj;
+                if (ni >= 0 && ni < n && nj >= 0 && nj < n && !visited[ni,nj]) {
+                    queue.Enqueue((ni, nj, dist + 1));
+                }
+            }
+        }
+        return 0;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need to traverse the grid to find islands and build the bridge.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n^2)</h4>
+                    <p class="text-gray-700">We need space for the queue and visited array in BFS.</p>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="8908864674"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>648. Replace Words - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 648: Replace Words.  Learn how to use Trie and Set approaches for optimal prefix matching.">
+    <meta name="keywords" content="leetcode, replace words, algorithm, solution, python, java, c++, javascript, c#, trie, set, prefix matching, coding interview">
+    <meta property="og:title" content="648. Replace Words - LeetCodee Solution">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 648: Replace Words.  Learn how to use Trie and Set approaches for optimal prefix matching.">
+    <meta property="og:url" content="https://leetcodee.com/problems/replace-words/">
+    <meta property="og:type" content="article">
+    <meta name="canonical" content="https://leetcodee.com/problems/replace-words/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "648. Replace Words - LeetCodee Solution",
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 648: Replace Words. Learn how to use Trie and Set approaches for optimal prefix matching.",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/replace-words/"
+      },
+      "wordCount": 700
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">648. Replace Words</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    In English, we have a concept called <strong>root</strong>, which can be followed by some other word to form another longer word - let's call this word <strong>successor</strong>. For example, when the <strong>root</strong> "an" is followed by the <strong>successor</strong> word "other", we can form a new word "another".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given a dictionary consisting of many <strong>roots</strong> and a sentence consisting of words separated by spaces, replace all the <strong>successors</strong> in the sentence with the <strong>root</strong> forming it. If a <strong>successor</strong> can be replaced by more than one <strong>root</strong>, replace it with the <strong>root</strong> that has the shortest length.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the sentence after the replacement.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: dictionary = ["cat","bat","rat"], sentence = "the cattle was rattled by the battery"
+Output: "the cat was rat by the bat"</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: dictionary = ["a","b","c"], sentence = "aadsfasf absbs bbab cadsfafs"
+Output: "a a b c"</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ dictionary.length ≤ 1000</li>
+                    <li>1 ≤ dictionary[i].length ≤ 100</li>
+                    <li>dictionary[i] consists of only lower-case letters.</li>
+                    <li>1 ≤ sentence.length ≤ 10^6</li>
+                    <li>sentence consists of only lower-case letters and spaces.</li>
+                    <li>The number of words in sentence is in the range [1, 1000]</li>
+                    <li>The length of each word in sentence is in the range [1, 1000]</li>
+                    <li>Every two consecutive words in sentence will be separated by exactly one space.</li>
+                    <li>sentence does not have leading or trailing spaces.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        # Build trie
+        root = {}
+        for word in dictionary:
+            node = root
+            for char in word:
+                node = node.setdefault(char, {})
+            node['$'] = word  # Mark end of word
+        
+        def find_root(word):
+            node = root
+            for i, char in enumerate(word):
+                if '$' in node:  # Found a root
+                    return node['$']
+                if char not in node:  # No root exists
+                    return word
+                node = node[char]
+            return word
+        
+        # Process each word in the sentence
+        words = sentence.split()
+        return ' '.join(find_root(word) for word in words)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Set):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        rootset = set(dictionary)
+        
+        def replace(word):
+            for i in range(1, len(word) + 1):
+                if word[:i] in rootset:
+                    return word[:i]
+            return word
+        
+        return ' '.join(map(replace, sentence.split()))</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses Trie for efficient prefix matching</li>
+                    <li>Second solution uses Set for simpler implementation</li>
+                    <li>Trie solution has better time complexity for long words</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    class TrieNode {
+        Map<Character, TrieNode> children = new HashMap<>();
+        String word = null;
+    }
+    
+    public String replaceWords(List<String> dictionary, String sentence) {
+        TrieNode root = new TrieNode();
+        
+        // Build trie
+        for (String word : dictionary) {
+            TrieNode node = root;
+            for (char c : word.toCharArray()) {
+                node.children.putIfAbsent(c, new TrieNode());
+                node = node.children.get(c);
+            }
+            node.word = word;
+        }
+        
+        // Process sentence
+        StringBuilder result = new StringBuilder();
+        String[] words = sentence.split(" ");
+        
+        for (String word : words) {
+            if (result.length() > 0) {
+                result.append(" ");
+            }
+            
+            TrieNode node = root;
+            for (char c : word.toCharArray()) {
+                if (node.word != null || !node.children.containsKey(c)) {
+                    break;
+                }
+                node = node.children.get(c);
+            }
+            result.append(node.word != null ? node.word : word);
+        }
+        
+        return result.toString();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+    struct TrieNode {
+        unordered_map<char, TrieNode*> children;
+        string* word = nullptr;
+        
+        ~TrieNode() {
+            for (auto& pair : children) {
+                delete pair.second;
+            }
+        }
+    };
+    
+public:
+    string replaceWords(vector<string>& dictionary, string sentence) {
+        TrieNode* root = new TrieNode();
+        
+        // Build trie
+        for (const string& word : dictionary) {
+            TrieNode* node = root;
+            for (char c : word) {
+                if (!node->children[c]) {
+                    node->children[c] = new TrieNode();
+                }
+                node = node->children[c];
+            }
+            node->word = &word;
+        }
+        
+        // Process sentence
+        stringstream ss(sentence);
+        string word, result;
+        bool first = true;
+        
+        while (ss >> word) {
+            if (!first) {
+                result += " ";
+            }
+            first = false;
+            
+            TrieNode* node = root;
+            for (char c : word) {
+                if (node->word || !node->children[c]) {
+                    break;
+                }
+                node = node->children[c];
+            }
+            result += node->word ? *node->word : word;
+        }
+        
+        delete root;
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} dictionary
+ * @param {string} sentence
+ * @return {string}
+ */
+var replaceWords = function(dictionary, sentence) {
+    const root = {};
+    
+    // Build trie
+    for (const word of dictionary) {
+        let node = root;
+        for (const char of word) {
+            node = node[char] = node[char] || {};
+        }
+        node.word = word;
+    }
+    
+    // Find root word
+    const findRoot = (word) => {
+        let node = root;
+        for (const char of word) {
+            if (node.word) return node.word;
+            if (!node[char]) return word;
+            node = node[char];
+        }
+        return word;
+    };
+    
+    // Process sentence
+    return sentence.split(' ')
+                  .map(findRoot)
+                  .join(' ');
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    class TrieNode {
+        public Dictionary<char, TrieNode> Children { get; } = new Dictionary<char, TrieNode>();
+        public string Word { get; set; }
+    }
+    
+    public string ReplaceWords(IList<string> dictionary, string sentence) {
+        var root = new TrieNode();
+        
+        // Build trie
+        foreach (var word in dictionary) {
+            var node = root;
+            foreach (var c in word) {
+                if (!node.Children.ContainsKey(c)) {
+                    node.Children[c] = new TrieNode();
+                }
+                node = node.Children[c];
+            }
+            node.Word = word;
+        }
+        
+        // Process sentence
+        return string.Join(" ", 
+            sentence.Split(' ')
+                   .Select(word => {
+                       var node = root;
+                       foreach (var c in word) {
+                           if (node.Word != null || !node.Children.ContainsKey(c)) {
+                               break;
+                           }
+                           node = node.Children[c];
+                       }
+                       return node.Word ?? word;
+                   }));
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using HashSet):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public string ReplaceWords(IList<string> dictionary, string sentence) {
+        var rootSet = new HashSet<string>(dictionary);
+        
+        return string.Join(" ",
+            sentence.Split(' ')
+                   .Select(word => {
+                       for (int i = 1; i <= word.Length; i++) {
+                           var prefix = word.Substring(0, i);
+                           if (rootSet.Contains(prefix)) {
+                               return prefix;
+                           }
+                       }
+                       return word;
+                   }));
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses Trie for efficient prefix matching</li>
+                        <li>Second solution uses HashSet for simpler implementation</li>
+                        <li>Both solutions handle all edge cases correctly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

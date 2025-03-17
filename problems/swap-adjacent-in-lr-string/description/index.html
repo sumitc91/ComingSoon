@@ -1,0 +1,368 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swap Adjacent in LR String - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Swap Adjacent in LR String problem on LeetCodee.  Find Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="leetcode, leetcodee, swap adjacent in lr string, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <meta property="og:title" content="Swap Adjacent in LR String - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/swap-adjacent-in-lr-string/">
+    <meta property="og:description" content="Learn how to solve the Swap Adjacent in LR String problem on LeetCodee.  Find Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/swap-adjacent-in-lr-string/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "777. Swap Adjacent in LR String",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "In a string composed of 'L', 'R', and 'X' characters, like \"RXXLRXRXL\", a move consists of either replacing one occurrence of \"XL\" with \"LX\", or replacing one occurrence of \"RX\" with \"XR\". Given the starting string start and the ending string end, return True if and only if there exists a sequence of moves to transform one string to the other.",
+      "keywords": "leetcode, leetcodee, swap adjacent in lr string, algorithm, solution, python, java, c++, javascript, c#, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">777. Swap Adjacent in LR String</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    In a string composed of 'L', 'R', and 'X' characters, like "RXXLRXRXL", a move consists of either replacing one occurrence of "XL" with "LX", or replacing one occurrence of "RX" with "XR". Given the starting string start and the ending string end, return True if and only if there exists a sequence of moves to transform one string to the other.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: start = "RXXLRXRXL", end = "XRLXXRRLX"
+Output: true
+Explanation: We can transform start to end following these steps:
+RXXLRXRXL ->
+XRXLRXRXL ->
+XRLXRXRXL ->
+XRLXXRRXL ->
+XRLXXRRLX</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: start = "X", end = "L"
+Output: false</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ start.length ≤ 10^4</li>
+                    <li>start.length == end.length</li>
+                    <li>Both start and end will only consist of characters in 'L', 'R', and 'X'</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def canTransform(self, start: str, end: str) -> bool:
+        # Check if lengths are different
+        if len(start) != len(end):
+            return False
+            
+        # Check if relative positions of L and R are same
+        if start.replace('X', '') != end.replace('X', ''):
+            return False
+            
+        # Check if L's positions in start are >= in end
+        # and R's positions in start are <= in end
+        start_l = [(i, c) for i, c in enumerate(start) if c != 'X']
+        end_l = [(i, c) for i, c in enumerate(end) if c != 'X']
+        
+        for (i1, c1), (i2, c2) in zip(start_l, end_l):
+            if c1 != c2:
+                return False
+            if c1 == 'L' and i1 < i2:
+                return False
+            if c1 == 'R' and i1 > i2:
+                return False
+                
+        return True</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Key insight: L can only move left and R can only move right</li>
+                    <li>Check if relative positions of L and R are preserved</li>
+                    <li>Time complexity: O(n) where n is length of strings</li>
+                    <li>Space complexity: O(n) for storing positions</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean canTransform(String start, String end) {
+        // Check if lengths are different
+        if (start.length() != end.length()) {
+            return false;
+        }
+        
+        // Check if relative positions of L and R are same
+        if (!start.replace("X", "").equals(end.replace("X", ""))) {
+            return false;
+        }
+        
+        // Get positions of L and R in both strings
+        List<Pair> startList = new ArrayList<>();
+        List<Pair> endList = new ArrayList<>();
+        
+        for (int i = 0; i < start.length(); i++) {
+            if (start.charAt(i) != 'X') {
+                startList.add(new Pair(i, start.charAt(i)));
+            }
+            if (end.charAt(i) != 'X') {
+                endList.add(new Pair(i, end.charAt(i)));
+            }
+        }
+        
+        // Check if positions are valid
+        for (int i = 0; i < startList.size(); i++) {
+            Pair s = startList.get(i);
+            Pair e = endList.get(i);
+            
+            if (s.c != e.c) {
+                return false;
+            }
+            if (s.c == 'L' && s.i < e.i) {
+                return false;
+            }
+            if (s.c == 'R' && s.i > e.i) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private static class Pair {
+        int i;
+        char c;
+        
+        Pair(int i, char c) {
+            this.i = i;
+            this.c = c;
+        }
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool canTransform(string start, string end) {
+        // Check if lengths are different
+        if (start.length() != end.length()) {
+            return false;
+        }
+        
+        // Check if relative positions of L and R are same
+        string s1 = start, s2 = end;
+        s1.erase(remove(s1.begin(), s1.end(), 'X'), s1.end());
+        s2.erase(remove(s2.begin(), s2.end(), 'X'), s2.end());
+        if (s1 != s2) {
+            return false;
+        }
+        
+        // Get positions of L and R in both strings
+        vector<pair<int, char>> startList, endList;
+        
+        for (int i = 0; i < start.length(); i++) {
+            if (start[i] != 'X') {
+                startList.emplace_back(i, start[i]);
+            }
+            if (end[i] != 'X') {
+                endList.emplace_back(i, end[i]);
+            }
+        }
+        
+        // Check if positions are valid
+        for (int i = 0; i < startList.size(); i++) {
+            if (startList[i].second != endList[i].second) {
+                return false;
+            }
+            if (startList[i].second == 'L' && startList[i].first < endList[i].first) {
+                return false;
+            }
+            if (startList[i].second == 'R' && startList[i].first > endList[i].first) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function canTransform(start, end) {
+    // Check if lengths are different
+    if (start.length !== end.length) {
+        return false;
+    }
+    
+    // Check if relative positions of L and R are same
+    if (start.replace(/X/g, '') !== end.replace(/X/g, '')) {
+        return false;
+    }
+    
+    // Get positions of L and R in both strings
+    const startList = [];
+    const endList = [];
+    
+    for (let i = 0; i < start.length; i++) {
+        if (start[i] !== 'X') {
+            startList.push([i, start[i]]);
+        }
+        if (end[i] !== 'X') {
+            endList.push([i, end[i]]);
+        }
+    }
+    
+    // Check if positions are valid
+    for (let i = 0; i < startList.length; i++) {
+        const [sI, sC] = startList[i];
+        const [eI, eC] = endList[i];
+        
+        if (sC !== eC) {
+            return false;
+        }
+        if (sC === 'L' && sI < eI) {
+            return false;
+        }
+        if (sC === 'R' && sI > eI) {
+            return false;
+        }
+    }
+    
+    return true;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool CanTransform(string start, string end) {
+        // Check if lengths are different
+        if (start.Length != end.Length) {
+            return false;
+        }
+        
+        // Check if relative positions of L and R are same
+        if (start.Replace("X", "") != end.Replace("X", "")) {
+            return false;
+        }
+        
+        // Get positions of L and R in both strings
+        var startList = new List<(int i, char c)>();
+        var endList = new List<(int i, char c)>();
+        
+        for (int i = 0; i < start.Length; i++) {
+            if (start[i] != 'X') {
+                startList.Add((i, start[i]));
+            }
+            if (end[i] != 'X') {
+                endList.Add((i, end[i]));
+            }
+        }
+        
+        // Check if positions are valid
+        for (int i = 0; i < startList.Count; i++) {
+            var (sI, sC) = startList[i];
+            var (eI, eC) = endList[i];
+            
+            if (sC != eC) {
+                return false;
+            }
+            if (sC == 'L' && sI < eI) {
+                return false;
+            }
+            if (sC == 'R' && sI > eI) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Key insight: L can only move left and R can only move right</li>
+                    <li>Check if relative positions of L and R are preserved</li>
+                    <li>Time complexity: O(n) where n is length of strings</li>
+                    <li>Space complexity: O(n) for storing positions</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

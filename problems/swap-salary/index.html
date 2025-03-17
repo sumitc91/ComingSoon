@@ -1,0 +1,234 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swap Salary - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the LeetCode Swap Salary problem with efficient SQL and C# solutions.  Includes MySQL, PostgreSQL, Oracle, MS SQL Server, and C# code examples.">
+    <meta name="keywords" content="LeetCode, Swap Salary, SQL, MySQL, PostgreSQL, Oracle, MS SQL Server, C#, solution, database, programming, tutorial">
+    <meta property="og:title" content="Swap Salary - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/swap-salary/">
+    <meta property="og:description" content="Learn how to solve the LeetCode Swap Salary problem with efficient SQL and C# solutions.  Includes MySQL, PostgreSQL, Oracle, MS SQL Server, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/swap-salary/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">627. Swap Salary</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#mysql" class="ml-2 text-blue-600 hover:text-blue-800">MySQL</a>
+                <a href="#postgresql" class="ml-2 text-blue-600 hover:text-blue-800">PostgreSQL</a>
+                <a href="#oracle" class="ml-2 text-blue-600 hover:text-blue-800">Oracle</a>
+                <a href="#mssql" class="ml-2 text-blue-600 hover:text-blue-800">MS SQL Server</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Table: <code class="bg-gray-100 px-1 rounded">Salary</code>
+                </p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
++-------------+----------+
+| Column Name | Type     |
++-------------+----------+
+| id          | int      |
+| name        | varchar  |
+| sex         | ENUM     |
+| salary      | int      |
++-------------+----------+
+id is the primary key (column with unique values) for this table.
+The sex column is ENUM value of type ('m', 'f').
+The table contains information about an employee.</pre>
+                <p class="text-gray-700 mb-4">
+                    Write a solution to swap all 'f' and 'm' values (i.e., change all 'f' values to 'm' and vice versa) with a single update statement and no intermediate temporary tables.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Note that you must write a single update statement, do not write any select statement for this problem.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example:</h2>
+                <p class="text-gray-700 mb-2">Input:</p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
+Salary table:
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | m   | 2500   |
+| 2  | B    | f   | 1500   |
+| 3  | C    | m   | 5500   |
+| 4  | D    | f   | 500    |
++----+------+-----+--------+</pre>
+                <p class="text-gray-700 mb-2">Output:</p>
+                <pre class="bg-gray-100 p-4 rounded mb-4">
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | f   | 2500   |
+| 2  | B    | m   | 1500   |
+| 3  | C    | f   | 5500   |
+| 4  | D    | m   | 500    |
++----+------+-----+--------+</pre>
+            </div>
+
+            <!-- MySQL Solution -->
+            <div id="mysql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MySQL Solution</h3>
+                <pre class="language-sql"><code>UPDATE Salary
+SET sex = CASE sex
+    WHEN 'm' THEN 'f'
+    ELSE 'm'
+END;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using IF:</h4>
+                    <pre class="language-sql"><code>UPDATE Salary
+SET sex = IF(sex = 'm', 'f', 'm');</code></pre>
+                </div>
+            </div>
+
+            <!-- PostgreSQL Solution -->
+            <div id="postgresql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">PostgreSQL Solution</h3>
+                <pre class="language-sql"><code>UPDATE Salary
+SET sex = CASE sex
+    WHEN 'm' THEN 'f'
+    ELSE 'm'
+END;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using IIF:</h4>
+                    <pre class="language-sql"><code>UPDATE Salary
+SET sex = IIF(sex = 'm', 'f', 'm');</code></pre>
+                </div>
+            </div>
+
+            <!-- Oracle Solution -->
+            <div id="oracle" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Oracle Solution</h3>
+                <pre class="language-sql"><code>UPDATE Salary
+SET sex = CASE sex
+    WHEN 'm' THEN 'f'
+    ELSE 'm'
+END;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using DECODE:</h4>
+                    <pre class="language-sql"><code>UPDATE Salary
+SET sex = DECODE(sex, 'm', 'f', 'f', 'm');</code></pre>
+                </div>
+            </div>
+
+            <!-- MS SQL Server Solution -->
+            <div id="mssql" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MS SQL Server Solution</h3>
+                <pre class="language-sql"><code>UPDATE Salary
+SET sex = CASE sex
+    WHEN 'm' THEN 'f'
+    ELSE 'm'
+END;</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using IIF:</h4>
+                    <pre class="language-sql"><code>UPDATE Salary
+SET sex = IIF(sex = 'm', 'f', 'm');</code></pre>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public void Execute(string connectionString) {
+        string sql = @"
+            UPDATE Salary
+            SET sex = CASE sex
+                WHEN 'm' THEN 'f'
+                ELSE 'm'
+            END;";
+            
+        // Using Dapper
+        using (var connection = new SqlConnection(connectionString)) {
+            connection.Execute(sql);
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Entity Framework:</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public void Execute(SalaryContext context) {
+        var employees = context.Salaries.ToList();
+        foreach (var employee in employees) {
+            employee.Sex = employee.Sex == "m" ? "f" : "m";
+        }
+        context.SaveChanges();
+    }
+    
+    // Entity Framework model
+    public class Salary {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Sex { get; set; }
+        public int SalaryAmount { get; set; }
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Both raw SQL and Entity Framework approaches are shown</li>
+                        <li>Raw SQL is more efficient for bulk updates</li>
+                        <li>Entity Framework approach allows for more complex business logic</li>
+                        <li>Both solutions maintain data integrity</li>
+                    </ul>
+                </div>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "627. Swap Salary",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Learn how to solve the LeetCode Swap Salary problem with efficient SQL and C# solutions. Includes MySQL, PostgreSQL, Oracle, MS SQL Server, and C# code examples.",
+      "keywords": "LeetCode, Swap Salary, SQL, MySQL, PostgreSQL, Oracle, MS SQL Server, C#, solution, database, programming, tutorial"
+    }
+    </script>
+</body>
+</html>

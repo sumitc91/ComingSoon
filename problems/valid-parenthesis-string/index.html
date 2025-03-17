@@ -1,0 +1,305 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Parenthesis String - LeetCodee Solution</title>
+    <meta name="description" content="Find the solution to LeetCode problem 678: Valid Parenthesis String.  This comprehensive guide provides Python, Java, C++, JavaScript, and C# solutions with explanations and analysis.">
+    <meta name="keywords" content="leetcode, valid parenthesis string, 678, solution, python, java, c++, javascript, c#, algorithm, coding, programming">
+    <meta property="og:title" content="Valid Parenthesis String - LeetCodee Solution">
+    <meta property="og:description" content="Find the solution to LeetCode problem 678: Valid Parenthesis String.  This comprehensive guide provides Python, Java, C++, JavaScript, and C# solutions with explanations and analysis.">
+    <meta property="og:url" content="https://leetcodee.com/problems/valid-parenthesis-string/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/valid-parenthesis-string/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">678. Valid Parenthesis String</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a string <code class="bg-gray-100 px-1 rounded">s</code> containing only three types of characters: <code class="bg-gray-100 px-1 rounded">'('</code>, <code class="bg-gray-100 px-1 rounded">')'</code> and <code class="bg-gray-100 px-1 rounded">'*'</code>, return <code class="bg-gray-100 px-1 rounded">true</code> if <code class="bg-gray-100 px-1 rounded">s</code> is valid.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The following rules define a valid string:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Any left parenthesis <code class="bg-gray-100 px-1 rounded">'('</code> must have a corresponding right parenthesis <code class="bg-gray-100 px-1 rounded">')'</code>.</li>
+                    <li>Any right parenthesis <code class="bg-gray-100 px-1 rounded">')'</code> must have a corresponding left parenthesis <code class="bg-gray-100 px-1 rounded">'('</code>.</li>
+                    <li>Left parenthesis <code class="bg-gray-100 px-1 rounded">'('</code> must go before the corresponding right parenthesis <code class="bg-gray-100 px-1 rounded">')'</code>.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">'*'</code> could be treated as a single right parenthesis <code class="bg-gray-100 px-1 rounded">')'</code> or a single left parenthesis <code class="bg-gray-100 px-1 rounded">'('</code> or an empty string <code class="bg-gray-100 px-1 rounded">""</code>.</li>
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "()"
+Output: true</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "(*)"
+Output: true</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "(*))"
+Output: true</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 100</li>
+                    <li>s[i] is <code class="bg-gray-100 px-1 rounded">'('</code>, <code class="bg-gray-100 px-1 rounded">')'</code> or <code class="bg-gray-100 px-1 rounded">'*'</code>.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def checkValidString(self, s: str) -> bool:
+        min_open = max_open = 0
+        
+        for char in s:
+            if char == '(':
+                min_open += 1
+                max_open += 1
+            elif char == ')':
+                min_open = max(0, min_open - 1)
+                max_open -= 1
+                if max_open < 0:
+                    return False
+            else:  # char == '*'
+                min_open = max(0, min_open - 1)
+                max_open += 1
+                
+        return min_open == 0</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Stack):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def checkValidString(self, s: str) -> bool:
+        left_stack = []
+        star_stack = []
+        
+        for i, char in enumerate(s):
+            if char == '(':
+                left_stack.append(i)
+            elif char == '*':
+                star_stack.append(i)
+            else:  # char == ')'
+                if left_stack:
+                    left_stack.pop()
+                elif star_stack:
+                    star_stack.pop()
+                else:
+                    return False
+                    
+        while left_stack and star_stack:
+            if left_stack[-1] > star_stack[-1]:
+                return False
+            left_stack.pop()
+            star_stack.pop()
+            
+        return len(left_stack) == 0</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses min/max open parentheses count</li>
+                    <li>Second solution uses two stacks for tracking</li>
+                    <li>Time complexity: O(n) for both solutions</li>
+                    <li>Space complexity: O(1) for first solution, O(n) for second</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean checkValidString(String s) {
+        int minOpen = 0, maxOpen = 0;
+        
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                minOpen++;
+                maxOpen++;
+            } else if (c == ')') {
+                minOpen = Math.max(0, minOpen - 1);
+                maxOpen--;
+                if (maxOpen < 0) {
+                    return false;
+                }
+            } else {  // c == '*'
+                minOpen = Math.max(0, minOpen - 1);
+                maxOpen++;
+            }
+        }
+        
+        return minOpen == 0;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool checkValidString(string s) {
+        int minOpen = 0, maxOpen = 0;
+        
+        for (char c : s) {
+            if (c == '(') {
+                minOpen++;
+                maxOpen++;
+            } else if (c == ')') {
+                minOpen = max(0, minOpen - 1);
+                maxOpen--;
+                if (maxOpen < 0) {
+                    return false;
+                }
+            } else {  // c == '*'
+                minOpen = max(0, minOpen - 1);
+                maxOpen++;
+            }
+        }
+        
+        return minOpen == 0;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var checkValidString = function(s) {
+    let minOpen = 0, maxOpen = 0;
+    
+    for (const c of s) {
+        if (c === '(') {
+            minOpen++;
+            maxOpen++;
+        } else if (c === ')') {
+            minOpen = Math.max(0, minOpen - 1);
+            maxOpen--;
+            if (maxOpen < 0) {
+                return false;
+            }
+        } else {  // c === '*'
+            minOpen = Math.max(0, minOpen - 1);
+            maxOpen++;
+        }
+    }
+    
+    return minOpen === 0;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool CheckValidString(string s) {
+        int minOpen = 0, maxOpen = 0;
+        
+        foreach (char c in s) {
+            if (c == '(') {
+                minOpen++;
+                maxOpen++;
+            } else if (c == ')') {
+                minOpen = Math.Max(0, minOpen - 1);
+                maxOpen--;
+                if (maxOpen < 0) {
+                    return false;
+                }
+            } else {  // c == '*'
+                minOpen = Math.Max(0, minOpen - 1);
+                maxOpen++;
+            }
+        }
+        
+        return minOpen == 0;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses min/max open parentheses count approach</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(1)</li>
+                    <li>Handles all possible cases for wildcard character</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "Article",
+                  "headline": "678. Valid Parenthesis String",
+                  "author": {
+                    "@type": "Person",
+                    "name": "LeetCodee"
+                  },
+                  "datePublished": "2023-10-27",
+                  "description": "Find the solution to LeetCode problem 678: Valid Parenthesis String.  This comprehensive guide provides Python, Java, C++, JavaScript, and C# solutions with explanations and analysis.",
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://leetcodee.com/problems/valid-parenthesis-string/"
+                  }
+                }
+            </script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

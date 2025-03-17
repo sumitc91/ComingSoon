@@ -1,0 +1,255 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uncommon Words from Two Sentences - LeetCodee Solution</title>
+    <meta name="description" content="Find the uncommon words from two sentences. LeetCodee provides solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, uncommon words, two sentences, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/uncommon-words-from-two-sentences/">
+    <meta property="og:title" content="Uncommon Words from Two Sentences - LeetCodee Solution">
+    <meta property="og:description" content="Find the uncommon words from two sentences. LeetCodee provides solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/uncommon-words-from-two-sentences/">
+    <meta property="og:site_name" content="LeetCodee">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Uncommon Words from Two Sentences - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the uncommon words from two sentences. LeetCodee provides solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "A sentence is a string of single-space separated words where each word consists of lowercase and uppercase letters only. A word is uncommon if it appears exactly once in one of the sentences, and does not appear in the other sentence. Given two sentences s1 and s2, return a list of all the uncommon words. You may return the answer in any order.  Example 1: Input: s1 = \"this apple is sweet\", s2 = \"this apple is sour\" Output: [\"sweet\",\"sour\"] Example 2: Input: s1 = \"apple apple\", s2 = \"banana\" Output: [\"banana\"] Constraints: 1 ≤ s1.length, s2.length ≤ 200 s1 and s2 consist of lowercase and uppercase letters and spaces Both s1 and s2 do not have leading or trailing spaces All the words in s1 and s2 are separated by a single space",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/uncommon-words-from-two-sentences/"
+      }
+    }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">884. Uncommon Words from Two Sentences</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A sentence is a string of single-space separated words where each word consists of lowercase and uppercase letters only.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A word is uncommon if it appears exactly once in one of the sentences, and does not appear in the other sentence.
+                </p>
+                <p class="text-gray-700">
+                    Given two sentences s1 and s2, return a list of all the uncommon words. You may return the answer in any order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s1 = "this apple is sweet", s2 = "this apple is sour"
+Output: ["sweet","sour"]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s1 = "apple apple", s2 = "banana"
+Output: ["banana"]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s1.length, s2.length ≤ 200</li>
+                    <li>s1 and s2 consist of lowercase and uppercase letters and spaces</li>
+                    <li>Both s1 and s2 do not have leading or trailing spaces</li>
+                    <li>All the words in s1 and s2 are separated by a single space</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def uncommonFromSentences(self, s1: str, s2: str) -> List[str]:
+        # Count words in both sentences
+        word_count = {}
+        for word in s1.split():
+            word_count[word] = word_count.get(word, 0) + 1
+        for word in s2.split():
+            word_count[word] = word_count.get(word, 0) + 1
+            
+        # Return words that appear exactly once
+        return [word for word, count in word_count.items() if count == 1]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dictionary to count word frequencies</li>
+                    <li>Time complexity: O(n + m)</li>
+                    <li>Space complexity: O(n + m)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String[] uncommonFromSentences(String s1, String s2) {
+        Map<String, Integer> wordCount = new HashMap<>();
+        
+        // Count words in both sentences
+        for (String word : s1.split(" ")) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+        for (String word : s2.split(" ")) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+        
+        // Collect words that appear exactly once
+        List<String> uncommon = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
+            if (entry.getValue() == 1) {
+                uncommon.add(entry.getKey());
+            }
+        }
+        
+        return uncommon.toArray(new String[0]);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<string> uncommonFromSentences(string s1, string s2) {
+        unordered_map<string, int> wordCount;
+        
+        // Helper function to split string and count words
+        auto countWords = [&](const string& s) {
+            stringstream ss(s);
+            string word;
+            while (ss >> word) {
+                wordCount[word]++;
+            }
+        };
+        
+        // Count words in both sentences
+        countWords(s1);
+        countWords(s2);
+        
+        // Collect words that appear exactly once
+        vector<string> uncommon;
+        for (const auto& [word, count] : wordCount) {
+            if (count == 1) {
+                uncommon.push_back(word);
+            }
+        }
+        
+        return uncommon;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {string[]}
+ */
+var uncommonFromSentences = function(s1, s2) {
+    const wordCount = new Map();
+    
+    // Count words in both sentences
+    const countWords = (s) => {
+        s.split(' ').forEach(word => {
+            wordCount.set(word, (wordCount.get(word) || 0) + 1);
+        });
+    };
+    
+    countWords(s1);
+    countWords(s2);
+    
+    // Return words that appear exactly once
+    return Array.from(wordCount.entries())
+        .filter(([word, count]) => count === 1)
+        .map(([word]) => word);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string[] UncommonFromSentences(string s1, string s2) {
+        var wordCount = new Dictionary<string, int>();
+        
+        // Count words in both sentences
+        foreach (var word in s1.Split(' ')) {
+            wordCount[word] = wordCount.GetValueOrDefault(word, 0) + 1;
+        }
+        foreach (var word in s2.Split(' ')) {
+            wordCount[word] = wordCount.GetValueOrDefault(word, 0) + 1;
+        }
+        
+        // Return words that appear exactly once
+        return wordCount.Where(kv => kv.Value == 1)
+                       .Select(kv => kv.Key)
+                       .ToArray();
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dictionary/map for word counting</li>
+                    <li>Handles word splitting efficiently</li>
+                    <li>LINQ for elegant filtering in C#</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

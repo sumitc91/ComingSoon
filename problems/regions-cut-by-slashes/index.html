@@ -1,0 +1,544 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regions Cut By Slashes - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of regions in a grid divided by slashes and backslashes. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, leetcodee, regions cut by slashes, algorithm, solution, python, java, c++, javascript, c#, union-find, disjoint-set">
+    <link rel="canonical" href="https://leetcodee.com/problems/regions-cut-by-slashes/">
+    <meta property="og:title" content="Regions Cut By Slashes - LeetCodee Solution">
+    <meta property="og:description" content="Find the number of regions in a grid divided by slashes and backslashes. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/regions-cut-by-slashes/">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Regions Cut By Slashes - LeetCodee Solution",
+      "description": "Find the number of regions in a grid divided by slashes and backslashes. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" // Replace with your logo URL
+        }
+      },
+      "datePublished": "2023-10-27", // Replace with the actual publication date
+      "dateModified": "2023-10-27", // Replace with the actual modification date
+      "articleSection": "LeetCode Solutions",
+      "keywords": ["leetcode", "leetcodee", "regions cut by slashes", "algorithm", "solution", "python", "java", "c++", "javascript", "c#", "union-find", "disjoint-set"]
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">959. Regions Cut By Slashes</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    In a N x N grid composed of 1 x 1 squares, each 1 x 1 square consists of a /, \, or blank space. These characters divide the square into contiguous regions.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    (Note that backslash characters are escaped, so a \ is represented as "\\".)
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the number of regions.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [
+  " /",
+  "/ "
+]
+Output: 2
+Explanation: The 2x2 grid is as follows:</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [
+  " /",
+  "  "
+]
+Output: 1
+Explanation: The 2x2 grid is as follows:</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [
+  "\\/",
+  "/\\"
+]
+Output: 4
+Explanation: (Recall that because \ characters are escaped, "\\/" refers to \/, and "/\\" refers to /\.)
+The 2x2 grid is as follows:</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 4:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [
+  "/\\",
+  "\\/"
+]
+Output: 5
+Explanation: (Recall that because \ characters are escaped, "/\\" refers to /\, and "\\/" refers to \/.)
+The 2x2 grid is as follows:</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 5:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: [
+  "//",
+  "/ "
+]
+Output: 3
+Explanation: The 2x2 grid is as follows:</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= grid.length == grid[0].length <= 30</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">grid[i][j]</code> is either <code class="bg-gray-100 px-1 rounded">'/'</code>, <code class="bg-gray-100 px-1 rounded">'\'</code>, or <code class="bg-gray-100 px-1 rounded">' '</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def regionsBySlashes(self, grid: List[str]) -> int:
+        n = len(grid)
+        # Each cell is divided into 4 triangles
+        parent = [i for i in range(4 * n * n)]
+        rank = [0] * (4 * n * n)
+        
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
+        
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px != py:
+                if rank[px] < rank[py]:
+                    px, py = py, px
+                parent[py] = px
+                if rank[px] == rank[py]:
+                    rank[px] += 1
+        
+        for i in range(n):
+            for j in range(n):
+                base = 4 * (i * n + j)
+                if grid[i][j] == '/':
+                    union(base, base + 3)
+                    union(base + 1, base + 2)
+                elif grid[i][j] == '\\':
+                    union(base, base + 1)
+                    union(base + 2, base + 3)
+                else:
+                    union(base, base + 1)
+                    union(base + 1, base + 2)
+                    union(base + 2, base + 3)
+                
+                # Connect to right cell
+                if j < n - 1:
+                    union(base + 1, base + 7)
+                
+                # Connect to bottom cell
+                if i < n - 1:
+                    union(base + 2, base + 4 * n)
+        
+        return sum(1 for i in range(4 * n * n) if parent[i] == i)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">Where n is the size of the grid. We need to process each cell and perform union operations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We need to store the parent and rank arrays for each of the 4 triangles in each cell.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int regionsBySlashes(String[] grid) {
+        int n = grid.length;
+        // Each cell is divided into 4 triangles
+        int[] parent = new int[4 * n * n];
+        int[] rank = new int[4 * n * n];
+        
+        for (int i = 0; i < parent.length; i++) {
+            parent[i] = i;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int base = 4 * (i * n + j);
+                char c = grid[i].charAt(j);
+                
+                if (c == '/') {
+                    union(parent, rank, base, base + 3);
+                    union(parent, rank, base + 1, base + 2);
+                } else if (c == '\\') {
+                    union(parent, rank, base, base + 1);
+                    union(parent, rank, base + 2, base + 3);
+                } else {
+                    union(parent, rank, base, base + 1);
+                    union(parent, rank, base + 1, base + 2);
+                    union(parent, rank, base + 2, base + 3);
+                }
+                
+                // Connect to right cell
+                if (j < n - 1) {
+                    union(parent, rank, base + 1, base + 7);
+                }
+                
+                // Connect to bottom cell
+                if (i < n - 1) {
+                    union(parent, rank, base + 2, base + 4 * n);
+                }
+            }
+        }
+        
+        int count = 0;
+        for (int i = 0; i < parent.length; i++) {
+            if (parent[i] == i) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    private int find(int[] parent, int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent, parent[x]);
+        }
+        return parent[x];
+    }
+    
+    private void union(int[] parent, int[] rank, int x, int y) {
+        int px = find(parent, x);
+        int py = find(parent, y);
+        
+        if (px != py) {
+            if (rank[px] < rank[py]) {
+                int temp = px;
+                px = py;
+                py = temp;
+            }
+            parent[py] = px;
+            if (rank[px] == rank[py]) {
+                rank[px]++;
+            }
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">Where n is the size of the grid. We need to process each cell and perform union operations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We need to store the parent and rank arrays for each of the 4 triangles in each cell.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int regionsBySlashes(vector<string>& grid) {
+        int n = grid.size();
+        // Each cell is divided into 4 triangles
+        vector<int> parent(4 * n * n);
+        vector<int> rank(4 * n * n, 0);
+        
+        for (int i = 0; i < parent.size(); i++) {
+            parent[i] = i;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int base = 4 * (i * n + j);
+                char c = grid[i][j];
+                
+                if (c == '/') {
+                    union(parent, rank, base, base + 3);
+                    union(parent, rank, base + 1, base + 2);
+                } else if (c == '\\') {
+                    union(parent, rank, base, base + 1);
+                    union(parent, rank, base + 2, base + 3);
+                } else {
+                    union(parent, rank, base, base + 1);
+                    union(parent, rank, base + 1, base + 2);
+                    union(parent, rank, base + 2, base + 3);
+                }
+                
+                // Connect to right cell
+                if (j < n - 1) {
+                    union(parent, rank, base + 1, base + 7);
+                }
+                
+                // Connect to bottom cell
+                if (i < n - 1) {
+                    union(parent, rank, base + 2, base + 4 * n);
+                }
+            }
+        }
+        
+        int count = 0;
+        for (int i = 0; i < parent.size(); i++) {
+            if (parent[i] == i) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+private:
+    int find(vector<int>& parent, int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent, parent[x]);
+        }
+        return parent[x];
+    }
+    
+    void union(vector<int>& parent, vector<int>& rank, int x, int y) {
+        int px = find(parent, x);
+        int py = find(parent, y);
+        
+        if (px != py) {
+            if (rank[px] < rank[py]) {
+                swap(px, py);
+            }
+            parent[py] = px;
+            if (rank[px] == rank[py]) {
+                rank[px]++;
+            }
+        }
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">Where n is the size of the grid. We need to process each cell and perform union operations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We need to store the parent and rank arrays for each of the 4 triangles in each cell.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} grid
+ * @return {number}
+ */
+var regionsBySlashes = function(grid) {
+    const n = grid.length;
+    // Each cell is divided into 4 triangles
+    const parent = new Array(4 * n * n);
+    const rank = new Array(4 * n * n).fill(0);
+    
+    for (let i = 0; i < parent.length; i++) {
+        parent[i] = i;
+    }
+    
+    function find(x) {
+        if (parent[x] !== x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+    
+    function union(x, y) {
+        const px = find(x);
+        const py = find(y);
+        
+        if (px !== py) {
+            if (rank[px] < rank[py]) {
+                [px, py] = [py, px];
+            }
+            parent[py] = px;
+            if (rank[px] === rank[py]) {
+                rank[px]++;
+            }
+        }
+    }
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            const base = 4 * (i * n + j);
+            const c = grid[i][j];
+            
+            if (c === '/') {
+                union(base, base + 3);
+                union(base + 1, base + 2);
+            } else if (c === '\\') {
+                union(base, base + 1);
+                union(base + 2, base + 3);
+            } else {
+                union(base, base + 1);
+                union(base + 1, base + 2);
+                union(base + 2, base + 3);
+            }
+            
+            // Connect to right cell
+            if (j < n - 1) {
+                union(base + 1, base + 7);
+            }
+            
+            // Connect to bottom cell
+            if (i < n - 1) {
+                union(base + 2, base + 4 * n);
+            }
+        }
+    }
+    
+    return parent.filter((p, i) => p === i).length;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">Where n is the size of the grid. We need to process each cell and perform union operations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We need to store the parent and rank arrays for each of the 4 triangles in each cell.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int RegionsBySlashes(string[] grid) {
+        int n = grid.Length;
+        // Each cell is divided into 4 triangles
+        int[] parent = new int[4 * n * n];
+        int[] rank = new int[4 * n * n];
+        
+        for (int i = 0; i < parent.Length; i++) {
+            parent[i] = i;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int base = 4 * (i * n + j);
+                char c = grid[i][j];
+                
+                if (c == '/') {
+                    Union(parent, rank, base, base + 3);
+                    Union(parent, rank, base + 1, base + 2);
+                } else if (c == '\\') {
+                    Union(parent, rank, base, base + 1);
+                    Union(parent, rank, base + 2, base + 3);
+                } else {
+                    Union(parent, rank, base, base + 1);
+                    Union(parent, rank, base + 1, base + 2);
+                    Union(parent, rank, base + 2, base + 3);
+                }
+                
+                // Connect to right cell
+                if (j < n - 1) {
+                    Union(parent, rank, base + 1, base + 7);
+                }
+                
+                // Connect to bottom cell
+                if (i < n - 1) {
+                    Union(parent, rank, base + 2, base + 4 * n);
+                }
+            }
+        }
+        
+        return parent.Count((p, i) => p == i);
+    }
+    
+    private int Find(int[] parent, int x) {
+        if (parent[x] != x) {
+            parent[x] = Find(parent, parent[x]);
+        }
+        return parent[x];
+    }
+    
+    private void Union(int[] parent, int[] rank, int x, int y) {
+        int px = Find(parent, x);
+        int py = Find(parent, y);
+        
+        if (px != py) {
+            if (rank[px] < rank[py]) {
+                int temp = px;
+                px = py;
+                py = temp;
+            }
+            parent[py] = px;
+            if (rank[px] == rank[py]) {
+                rank[px]++;
+            }
+        }
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">Where n is the size of the grid. We need to process each cell and perform union operations.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We need to store the parent and rank arrays for each of the 4 triangles in each cell.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

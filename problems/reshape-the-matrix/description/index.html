@@ -1,0 +1,360 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reshape the Matrix - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Reshape the Matrix problem on LeetCodee. Find detailed explanations and Python, Java, C++, JavaScript, and C# solutions with time and space complexity analysis.">
+    <meta name="keywords" content="leetcode, reshape the matrix, matrix reshape, array, algorithm, python, java, cpp, javascript, c#, solution, tutorial, coding, programming">
+    <meta property="og:title" content="Reshape the Matrix - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/reshape-the-matrix/">
+    <meta property="og:description" content="Learn how to solve the Reshape the Matrix problem on LeetCodee. Find detailed explanations and Python, Java, C++, JavaScript, and C# solutions with time and space complexity analysis.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/reshape-the-matrix/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">566. Reshape the Matrix</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    In MATLAB, there is a handy function called 'reshape' which can reshape an <code class="bg-gray-100 px-1 rounded">m x n</code> matrix into a new one with a different size <code class="bg-gray-100 px-1 rounded">r x c</code> keeping its original data.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given an <code class="bg-gray-100 px-1 rounded">m x n</code> matrix <code class="bg-gray-100 px-1 rounded">mat</code> and two integers <code class="bg-gray-100 px-1 rounded">r</code> and <code class="bg-gray-100 px-1 rounded">c</code> representing the number of rows and the number of columns of the wanted reshaped matrix.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The reshaped matrix should be filled with all the elements of the original matrix in the same row-traversing order as they were.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If the reshape operation with given parameters is possible and legal, output the new reshaped matrix; Otherwise, output the original matrix.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: mat = [[1,2],[3,4]], r = 1, c = 4
+Output: [[1,2,3,4]]</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: mat = [[1,2],[3,4]], r = 2, c = 4
+Output: [[1,2],[3,4]]</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">m == mat.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">n == mat[i].length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= m, n <= 100</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">-1000 <= mat[i][j] <= 1000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= r, c <= 300</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        m, n = len(mat), len(mat[0])
+        
+        # Check if reshape is possible
+        if m * n != r * c:
+            return mat
+        
+        # Create new matrix
+        result = [[0] * c for _ in range(r)]
+        
+        # Fill new matrix
+        for i in range(m * n):
+            # Convert 1D index to 2D indices for both matrices
+            result[i // c][i % c] = mat[i // n][i % n]
+        
+        return result</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">Where m and n are the dimensions of the input matrix. We need to traverse all elements.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">For storing the reshaped matrix.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int[][] matrixReshape(int[][] mat, int r, int c) {
+        int m = mat.length;
+        int n = mat[0].length;
+        
+        // Check if reshape is possible
+        if (m * n != r * c) {
+            return mat;
+        }
+        
+        // Create new matrix
+        int[][] result = new int[r][c];
+        
+        // Fill new matrix
+        for (int i = 0; i < m * n; i++) {
+            // Convert 1D index to 2D indices for both matrices
+            result[i / c][i % c] = mat[i / n][i % n];
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">Where m and n are the dimensions of the input matrix. We need to traverse all elements.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">For storing the reshaped matrix.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+        int m = mat.size();
+        int n = mat[0].size();
+        
+        // Check if reshape is possible
+        if (m * n != r * c) {
+            return mat;
+        }
+        
+        // Create new matrix
+        vector<vector<int>> result(r, vector<int>(c));
+        
+        // Fill new matrix
+        for (int i = 0; i < m * n; i++) {
+            // Convert 1D index to 2D indices for both matrices
+            result[i / c][i % c] = mat[i / n][i % n];
+        }
+        
+        return result;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">Where m and n are the dimensions of the input matrix. We need to traverse all elements.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">For storing the reshaped matrix.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} mat
+ * @param {number} r
+ * @param {number} c
+ * @return {number[][]}
+ */
+var matrixReshape = function(mat, r, c) {
+    const m = mat.length;
+    const n = mat[0].length;
+    
+    // Check if reshape is possible
+    if (m * n !== r * c) {
+        return mat;
+    }
+    
+    // Create new matrix
+    const result = Array(r).fill().map(() => Array(c).fill(0));
+    
+    // Fill new matrix
+    for (let i = 0; i < m * n; i++) {
+        // Convert 1D index to 2D indices for both matrices
+        result[Math.floor(i / c)][i % c] = mat[Math.floor(i / n)][i % n];
+    }
+    
+    return result;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">Where m and n are the dimensions of the input matrix. We need to traverse all elements.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">For storing the reshaped matrix.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int[][] MatrixReshape(int[][] mat, int r, int c) {
+        int m = mat.Length;
+        int n = mat[0].Length;
+        
+        // Check if reshape is possible
+        if (m * n != r * c) {
+            return mat;
+        }
+        
+        // Create new matrix
+        int[][] result = new int[r][];
+        for (int i = 0; i < r; i++) {
+            result[i] = new int[c];
+        }
+        
+        // Fill new matrix
+        for (int i = 0; i < m * n; i++) {
+            // Convert 1D index to 2D indices for both matrices
+            result[i / c][i % c] = mat[i / n][i % n];
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">Where m and n are the dimensions of the input matrix. We need to traverse all elements.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m * n)</h4>
+                    <p class="text-gray-700">For storing the reshaped matrix.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses linear indexing to reshape the matrix:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Matrix traversal</li>
+                            <li>Linear indexing</li>
+                            <li>Dimension validation</li>
+                            <li>Index conversion</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Check dimensions</li>
+                            <li>Create new matrix</li>
+                            <li>Convert indices</li>
+                            <li>Fill elements</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Size validation</li>
+                        <li>Matrix creation</li>
+                        <li>Index mapping</li>
+                        <li>Element copying</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Early return</li>
+                        <li>Single traversal</li>
+                        <li>Direct indexing</li>
+                        <li>Memory efficiency</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Invalid dimensions</li>
+                        <li>Single element</li>
+                        <li>Same shape</li>
+                        <li>Maximum size</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "566. Reshape the Matrix",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-08-16",
+      "dateModified": "2024-08-16",
+      "description": "Learn how to solve the Reshape the Matrix problem on LeetCodee. Find detailed explanations and Python, Java, C++, JavaScript, and C# solutions with time and space complexity analysis.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/reshape-the-matrix/"
+      }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shifting Letters - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions for LeetCode problem 848: Shifting Letters.  Find optimized Python, Java, C++, JavaScript, and C# code with explanations.">
+    <meta name="keywords" content="LeetCode, Shifting Letters, 848, Python, Java, C++, JavaScript, C#, solution, algorithm, coding, programming">
+    <meta property="og:title" content="Shifting Letters - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/shifting-letters/">
+    <meta property="og:description" content="Efficient solutions for LeetCode problem 848: Shifting Letters.  Find optimized Python, Java, C++, JavaScript, and C# code with explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/shifting-letters/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Shifting Letters - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Efficient solutions for LeetCode problem 848: Shifting Letters.  Find optimized Python, Java, C++, JavaScript, and C# code with explanations.",
+      "articleBody": "You are given a string s of lowercase English letters and an integer array shifts of the same length. Call the shift() of a letter, the next letter in the alphabet, (wrapping around so that 'z' becomes 'a'). For example, shift('a') = 'b', shift('t') = 'u', and shift('z') = 'a'. Now for each shifts[i] = x, we want to shift the first i + 1 letters of s, x times. Return the final string after all such shifts to s are applied.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/shifting-letters/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">848. Shifting Letters</h1>
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given a string s of lowercase English letters and an integer array shifts of the same length.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Call the shift() of a letter, the next letter in the alphabet, (wrapping around so that 'z' becomes 'a').
+                </p>
+                <p class="text-gray-700">
+                    For example, shift('a') = 'b', shift('t') = 'u', and shift('z') = 'a'.
+                    Now for each shifts[i] = x, we want to shift the first i + 1 letters of s, x times.
+                    Return the final string after all such shifts to s are applied.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "abc", shifts = [3,5,9]
+Output: "rpl"
+Explanation: We start with "abc".
+After shifting the first 1 letters of s by 3, we have "dbc".
+After shifting the first 2 letters of s by 5, we have "igc".
+After shifting the first 3 letters of s by 9, we have "rpl", the answer.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "aaa", shifts = [1,2,3]
+Output: "gfd"</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 10⁵</li>
+                    <li>s consists of lowercase English letters</li>
+                    <li>shifts.length == s.length</li>
+                    <li>0 ≤ shifts[i] ≤ 10⁹</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def shiftingLetters(self, s: str, shifts: List[int]) -> str:
+        # Calculate cumulative shifts from right to left
+        n = len(s)
+        total_shift = 0
+        result = [''] * n
+        
+        for i in range(n - 1, -1, -1):
+            total_shift = (total_shift + shifts[i]) % 26
+            # Convert character to 0-25 range, add shift, convert back to char
+            curr_char = ord(s[i]) - ord('a')
+            new_char = (curr_char + total_shift) % 26
+            result[i] = chr(new_char + ord('a'))
+        
+        return ''.join(result)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses cumulative sum from right to left to handle shifts efficiently</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String shiftingLetters(String s, int[] shifts) {
+        int n = s.length();
+        char[] result = s.toCharArray();
+        long totalShift = 0;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            totalShift = (totalShift + shifts[i]) % 26;
+            result[i] = (char)((s.charAt(i) - 'a' + totalShift) % 26 + 'a');
+        }
+        
+        return new String(result);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string shiftingLetters(string s, vector<int>& shifts) {
+        int n = s.length();
+        long long totalShift = 0;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            totalShift = (totalShift + shifts[i]) % 26;
+            s[i] = ((s[i] - 'a' + totalShift) % 26) + 'a';
+        }
+        
+        return s;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @param {number[]} shifts
+ * @return {string}
+ */
+var shiftingLetters = function(s, shifts) {
+    const n = s.length;
+    const result = new Array(n);
+    let totalShift = 0;
+    
+    for (let i = n - 1; i >= 0; i--) {
+        totalShift = (totalShift + shifts[i]) % 26;
+        const charCode = s.charCodeAt(i) - 97;
+        result[i] = String.fromCharCode(((charCode + totalShift) % 26) + 97);
+    }
+    
+    return result.join('');
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string ShiftingLetters(string s, int[] shifts) {
+        int n = s.Length;
+        char[] result = s.ToCharArray();
+        long totalShift = 0;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            totalShift = (totalShift + shifts[i]) % 26;
+            result[i] = (char)((s[i] - 'a' + totalShift) % 26 + 'a');
+        }
+        
+        return new string(result);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses long to handle large cumulative shifts</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

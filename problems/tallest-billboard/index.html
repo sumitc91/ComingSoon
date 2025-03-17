@@ -1,0 +1,357 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tallest Billboard - LeetCodee Solution</title>
+    <meta name="description" content="Find the tallest possible billboard height using a given set of rods.  Solve this LeetCode problem with optimized Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="leetcode, tallest billboard, dynamic programming, algorithm, python, java, cpp, javascript, csharp, solution, coding, interview">
+    <meta name="canonical" content="https://leetcodee.com/problems/tallest-billboard/">
+    <meta property="og:title" content="Tallest Billboard - LeetCodee Solution">
+    <meta property="og:description" content="Find the tallest possible billboard height using a given set of rods.  Solve this LeetCode problem with optimized Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:url" content="https://leetcodee.com/problems/tallest-billboard/">
+    <meta property="og:site_name" content="LeetCodee">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "956. Tallest Billboard",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "You are installing a billboard and want it to have the largest height. The billboard will have two steel supports, one on each side. Each steel support must be an equal height. You are given a collection of rods that can be welded together. For example, if you have rods of lengths 1, 2, and 3, you can weld them together to make a support of length 6. Return the largest possible height of your billboard installation. If you cannot support the billboard, return 0.",
+      "image": "",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" // Replace with your actual logo URL
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/tallest-billboard/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">956. Tallest Billboard</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are installing a billboard and want it to have the largest height. The billboard will have two steel supports, one on each side. Each steel support must be an equal height.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given a collection of rods that can be welded together. For example, if you have rods of lengths 1, 2, and 3, you can weld them together to make a support of length 6.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the largest possible height of your billboard installation. If you cannot support the billboard, return 0.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: rods = [1,2,3,6]
+Output: 6
+Explanation: We have two disjoint subsets {1,2,3} and {6}, which have the same sum = 6.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: rods = [1,2,3,4,5,6]
+Output: 10
+Explanation: We have two disjoint subsets {2,3,5} and {4,6}, which have the same sum = 10.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: rods = [1,2]
+Output: 0
+Explanation: The billboard cannot be supported, so we return 0.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= rods.length <= 20</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= rods[i] <= 1000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">sum(rods[i]) <= 5000</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def tallestBillboard(self, rods: List[int]) -> int:
+        # dp[diff] represents the maximum sum of the shorter support when the difference is diff
+        dp = {0: 0}
+        
+        for rod in rods:
+            new_dp = {}
+            for diff, shorter in dp.items():
+                # Add rod to shorter support
+                new_diff = diff + rod
+                new_shorter = shorter
+                if new_diff not in new_dp or new_shorter > new_dp[new_diff]:
+                    new_dp[new_diff] = new_shorter
+                
+                # Add rod to longer support
+                new_diff = abs(diff - rod)
+                new_shorter = max(shorter, shorter + diff - rod)
+                if new_diff not in new_dp or new_shorter > new_dp[new_diff]:
+                    new_dp[new_diff] = new_shorter
+                
+                # Keep the current state
+                if diff not in new_dp or shorter > new_dp[diff]:
+                    new_dp[diff] = shorter
+            
+            dp = new_dp
+        
+        return dp[0]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * sum)</h4>
+                    <p class="text-gray-700">Where n is the number of rods and sum is the sum of all rod lengths. We need to process each rod and each possible difference.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(sum)</h4>
+                    <p class="text-gray-700">We need to store the states for each possible difference.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int tallestBillboard(int[] rods) {
+        // dp[diff] represents the maximum sum of the shorter support when the difference is diff
+        Map<Integer, Integer> dp = new HashMap<>();
+        dp.put(0, 0);
+        
+        for (int rod : rods) {
+            Map<Integer, Integer> newDp = new HashMap<>();
+            for (Map.Entry<Integer, Integer> entry : dp.entrySet()) {
+                int diff = entry.getKey();
+                int shorter = entry.getValue();
+                
+                // Add rod to shorter support
+                int newDiff = diff + rod;
+                int newShorter = shorter;
+                newDp.put(newDiff, Math.max(newDp.getOrDefault(newDiff, 0), newShorter));
+                
+                // Add rod to longer support
+                newDiff = Math.abs(diff - rod);
+                newShorter = Math.max(shorter, shorter + diff - rod);
+                newDp.put(newDiff, Math.max(newDp.getOrDefault(newDiff, 0), newShorter));
+                
+                // Keep the current state
+                newDp.put(diff, Math.max(newDp.getOrDefault(diff, 0), shorter));
+            }
+            dp = newDp;
+        }
+        
+        return dp.get(0);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * sum)</h4>
+                    <p class="text-gray-700">Where n is the number of rods and sum is the sum of all rod lengths. We need to process each rod and each possible difference.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(sum)</h4>
+                    <p class="text-gray-700">We need to store the states for each possible difference.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int tallestBillboard(vector<int>& rods) {
+        // dp[diff] represents the maximum sum of the shorter support when the difference is diff
+        unordered_map<int, int> dp;
+        dp[0] = 0;
+        
+        for (int rod : rods) {
+            unordered_map<int, int> newDp;
+            for (const auto& [diff, shorter] : dp) {
+                // Add rod to shorter support
+                int newDiff = diff + rod;
+                int newShorter = shorter;
+                newDp[newDiff] = max(newDp[newDiff], newShorter);
+                
+                // Add rod to longer support
+                newDiff = abs(diff - rod);
+                newShorter = max(shorter, shorter + diff - rod);
+                newDp[newDiff] = max(newDp[newDiff], newShorter);
+                
+                // Keep the current state
+                newDp[diff] = max(newDp[diff], shorter);
+            }
+            dp = newDp;
+        }
+        
+        return dp[0];
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * sum)</h4>
+                    <p class="text-gray-700">Where n is the number of rods and sum is the sum of all rod lengths. We need to process each rod and each possible difference.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(sum)</h4>
+                    <p class="text-gray-700">We need to store the states for each possible difference.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} rods
+ * @return {number}
+ */
+var tallestBillboard = function(rods) {
+    // dp[diff] represents the maximum sum of the shorter support when the difference is diff
+    let dp = new Map();
+    dp.set(0, 0);
+    
+    for (const rod of rods) {
+        const newDp = new Map();
+        for (const [diff, shorter] of dp) {
+            // Add rod to shorter support
+            let newDiff = diff + rod;
+            let newShorter = shorter;
+            newDp.set(newDiff, Math.max(newDp.get(newDiff) || 0, newShorter));
+            
+            // Add rod to longer support
+            newDiff = Math.abs(diff - rod);
+            newShorter = Math.max(shorter, shorter + diff - rod);
+            newDp.set(newDiff, Math.max(newDp.get(newDiff) || 0, newShorter));
+            
+            // Keep the current state
+            newDp.set(diff, Math.max(newDp.get(diff) || 0, shorter));
+        }
+        dp = newDp;
+    }
+    
+    return dp.get(0);
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * sum)</h4>
+                    <p class="text-gray-700">Where n is the number of rods and sum is the sum of all rod lengths. We need to process each rod and each possible difference.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(sum)</h4>
+                    <p class="text-gray-700">We need to store the states for each possible difference.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int TallestBillboard(int[] rods) {
+        // dp[diff] represents the maximum sum of the shorter support when the difference is diff
+        Dictionary<int, int> dp = new Dictionary<int, int>();
+        dp[0] = 0;
+        
+        foreach (int rod in rods) {
+            Dictionary<int, int> newDp = new Dictionary<int, int>();
+            foreach (var kvp in dp) {
+                int diff = kvp.Key;
+                int shorter = kvp.Value;
+                
+                // Add rod to shorter support
+                int newDiff = diff + rod;
+                int newShorter = shorter;
+                if (!newDp.ContainsKey(newDiff) || newShorter > newDp[newDiff]) {
+                    newDp[newDiff] = newShorter;
+                }
+                
+                // Add rod to longer support
+                newDiff = Math.Abs(diff - rod);
+                newShorter = Math.Max(shorter, shorter + diff - rod);
+                if (!newDp.ContainsKey(newDiff) || newShorter > newDp[newDiff]) {
+                    newDp[newDiff] = newShorter;
+                }
+                
+                // Keep the current state
+                if (!newDp.ContainsKey(diff) || shorter > newDp[diff]) {
+                    newDp[diff] = shorter;
+                }
+            }
+            dp = newDp;
+        }
+        
+        return dp[0];
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * sum)</h4>
+                    <p class="text-gray-700">Where n is the number of rods and sum is the sum of all rod lengths. We need to process each rod and each possible difference.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(sum)</h4>
+                    <p class="text-gray-700">We need to store the states for each possible difference.</p>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subdomain Visit Count - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Subdomain Visit Count problem on LeetCode.  Find detailed explanations and solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, subdomain visit count, algorithm, solution, python, java, c++, javascript, c#, coding, programming, tutorial">
+    <meta name="canonical" content="https://leetcodee.com/problems/subdomain-visit-count/">
+    <meta property="og:title" content="Subdomain Visit Count - LeetCodee Solution">
+    <meta property="og:description" content="Learn how to solve the Subdomain Visit Count problem on LeetCode.  Find detailed explanations and solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/subdomain-visit-count/">
+    <meta property="og:site_name" content="LeetCodee">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Subdomain Visit Count - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Learn how to solve the Subdomain Visit Count problem on LeetCode. Find detailed explanations and solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "A website domain \"discuss.leetcode.com\" consists of various subdomains. At the top level, we have \"com\", at the next level, we have \"leetcode.com\", and at the lowest level, \"discuss.leetcode.com\". When we visit a domain like \"discuss.leetcode.com\", we will also visit the parent domains \"leetcode.com\" and \"com\" implicitly. A count-paired domain is a domain that has one of the two formats \"rep d1.d2.d3\" or \"rep d1.d2\" where rep is the number of visits to the domain and d1.d2.d3 is the domain itself. For example, \"9001 discuss.leetcode.com\" is a count-paired domain that indicates that discuss.leetcode.com was visited 9001 times. Given an array of count-paired domains cpdomains, return an array of the count-paired domains of each subdomain in the input. You may return the answer in any order.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/subdomain-visit-count/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">811. Subdomain Visit Count</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A website domain "discuss.leetcode.com" consists of various subdomains. At the top level, we have "com", at the next level, we have "leetcode.com", and at the lowest level, "discuss.leetcode.com". When we visit a domain like "discuss.leetcode.com", we will also visit the parent domains "leetcode.com" and "com" implicitly.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A count-paired domain is a domain that has one of the two formats "rep d1.d2.d3" or "rep d1.d2" where rep is the number of visits to the domain and d1.d2.d3 is the domain itself.
+                </p>
+                <p class="text-gray-700">
+                    For example, "9001 discuss.leetcode.com" is a count-paired domain that indicates that discuss.leetcode.com was visited 9001 times.
+                </p>
+                <p class="text-gray-700">
+                    Given an array of count-paired domains cpdomains, return an array of the count-paired domains of each subdomain in the input. You may return the answer in any order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: cpdomains = ["9001 discuss.leetcode.com"]
+Output: ["9001 discuss.leetcode.com","9001 leetcode.com","9001 com"]
+Explanation: We only have one website domain: "discuss.leetcode.com".
+As discussed above, the subdomain "leetcode.com" and "com" will also be visited.
+So they will all be visited 9001 times.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: cpdomains = ["900 google.mail.com","50 yahoo.com","1 intel.mail.com","5 wiki.org"]
+Output: ["901 mail.com","50 yahoo.com","900 google.mail.com","5 wiki.org","5 org","1 intel.mail.com","951 com"]
+Explanation: We will visit "google.mail.com" 900 times, "yahoo.com" 50 times, "intel.mail.com" once and "wiki.org" 5 times.
+For the subdomains, we will visit "mail.com" 901 times, "com" 951 times, and "org" 5 times.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ cpdomain.length ≤ 100</li>
+                    <li>1 ≤ cpdomain[i].length ≤ 100</li>
+                    <li>cpdomain[i] follows either the "repi d1i.d2i.d3i" format or the "repi d1i.d2i" format</li>
+                    <li>repi is an integer in the range [1, 10^4]</li>
+                    <li>d1i, d2i, and d3i consist of lowercase English letters</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
+        domain_counts = {}
+        
+        for cpdomain in cpdomains:
+            count, domain = cpdomain.split()
+            count = int(count)
+            subdomains = domain.split('.')
+            
+            for i in range(len(subdomains)):
+                subdomain = '.'.join(subdomains[i:])
+                domain_counts[subdomain] = domain_counts.get(subdomain, 0) + count
+                
+        return [f"{count} {domain}" for domain, count in domain_counts.items()]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dictionary to store domain visit counts</li>
+                    <li>Splits each domain into subdomains and updates counts</li>
+                    <li>Time complexity: O(N * M) where N is number of domains and M is max length of domain</li>
+                    <li>Space complexity: O(N * M)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<String> subdomainVisits(String[] cpdomains) {
+        Map<String, Integer> counts = new HashMap<>();
+        
+        for (String cpdomain : cpdomains) {
+            String[] parts = cpdomain.split(" ");
+            int count = Integer.parseInt(parts[0]);
+            String domain = parts[1];
+            
+            String[] subdomains = domain.split("\\.");
+            String curr = "";
+            
+            for (int i = subdomains.length - 1; i >= 0; i--) {
+                curr = subdomains[i] + (i < subdomains.length - 1 ? "." + curr : "");
+                counts.put(curr, counts.getOrDefault(curr, 0) + count);
+            }
+        }
+        
+        List<String> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+            result.add(entry.getValue() + " " + entry.getKey());
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<string> subdomainVisits(vector<string>& cpdomains) {
+        unordered_map<string, int> counts;
+        
+        for (const string& cpdomain : cpdomains) {
+            int spacePos = cpdomain.find(' ');
+            int count = stoi(cpdomain.substr(0, spacePos));
+            string domain = cpdomain.substr(spacePos + 1);
+            
+            counts[domain] += count;
+            
+            for (int i = 0; i < domain.length(); i++) {
+                if (domain[i] == '.') {
+                    string subdomain = domain.substr(i + 1);
+                    counts[subdomain] += count;
+                }
+            }
+        }
+        
+        vector<string> result;
+        for (const auto& pair : counts) {
+            result.push_back(to_string(pair.second) + " " + pair.first);
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} cpdomains
+ * @return {string[]}
+ */
+var subdomainVisits = function(cpdomains) {
+    const counts = new Map();
+    
+    for (const cpdomain of cpdomains) {
+        const [count, domain] = cpdomain.split(' ');
+        const subdomains = domain.split('.');
+        
+        for (let i = 0; i < subdomains.length; i++) {
+            const subdomain = subdomains.slice(i).join('.');
+            counts.set(subdomain, (counts.get(subdomain) || 0) + Number(count));
+        }
+    }
+    
+    return Array.from(counts).map(([domain, count]) => `${count} ${domain}`);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<string> SubdomainVisits(string[] cpdomains) {
+        Dictionary<string, int> counts = new Dictionary<string, int>();
+        
+        foreach (string cpdomain in cpdomains) {
+            string[] parts = cpdomain.Split(' ');
+            int count = int.Parse(parts[0]);
+            string domain = parts[1];
+            
+            string[] subdomains = domain.Split('.');
+            string curr = "";
+            
+            for (int i = subdomains.Length - 1; i >= 0; i--) {
+                curr = subdomains[i] + (i < subdomains.Length - 1 ? "." + curr : "");
+                if (!counts.ContainsKey(curr)) {
+                    counts[curr] = 0;
+                }
+                counts[curr] += count;
+            }
+        }
+        
+        return counts.Select(pair => $"{pair.Value} {pair.Key}").ToList();
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dictionary/map to store subdomain counts</li>
+                    <li>Processes each domain from right to left to get all subdomains</li>
+                    <li>Time complexity: O(N * M) where N is number of domains and M is max length of domain</li>
+                    <li>Space complexity: O(N * M)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

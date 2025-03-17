@@ -1,0 +1,450 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotting Oranges - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum minutes to rot all oranges in an m x n grid.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, rotting oranges, solution, algorithm, python, java, c++, javascript, c#, coding, problem solving, data structures, breadth-first search, bfs">
+    <meta property="og:title" content="Rotting Oranges - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/rotting-oranges/">
+    <meta property="og:description" content="Find the minimum minutes to rot all oranges in an m x n grid. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:image" content="https://leetcodee.com/og-image.jpg">  <!-- Replace with actual OG image URL -->
+    <link rel="canonical" href="https://leetcodee.com/problems/rotting-oranges/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "994. Rotting Oranges",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2023-10-27",  <!-- Replace with actual modification date -->
+      "description": "Find the minimum minutes to rot all oranges in an m x n grid. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/rotting-oranges/"
+      },
+      "articleSection": "LeetCode Solutions",
+      "wordCount": 1000  <!-- Replace with actual word count -->
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">994. Rotting Oranges</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an <code class="bg-gray-100 px-1 rounded">m x n</code> grid where each cell can have one of three values:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">0</code> representing an empty cell,</li>
+                    <li><code class="bg-gray-100 px-1 rounded">1</code> representing a fresh orange, or</li>
+                    <li><code class="bg-gray-100 px-1 rounded">2</code> representing a rotten orange.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return <code class="bg-gray-100 px-1 rounded">-1</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: grid = [[2,1,1],[1,1,0],[0,1,1]]
+Output: 4</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: grid = [[2,1,1],[0,1,1],[1,0,1]]
+Output: -1
+Explanation: The orange in the bottom left corner (row 2, column 0) is never rotten, because rotting only happens 4-directionally.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: grid = [[0,2]]
+Output: 0
+Explanation: Since there are already no fresh oranges at minute 0, the answer is just 0.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">m == grid.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">n == grid[i].length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= m, n <= 10</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">grid[i][j]</code> is <code class="bg-gray-100 px-1 rounded">0</code>, <code class="bg-gray-100 px-1 rounded">1</code>, or <code class="bg-gray-100 px-1 rounded">2</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>from collections import deque
+from typing import List
+
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return 0
+            
+        rows, cols = len(grid), len(grid[0])
+        fresh = 0
+        rotten = deque()
+        
+        # Find all rotten oranges and count fresh ones
+        for i in range(rows):
+            for j in range(cols):
+                if grid[i][j] == 2:
+                    rotten.append((i, j))
+                elif grid[i][j] == 1:
+                    fresh += 1
+                    
+        if fresh == 0:
+            return 0
+            
+        minutes = 0
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        
+        while rotten and fresh > 0:
+            minutes += 1
+            for _ in range(len(rotten)):
+                x, y = rotten.popleft()
+                
+                for dx, dy in directions:
+                    new_x, new_y = x + dx, y + dy
+                    
+                    if (0 <= new_x < rows and 
+                        0 <= new_y < cols and 
+                        grid[new_x][new_y] == 1):
+                        grid[new_x][new_y] = 2
+                        fresh -= 1
+                        rotten.append((new_x, new_y))
+                        
+        return minutes if fresh == 0 else -1</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">We need to visit each cell in the grid at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">In worst case, all cells could be rotten.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int orangesRotting(int[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+        
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int fresh = 0;
+        Queue<int[]> rotten = new LinkedList<>();
+        
+        // Find all rotten oranges and count fresh ones
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 2) {
+                    rotten.offer(new int[]{i, j});
+                } else if (grid[i][j] == 1) {
+                    fresh++;
+                }
+            }
+        }
+        
+        if (fresh == 0) return 0;
+        
+        int minutes = 0;
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        
+        while (!rotten.isEmpty() && fresh > 0) {
+            minutes++;
+            int size = rotten.size();
+            
+            for (int i = 0; i < size; i++) {
+                int[] current = rotten.poll();
+                
+                for (int[] dir : directions) {
+                    int newX = current[0] + dir[0];
+                    int newY = current[1] + dir[1];
+                    
+                    if (newX >= 0 && newX < rows && 
+                        newY >= 0 && newY < cols && 
+                        grid[newX][newY] == 1) {
+                        grid[newX][newY] = 2;
+                        fresh--;
+                        rotten.offer(new int[]{newX, newY});
+                    }
+                }
+            }
+        }
+        
+        return fresh == 0 ? minutes : -1;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">We need to visit each cell in the grid at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">In worst case, all cells could be rotten.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        if (grid.empty()) return 0;
+        
+        int rows = grid.size();
+        int cols = grid[0].size();
+        int fresh = 0;
+        queue<pair<int, int>> rotten;
+        
+        // Find all rotten oranges and count fresh ones
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 2) {
+                    rotten.push({i, j});
+                } else if (grid[i][j] == 1) {
+                    fresh++;
+                }
+            }
+        }
+        
+        if (fresh == 0) return 0;
+        
+        int minutes = 0;
+        vector<pair<int, int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        
+        while (!rotten.empty() && fresh > 0) {
+            minutes++;
+            int size = rotten.size();
+            
+            for (int i = 0; i < size; i++) {
+                auto current = rotten.front();
+                rotten.pop();
+                
+                for (const auto& dir : directions) {
+                    int newX = current.first + dir.first;
+                    int newY = current.second + dir.second;
+                    
+                    if (newX >= 0 && newX < rows && 
+                        newY >= 0 && newY < cols && 
+                        grid[newX][newY] == 1) {
+                        grid[newX][newY] = 2;
+                        fresh--;
+                        rotten.push({newX, newY});
+                    }
+                }
+            }
+        }
+        
+        return fresh == 0 ? minutes : -1;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">We need to visit each cell in the grid at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">In worst case, all cells could be rotten.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var orangesRotting = function(grid) {
+    if (!grid || grid.length === 0) return 0;
+    
+    const rows = grid.length;
+    const cols = grid[0].length;
+    let fresh = 0;
+    const rotten = [];
+    
+    // Find all rotten oranges and count fresh ones
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (grid[i][j] === 2) {
+                rotten.push([i, j]);
+            } else if (grid[i][j] === 1) {
+                fresh++;
+            }
+        }
+    }
+    
+    if (fresh === 0) return 0;
+    
+    let minutes = 0;
+    const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    
+    while (rotten.length > 0 && fresh > 0) {
+        minutes++;
+        const size = rotten.length;
+        
+        for (let i = 0; i < size; i++) {
+            const [x, y] = rotten.shift();
+            
+            for (const [dx, dy] of directions) {
+                const newX = x + dx;
+                const newY = y + dy;
+                
+                if (newX >= 0 && newX < rows && 
+                    newY >= 0 && newY < cols && 
+                    grid[newX][newY] === 1) {
+                    grid[newX][newY] = 2;
+                    fresh--;
+                    rotten.push([newX, newY]);
+                }
+            }
+        }
+    }
+    
+    return fresh === 0 ? minutes : -1;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">We need to visit each cell in the grid at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">In worst case, all cells could be rotten.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int OrangesRotting(int[][] grid) {
+        if (grid == null || grid.Length == 0) return 0;
+        
+        int rows = grid.Length;
+        int cols = grid[0].Length;
+        int fresh = 0;
+        Queue<(int, int)> rotten = new Queue<(int, int)>();
+        
+        // Find all rotten oranges and count fresh ones
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 2) {
+                    rotten.Enqueue((i, j));
+                } else if (grid[i][j] == 1) {
+                    fresh++;
+                }
+            }
+        }
+        
+        if (fresh == 0) return 0;
+        
+        int minutes = 0;
+        var directions = new[] { (0, 1), (1, 0), (0, -1), (-1, 0) };
+        
+        while (rotten.Count > 0 && fresh > 0) {
+            minutes++;
+            int size = rotten.Count;
+            
+            for (int i = 0; i < size; i++) {
+                var (x, y) = rotten.Dequeue();
+                
+                foreach (var (dx, dy) in directions) {
+                    int newX = x + dx;
+                    int newY = y + dy;
+                    
+                    if (newX >= 0 && newX < rows && 
+                        newY >= 0 && newY < cols && 
+                        grid[newX][newY] == 1) {
+                        grid[newX][newY] = 2;
+                        fresh--;
+                        rotten.Enqueue((newX, newY));
+                    }
+                }
+            }
+        }
+        
+        return fresh == 0 ? minutes : -1;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">We need to visit each cell in the grid at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(m × n)</h4>
+                    <p class="text-gray-700">In worst case, all cells could be rotten.</p>
+                </div>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

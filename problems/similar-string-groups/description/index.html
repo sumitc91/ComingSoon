@@ -1,0 +1,467 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Similar String Groups - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of similar string groups using Union-Find algorithm.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 839.">
+    <meta name="keywords" content="leetcode, similar string groups, union-find, algorithm, python, java, cpp, javascript, c#, solution, coding, problem 839">
+    <meta name="canonical" content="https://leetcodee.com/problems/similar-string-groups/">
+    <meta property="og:title" content="Similar String Groups - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/similar-string-groups/">
+    <meta property="og:description" content="Find the number of similar string groups using Union-Find algorithm.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 839.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "839. Similar String Groups",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the number of similar string groups using Union-Find algorithm. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/similar-string-groups/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "keywords":"leetcode, similar string groups, union-find, algorithm, python, java, cpp, javascript, c#, solution, coding, problem 839"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">839. Similar String Groups</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Two strings X and Y are similar if we can swap two letters (in different positions) of X, so that it equals Y. Also two strings X and Y are similar if they are equal.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, "tars" and "rats" are similar (swapping at positions 0 and 2), and "rats" and "arts" are similar, but "star" is not similar to "tars", "rats", or "arts".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Together, these form two connected groups by similarity: {"tars", "rats", "arts"} and {"star"}.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Notice that "tars" and "arts" are in the same group even though they are not similar. Formally, each group is such that a word is in the group if and only if it is similar to at least one other word in the group.
+                </p>
+                <p class="text-gray-700">
+                    We are given a list strs of strings where every string in strs is an anagram of every other string in strs. How many groups are there?
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: strs = ["tars","rats","arts","star"]
+Output: 2</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: strs = ["omv","ovm"]
+Output: 1</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ strs.length ≤ 300</li>
+                    <li>1 ≤ strs[i].length ≤ 300</li>
+                    <li>strs[i] consists of lowercase letters only</li>
+                    <li>All words in strs have the same length</li>
+                    <li>All words in strs have the same set of characters (i.e., they're anagrams of each other)</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.count = n
+        
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return
+        if self.rank[px] < self.rank[py]:
+            px, py = py, px
+        self.parent[py] = px
+        if self.rank[px] == self.rank[py]:
+            self.rank[px] += 1
+        self.count -= 1
+
+class Solution:
+    def numSimilarGroups(self, strs: List[str]) -> int:
+        def isSimilar(s1: str, s2: str) -> bool:
+            diff = 0
+            for c1, c2 in zip(s1, s2):
+                if c1 != c2:
+                    diff += 1
+                if diff > 2:
+                    return False
+            return diff == 0 or diff == 2
+        
+        n = len(strs)
+        uf = UnionFind(n)
+        
+        for i in range(n):
+            for j in range(i + 1, n):
+                if isSimilar(strs[i], strs[j]):
+                    uf.union(i, j)
+        
+        return uf.count</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses Union-Find data structure to track connected components</li>
+                    <li>Time complexity: O(N²L) where N is the length of strs and L is the length of each string</li>
+                    <li>Space complexity: O(N)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    class UnionFind {
+        int[] parent;
+        int[] rank;
+        int count;
+        
+        UnionFind(int n) {
+            parent = new int[n];
+            rank = new int[n];
+            count = n;
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+        }
+        
+        int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+        
+        void union(int x, int y) {
+            int px = find(x), py = find(y);
+            if (px == py) return;
+            if (rank[px] < rank[py]) {
+                int temp = px;
+                px = py;
+                py = temp;
+            }
+            parent[py] = px;
+            if (rank[px] == rank[py]) {
+                rank[px]++;
+            }
+            count--;
+        }
+    }
+    
+    public int numSimilarGroups(String[] strs) {
+        int n = strs.length;
+        UnionFind uf = new UnionFind(n);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (isSimilar(strs[i], strs[j])) {
+                    uf.union(i, j);
+                }
+            }
+        }
+        
+        return uf.count;
+    }
+    
+    private boolean isSimilar(String s1, String s2) {
+        int diff = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i)) {
+                diff++;
+                if (diff > 2) return false;
+            }
+        }
+        return diff == 0 || diff == 2;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class UnionFind {
+private:
+    vector<int> parent;
+    vector<int> rank;
+    int count;
+    
+public:
+    UnionFind(int n) {
+        parent.resize(n);
+        rank.resize(n, 0);
+        count = n;
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+    
+    void unite(int x, int y) {
+        int px = find(x), py = find(y);
+        if (px == py) return;
+        if (rank[px] < rank[py]) {
+            swap(px, py);
+        }
+        parent[py] = px;
+        if (rank[px] == rank[py]) {
+            rank[px]++;
+        }
+        count--;
+    }
+    
+    int getCount() const {
+        return count;
+    }
+};
+
+class Solution {
+public:
+    int numSimilarGroups(vector<string>& strs) {
+        int n = strs.size();
+        UnionFind uf(n);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (isSimilar(strs[i], strs[j])) {
+                    uf.unite(i, j);
+                }
+            }
+        }
+        
+        return uf.getCount();
+    }
+    
+private:
+    bool isSimilar(const string& s1, const string& s2) {
+        int diff = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1[i] != s2[i]) {
+                diff++;
+                if (diff > 2) return false;
+            }
+        }
+        return diff == 0 || diff == 2;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} strs
+ * @return {number}
+ */
+var numSimilarGroups = function(strs) {
+    class UnionFind {
+        constructor(n) {
+            this.parent = Array.from({length: n}, (_, i) => i);
+            this.rank = new Array(n).fill(0);
+            this.count = n;
+        }
+        
+        find(x) {
+            if (this.parent[x] !== x) {
+                this.parent[x] = this.find(this.parent[x]);
+            }
+            return this.parent[x];
+        }
+        
+        union(x, y) {
+            let px = this.find(x), py = this.find(y);
+            if (px === py) return;
+            if (this.rank[px] < this.rank[py]) {
+                [px, py] = [py, px];
+            }
+            this.parent[py] = px;
+            if (this.rank[px] === this.rank[py]) {
+                this.rank[px]++;
+            }
+            this.count--;
+        }
+    }
+    
+    const isSimilar = (s1, s2) => {
+        let diff = 0;
+        for (let i = 0; i < s1.length; i++) {
+            if (s1[i] !== s2[i]) {
+                diff++;
+                if (diff > 2) return false;
+            }
+        }
+        return diff === 0 || diff === 2;
+    };
+    
+    const n = strs.length;
+    const uf = new UnionFind(n);
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+            if (isSimilar(strs[i], strs[j])) {
+                uf.union(i, j);
+            }
+        }
+    }
+    
+    return uf.count;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    class UnionFind {
+        private int[] parent;
+        private int[] rank;
+        public int Count;
+        
+        public UnionFind(int n) {
+            parent = new int[n];
+            rank = new int[n];
+            Count = n;
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+        }
+        
+        public int Find(int x) {
+            if (parent[x] != x) {
+                parent[x] = Find(parent[x]);
+            }
+            return parent[x];
+        }
+        
+        public void Union(int x, int y) {
+            int px = Find(x), py = Find(y);
+            if (px == py) return;
+            if (rank[px] < rank[py]) {
+                int temp = px;
+                px = py;
+                py = temp;
+            }
+            parent[py] = px;
+            if (rank[px] == rank[py]) {
+                rank[px]++;
+            }
+            Count--;
+        }
+    }
+    
+    public int NumSimilarGroups(string[] strs) {
+        int n = strs.Length;
+        var uf = new UnionFind(n);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (IsSimilar(strs[i], strs[j])) {
+                    uf.Union(i, j);
+                }
+            }
+        }
+        
+        return uf.Count;
+    }
+    
+    private bool IsSimilar(string s1, string s2) {
+        int diff = 0;
+        for (int i = 0; i < s1.Length; i++) {
+            if (s1[i] != s2[i]) {
+                diff++;
+                if (diff > 2) return false;
+            }
+        }
+        return diff == 0 || diff == 2;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Implements Union-Find with path compression and rank optimization</li>
+                    <li>Efficiently checks string similarity</li>
+                    <li>Time complexity: O(N²L)</li>
+                    <li>Space complexity: O(N)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Minimum Node In a Binary Tree - LeetCodee Solution</title>
+    <meta name="description" content="Find the second minimum node in a binary tree.  Optimized LeetCode solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, second minimum node, binary tree, algorithm, data structure, python, java, c++, javascript, c#, solution, coding, interview">
+    <link rel="canonical" href="https://leetcodee.com/problems/second-minimum-node-in-a-binary-tree/">
+    <meta property="og:title" content="Second Minimum Node In a Binary Tree - LeetCodee Solution">
+    <meta property="og:description" content="Find the second minimum node in a binary tree.  Optimized LeetCode solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/second-minimum-node-in-a-binary-tree/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "671. Second Minimum Node In a Binary Tree",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the second minimum node in a binary tree. Optimized LeetCode solutions in Python, Java, C++, JavaScript, and C# are provided.",
+      "keywords": "leetcode, second minimum node, binary tree, algorithm, data structure, python, java, c++, javascript, c#, solution, coding, interview",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/second-minimum-node-in-a-binary-tree/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">671. Second Minimum Node In a Binary Tree</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a non-empty special binary tree consisting of nodes with the non-negative value, where each node in this tree has exactly <code class="bg-gray-100 px-1 rounded">two</code> or <code class="bg-gray-100 px-1 rounded">zero</code> sub-node. If the node has two sub-nodes, then this node's value is the smaller value among its two sub-nodes. More formally, the property <code class="bg-gray-100 px-1 rounded">root.val = min(root.left.val, root.right.val)</code> always holds.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given such a binary tree, you need to output the <strong>second minimum</strong> value in the set made of all the nodes' value in the whole tree.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If no such second minimum value exists, output <code class="bg-gray-100 px-1 rounded">-1</code> instead.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [2,2,5,null,null,5,7]
+Output: 5
+Explanation: The smallest value is 2, the second smallest value is 5.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [2,2,2]
+Output: -1
+Explanation: The smallest value is 2, but there isn't any second smallest value.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 25]</li>
+                    <li>1 ≤ Node.val ≤ 2<sup>31</sup> - 1</li>
+                    <li>root.val == min(root.left.val, root.right.val) for each internal node of the tree</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
+        def dfs(node: Optional[TreeNode], min_val: int) -> int:
+            if not node:
+                return -1
+            
+            # If current value is greater than min_val, it's a candidate
+            if node.val > min_val:
+                return node.val
+            
+            # Get second minimum from left and right subtrees
+            left = dfs(node.left, min_val)
+            right = dfs(node.right, min_val)
+            
+            # If both subtrees have valid second minimums, return the smaller one
+            if left != -1 and right != -1:
+                return min(left, right)
+            
+            # Return the non -1 value if one exists
+            return max(left, right)
+        
+        return dfs(root, root.val)</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Set):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
+        def collect_values(node: Optional[TreeNode]) -> None:
+            if not node:
+                return
+            values.add(node.val)
+            collect_values(node.left)
+            collect_values(node.right)
+        
+        values = set()
+        collect_values(root)
+        
+        # Remove minimum value and get second minimum
+        if len(values) < 2:
+            return -1
+        values.remove(min(values))
+        return min(values)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses DFS with early pruning</li>
+                    <li>Second solution collects all values in a set</li>
+                    <li>Time complexity: O(n) where n is number of nodes</li>
+                    <li>Space complexity: O(h) for first solution, O(n) for second</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int findSecondMinimumValue(TreeNode root) {
+        return dfs(root, root.val);
+    }
+    
+    private int dfs(TreeNode node, int minVal) {
+        if (node == null) {
+            return -1;
+        }
+        
+        // If current value is greater than minVal, it's a candidate
+        if (node.val > minVal) {
+            return node.val;
+        }
+        
+        // Get second minimum from left and right subtrees
+        int left = dfs(node.left, minVal);
+        int right = dfs(node.right, minVal);
+        
+        // If both subtrees have valid second minimums, return the smaller one
+        if (left != -1 && right != -1) {
+            return Math.min(left, right);
+        }
+        
+        // Return the non -1 value if one exists
+        return Math.max(left, right);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int findSecondMinimumValue(TreeNode* root) {
+        return dfs(root, root->val);
+    }
+    
+private:
+    int dfs(TreeNode* node, int minVal) {
+        if (!node) {
+            return -1;
+        }
+        
+        // If current value is greater than minVal, it's a candidate
+        if (node->val > minVal) {
+            return node->val;
+        }
+        
+        // Get second minimum from left and right subtrees
+        int left = dfs(node->left, minVal);
+        int right = dfs(node->right, minVal);
+        
+        // If both subtrees have valid second minimums, return the smaller one
+        if (left != -1 && right != -1) {
+            return min(left, right);
+        }
+        
+        // Return the non -1 value if one exists
+        return max(left, right);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var findSecondMinimumValue = function(root) {
+    const dfs = (node, minVal) => {
+        if (!node) {
+            return -1;
+        }
+        
+        // If current value is greater than minVal, it's a candidate
+        if (node.val > minVal) {
+            return node.val;
+        }
+        
+        // Get second minimum from left and right subtrees
+        const left = dfs(node.left, minVal);
+        const right = dfs(node.right, minVal);
+        
+        // If both subtrees have valid second minimums, return the smaller one
+        if (left !== -1 && right !== -1) {
+            return Math.min(left, right);
+        }
+        
+        // Return the non -1 value if one exists
+        return Math.max(left, right);
+    };
+    
+    return dfs(root, root.val);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int FindSecondMinimumValue(TreeNode root) {
+        return Dfs(root, root.val);
+    }
+    
+    private int Dfs(TreeNode node, int minVal) {
+        if (node == null) {
+            return -1;
+        }
+        
+        // If current value is greater than minVal, it's a candidate
+        if (node.val > minVal) {
+            return node.val;
+        }
+        
+        // Get second minimum from left and right subtrees
+        int left = Dfs(node.left, minVal);
+        int right = Dfs(node.right, minVal);
+        
+        // If both subtrees have valid second minimums, return the smaller one
+        if (left != -1 && right != -1) {
+            return Math.Min(left, right);
+        }
+        
+        // Return the non -1 value if one exists
+        return Math.Max(left, right);
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses DFS with early pruning for efficiency</li>
+                    <li>Time complexity: O(n) where n is number of nodes</li>
+                    <li>Space complexity: O(h) where h is height of tree</li>
+                    <li>Handles edge cases like single value trees</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

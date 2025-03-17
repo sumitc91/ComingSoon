@@ -1,0 +1,320 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Mismatch - LeetCodee Solution</title>
+    <meta name="description" content="Find the duplicate and missing number in an integer array. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, set mismatch, duplicate number, missing number, algorithm, python, java, cpp, javascript, csharp, solution, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/set-mismatch/">
+    <meta property="og:title" content="Set Mismatch - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/set-mismatch/">
+    <meta property="og:description" content="Find the duplicate and missing number in an integer array. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:image" content="https://leetcodee.com/leetcodee_logo.png">  <!-- Replace with actual image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Set Mismatch - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee" // Or author's name
+      },
+      "datePublished": "2023-10-27", // Or publication date
+      "description": "Find the duplicate and missing number in an integer array.  LeetCodee provides solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "You have a set of integers s, which originally contains all the numbers from 1 to n. Unfortunately, due to some error, one of the numbers in s got duplicated to another number in the set, which results in repetition of one number and loss of another number. You are given an integer array nums representing the data status of this set after the error. Find the number that occurs twice and the number that is missing and return them in the form of an array.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/set-mismatch/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">645. Set Mismatch</h1>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You have a set of integers <code class="bg-gray-100 px-1 rounded">s</code>, which originally contains all the numbers from 1 to <code class="bg-gray-100 px-1 rounded">n</code>. Unfortunately, due to some error, one of the numbers in <code class="bg-gray-100 px-1 rounded">s</code> got duplicated to another number in the set, which results in repetition of one number and loss of another number.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array <code class="bg-gray-100 px-1 rounded">nums</code> representing the data status of this set after the error.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Find the number that occurs twice and the number that is missing and return them in the form of an array.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,2,4]
+Output: [2,3]
+Explanation: 2 appears twice and 3 is missing.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,1]
+Output: [1,2]
+Explanation: 1 appears twice and 2 is missing.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>2 ≤ nums.length ≤ 10<sup>4</sup></li>
+                    <li>1 ≤ nums[i] ≤ 10<sup>4</sup></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findErrorNums(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        count = [0] * (n + 1)
+        
+        # Count occurrences of each number
+        for num in nums:
+            count[num] += 1
+        
+        duplicate = missing = 0
+        
+        # Find duplicate and missing numbers
+        for i in range(1, n + 1):
+            if count[i] == 2:
+                duplicate = i
+            elif count[i] == 0:
+                missing = i
+        
+        return [duplicate, missing]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using XOR):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def findErrorNums(self, nums: List[int]) -> List[int]:
+        # Get the XOR of all numbers from 1 to n and all numbers in nums
+        xor_all = 0
+        for i in range(len(nums)):
+            xor_all ^= (i + 1) ^ nums[i]
+        
+        # Get the rightmost set bit in xor_all
+        rightmost_set_bit = xor_all & -xor_all
+        
+        # Divide numbers into two groups based on rightmost set bit
+        x = y = 0
+        for i in range(len(nums)):
+            if (i + 1) & rightmost_set_bit:
+                x ^= i + 1
+            if nums[i] & rightmost_set_bit:
+                x ^= nums[i]
+            else:
+                y ^= nums[i]
+            if not ((i + 1) & rightmost_set_bit):
+                y ^= i + 1
+        
+        # Check which number appears twice
+        for num in nums:
+            if num == x:
+                return [x, y]
+        return [y, x]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses counting approach with O(n) time and O(n) space</li>
+                    <li>Second solution uses XOR for O(n) time and O(1) space</li>
+                    <li>Both solutions handle all edge cases correctly</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int[] findErrorNums(int[] nums) {
+        int n = nums.length;
+        int[] count = new int[n + 1];
+        
+        // Count occurrences of each number
+        for (int num : nums) {
+            count[num]++;
+        }
+        
+        int[] result = new int[2];
+        
+        // Find duplicate and missing numbers
+        for (int i = 1; i <= n; i++) {
+            if (count[i] == 2) {
+                result[0] = i;
+            } else if (count[i] == 0) {
+                result[1] = i;
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> count(n + 1);
+        
+        // Count occurrences of each number
+        for (int num : nums) {
+            count[num]++;
+        }
+        
+        vector<int> result(2);
+        
+        // Find duplicate and missing numbers
+        for (int i = 1; i <= n; i++) {
+            if (count[i] == 2) {
+                result[0] = i;
+            } else if (count[i] == 0) {
+                result[1] = i;
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findErrorNums = function(nums) {
+    const n = nums.length;
+    const count = new Array(n + 1).fill(0);
+    
+    // Count occurrences of each number
+    for (const num of nums) {
+        count[num]++;
+    }
+    
+    const result = [0, 0];
+    
+    // Find duplicate and missing numbers
+    for (let i = 1; i <= n; i++) {
+        if (count[i] === 2) {
+            result[0] = i;
+        } else if (count[i] === 0) {
+            result[1] = i;
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int[] FindErrorNums(int[] nums) {
+        int n = nums.Length;
+        int[] count = new int[n + 1];
+        
+        // Count occurrences of each number
+        foreach (int num in nums) {
+            count[num]++;
+        }
+        
+        int[] result = new int[2];
+        
+        // Find duplicate and missing numbers
+        for (int i = 1; i <= n; i++) {
+            if (count[i] == 2) {
+                result[0] = i;
+            } else if (count[i] == 0) {
+                result[1] = i;
+            }
+        }
+        
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using LINQ):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public int[] FindErrorNums(int[] nums) {
+        var n = nums.Length;
+        var duplicate = nums.GroupBy(x => x)
+                          .Where(g => g.Count() > 1)
+                          .Select(g => g.Key)
+                          .First();
+        var missing = Enumerable.Range(1, n)
+                              .Except(nums)
+                              .First();
+        return new[] { duplicate, missing };
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses array counting for optimal performance</li>
+                        <li>Second solution uses LINQ for cleaner but less efficient implementation</li>
+                        <li>Both solutions handle all edge cases correctly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

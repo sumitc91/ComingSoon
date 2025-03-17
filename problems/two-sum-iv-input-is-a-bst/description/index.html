@@ -1,0 +1,317 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Sum IV - Input is a BST - LeetCodee Solution</title>
+    <meta name="description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode's Two Sum IV - Input is a BST problem.  Includes detailed explanations and performance analysis.">
+    <meta name="keywords" content="leetcode, two sum iv, binary search tree, bst, python, java, c++, javascript, c#, algorithm, data structure, solution, coding, interview">
+    <link rel="canonical" href="https://leetcodee.com/problems/two-sum-iv-input-is-a-bst/">
+    <meta property="og:title" content="Two Sum IV - Input is a BST - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/two-sum-iv-input-is-a-bst/">
+    <meta property="og:description" content="Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode's Two Sum IV - Input is a BST problem.  Includes detailed explanations and performance analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Two Sum IV - Input is a BST - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Efficient solutions in Python, Java, C++, JavaScript, and C# for LeetCode's Two Sum IV - Input is a BST problem. Includes detailed explanations and performance analysis.",
+      "keywords": "leetcode, two sum iv, binary search tree, bst, python, java, c++, javascript, c#, algorithm, data structure, solution, coding, interview",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">653. Two Sum IV - Input is a BST</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the <code class="bg-gray-100 px-1 rounded">root</code> of a Binary Search Tree and a target number <code class="bg-gray-100 px-1 rounded">k</code>, return <code class="bg-gray-100 px-1 rounded">true</code> if there exist two elements in the BST such that their sum is equal to the given target.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [5,3,6,2,4,null,7], k = 9
+Output: true
+Explanation: The BST contains nodes with values 2, 3, 4, 5, 6, 7.
+There exists two nodes with values 4 and 5 whose sum equals 9.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: root = [5,3,6,2,4,null,7], k = 28
+Output: false
+Explanation: No two nodes in the tree have a sum equal to 28.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>The number of nodes in the tree is in the range [1, 10<sup>4</sup>]</li>
+                    <li>-10<sup>4</sup> ≤ Node.val ≤ 10<sup>4</sup></li>
+                    <li>root is guaranteed to be a valid binary search tree</li>
+                    <li>-10<sup>5</sup> ≤ k ≤ 10<sup>5</sup></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        def inorder(node, seen):
+            if not node:
+                return False
+            
+            # Check if we've seen k - current value
+            if k - node.val in seen:
+                return True
+            
+            # Add current value to seen set
+            seen.add(node.val)
+            
+            # Check left and right subtrees
+            return inorder(node.left, seen) or inorder(node.right, seen)
+        
+        return inorder(root, set())</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Two Pointers with BST Iterator):</h4>
+                    <pre class="language-python"><code>class BSTIterator:
+    def __init__(self, root: TreeNode, forward: bool):
+        self.stack = []
+        self.forward = forward
+        node = root
+        while node:
+            self.stack.append(node)
+            node = node.right if forward else node.left
+    
+    def next(self) -> int:
+        node = self.stack.pop()
+        curr = node.left if self.forward else node.right
+        while curr:
+            self.stack.append(curr)
+            curr = curr.right if self.forward else curr.left
+        return node.val
+
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        if not root:
+            return False
+            
+        left = BSTIterator(root, False)  # Forward iterator
+        right = BSTIterator(root, True)  # Reverse iterator
+        
+        l, r = left.next(), right.next()
+        while l < r:
+            curr_sum = l + r
+            if curr_sum == k:
+                return True
+            elif curr_sum < k:
+                l = left.next()
+            else:
+                r = right.next()
+        
+        return False</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses HashSet with O(n) space</li>
+                    <li>Second solution uses BST property with O(h) space</li>
+                    <li>Both solutions have O(n) time complexity</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private Set<Integer> seen = new HashSet<>();
+    
+    public boolean findTarget(TreeNode root, int k) {
+        if (root == null) {
+            return false;
+        }
+        
+        // Check if we've seen k - current value
+        if (seen.contains(k - root.val)) {
+            return true;
+        }
+        
+        // Add current value to seen set
+        seen.add(root.val);
+        
+        // Check left and right subtrees
+        return findTarget(root.left, k) || findTarget(root.right, k);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+    unordered_set<int> seen;
+    
+public:
+    bool findTarget(TreeNode* root, int k) {
+        if (!root) {
+            return false;
+        }
+        
+        // Check if we've seen k - current value
+        if (seen.count(k - root->val)) {
+            return true;
+        }
+        
+        // Add current value to seen set
+        seen.insert(root->val);
+        
+        // Check left and right subtrees
+        return findTarget(root->left, k) || findTarget(root->right, k);
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {boolean}
+ */
+var findTarget = function(root, k) {
+    const seen = new Set();
+    
+    function dfs(node) {
+        if (!node) {
+            return false;
+        }
+        
+        // Check if we've seen k - current value
+        if (seen.has(k - node.val)) {
+            return true;
+        }
+        
+        // Add current value to seen set
+        seen.add(node.val);
+        
+        // Check left and right subtrees
+        return dfs(node.left) || dfs(node.right);
+    }
+    
+    return dfs(root);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private HashSet<int> seen = new HashSet<int>();
+    
+    public bool FindTarget(TreeNode root, int k) {
+        if (root == null) {
+            return false;
+        }
+        
+        // Check if we've seen k - current value
+        if (seen.Contains(k - root.val)) {
+            return true;
+        }
+        
+        // Add current value to seen set
+        seen.Add(root.val);
+        
+        // Check left and right subtrees
+        return FindTarget(root.left, k) || FindTarget(root.right, k);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using LINQ):</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public bool FindTarget(TreeNode root, int k) {
+        var values = new HashSet<int>();
+        
+        return TraverseTree(root)
+               .Any(val => values.Contains(k - val) || !values.Add(val));
+    }
+    
+    private IEnumerable<int> TraverseTree(TreeNode node) {
+        if (node == null) yield break;
+        
+        foreach (var val in TraverseTree(node.left))
+            yield return val;
+            
+        yield return node.val;
+        
+        foreach (var val in TraverseTree(node.right))
+            yield return val;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses recursive DFS with HashSet</li>
+                        <li>Second solution uses LINQ with iterator pattern</li>
+                        <li>Both solutions maintain O(n) time and space complexity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short Encoding of Words - LeetCodee Solution</title>
+    <meta name="description" content="Find the length of the shortest reference string for a valid encoding of an array of words.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, short encoding of words, coding solution, python, java, cpp, javascript, c#, algorithm, data structures">
+    <meta property="og:title" content="Short Encoding of Words - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/short-encoding-of-words/">
+    <meta property="og:description" content="Find the length of the shortest reference string for a valid encoding of an array of words.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/short-encoding-of-words/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Short Encoding of Words - LeetCodee Solution",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the length of the shortest reference string for a valid encoding of an array of words. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleBody": "A valid encoding of an array of words is any reference string s and array of indices indices such that: words.length == indices.length The reference string s ends with the '#' character. For each index indices[i], the substring of s starting from indices[i] and up to (but not including) the next '#' character is equal to words[i]. Given an array of words, return the length of the shortest reference string s possible of any valid encoding of words.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/short-encoding-of-words/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">820. Short Encoding of Words</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A valid encoding of an array of words is any reference string s and array of indices indices such that:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>words.length == indices.length</li>
+                    <li>The reference string s ends with the '#' character.</li>
+                    <li>For each index indices[i], the substring of s starting from indices[i] and up to (but not including) the next '#' character is equal to words[i].</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Given an array of words, return the length of the shortest reference string s possible of any valid encoding of words.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: words = ["time", "me", "bell"]
+Output: 10
+Explanation: A valid encoding would be s = "time#bell#" and indices = [0, 2, 5].
+words[0] = "time", the substring of s starting from indices[0] = 0 to the next '#' is "time#"
+words[1] = "me", the substring of s starting from indices[1] = 2 to the next '#' is "me#"
+words[2] = "bell", the substring of s starting from indices[2] = 5 to the next '#' is "bell#"</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: words = ["t"]
+Output: 2
+Explanation: A valid encoding would be s = "t#" and indices = [0].</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ words.length ≤ 2000</li>
+                    <li>1 ≤ words[i].length ≤ 7</li>
+                    <li>words[i] consists of only lowercase letters.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def minimumLengthEncoding(self, words: List[str]) -> int:
+        # Remove duplicates and sort by length in descending order
+        words = list(set(words))
+        words.sort(key=len, reverse=True)
+        
+        # Build reference string
+        encoding = ""
+        for word in words:
+            # If word is not a suffix of any previously added word
+            if not any(w.endswith(word) for w in encoding.split('#')[:-1]):
+                encoding += word + "#"
+                
+        return len(encoding)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Removes duplicate words using set</li>
+                    <li>Processes longer words first to handle suffixes</li>
+                    <li>Time complexity: O(n * k²) where n is number of words and k is max word length</li>
+                    <li>Space complexity: O(n * k)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int minimumLengthEncoding(String[] words) {
+        // Create set of words
+        Set<String> good = new HashSet<>(Arrays.asList(words));
+        
+        // Remove words that are suffixes of other words
+        for (String word : words) {
+            for (int k = 1; k < word.length(); k++) {
+                good.remove(word.substring(k));
+            }
+        }
+        
+        // Calculate total length including '#' characters
+        int ans = 0;
+        for (String word : good) {
+            ans += word.length() + 1;
+        }
+        
+        return ans;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int minimumLengthEncoding(vector<string>& words) {
+        // Create set of words
+        unordered_set<string> good(words.begin(), words.end());
+        
+        // Remove words that are suffixes of other words
+        for (const string& word : words) {
+            for (int k = 1; k < word.length(); k++) {
+                good.erase(word.substr(k));
+            }
+        }
+        
+        // Calculate total length including '#' characters
+        int ans = 0;
+        for (const string& word : good) {
+            ans += word.length() + 1;
+        }
+        
+        return ans;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} words
+ * @return {number}
+ */
+var minimumLengthEncoding = function(words) {
+    // Create set of words
+    const good = new Set(words);
+    
+    // Remove words that are suffixes of other words
+    for (const word of words) {
+        for (let k = 1; k < word.length; k++) {
+            good.delete(word.slice(k));
+        }
+    }
+    
+    // Calculate total length including '#' characters
+    let ans = 0;
+    for (const word of good) {
+        ans += word.length + 1;
+    }
+    
+    return ans;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int MinimumLengthEncoding(string[] words) {
+        // Create set of words
+        var good = new HashSet<string>(words);
+        
+        // Remove words that are suffixes of other words
+        foreach (var word in words) {
+            for (int k = 1; k < word.Length; k++) {
+                good.Remove(word.Substring(k));
+            }
+        }
+        
+        // Calculate total length including '#' characters
+        int ans = 0;
+        foreach (var word in good) {
+            ans += word.Length + 1;
+        }
+        
+        return ans;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses HashSet to store unique words</li>
+                    <li>Removes suffix words to minimize encoding length</li>
+                    <li>Time complexity: O(n * k²)</li>
+                    <li>Space complexity: O(n * k)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

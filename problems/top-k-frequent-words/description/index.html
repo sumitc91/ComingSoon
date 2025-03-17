@@ -1,0 +1,314 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top K Frequent Words - LeetCodee Solution</title>
+    <meta name="description" content="Find the k most frequent words in a given array of strings.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 692.">
+    <meta name="keywords" content="leetcode, top k frequent words, algorithm, python, java, c++, javascript, c#, solution, coding, interview">
+    <meta name="canonical" content="https://leetcodee.com/problems/top-k-frequent-words/">
+    <meta property="og:title" content="Top K Frequent Words - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/top-k-frequent-words/">
+    <meta property="og:description" content="Find the k most frequent words in a given array of strings.  Solutions in Python, Java, C++, JavaScript, and C#. LeetCode problem 692.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "692. Top K Frequent Words",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the k most frequent words in a given array of strings. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "keywords": "leetcode, top k frequent words, algorithm, python, java, c++, javascript, c#, solution, coding, interview",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/top-k-frequent-words/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">692. Top K Frequent Words</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an array of strings <code class="bg-gray-100 px-1 rounded">words</code> and an integer <code class="bg-gray-100 px-1 rounded">k</code>, return the <code class="bg-gray-100 px-1 rounded">k</code> most frequent strings.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: words = ["i","love","leetcode","i","love","coding"], k = 2
+Output: ["i","love"]
+Explanation: "i" and "love" are the two most frequent words.
+Note that "i" comes before "love" due to a lower alphabetical order.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: words = ["the","day","is","sunny","the","the","the","sunny","is","is"], k = 4
+Output: ["the","is","sunny","day"]
+Explanation: "the", "is", "sunny" and "day" are the four most frequent words, with the number of occurrence being 4, 3, 2 and 1 respectively.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ words.length ≤ 500</li>
+                    <li>1 ≤ words[i].length ≤ 10</li>
+                    <li>words[i] consists of lowercase English letters</li>
+                    <li>k is in the range [1, The number of unique words]</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        # Count word frequencies
+        word_count = Counter(words)
+        
+        # Create a heap of (-frequency, word) pairs
+        # Using negative frequency to create a max heap
+        heap = [(-freq, word) for word, freq in word_count.items()]
+        heapify(heap)
+        
+        # Get top k elements
+        result = []
+        for _ in range(k):
+            freq, word = heappop(heap)
+            result.append(word)
+            
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses Counter to count word frequencies</li>
+                    <li>Creates a min heap with (-frequency, word) pairs</li>
+                    <li>Negative frequency creates max heap behavior</li>
+                    <li>Time complexity: O(n log k) where n is the length of words</li>
+                    <li>Space complexity: O(n) for the counter and heap</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        // Count word frequencies
+        Map<String, Integer> wordCount = new HashMap<>();
+        for (String word : words) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+        
+        // Create priority queue with custom comparator
+        PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>(
+            (a, b) -> a.getValue().equals(b.getValue()) ?
+                b.getKey().compareTo(a.getKey()) :
+                a.getValue() - b.getValue()
+        );
+        
+        // Add entries to priority queue, maintaining size k
+        for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
+            pq.offer(entry);
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+        
+        // Build result list
+        List<String> result = new ArrayList<>();
+        while (!pq.isEmpty()) {
+            result.add(0, pq.poll().getKey());
+        }
+        
+        return result;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        // Count word frequencies
+        unordered_map<string, int> wordCount;
+        for (const string& word : words) {
+            wordCount[word]++;
+        }
+        
+        // Custom comparator for priority queue
+        auto comp = [](pair<string, int>& a, pair<string, int>& b) {
+            return a.second > b.second || 
+                   (a.second == b.second && a.first < b.first);
+        };
+        
+        // Create min heap
+        priority_queue<pair<string, int>, 
+                      vector<pair<string, int>>, 
+                      decltype(comp)> pq(comp);
+        
+        // Add entries to priority queue
+        for (const auto& entry : wordCount) {
+            pq.push(entry);
+            if (pq.size() > k) {
+                pq.pop();
+            }
+        }
+        
+        // Build result vector
+        vector<string> result(k);
+        for (int i = k - 1; i >= 0; i--) {
+            result[i] = pq.top().first;
+            pq.pop();
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} words
+ * @param {number} k
+ * @return {string[]}
+ */
+var topKFrequent = function(words, k) {
+    // Count word frequencies
+    const wordCount = new Map();
+    for (const word of words) {
+        wordCount.set(word, (wordCount.get(word) || 0) + 1);
+    }
+    
+    // Convert to array and sort
+    return Array.from(wordCount.entries())
+        .sort((a, b) => 
+            b[1] === a[1] ? 
+            a[0].localeCompare(b[0]) : 
+            b[1] - a[1]
+        )
+        .slice(0, k)
+        .map(entry => entry[0]);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<string> TopKFrequent(string[] words, int k) {
+        // Count word frequencies
+        Dictionary<string, int> wordCount = new Dictionary<string, int>();
+        foreach (string word in words) {
+            if (!wordCount.ContainsKey(word)) {
+                wordCount[word] = 0;
+            }
+            wordCount[word]++;
+        }
+        
+        // Create priority queue with custom comparison
+        var pq = new SortedDictionary<(int freq, string word), string>(
+            Comparer<(int freq, string word)>.Create((a, b) => {
+                if (a.freq != b.freq) {
+                    return a.freq.CompareTo(b.freq);
+                }
+                return b.word.CompareTo(a.word);
+            })
+        );
+        
+        // Add entries to priority queue
+        foreach (var entry in wordCount) {
+            pq.Add((-entry.Value, entry.Key), entry.Key);
+            if (pq.Count > k) {
+                pq.Remove(pq.Last().Key);
+            }
+        }
+        
+        // Return top k words
+        return pq.Values.Take(k).ToList();
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dictionary/map to count word frequencies</li>
+                    <li>Different approaches for different languages based on available data structures</li>
+                    <li>Python and JavaScript solutions are more concise due to built-in sorting capabilities</li>
+                    <li>Java and C++ use priority queues for efficient k-element selection</li>
+                    <li>C# uses SortedDictionary as an alternative to priority queue</li>
+                    <li>Time complexity: O(n log k) for heap-based solutions, O(n log n) for sorting-based solutions</li>
+                    <li>Space complexity: O(n) for storing word frequencies</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

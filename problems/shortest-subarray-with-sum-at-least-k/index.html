@@ -1,0 +1,319 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortest Subarray with Sum at Least K - LeetCodee Solution</title>
+    <meta name="description" content="Find the length of the shortest subarray with a sum at least k. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, shortest subarray, sum at least k, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <meta name="canonical" content="https://leetcodee.com/problems/shortest-subarray-with-sum-at-least-k/">
+    <meta property="og:title" content="Shortest Subarray with Sum at Least K - LeetCodee Solution">
+    <meta property="og:description" content="Find the length of the shortest subarray with a sum at least k. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/shortest-subarray-with-sum-at-least-k/">
+    <meta property="og:site_name" content="LeetCodee">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Shortest Subarray with Sum at Least K",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the length of the shortest subarray with a sum at least k.  Solutions in Python, Java, C++, JavaScript, and C#.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/shortest-subarray-with-sum-at-least-k/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">862. Shortest Subarray with Sum at Least K</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given an integer array nums and an integer k, return the length of the shortest non-empty subarray of nums with a sum of at least k. If there is no such subarray, return -1.
+                </p>
+                <p class="text-gray-700">
+                    A subarray is a contiguous part of an array.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1], k = 1
+Output: 1</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2], k = 4
+Output: -1</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [2,-1,2], k = 3
+Output: 3</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 10⁵</li>
+                    <li>-10⁵ ≤ nums[i] ≤ 10⁵</li>
+                    <li>1 ≤ k ≤ 10⁹</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def shortestSubarray(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        # Calculate prefix sums
+        prefix_sum = [0] * (n + 1)
+        for i in range(n):
+            prefix_sum[i + 1] = prefix_sum[i] + nums[i]
+        
+        # Initialize result and deque
+        result = n + 1
+        deque = collections.deque()
+        
+        # Process each prefix sum
+        for i in range(n + 1):
+            # Remove elements from deque that can't give shorter subarray
+            while deque and prefix_sum[i] - prefix_sum[deque[0]] >= k:
+                result = min(result, i - deque.popleft())
+            
+            # Remove elements that are larger than current prefix sum
+            while deque and prefix_sum[i] <= prefix_sum[deque[-1]]:
+                deque.pop()
+            
+            deque.append(i)
+        
+        return result if result <= n else -1</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses monotonic deque for efficient processing</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int shortestSubarray(int[] nums, int k) {
+        int n = nums.length;
+        // Calculate prefix sums using long to handle large numbers
+        long[] prefix_sum = new long[n + 1];
+        for (int i = 0; i < n; i++) {
+            prefix_sum[i + 1] = prefix_sum[i] + nums[i];
+        }
+        
+        // Initialize result and deque
+        int result = n + 1;
+        Deque<Integer> deque = new ArrayDeque<>();
+        
+        // Process each prefix sum
+        for (int i = 0; i <= n; i++) {
+            // Remove elements from deque that can't give shorter subarray
+            while (!deque.isEmpty() && prefix_sum[i] - prefix_sum[deque.peekFirst()] >= k) {
+                result = Math.min(result, i - deque.pollFirst());
+            }
+            
+            // Remove elements that are larger than current prefix sum
+            while (!deque.isEmpty() && prefix_sum[i] <= prefix_sum[deque.peekLast()]) {
+                deque.pollLast();
+            }
+            
+            deque.offerLast(i);
+        }
+        
+        return result <= n ? result : -1;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int shortestSubarray(vector<int>& nums, int k) {
+        int n = nums.size();
+        // Calculate prefix sums using long long to handle large numbers
+        vector<long long> prefix_sum(n + 1);
+        for (int i = 0; i < n; i++) {
+            prefix_sum[i + 1] = prefix_sum[i] + nums[i];
+        }
+        
+        // Initialize result and deque
+        int result = n + 1;
+        deque<int> deque;
+        
+        // Process each prefix sum
+        for (int i = 0; i <= n; i++) {
+            // Remove elements from deque that can't give shorter subarray
+            while (!deque.empty() && prefix_sum[i] - prefix_sum[deque.front()] >= k) {
+                result = min(result, i - deque.front());
+                deque.pop_front();
+            }
+            
+            // Remove elements that are larger than current prefix sum
+            while (!deque.empty() && prefix_sum[i] <= prefix_sum[deque.back()]) {
+                deque.pop_back();
+            }
+            
+            deque.push_back(i);
+        }
+        
+        return result <= n ? result : -1;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var shortestSubarray = function(nums, k) {
+    const n = nums.length;
+    // Calculate prefix sums using BigInt to handle large numbers
+    const prefix_sum = new Array(n + 1).fill(0n);
+    for (let i = 0; i < n; i++) {
+        prefix_sum[i + 1] = prefix_sum[i] + BigInt(nums[i]);
+    }
+    
+    // Initialize result and deque
+    let result = n + 1;
+    const deque = [];
+    
+    // Process each prefix sum
+    for (let i = 0; i <= n; i++) {
+        // Remove elements from deque that can't give shorter subarray
+        while (deque.length && prefix_sum[i] - prefix_sum[deque[0]] >= BigInt(k)) {
+            result = Math.min(result, i - deque.shift());
+        }
+        
+        // Remove elements that are larger than current prefix sum
+        while (deque.length && prefix_sum[i] <= prefix_sum[deque[deque.length - 1]]) {
+            deque.pop();
+        }
+        
+        deque.push(i);
+    }
+    
+    return result <= n ? result : -1;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int ShortestSubarray(int[] nums, int k) {
+        int n = nums.Length;
+        // Calculate prefix sums using long to handle large numbers
+        long[] prefix_sum = new long[n + 1];
+        for (int i = 0; i < n; i++) {
+            prefix_sum[i + 1] = prefix_sum[i] + nums[i];
+        }
+        
+        // Initialize result and deque
+        int result = n + 1;
+        LinkedList<int> deque = new LinkedList<int>();
+        
+        // Process each prefix sum
+        for (int i = 0; i <= n; i++) {
+            // Remove elements from deque that can't give shorter subarray
+            while (deque.Count > 0 && prefix_sum[i] - prefix_sum[deque.First.Value] >= k) {
+                result = Math.Min(result, i - deque.First.Value);
+                deque.RemoveFirst();
+            }
+            
+            // Remove elements that are larger than current prefix sum
+            while (deque.Count > 0 && prefix_sum[i] <= prefix_sum[deque.Last.Value]) {
+                deque.RemoveLast();
+            }
+            
+            deque.AddLast(i);
+        }
+        
+        return result <= n ? result : -1;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses prefix sum array and monotonic deque</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+             <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

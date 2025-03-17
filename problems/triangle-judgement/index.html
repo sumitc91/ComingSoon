@@ -1,0 +1,239 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangle Judgement - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Triangle Judgement problem on LeetCodee.  Find detailed explanations, MySQL, PostgreSQL, MS SQL Server, and Oracle solutions, and optimized approach with code examples.">
+    <meta name="keywords" content="LeetCode, SQL, Triangle Judgement, Database, Solution, MySQL, PostgreSQL, MS SQL Server, Oracle, Triangle Inequality Theorem, Algorithm, Coding, Programming">
+    <meta property="og:title" content="Triangle Judgement - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/triangle-judgement/">
+    <meta property="og:description" content="Learn how to solve the Triangle Judgement problem on LeetCodee.  Find detailed explanations, MySQL, PostgreSQL, MS SQL Server, and Oracle solutions, and optimized approach with code examples.">
+    <meta property="og:image" content="https://leetcodee.com/images/leetcode-logo.png">  <!-- Replace with actual image URL -->
+    <link rel="canonical" href="https://leetcodee.com/problems/triangle-judgement/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Triangle Judgement - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-10-27",  <!-- Add the actual publication date -->
+      "dateModified": "2024-10-27",  <!-- Add the actual modification date -->
+      "description": "Learn how to solve the Triangle Judgement problem on LeetCodee.  Find detailed explanations, MySQL, PostgreSQL, MS SQL Server, and Oracle solutions, and optimized approach with code examples.",
+      "image": "https://leetcodee.com/images/leetcode-logo.png",  <!-- Replace with actual image URL -->
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/triangle-judgement/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">610. Triangle Judgement</h1>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Table: <code class="bg-gray-100 px-1 rounded">Triangle</code>
+                </p>
+                <pre class="bg-gray-100 p-4 rounded mb-4"><code>+-------------+------+
+| Column Name | Type |
++-------------+------+
+| x           | int  |
+| y           | int  |
+| z           | int  |
++-------------+------+
+(x, y, z) is the primary key column for this table.
+Each row of this table contains the lengths of three line segments.</code></pre>
+                <p class="text-gray-700 mb-4">
+                    Write an SQL query to report for every three line segments whether they can form a triangle.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the result table in any order.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example:</h2>
+                <p class="text-gray-700 mb-2">Input:</p>
+                <pre class="bg-gray-100 p-4 rounded mb-4"><code>Triangle table:
++----+----+----+
+| x  | y  | z  |
++----+----+----+
+| 13 | 15 | 30 |
+| 10 | 20 | 15 |
++----+----+----+</code></pre>
+                <p class="text-gray-700 mb-2">Output:</p>
+                <pre class="bg-gray-100 p-4 rounded"><code>+----+----+----+----------+
+| x  | y  | z  | triangle |
++----+----+----+----------+
+| 13 | 15 | 30 | No       |
+| 10 | 20 | 15 | Yes      |
++----+----+----+----------+</code></pre>
+                <p class="text-gray-700 mt-4">Explanation:</p>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>For the first row, x + y = 28 < z (30), so it cannot form a triangle.</li>
+                    <li>For the second row, all pairs of sides sum greater than the remaining side, so it can form a triangle.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- MySQL Solution -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MySQL Solution</h3>
+                <pre class="language-sql"><code>SELECT 
+    x,
+    y,
+    z,
+    CASE
+        WHEN x + y > z AND x + z > y AND y + z > x THEN 'Yes'
+        ELSE 'No'
+    END AS triangle
+FROM Triangle;</code></pre>
+            </div>
+
+            <!-- PostgreSQL Solution -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">PostgreSQL Solution</h3>
+                <pre class="language-sql"><code>SELECT 
+    x,
+    y,
+    z,
+    CASE
+        WHEN x + y > z AND x + z > y AND y + z > x THEN 'Yes'
+        ELSE 'No'
+    END AS triangle
+FROM Triangle;</code></pre>
+            </div>
+
+            <!-- MS SQL Server Solution -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">MS SQL Server Solution</h3>
+                <pre class="language-sql"><code>SELECT 
+    x,
+    y,
+    z,
+    CASE
+        WHEN x + y > z AND x + z > y AND y + z > x THEN 'Yes'
+        ELSE 'No'
+    END AS triangle
+FROM Triangle;</code></pre>
+            </div>
+
+            <!-- Oracle Solution -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Oracle Solution</h3>
+                <pre class="language-sql"><code>SELECT 
+    x,
+    y,
+    z,
+    CASE
+        WHEN x + y > z AND x + z > y AND y + z > x THEN 'Yes'
+        ELSE 'No'
+    END AS triangle
+FROM Triangle;</code></pre>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses triangle inequality theorem:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Triangle inequality</li>
+                            <li>Side comparisons</li>
+                            <li>CASE statement</li>
+                            <li>Boolean logic</li>
+                        </ul>
+                    </li>
+                    <li>Query Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Select sides</li>
+                            <li>Check conditions</li>
+                            <li>Determine result</li>
+                            <li>Format output</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>CASE usage</li>
+                        <li>Arithmetic operations</li>
+                        <li>Boolean conditions</li>
+                        <li>Result formatting</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Single pass</li>
+                        <li>No joins needed</li>
+                        <li>Simple conditions</li>
+                        <li>Direct calculation</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Equal sides</li>
+                        <li>Zero sides</li>
+                        <li>Negative values</li>
+                        <li>Large numbers</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Array with Same Average - LeetCodee Solution</title>
+    <meta name="description" content="Find out how to solve the LeetCode problem 'Split Array with Same Average' with efficient Python, Java, C++, JavaScript, and C# solutions. Includes detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, split array same average, algorithm, solution, python, java, c++, javascript, c#, coding, programming, data structures, arrays, average">
+    <meta property="og:title" content="Split Array with Same Average - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/split-array-with-same-average/">
+    <meta property="og:description" content="Find out how to solve the LeetCode problem 'Split Array with Same Average' with efficient Python, Java, C++, JavaScript, and C# solutions. Includes detailed explanations and time/space complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/split-array-with-same-average/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Split Array with Same Average - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find out how to solve the LeetCode problem 'Split Array with Same Average' with efficient Python, Java, C++, JavaScript, and C# solutions. Includes detailed explanations and time/space complexity analysis.",
+      "keywords": "leetcode, split array same average, algorithm, solution, python, java, c++, javascript, c#, coding, programming, data structures, arrays, average",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/split-array-with-same-average/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">805. Split Array with Same Average</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array nums. You should move each element of nums into one of the two arrays A and B such that A and B are non-empty, and average(A) == average(B).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return true if it is possible to achieve that and false otherwise.
+                </p>
+                <p class="text-gray-700">
+                    Note that for an array arr, average(arr) is the sum of all the elements of arr over the length of arr.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,2,3,4,5,6,7,8]
+Output: true
+Explanation: We can split the array into [1,4,5,8] and [2,3,6,7], and both of them have an average of 4.5.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [3,1]
+Output: false</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 30</li>
+                    <li>0 ≤ nums[i] ≤ 10^4</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def splitArraySameAverage(self, nums: List[int]) -> bool:
+        n = len(nums)
+        if n == 1:
+            return False
+            
+        total = sum(nums)
+        nums = [num * n - total for num in nums]
+        
+        # Split array into two halves for meet in the middle
+        m = n // 2
+        left = set()
+        
+        # Generate all possible sums for left half
+        for i in range(1, 1 << m):
+            curr_sum = sum(nums[j] for j in range(m) if i & (1 << j))
+            if curr_sum == 0:
+                return True
+            left.add(curr_sum)
+        
+        # Check all possible sums for right half
+        for i in range(1, 1 << (n - m)):
+            curr_sum = sum(nums[j + m] for j in range(n - m) if i & (1 << j))
+            if currSum == 0 or (i != (1 << (n - m)) - 1 and -curr_sum in left):
+                return True
+                
+        return False</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses meet in the middle approach to reduce time complexity</li>
+                    <li>Transforms problem to finding subsets that sum to zero</li>
+                    <li>Time complexity: O(2^(n/2))</li>
+                    <li>Space complexity: O(2^(n/2))</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean splitArraySameAverage(int[] nums) {
+        int n = nums.length;
+        if (n == 1) return false;
+        
+        int sum = 0;
+        for (int num : nums) sum += num;
+        
+        // Transform array
+        for (int i = 0; i < n; i++) {
+            nums[i] = nums[i] * n - sum;
+        }
+        
+        // Split array into two halves
+        int m = n / 2;
+        Set<Integer> left = new HashSet<>();
+        
+        // Generate all possible sums for left half
+        for (int i = 1; i < (1 << m); i++) {
+            int currSum = 0;
+            for (int j = 0; j < m; j++) {
+                if ((i & (1 << j)) != 0) {
+                    currSum += nums[j];
+                }
+            }
+            if (currSum == 0) return true;
+            left.add(currSum);
+        }
+        
+        // Check all possible sums for right half
+        for (int i = 1; i < (1 << (n - m)); i++) {
+            int currSum = 0;
+            for (int j = 0; j < n - m; j++) {
+                if ((i & (1 << j)) != 0) {
+                    currSum += nums[j + m];
+                }
+            }
+            if (currSum == 0 || (i != (1 << (n - m)) - 1 && left.contains(-currSum))) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool splitArraySameAverage(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 1) return false;
+        
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        
+        // Transform array
+        for (int i = 0; i < n; i++) {
+            nums[i] = nums[i] * n - sum;
+        }
+        
+        // Split array into two halves
+        int m = n / 2;
+        unordered_set<int> left;
+        
+        // Generate all possible sums for left half
+        for (int i = 1; i < (1 << m); i++) {
+            int currSum = 0;
+            for (int j = 0; j < m; j++) {
+                if (i & (1 << j)) {
+                    currSum += nums[j];
+                }
+            }
+            if (currSum == 0) return true;
+            left.insert(currSum);
+        }
+        
+        // Check all possible sums for right half
+        for (int i = 1; i < (1 << (n - m)); i++) {
+            int currSum = 0;
+            for (int j = 0; j < n - m; j++) {
+                if (i & (1 << j)) {
+                    currSum += nums[j + m];
+                }
+            }
+            if (currSum == 0 || (i != (1 << (n - m)) - 1 && left.count(-currSum))) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var splitArraySameAverage = function(nums) {
+    const n = nums.length;
+    if (n === 1) return false;
+    
+    const sum = nums.reduce((a, b) => a + b, 0);
+    
+    // Transform array
+    nums = nums.map(num => num * n - sum);
+    
+    // Split array into two halves
+    const m = Math.floor(n / 2);
+    const left = new Set();
+    
+    // Generate all possible sums for left half
+    for (let i = 1; i < (1 << m); i++) {
+        let currSum = 0;
+        for (let j = 0; j < m; j++) {
+            if (i & (1 << j)) {
+                currSum += nums[j];
+            }
+        }
+        if (currSum === 0) return true;
+        left.add(currSum);
+    }
+    
+    // Check all possible sums for right half
+    for (let i = 1; i < (1 << (n - m)); i++) {
+        let currSum = 0;
+        for (let j = 0; j < n - m; j++) {
+            if (i & (1 << j)) {
+                currSum += nums[j + m];
+            }
+        }
+        if (currSum === 0 || (i !== (1 << (n - m)) - 1 && left.has(-currSum))) {
+            return true;
+        }
+    }
+    
+    return false;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool SplitArraySameAverage(int[] nums) {
+        int n = nums.Length;
+        if (n == 1) return false;
+        
+        int sum = nums.Sum();
+        
+        // Transform array
+        for (int i = 0; i < n; i++) {
+            nums[i] = nums[i] * n - sum;
+        }
+        
+        // Split array into two halves
+        int m = n / 2;
+        HashSet<int> left = new HashSet<int>();
+        
+        // Generate all possible sums for left half
+        for (int i = 1; i < (1 << m); i++) {
+            int currSum = 0;
+            for (int j = 0; j < m; j++) {
+                if ((i & (1 << j)) != 0) {
+                    currSum += nums[j];
+                }
+            }
+            if (currSum == 0) return true;
+            left.Add(currSum);
+        }
+        
+        // Check all possible sums for right half
+        for (int i = 1; i < (1 << (n - m)); i++) {
+            int currSum = 0;
+            for (int j = 0; j < n - m; j++) {
+                if ((i & (1 << j)) != 0) {
+                    currSum += nums[j + m];
+                }
+            }
+            if (currSum == 0 || (i != (1 << (n - m)) - 1 && left.Contains(-currSum))) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses bit manipulation for generating subsets</li>
+                    <li>Transforms problem to find subsets with sum zero</li>
+                    <li>Time complexity: O(2^(n/2))</li>
+                    <li>Space complexity: O(2^(n/2))</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

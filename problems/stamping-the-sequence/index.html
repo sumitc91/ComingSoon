@@ -1,0 +1,426 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stamping The Sequence - LeetCodee Solution</title>
+    <meta name="description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 936: Stamping The Sequence.  Learn efficient algorithms and conquer this challenging problem.">
+    <meta name="keywords" content="leetcode, leetcode solution, stamping the sequence, algorithm, python, java, c++, javascript, c#, coding, programming, competitive programming, problem 936">
+    <link rel="canonical" href="https://leetcodee.com/problems/stamping-the-sequence/">
+    <meta property="og:title" content="Stamping The Sequence - LeetCodee Solution">
+    <meta property="og:description" content="Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 936: Stamping The Sequence.  Learn efficient algorithms and conquer this challenging problem.">
+    <meta property="og:url" content="https://leetcodee.com/problems/stamping-the-sequence/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "936. Stamping The Sequence",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Comprehensive guide and solutions in Python, Java, C++, JavaScript, and C# for LeetCode problem 936: Stamping The Sequence.  Learn efficient algorithms and conquer this challenging problem.",
+      "keywords": "leetcode, leetcode solution, stamping the sequence, algorithm, python, java, c++, javascript, c#, coding, programming, competitive programming, problem 936"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">936. Stamping The Sequence</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You want to form a target string of lowercase letters.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    At the beginning, your sequence is target.length '?' marks. You also have a stamp of lowercase letters.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    On each turn, you may place the stamp over the sequence, and replace every letter in the sequence with the corresponding letter from the stamp. You can make up to 10 * target.length turns.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, if the initial sequence is "?????", and your stamp is "abc", then you may make "abc??", "?abc?", "??abc" in the first turn. (Note that the stamp must be fully contained within the boundaries of the sequence in order to stamp.)
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If the sequence is possible to stamp, then return an array of the index of the left-most letter being stamped at each turn. If the sequence is not possible to stamp, return an empty array.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, if the sequence is "ababc", and the stamp is "abc", then we could return the answer [0, 2], corresponding to the moves "?????" -> "abc??" -> "ababc".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Also, if the sequence is possible to stamp, it is guaranteed it is possible to stamp within 10 * target.length moves. Any answers specifying more than 10 * target.length moves will not be accepted.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: stamp = "abc", target = "ababc"
+Output: [0,2]
+Explanation: Initially s = "?????".
+- Place stamp at index 0 to get "abc??".
+- Place stamp at index 2 to get "ababc".
+[1,0,2] would also be accepted as an answer, as well as some other answers.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: stamp = "abca", target = "aabcaca"
+Output: [3,0,1]
+Explanation: Initially s = "???????".
+- Place stamp at index 3 to get "???abca".
+- Place stamp at index 0 to get "abcabca".
+- Place stamp at index 1 to get "aabcaca".</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= stamp.length <= target.length <= 1000</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">stamp</code> and <code class="bg-gray-100 px-1 rounded">target</code> only contain lowercase letters.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def movesToStamp(self, stamp: str, target: str) -> List[int]:
+        def canStamp(start: int) -> bool:
+            for i in range(len(stamp)):
+                if target[start + i] != '?' and target[start + i] != stamp[i]:
+                    return False
+            return True
+        
+        def stampAt(start: int) -> int:
+            count = 0
+            for i in range(len(stamp)):
+                if target[start + i] != '?':
+                    count += 1
+                    target[start + i] = '?'
+            return count
+        
+        target = list(target)
+        n = len(target)
+        m = len(stamp)
+        result = []
+        total = 0
+        
+        while total < n:
+            found = False
+            for i in range(n - m + 1):
+                if canStamp(i):
+                    found = True
+                    result.append(i)
+                    total += stampAt(i)
+                    break
+            if not found:
+                return []
+                
+        return result[::-1]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * (n - m))</h4>
+                    <p class="text-gray-700">Where n is the length of target and m is the length of stamp.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the target string as a list.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private boolean canStamp(String target, String stamp, int start) {
+        for (int i = 0; i < stamp.length(); i++) {
+            if (target.charAt(start + i) != '?' && target.charAt(start + i) != stamp.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private int stampAt(StringBuilder target, String stamp, int start) {
+        int count = 0;
+        for (int i = 0; i < stamp.length(); i++) {
+            if (target.charAt(start + i) != '?') {
+                count++;
+                target.setCharAt(start + i, '?');
+            }
+        }
+        return count;
+    }
+    
+    public int[] movesToStamp(String stamp, String target) {
+        StringBuilder sb = new StringBuilder(target);
+        int n = target.length();
+        int m = stamp.length();
+        List<Integer> result = new ArrayList<>();
+        int total = 0;
+        
+        while (total < n) {
+            boolean found = false;
+            for (int i = 0; i <= n - m; i++) {
+                if (canStamp(sb.toString(), stamp, i)) {
+                    found = true;
+                    result.add(i);
+                    total += stampAt(sb, stamp, i);
+                    break;
+                }
+            }
+            if (!found) {
+                return new int[0];
+            }
+        }
+        
+        int[] ans = new int[result.size()];
+        for (int i = 0; i < ans.length; i++) {
+            ans[i] = result.get(result.size() - 1 - i);
+        }
+        return ans;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * (n - m))</h4>
+                    <p class="text-gray-700">Where n is the length of target and m is the length of stamp.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the target string as a StringBuilder.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    bool canStamp(const string& target, const string& stamp, int start) {
+        for (int i = 0; i < stamp.length(); i++) {
+            if (target[start + i] != '?' && target[start + i] != stamp[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    int stampAt(string& target, const string& stamp, int start) {
+        int count = 0;
+        for (int i = 0; i < stamp.length(); i++) {
+            if (target[start + i] != '?') {
+                count++;
+                target[start + i] = '?';
+            }
+        }
+        return count;
+    }
+    
+public:
+    vector<int> movesToStamp(string stamp, string target) {
+        int n = target.length();
+        int m = stamp.length();
+        vector<int> result;
+        int total = 0;
+        
+        while (total < n) {
+            bool found = false;
+            for (int i = 0; i <= n - m; i++) {
+                if (canStamp(target, stamp, i)) {
+                    found = true;
+                    result.push_back(i);
+                    total += stampAt(target, stamp, i);
+                    break;
+                }
+            }
+            if (!found) {
+                return {};
+            }
+        }
+        
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * (n - m))</h4>
+                    <p class="text-gray-700">Where n is the length of target and m is the length of stamp.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the target string.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} stamp
+ * @param {string} target
+ * @return {number[]}
+ */
+var movesToStamp = function(stamp, target) {
+    function canStamp(start) {
+        for (let i = 0; i < stamp.length; i++) {
+            if (target[start + i] !== '?' && target[start + i] !== stamp[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    function stampAt(start) {
+        let count = 0;
+        target = target.split('');
+        for (let i = 0; i < stamp.length; i++) {
+            if (target[start + i] !== '?') {
+                count++;
+                target[start + i] = '?';
+            }
+        }
+        target = target.join('');
+        return count;
+    }
+    
+    const n = target.length;
+    const m = stamp.length;
+    const result = [];
+    let total = 0;
+    
+    while (total < n) {
+        let found = false;
+        for (let i = 0; i <= n - m; i++) {
+            if (canStamp(i)) {
+                found = true;
+                result.push(i);
+                total += stampAt(i);
+                break;
+            }
+        }
+        if (!found) {
+            return [];
+        }
+    }
+    
+    return result.reverse();
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * (n - m))</h4>
+                    <p class="text-gray-700">Where n is the length of target and m is the length of stamp.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the target string.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private bool CanStamp(string target, string stamp, int start) {
+        for (int i = 0; i < stamp.Length; i++) {
+            if (target[start + i] != '?' && target[start + i] != stamp[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private int StampAt(StringBuilder target, string stamp, int start) {
+        int count = 0;
+        for (int i = 0; i < stamp.Length; i++) {
+            if (target[start + i] != '?') {
+                count++;
+                target[start + i] = '?';
+            }
+        }
+        return count;
+    }
+    
+    public int[] MovesToStamp(string stamp, string target) {
+        StringBuilder sb = new StringBuilder(target);
+        int n = target.Length;
+        int m = stamp.Length;
+        List<int> result = new List<int>();
+        int total = 0;
+        
+        while (total < n) {
+            bool found = false;
+            for (int i = 0; i <= n - m; i++) {
+                if (CanStamp(sb.ToString(), stamp, i)) {
+                    found = true;
+                    result.Add(i);
+                    total += StampAt(sb, stamp, i);
+                    break;
+                }
+            }
+            if (!found) {
+                return new int[0];
+            }
+        }
+        
+        result.Reverse();
+        return result.ToArray();
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n * (n - m))</h4>
+                    <p class="text-gray-700">Where n is the length of target and m is the length of stamp.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to store the target string as a StringBuilder.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

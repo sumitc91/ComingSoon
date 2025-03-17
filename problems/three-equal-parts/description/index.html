@@ -1,0 +1,397 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Equal Parts - LeetCodee Solution</title>
+    <meta name="description" content="Find the solution to LeetCode problem 927: Three Equal Parts.  Learn how to divide an array of 0s and 1s into three parts with equal binary values. Includes Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="leetcode, leetcode solution, three equal parts, algorithm, array, binary, python, java, c++, javascript, c#, coding, programming">
+    <meta property="og:title" content="Three Equal Parts - LeetCodee Solution">
+    <meta property="og:description" content="Find the solution to LeetCode problem 927: Three Equal Parts.  Learn how to divide an array of 0s and 1s into three parts with equal binary values. Includes Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:url" content="https://leetcodee.com/problems/three-equal-parts/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/three-equal-parts/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "927. Three Equal Parts",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "You are given an array arr which consists of only zeros and ones, divide the array into three non-empty parts such that all of these parts represent the same binary value.",
+      "keywords": "leetcode, leetcode solution, three equal parts, algorithm, array, binary, python, java, c++, javascript, c#, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">927. Three Equal Parts</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an array <code class="bg-gray-100 px-1 rounded">arr</code> which consists of only zeros and ones, divide the array into three non-empty parts such that all of these parts represent the same binary value.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    If it is possible, return any <code class="bg-gray-100 px-1 rounded">[i, j]</code> with <code class="bg-gray-100 px-1 rounded">i + 1 < j</code>, such that:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li><code class="bg-gray-100 px-1 rounded">arr[0], arr[1], ..., arr[i]</code> is the first part,</li>
+                    <li><code class="bg-gray-100 px-1 rounded">arr[i + 1], arr[i + 2], ..., arr[j - 1]</code> is the second part, and</li>
+                    <li><code class="bg-gray-100 px-1 rounded">arr[j], arr[j + 1], ..., arr[arr.length - 1]</code> is the third part.</li>
+                    <li>All three parts have equal binary values.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    If it is not possible, return <code class="bg-gray-100 px-1 rounded">[-1, -1]</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Note that the entire part is used when considering what binary value it represents. For example, <code class="bg-gray-100 px-1 rounded">[1,1,0]</code> represents <code class="bg-gray-100 px-1 rounded">6</code> in decimal, not <code class="bg-gray-100 px-1 rounded">3</code>. Also, leading zeros are allowed, so <code class="bg-gray-100 px-1 rounded">[0,1,1]</code> and <code class="bg-gray-100 px-1 rounded">[1,1]</code> represent the same value.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [1,0,1,0,1]
+Output: [0,3]</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [1,1,0,1,1]
+Output: [-1,-1]</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: arr = [1,1,0,0,1]
+Output: [0,2]</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">3 <= arr.length <= 3 * 10^4</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">arr[i]</code> is <code class="bg-gray-100 px-1 rounded">0</code> or <code class="bg-gray-100 px-1 rounded">1</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def threeEqualParts(self, arr: List[int]) -> List[int]:
+        ones = sum(arr)
+        if ones % 3 != 0:
+            return [-1, -1]
+        if ones == 0:
+            return [0, len(arr) - 1]
+            
+        target = ones // 3
+        count = 0
+        first = second = third = -1
+        
+        for i, num in enumerate(arr):
+            if num == 1:
+                count += 1
+                if count == 1:
+                    first = i
+                elif count == target + 1:
+                    second = i
+                elif count == 2 * target + 1:
+                    third = i
+                    
+        while third < len(arr):
+            if arr[first] != arr[second] or arr[second] != arr[third]:
+                return [-1, -1]
+            first += 1
+            second += 1
+            third += 1
+            
+        return [first - 1, second]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once to find the positions and verify the parts.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int[] threeEqualParts(int[] arr) {
+        int ones = 0;
+        for (int num : arr) {
+            ones += num;
+        }
+        
+        if (ones % 3 != 0) {
+            return new int[]{-1, -1};
+        }
+        if (ones == 0) {
+            return new int[]{0, arr.length - 1};
+        }
+        
+        int target = ones / 3;
+        int count = 0;
+        int first = -1, second = -1, third = -1;
+        
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 1) {
+                count++;
+                if (count == 1) {
+                    first = i;
+                } else if (count == target + 1) {
+                    second = i;
+                } else if (count == 2 * target + 1) {
+                    third = i;
+                }
+            }
+        }
+        
+        while (third < arr.length) {
+            if (arr[first] != arr[second] || arr[second] != arr[third]) {
+                return new int[]{-1, -1};
+            }
+            first++;
+            second++;
+            third++;
+        }
+        
+        return new int[]{first - 1, second};
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once to find the positions and verify the parts.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<int> threeEqualParts(vector<int>& arr) {
+        int ones = 0;
+        for (int num : arr) {
+            ones += num;
+        }
+        
+        if (ones % 3 != 0) {
+            return {-1, -1};
+        }
+        if (ones == 0) {
+            return {0, (int)arr.size() - 1};
+        }
+        
+        int target = ones / 3;
+        int count = 0;
+        int first = -1, second = -1, third = -1;
+        
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr[i] == 1) {
+                count++;
+                if (count == 1) {
+                    first = i;
+                } else if (count == target + 1) {
+                    second = i;
+                } else if (count == 2 * target + 1) {
+                    third = i;
+                }
+            }
+        }
+        
+        while (third < arr.size()) {
+            if (arr[first] != arr[second] || arr[second] != arr[third]) {
+                return {-1, -1};
+            }
+            first++;
+            second++;
+            third++;
+        }
+        
+        return {first - 1, second};
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once to find the positions and verify the parts.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} arr
+ * @return {number[]}
+ */
+var threeEqualParts = function(arr) {
+    let ones = 0;
+    for (const num of arr) {
+        ones += num;
+    }
+    
+    if (ones % 3 !== 0) {
+        return [-1, -1];
+    }
+    if (ones === 0) {
+        return [0, arr.length - 1];
+    }
+    
+    const target = ones / 3;
+    let count = 0;
+    let first = -1, second = -1, third = -1;
+    
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === 1) {
+            count++;
+            if (count === 1) {
+                first = i;
+            } else if (count === target + 1) {
+                second = i;
+            } else if (count === 2 * target + 1) {
+                third = i;
+            }
+        }
+    }
+    
+    while (third < arr.length) {
+        if (arr[first] !== arr[second] || arr[second] !== arr[third]) {
+            return [-1, -1];
+        }
+        first++;
+        second++;
+        third++;
+    }
+    
+    return [first - 1, second];
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once to find the positions and verify the parts.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int[] ThreeEqualParts(int[] arr) {
+        int ones = 0;
+        foreach (int num in arr) {
+            ones += num;
+        }
+        
+        if (ones % 3 != 0) {
+            return new int[] { -1, -1 };
+        }
+        if (ones == 0) {
+            return new int[] { 0, arr.Length - 1 };
+        }
+        
+        int target = ones / 3;
+        int count = 0;
+        int first = -1, second = -1, third = -1;
+        
+        for (int i = 0; i < arr.Length; i++) {
+            if (arr[i] == 1) {
+                count++;
+                if (count == 1) {
+                    first = i;
+                } else if (count == target + 1) {
+                    second = i;
+                } else if (count == 2 * target + 1) {
+                    third = i;
+                }
+            }
+        }
+        
+        while (third < arr.Length) {
+            if (arr[first] != arr[second] || arr[second] != arr[third]) {
+                return new int[] { -1, -1 };
+            }
+            first++;
+            second++;
+            third++;
+        }
+        
+        return new int[] { first - 1, second };
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n)</h4>
+                    <p class="text-gray-700">We need to traverse the array once to find the positions and verify the parts.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="8098822947"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

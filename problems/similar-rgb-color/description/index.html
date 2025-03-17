@@ -1,0 +1,235 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Similar RGB Color - LeetCodee Solution</title>
+    <meta name="description" content="Find the most similar RGB color with a shorthand notation. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, similar rgb color, algorithm, solution, python, java, c++, javascript, c#, coding, programming, tutorial">
+    <link rel="canonical" href="https://leetcodee.com/problems/similar-rgb-color/">
+    <meta property="og:title" content="Similar RGB Color - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/similar-rgb-color/">
+    <meta property="og:description" content="Find the most similar RGB color with a shorthand notation. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "800. Similar RGB Color",
+      "author": {
+        "@type": "Organization",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2024-03-08",
+      "description": "Find the most similar RGB color with a shorthand notation. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "articleSection": "LeetCode Solutions",
+      "keywords": "leetcode, similar rgb color, algorithm, solution, python, java, c++, javascript, c#, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">800. Similar RGB Color</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    The RGB color "#AABBCC" can be written as "#ABC" in shorthand. For example, "#15c" is shorthand for the color "#1155cc".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given a string color that follows the format "#ABCDEF", return a string representing the color that is most similar to the given color and has a shorthand (i.e., it can be represented as some "#XYZ").
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Any answer which has the same highest similarity as the best answer will be accepted.
+                </p>
+                <p class="text-gray-700">
+                    For example, the similarity between "123" and "111" is -(1-1)² -(2-1)² -(3-1)² = -5.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: color = "#09f166"
+Output: "#11ee66"
+Explanation: 
+The similarity is -(0x09-0x11)² -(0xf1-0xee)² -(0x66-0x66)² = -1296 -9 -0 = -1305</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: color = "#4e3fe1"
+Output: "#4444ee"</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>color.length == 7</li>
+                    <li>color[0] == '#'</li>
+                    <li>color[i] is either digit or character in the range ['a', 'f'] for i > 0</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def similarRGB(self, color: str) -> str:
+        def find_closest(comp):
+            num = int(comp, 16)
+            q = num // 17
+            if num % 17 > 8:
+                q += 1
+            return '{:02x}'.format(17 * q)
+        
+        return '#' + find_closest(color[1:3]) + find_closest(color[3:5]) + find_closest(color[5:7])</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Divides each component by 17 to find closest repeating hex value</li>
+                    <li>Rounds up if remainder is greater than 8</li>
+                    <li>Time complexity: O(1)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String similarRGB(String color) {
+        return "#" + findClosest(color.substring(1, 3)) 
+                   + findClosest(color.substring(3, 5)) 
+                   + findClosest(color.substring(5, 7));
+    }
+    
+    private String findClosest(String comp) {
+        int num = Integer.parseInt(comp, 16);
+        int q = num / 17;
+        if (num % 17 > 8) q++;
+        return String.format("%02x", 17 * q);
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string similarRGB(string color) {
+        return "#" + findClosest(color.substr(1, 2)) 
+                  + findClosest(color.substr(3, 2)) 
+                  + findClosest(color.substr(5, 2));
+    }
+    
+private:
+    string findClosest(string comp) {
+        int num = stoi(comp, nullptr, 16);
+        int q = num / 17;
+        if (num % 17 > 8) q++;
+        
+        stringstream ss;
+        ss << setfill('0') << setw(2) << hex << 17 * q;
+        return ss.str();
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} color
+ * @return {string}
+ */
+var similarRGB = function(color) {
+    const findClosest = (comp) => {
+        const num = parseInt(comp, 16);
+        let q = Math.floor(num / 17);
+        if (num % 17 > 8) q++;
+        return (17 * q).toString(16).padStart(2, '0');
+    };
+    
+    return '#' + findClosest(color.slice(1, 3)) 
+               + findClosest(color.slice(3, 5)) 
+               + findClosest(color.slice(5, 7));
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string SimilarRGB(string color) {
+        return "#" + FindClosest(color.Substring(1, 2)) 
+                  + FindClosest(color.Substring(3, 2)) 
+                  + FindClosest(color.Substring(5, 2));
+    }
+    
+    private string FindClosest(string comp) {
+        int num = Convert.ToInt32(comp, 16);
+        int q = num / 17;
+        if (num % 17 > 8) q++;
+        return (17 * q).ToString("x2");
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Processes each color component (R,G,B) separately</li>
+                    <li>Finds closest multiple of 17 for each component</li>
+                    <li>Time complexity: O(1)</li>
+                    <li>Space complexity: O(1)</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

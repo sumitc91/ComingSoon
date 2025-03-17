@@ -1,0 +1,407 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Scheduler - LeetCodee Solution</title>
+    <meta name="description" content="Find the optimal solution to the Task Scheduler problem on LeetCodee.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, task scheduler, algorithm, solution, python, java, cpp, javascript, c#, coding, interview, programming">
+    <meta property="og:title" content="Task Scheduler - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/task-scheduler/">
+    <meta property="og:description" content="Find the optimal solution to the Task Scheduler problem on LeetCodee.  Includes Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/task-scheduler/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "621. Task Scheduler",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle. However, there is a non-negative integer n that represents the cooldown period between two same tasks (the same letter in the array), that is that there must be at least n units of time between any two same tasks. Return the least number of units of time that the CPU will take to finish all the given tasks.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/task-scheduler/"
+      },
+      "wordCount": 1000
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">621. Task Scheduler</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a characters array <code class="bg-gray-100 px-1 rounded">tasks</code>, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    However, there is a non-negative integer <code class="bg-gray-100 px-1 rounded">n</code> that represents the cooldown period between two same tasks (the same letter in the array), that is that there must be at least <code class="bg-gray-100 px-1 rounded">n</code> units of time between any two same tasks.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the least number of units of time that the CPU will take to finish all the given tasks.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="text-gray-700 mb-2">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">Input: tasks = ["A","A","A","B","B","B"], n = 2
+Output: 8
+Explanation: 
+A -> B -> idle -> A -> B -> idle -> A -> B
+There is at least 2 units of time between any two same tasks.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="text-gray-700 mb-2">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">Input: tasks = ["A","A","A","B","B","B"], n = 0
+Output: 6
+Explanation: On this case any permutation of size 6 would work since n = 0.
+["A","A","A","B","B","B"]
+["A","B","A","B","A","B"]
+["B","B","B","A","A","A"]
+etc.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="text-gray-700 mb-2">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">Input: tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"], n = 2
+Output: 16
+Explanation: 
+One possible solution is
+A -> B -> C -> A -> D -> E -> A -> F -> G -> A -> idle -> idle -> A -> idle -> idle -> A</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= task.length <= 10⁴</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">tasks[i]</code> is upper-case English letter</li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= n <= 100</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        # Count frequency of each task
+        freq = Counter(tasks)
+        max_freq = max(freq.values())
+        
+        # Count how many tasks have the maximum frequency
+        max_freq_tasks = sum(1 for f in freq.values() if f == max_freq)
+        
+        # Calculate minimum intervals needed
+        min_intervals = (max_freq - 1) * (n + 1) + max_freq_tasks
+        
+        return max(min_intervals, len(tasks))</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(N)</h4>
+                    <p class="text-gray-700">Where N is the number of tasks.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we only store at most 26 characters (uppercase English letters).</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Explanation:</h4>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                        <li>Count the frequency of each task</li>
+                        <li>Find the task with maximum frequency (max_freq)</li>
+                        <li>Count tasks with maximum frequency (max_freq_tasks)</li>
+                        <li>Calculate minimum intervals using formula: (max_freq - 1) * (n + 1) + max_freq_tasks</li>
+                        <li>Return maximum of calculated intervals and total tasks</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        // Count frequency of each task
+        int[] freq = new int[26];
+        for (char task : tasks) {
+            freq[task - 'A']++;
+        }
+        
+        // Find maximum frequency
+        int maxFreq = 0;
+        for (int f : freq) {
+            maxFreq = Math.max(maxFreq, f);
+        }
+        
+        // Count tasks with maximum frequency
+        int maxFreqTasks = 0;
+        for (int f : freq) {
+            if (f == maxFreq) maxFreqTasks++;
+        }
+        
+        // Calculate minimum intervals needed
+        int minIntervals = (maxFreq - 1) * (n + 1) + maxFreqTasks;
+        
+        return Math.max(minIntervals, tasks.length);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using PriorityQueue:</h4>
+                    <pre class="language-java"><code>class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        int[] freq = new int[26];
+        for (char task : tasks) {
+            freq[task - 'A']++;
+        }
+        
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+        for (int f : freq) {
+            if (f > 0) pq.offer(f);
+        }
+        
+        int time = 0;
+        while (!pq.isEmpty()) {
+            List<Integer> temp = new ArrayList<>();
+            int i = 0;
+            
+            while (i <= n && !pq.isEmpty()) {
+                int count = pq.poll();
+                if (count > 1) temp.add(count - 1);
+                time++;
+                i++;
+            }
+            
+            pq.addAll(temp);
+            if (!pq.isEmpty() && i <= n) time += (n - i + 1);
+        }
+        
+        return time;
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> freq(26, 0);
+        for (char task : tasks) {
+            freq[task - 'A']++;
+        }
+        
+        int maxFreq = *max_element(freq.begin(), freq.end());
+        int maxFreqTasks = count(freq.begin(), freq.end(), maxFreq);
+        
+        int minIntervals = (maxFreq - 1) * (n + 1) + maxFreqTasks;
+        
+        return max(minIntervals, (int)tasks.size());
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Priority Queue:</h4>
+                    <pre class="language-cpp"><code>class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> freq(26, 0);
+        for (char task : tasks) {
+            freq[task - 'A']++;
+        }
+        
+        priority_queue<int> pq;
+        for (int f : freq) {
+            if (f > 0) pq.push(f);
+        }
+        
+        int time = 0;
+        while (!pq.empty()) {
+            vector<int> temp;
+            int i = 0;
+            
+            while (i <= n && !pq.empty()) {
+                int count = pq.top(); pq.pop();
+                if (count > 1) temp.push_back(count - 1);
+                time++;
+                i++;
+            }
+            
+            for (int count : temp) pq.push(count);
+            if (!pq.empty() && i <= n) time += (n - i + 1);
+        }
+        
+        return time;
+    }
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {character[]} tasks
+ * @param {number} n
+ * @return {number}
+ */
+var leastInterval = function(tasks, n) {
+    // Count frequency of each task
+    const freq = new Array(26).fill(0);
+    for (const task of tasks) {
+        freq[task.charCodeAt(0) - 'A'.charCodeAt(0)]++;
+    }
+    
+    // Find maximum frequency
+    const maxFreq = Math.max(...freq);
+    
+    // Count tasks with maximum frequency
+    const maxFreqTasks = freq.filter(f => f === maxFreq).length;
+    
+    // Calculate minimum intervals needed
+    const minIntervals = (maxFreq - 1) * (n + 1) + maxFreqTasks;
+    
+    return Math.max(minIntervals, tasks.length);
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using Map:</h4>
+                    <pre class="language-javascript"><code>var leastInterval = function(tasks, n) {
+    const freq = new Map();
+    for (const task of tasks) {
+        freq.set(task, (freq.get(task) || 0) + 1);
+    }
+    
+    const maxFreq = Math.max(...freq.values());
+    const maxFreqTasks = Array.from(freq.values()).filter(f => f === maxFreq).length;
+    
+    return Math.max((maxFreq - 1) * (n + 1) + maxFreqTasks, tasks.length);
+};</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Performance Considerations:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Array-based solution is more memory efficient than Map-based solution</li>
+                        <li>For small n, the simple formula approach is faster than simulation</li>
+                        <li>Priority Queue solution is useful when you need to handle dynamic task scheduling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int LeastInterval(char[] tasks, int n) {
+        int[] freq = new int[26];
+        foreach (char task in tasks) {
+            freq[task - 'A']++;
+        }
+        
+        int maxFreq = freq.Max();
+        int maxCount = freq.Count(f => f == maxFreq);
+        
+        return Math.Max(tasks.Length, (maxFreq - 1) * (n + 1) + maxCount);
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using PriorityQueue:</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    public int LeastInterval(char[] tasks, int n) {
+        int[] freq = new int[26];
+        foreach (char task in tasks) {
+            freq[task - 'A']++;
+        }
+        
+        var pq = new PriorityQueue<int, int>();
+        foreach (int f in freq) {
+            if (f > 0) pq.Enqueue(f, -f); // Use negative for max heap
+        }
+        
+        int time = 0;
+        while (pq.Count > 0) {
+            var temp = new List<int>();
+            int i = 0;
+            
+            while (i <= n && pq.Count > 0) {
+                int count = pq.Dequeue();
+                if (count > 1) temp.Add(count - 1);
+                time++;
+                i++;
+            }
+            
+            foreach (int count in temp) {
+                pq.Enqueue(count, -count);
+            }
+            
+            if (pq.Count > 0 && i <= n) time += (n - i + 1);
+        }
+        
+        return time;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses LINQ for cleaner code</li>
+                        <li>PriorityQueue solution available in .NET 6+ for optimal performance</li>
+                        <li>Both solutions have O(n) time complexity</li>
+                        <li>PriorityQueue solution uses more memory but simulates actual scheduling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

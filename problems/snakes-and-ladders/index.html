@@ -1,0 +1,453 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snakes and Ladders - LeetCodee Solution</title>
+    <meta name="description" content="Find the least number of moves to reach the end in the Snakes and Ladders game.  This LeetCodee solution provides optimized Python, Java, C++, JavaScript, and C# code with detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, snakes and ladders, solution, python, java, c++, javascript, c#, algorithm, breadth-first search, bfs, game, puzzle">
+    <link rel="canonical" href="https://leetcodee.com/problems/snakes-and-ladders/">
+    <meta property="og:title" content="Snakes and Ladders - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/snakes-and-ladders/">
+    <meta property="og:description" content="Find the least number of moves to reach the end in the Snakes and Ladders game.  This LeetCodee solution provides optimized Python, Java, C++, JavaScript, and C# code with detailed explanations and time/space complexity analysis.">
+    <meta property="og:image" content="https://leetcodee.com/leetcodee_logo.png">  <!-- Replace with actual image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Snakes and Ladders - LeetCodee Solution",
+      "image": "https://leetcodee.com/leetcodee_logo.png",  <!-- Replace with actual image URL -->
+      "datePublished": "2023-10-27",  <!-- Update with publication date -->
+      "dateModified": "2023-10-27",  <!-- Update with modification date -->
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find the least number of moves to reach the end in the Snakes and Ladders game.  This LeetCodee solution provides optimized Python, Java, C++, JavaScript, and C# code with detailed explanations and time/space complexity analysis.",
+      "articleBody": "You are given an n x n integer matrix board where the cells are labeled from 1 to n² in a Boustrophedon style starting from the bottom left of the board (i.e. board[n - 1][0]) and alternating direction each row.  [rest of the article body]"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">909. Snakes and Ladders</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an <code class="bg-gray-100 px-1 rounded">n x n</code> integer matrix <code class="bg-gray-100 px-1 rounded">board</code> where the cells are labeled from <code class="bg-gray-100 px-1 rounded">1</code> to <code class="bg-gray-100 px-1 rounded">n²</code> in a <a href="https://en.wikipedia.org/wiki/Boustrophedon" class="text-blue-600 hover:text-blue-800">Boustrophedon</a> style starting from the bottom left of the board (i.e. <code class="bg-gray-100 px-1 rounded">board[n - 1][0]</code>) and alternating direction each row.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You start on square <code class="bg-gray-100 px-1 rounded">1</code> of the board. In each move, starting from square <code class="bg-gray-100 px-1 rounded">curr</code>, do the following:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Choose a destination square <code class="bg-gray-100 px-1 rounded">next</code> with a label in the range <code class="bg-gray-100 px-1 rounded">[curr + 1, min(curr + 6, n²)]</code>.</li>
+                    <li>This choice simulates the result of a standard 6-sided die roll: i.e., there are always at most 6 destinations, regardless of the size of the board.</li>
+                    <li>If <code class="bg-gray-100 px-1 rounded">next</code> has a snake or ladder, you must move to the destination of that snake or ladder. Otherwise, you move to <code class="bg-gray-100 px-1 rounded">next</code>.</li>
+                    <li>The game ends when you reach the square <code class="bg-gray-100 px-1 rounded">n²</code>.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    A board square on row <code class="bg-gray-100 px-1 rounded">r</code> and column <code class="bg-gray-100 px-1 rounded">c</code> has a snake or ladder if <code class="bg-gray-100 px-1 rounded">board[r][c] != -1</code>. The destination of that snake or ladder is <code class="bg-gray-100 px-1 rounded">board[r][c]</code>.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Squares <code class="bg-gray-100 px-1 rounded">1</code> and <code class="bg-gray-100 px-1 rounded">n²</code> do not have a snake or ladder.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the least number of moves required to reach the square <code class="bg-gray-100 px-1 rounded">n²</code>. If it is not possible to reach the square, return <code class="bg-gray-100 px-1 rounded">-1</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: board = [[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,35,-1,-1,13,-1],[-1,-1,-1,-1,-1,-1],[-1,15,-1,-1,-1,-1]]
+Output: 4
+Explanation: 
+In the beginning, you start at square 1 (at row 5, column 0).
+You decide to move to square 2 and must take the ladder to square 15.
+You then decide to move to square 17 and must take the snake to square 13.
+You then decide to move to square 14 and must take the ladder to square 35.
+You then decide to move to square 36, ending the game.
+This is the lowest possible number of moves to reach the last square, so return 4.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: board = [[-1,-1],[-1,3]]
+Output: 1</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">n == board.length == board[i].length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">2 <= n <= 20</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">board[i][j]</code> is either <code class="bg-gray-100 px-1 rounded">-1</code> or in the range <code class="bg-gray-100 px-1 rounded">[1, n²]</code>.</li>
+                    <li>The squares labeled <code class="bg-gray-100 px-1 rounded">1</code> and <code class="bg-gray-100 px-1 rounded">n²</code> do not have any snake or ladder.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def snakesAndLadders(self, board: List[List[int]]) -> int:
+        n = len(board)
+        
+        def get_coordinates(square: int) -> tuple:
+            # Convert square number to board coordinates
+            row = n - 1 - (square - 1) // n
+            col = (square - 1) % n if (n - 1 - row) % 2 == 0 else n - 1 - (square - 1) % n
+            return row, col
+        
+        # BFS to find shortest path
+        queue = [(1, 0)]  # (current square, moves)
+        visited = {1}
+        
+        while queue:
+            square, moves = queue.pop(0)
+            if square == n * n:
+                return moves
+                
+            # Try all possible dice rolls
+            for i in range(1, 7):
+                next_square = square + i
+                if next_square > n * n:
+                    break
+                    
+                # Get coordinates of next square
+                row, col = get_coordinates(next_square)
+                
+                # Check if there's a snake or ladder
+                if board[row][col] != -1:
+                    next_square = board[row][col]
+                
+                if next_square not in visited:
+                    visited.add(next_square)
+                    queue.append((next_square, moves + 1))
+        
+        return -1</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">In the worst case, we might need to visit all squares on the board.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We use a visited set to keep track of visited squares.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int n;
+    
+    public int snakesAndLadders(int[][] board) {
+        n = board.length;
+        
+        // BFS to find shortest path
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{1, 0});  // {current square, moves}
+        Set<Integer> visited = new HashSet<>();
+        visited.add(1);
+        
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int square = current[0];
+            int moves = current[1];
+            
+            if (square == n * n) {
+                return moves;
+            }
+            
+            // Try all possible dice rolls
+            for (int i = 1; i <= 6; i++) {
+                int nextSquare = square + i;
+                if (nextSquare > n * n) {
+                    break;
+                }
+                
+                // Get coordinates of next square
+                int[] coords = getCoordinates(nextSquare);
+                int row = coords[0];
+                int col = coords[1];
+                
+                // Check if there's a snake or ladder
+                if (board[row][col] != -1) {
+                    nextSquare = board[row][col];
+                }
+                
+                if (!visited.contains(nextSquare)) {
+                    visited.add(nextSquare);
+                    queue.offer(new int[]{nextSquare, moves + 1});
+                }
+            }
+        }
+        
+        return -1;
+    }
+    
+    private int[] getCoordinates(int square) {
+        int row = n - 1 - (square - 1) / n;
+        int col = (square - 1) % n;
+        if ((n - 1 - row) % 2 == 1) {
+            col = n - 1 - col;
+        }
+        return new int[]{row, col};
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">In the worst case, we might need to visit all squares on the board.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We use a visited set to keep track of visited squares.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int n;
+    
+    pair<int, int> getCoordinates(int square) {
+        int row = n - 1 - (square - 1) / n;
+        int col = (square - 1) % n;
+        if ((n - 1 - row) % 2 == 1) {
+            col = n - 1 - col;
+        }
+        return {row, col};
+    }
+    
+public:
+    int snakesAndLadders(vector<vector<int>>& board) {
+        n = board.size();
+        
+        // BFS to find shortest path
+        queue<pair<int, int>> q;  // {current square, moves}
+        q.push({1, 0});
+        unordered_set<int> visited;
+        visited.insert(1);
+        
+        while (!q.empty()) {
+            auto [square, moves] = q.front();
+            q.pop();
+            
+            if (square == n * n) {
+                return moves;
+            }
+            
+            // Try all possible dice rolls
+            for (int i = 1; i <= 6; i++) {
+                int nextSquare = square + i;
+                if (nextSquare > n * n) {
+                    break;
+                }
+                
+                // Get coordinates of next square
+                auto [row, col] = getCoordinates(nextSquare);
+                
+                // Check if there's a snake or ladder
+                if (board[row][col] != -1) {
+                    nextSquare = board[row][col];
+                }
+                
+                if (visited.find(nextSquare) == visited.end()) {
+                    visited.insert(nextSquare);
+                    q.push({nextSquare, moves + 1});
+                }
+            }
+        }
+        
+        return -1;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">In the worst case, we might need to visit all squares on the board.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We use a visited set to keep track of visited squares.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[][]} board
+ * @return {number}
+ */
+var snakesAndLadders = function(board) {
+    const n = board.length;
+    
+    const getCoordinates = (square) => {
+        const row = n - 1 - Math.floor((square - 1) / n);
+        let col = (square - 1) % n;
+        if ((n - 1 - row) % 2 === 1) {
+            col = n - 1 - col;
+        }
+        return [row, col];
+    };
+    
+    // BFS to find shortest path
+    const queue = [[1, 0]];  // [current square, moves]
+    const visited = new Set([1]);
+    
+    while (queue.length > 0) {
+        const [square, moves] = queue.shift();
+        
+        if (square === n * n) {
+            return moves;
+        }
+        
+        // Try all possible dice rolls
+        for (let i = 1; i <= 6; i++) {
+            let nextSquare = square + i;
+            if (nextSquare > n * n) {
+                break;
+            }
+            
+            // Get coordinates of next square
+            const [row, col] = getCoordinates(nextSquare);
+            
+            // Check if there's a snake or ladder
+            if (board[row][col] !== -1) {
+                nextSquare = board[row][col];
+            }
+            
+            if (!visited.has(nextSquare)) {
+                visited.add(nextSquare);
+                queue.push([nextSquare, moves + 1]);
+            }
+        }
+    }
+    
+    return -1;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">In the worst case, we might need to visit all squares on the board.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We use a visited set to keep track of visited squares.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int n;
+    
+    private (int row, int col) GetCoordinates(int square) {
+        int row = n - 1 - (square - 1) / n;
+        int col = (square - 1) % n;
+        if ((n - 1 - row) % 2 == 1) {
+            col = n - 1 - col;
+        }
+        return (row, col);
+    }
+    
+    public int SnakesAndLadders(int[][] board) {
+        n = board.Length;
+        
+        // BFS to find shortest path
+        var queue = new Queue<(int square, int moves)>();
+        queue.Enqueue((1, 0));
+        var visited = new HashSet<int> { 1 };
+        
+        while (queue.Count > 0) {
+            var (square, moves) = queue.Dequeue();
+            
+            if (square == n * n) {
+                return moves;
+            }
+            
+            // Try all possible dice rolls
+            for (int i = 1; i <= 6; i++) {
+                int nextSquare = square + i;
+                if (nextSquare > n * n) {
+                    break;
+                }
+                
+                // Get coordinates of next square
+                var (row, col) = GetCoordinates(nextSquare);
+                
+                // Check if there's a snake or ladder
+                if (board[row][col] != -1) {
+                    nextSquare = board[row][col];
+                }
+                
+                if (!visited.Contains(nextSquare)) {
+                    visited.Add(nextSquare);
+                    queue.Enqueue((nextSquare, moves + 1));
+                }
+            }
+        }
+        
+        return -1;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n²)</h4>
+                    <p class="text-gray-700">In the worst case, we might need to visit all squares on the board.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">We use a visited set to keep track of visited squares.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smallest Rotation with Highest Score - LeetCodee Solution</title>
+    <meta name="description" content="Find the rotation index k that corresponds to the highest score for a rotated array.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, smallest rotation, highest score, algorithm, solution, python, java, c++, javascript, c#, coding, interview">
+    <meta property="og:title" content="Smallest Rotation with Highest Score - LeetCodee Solution">
+    <meta property="og:description" content="Find the rotation index k that corresponds to the highest score for a rotated array.  Solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/smallest-rotation-with-highest-score/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/smallest-rotation-with-highest-score/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Smallest Rotation with Highest Score - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the rotation index k that corresponds to the highest score for a rotated array. Solutions in Python, Java, C++, JavaScript, and C#.",
+      "keywords": "leetcode, smallest rotation, highest score, algorithm, solution, python, java, c++, javascript, c#, coding, interview",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/smallest-rotation-with-highest-score/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">798. Smallest Rotation with Highest Score</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an array nums. You can rotate it by a non-negative integer k so that the array becomes [nums[k], nums[k + 1], ... nums[nums.length - 1], nums[0], nums[1], ..., nums[k-1]]. Afterward, any entries that are less than or equal to their index are worth 1 point.
+                </p>
+                <p class="text-gray-700">
+                    For example, if we have nums = [2,4,1,3,0], and we rotate by k = 2, it becomes [1,3,0,2,4]. This is worth 3 points because 1 > 0 [no points], 3 > 1 [no points], 0 ≤ 2 [one point], 2 ≤ 3 [one point], 4 > 4 [no points].
+                </p>
+                <p class="text-gray-700">
+                    Return the rotation index k that corresponds to the highest score we can achieve if we rotated nums by it. If there are multiple answers, return the smallest such index k.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [2,3,1,4,0]
+Output: 3
+Explanation: Scores for each k are listed below: 
+k = 0,  nums = [2,3,1,4,0],    score 2
+k = 1,  nums = [3,1,4,0,2],    score 3
+k = 2,  nums = [1,4,0,2,3],    score 3
+k = 3,  nums = [4,0,2,3,1],    score 4
+k = 4,  nums = [0,2,3,1,4],    score 3</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: nums = [1,3,0,2,4]
+Output: 0
+Explanation: nums will always have 3 points no matter how it shifts.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ nums.length ≤ 10^5</li>
+                    <li>0 ≤ nums[i] < nums.length</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def bestRotation(self, nums: List[int]) -> int:
+        n = len(nums)
+        change = [0] * n
+        
+        # For each index i, find the range of k where nums[i] gets a point
+        for i in range(n):
+            # If we rotate k positions, the new index of nums[i] is (i - k) % n
+            # We want (i - k) % n >= nums[i]
+            # k needs to be in range [i - nums[i] + 1, i + 1]
+            left = (i + 1) % n
+            right = (i - nums[i] + 1 + n) % n
+            
+            change[left] += 1
+            change[right] -= 1
+            if left > right:
+                change[0] += 1
+        
+        # Find k with maximum score
+        curr = 0
+        max_score = 0
+        k = 0
+        for i in range(n):
+            curr += change[i]
+            if curr > max_score:
+                max_score = curr
+                k = i
+        
+        return k</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses difference array technique to track score changes</li>
+                    <li>For each index, calculates range of k where it contributes a point</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int bestRotation(int[] nums) {
+        int n = nums.length;
+        int[] change = new int[n];
+        
+        for (int i = 0; i < n; i++) {
+            int left = (i + 1) % n;
+            int right = (i - nums[i] + 1 + n) % n;
+            
+            change[left]++;
+            change[right]--;
+            if (left > right) {
+                change[0]++;
+            }
+        }
+        
+        int curr = 0;
+        int maxScore = 0;
+        int k = 0;
+        for (int i = 0; i < n; i++) {
+            curr += change[i];
+            if (curr > maxScore) {
+                maxScore = curr;
+                k = i;
+            }
+        }
+        
+        return k;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int bestRotation(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> change(n);
+        
+        for (int i = 0; i < n; i++) {
+            int left = (i + 1) % n;
+            int right = (i - nums[i] + 1 + n) % n;
+            
+            change[left]++;
+            change[right]--;
+            if (left > right) {
+                change[0]++;
+            }
+        }
+        
+        int curr = 0;
+        int maxScore = 0;
+        int k = 0;
+        for (int i = 0; i < n; i++) {
+            curr += change[i];
+            if (curr > maxScore) {
+                maxScore = curr;
+                k = i;
+            }
+        }
+        
+        return k;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function bestRotation(nums) {
+    const n = nums.length;
+    const change = new Array(n).fill(0);
+    
+    for (let i = 0; i < n; i++) {
+        const left = (i + 1) % n;
+        const right = (i - nums[i] + 1 + n) % n;
+        
+        change[left]++;
+        change[right]--;
+        if (left > right) {
+            change[0]++;
+        }
+    }
+    
+    let curr = 0;
+    let maxScore = 0;
+    let k = 0;
+    for (let i = 0; i < n; i++) {
+        curr += change[i];
+        if (curr > maxScore) {
+            maxScore = curr;
+            k = i;
+        }
+    }
+    
+    return k;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int BestRotation(int[] nums) {
+        int n = nums.Length;
+        int[] change = new int[n];
+        
+        for (int i = 0; i < n; i++) {
+            int left = (i + 1) % n;
+            int right = (i - nums[i] + 1 + n) % n;
+            
+            change[left]++;
+            change[right]--;
+            if (left > right) {
+                change[0]++;
+            }
+        }
+        
+        int curr = 0;
+        int maxScore = 0;
+        int k = 0;
+        for (int i = 0; i < n; i++) {
+            curr += change[i];
+            if (curr > maxScore) {
+                maxScore = curr;
+                k = i;
+            }
+        }
+        
+        return k;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses difference array technique to track score changes</li>
+                    <li>For each index, calculates range of k where it contributes a point</li>
+                    <li>Time complexity: O(n)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

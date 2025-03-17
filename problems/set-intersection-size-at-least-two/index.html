@@ -1,0 +1,322 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Intersection Size At Least Two - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum size of a set S such that for every interval [a, b], the intersection of S with [a, b] has a size of at least 2.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, leetcodee, set intersection, algorithm, solution, python, java, cpp, javascript, c#, coding, interview">
+    <meta property="og:title" content="Set Intersection Size At Least Two - LeetCodee Solution">
+    <meta property="og:description" content="Find the minimum size of a set S such that for every interval [a, b], the intersection of S with [a, b] has a size of at least 2.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:url" content="https://leetcodee.com/problems/set-intersection-size-at-least-two/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/set-intersection-size-at-least-two/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">757. Set Intersection Size At Least Two</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    An integer interval [a, b] (for integers a < b) represents the set of all integers x with a ≤ x ≤ b.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For a set of intervals, we want to find a set S of integers of minimum size such that for every interval [a, b] in the set, the intersection of S with [a, b] has a size of at least 2.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the minimum size of such a set S.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: intervals = [[1,3],[1,4],[2,5],[3,5]]
+Output: 3
+Explanation:
+Consider the set S = {2, 3, 4}.  For each interval, there are at least 2 elements from S in the interval.
+For [1,3], we have 2, 3;
+For [1,4], we have 2, 3, 4;
+For [2,5], we have 2, 3, 4;
+For [3,5], we have 3, 4, 5.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: intervals = [[1,2],[2,3],[2,4],[4,5]]
+Output: 5
+Explanation:
+An example of a minimum sized set is {1, 2, 3, 4, 5}.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ intervals.length ≤ 3000</li>
+                    <li>intervals[i].length == 2</li>
+                    <li>0 ≤ intervals[i][0] < intervals[i][1] ≤ 10^8</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def intersectionSizeTwo(self, intervals: List[List[int]]) -> int:
+        # Sort intervals by end point
+        intervals.sort(key=lambda x: (x[1], -x[0]))
+        
+        # Initialize result set
+        result = []
+        
+        for start, end in intervals:
+            # Count how many points we already have in this interval
+            count = sum(1 for x in result if start <= x <= end)
+            
+            # If we need more points
+            if count < 2:
+                # Add points from right to left
+                for i in range(end, start - 1, -1):
+                    if count >= 2:
+                        break
+                    if i not in result:
+                        result.append(i)
+                        count += 1
+                        
+        return len(result)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Sorts intervals by end point and then by start point in reverse</li>
+                    <li>Greedily adds points from right to left for each interval</li>
+                    <li>Time complexity: O(n log n) where n is number of intervals</li>
+                    <li>Space complexity: O(n) for storing result set</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int intersectionSizeTwo(int[][] intervals) {
+        // Sort intervals by end point
+        Arrays.sort(intervals, (a, b) -> {
+            if (a[1] != b[1]) return a[1] - b[1];
+            return b[0] - a[0];
+        });
+        
+        // Initialize result set
+        List<Integer> result = new ArrayList<>();
+        
+        for (int[] interval : intervals) {
+            int start = interval[0];
+            int end = interval[1];
+            
+            // Count how many points we already have in this interval
+            int count = 0;
+            for (int x : result) {
+                if (start <= x && x <= end) {
+                    count++;
+                }
+            }
+            
+            // If we need more points
+            if (count < 2) {
+                // Add points from right to left
+                for (int i = end; i >= start && count < 2; i--) {
+                    if (!result.contains(i)) {
+                        result.add(i);
+                        count++;
+                    }
+                }
+            }
+        }
+        
+        return result.size();
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int intersectionSizeTwo(vector<vector<int>>& intervals) {
+        // Sort intervals by end point
+        sort(intervals.begin(), intervals.end(), 
+            [](const vector<int>& a, const vector<int>& b) {
+                if (a[1] != b[1]) return a[1] < b[1];
+                return a[0] > b[0];
+            });
+        
+        // Initialize result set
+        vector<int> result;
+        
+        for (const auto& interval : intervals) {
+            int start = interval[0];
+            int end = interval[1];
+            
+            // Count how many points we already have in this interval
+            int count = 0;
+            for (int x : result) {
+                if (start <= x && x <= end) {
+                    count++;
+                }
+            }
+            
+            // If we need more points
+            if (count < 2) {
+                // Add points from right to left
+                for (int i = end; i >= start && count < 2; i--) {
+                    if (find(result.begin(), result.end(), i) == result.end()) {
+                        result.push_back(i);
+                        count++;
+                    }
+                }
+            }
+        }
+        
+        return result.size();
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function intersectionSizeTwo(intervals) {
+    // Sort intervals by end point
+    intervals.sort((a, b) => {
+        if (a[1] !== b[1]) return a[1] - b[1];
+        return b[0] - a[0];
+    });
+    
+    // Initialize result set
+    const result = [];
+    
+    for (const [start, end] of intervals) {
+        // Count how many points we already have in this interval
+        let count = result.filter(x => start <= x && x <= end).length;
+        
+        // If we need more points
+        if (count < 2) {
+            // Add points from right to left
+            for (let i = end; i >= start && count < 2; i--) {
+                if (!result.includes(i)) {
+                    result.push(i);
+                    count++;
+                }
+            }
+        }
+    }
+    
+    return result.length;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int IntersectionSizeTwo(int[][] intervals) {
+        // Sort intervals by end point
+        Array.Sort(intervals, (a, b) => {
+            if (a[1] != b[1]) return a[1].CompareTo(b[1]);
+            return b[0].CompareTo(a[0]);
+        });
+        
+        // Initialize result set
+        var result = new List<int>();
+        
+        foreach (var interval in intervals) {
+            int start = interval[0];
+            int end = interval[1];
+            
+            // Count how many points we already have in this interval
+            int count = result.Count(x => start <= x && x <= end);
+            
+            // If we need more points
+            if (count < 2) {
+                // Add points from right to left
+                for (int i = end; i >= start && count < 2; i--) {
+                    if (!result.Contains(i)) {
+                        result.Add(i);
+                        count++;
+                    }
+                }
+            }
+        }
+        
+        return result.Count;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Sorts intervals by end point and then by start point in reverse</li>
+                    <li>Greedily adds points from right to left for each interval</li>
+                    <li>Time complexity: O(n log n) where n is number of intervals</li>
+                    <li>Space complexity: O(n) for storing result set</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              "headline": "757. Set Intersection Size At Least Two",
+              "author": {
+                "@type": "Person",
+                "name": "LeetCodee"
+              },
+              "datePublished": "2024-08-06",
+              "description": "Find the minimum size of a set S such that for every interval [a, b], the intersection of S with [a, b] has a size of at least 2. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+              "articleBody": "An integer interval [a, b] (for integers a < b) represents the set of all integers x with a ≤ x ≤ b. For a set of intervals, we want to find a set S of integers of minimum size such that for every interval [a, b] in the set, the intersection of S with [a, b] has a size of at least 2. Return the minimum size of such a set S."
+            }
+            </script>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

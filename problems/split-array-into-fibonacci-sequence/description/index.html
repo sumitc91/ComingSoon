@@ -1,0 +1,388 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Array into Fibonacci Sequence - LeetCodee Solution</title>
+    <meta name="description" content="Find a Fibonacci-like sequence split from a given string of digits.  Includes Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="leetcode, fibonacci, fibonacci sequence, algorithm, coding, solution, python, java, cpp, javascript, csharp, backtracking, dynamic programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/split-array-into-fibonacci-sequence/">
+    <meta property="og:title" content="Split Array into Fibonacci Sequence - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/split-array-into-fibonacci-sequence/">
+    <meta property="og:description" content="Find a Fibonacci-like sequence split from a given string of digits.  Includes Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:image" content="https://leetcodee.com/logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Split Array into Fibonacci Sequence - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Find a Fibonacci-like sequence split from a given string of digits.  Includes Python, Java, C++, JavaScript, and C# solutions with explanations.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/split-array-into-fibonacci-sequence/"
+      },
+      "keywords": "leetcode, fibonacci, fibonacci sequence, algorithm, coding, solution, python, java, cpp, javascript, csharp, backtracking, dynamic programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">842. Split Array into Fibonacci Sequence</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given a string of digits num, such as "123456579". We can split it into a Fibonacci-like sequence [123, 456, 579].
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Formally, a Fibonacci-like sequence is a list F of non-negative integers such that:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>0 ≤ F[i] ≤ 2³¹ - 1, (that is, each integer fits in a 32-bit signed integer type)</li>
+                    <li>F.length ≥ 3</li>
+                    <li>F[i] + F[i+1] = F[i+2] for all 0 ≤ i < F.length - 2</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Additionally, note that when splitting the string into pieces, each piece must not have extra leading zeroes, except if the piece is the number 0 itself.
+                </p>
+                <p class="text-gray-700">
+                    Return any Fibonacci-like sequence split from num, or return [] if it cannot be done.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: num = "123456579"
+Output: [123,456,579]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: num = "11235813"
+Output: [1,1,2,3,5,8,13]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: num = "112358130"
+Output: []
+Explanation: The task is impossible.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ num.length ≤ 200</li>
+                    <li>num contains only digits</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def splitIntoFibonacci(self, num: str) -> List[int]:
+        def backtrack(index: int, path: List[int]) -> bool:
+            if index == len(num):
+                return len(path) >= 3
+            
+            for i in range(index, len(num)):
+                # Check for leading zeros
+                if num[index] == '0' and i > index:
+                    break
+                
+                # Get current number
+                curr = int(num[index:i + 1])
+                if curr > 2**31 - 1:
+                    break
+                
+                # Check Fibonacci property
+                if len(path) >= 2 and curr > path[-1] + path[-2]:
+                    break
+                
+                if len(path) <= 1 or curr == path[-1] + path[-2]:
+                    path.append(curr)
+                    if backtrack(i + 1, path):
+                        return True
+                    path.pop()
+            
+            return False
+        
+        result = []
+        backtrack(0, result)
+        return result</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses backtracking to try different splits</li>
+                    <li>Handles constraints like leading zeros and 32-bit integer limit</li>
+                    <li>Time complexity: O(n³) in worst case</li>
+                    <li>Space complexity: O(n) for recursion stack</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<Integer> splitIntoFibonacci(String num) {
+        List<Integer> result = new ArrayList<>();
+        backtrack(num, 0, result);
+        return result;
+    }
+    
+    private boolean backtrack(String num, int index, List<Integer> path) {
+        if (index == num.length()) {
+            return path.size() >= 3;
+        }
+        
+        for (int i = index; i < num.length(); i++) {
+            // Check for leading zeros
+            if (num.charAt(index) == '0' && i > index) {
+                break;
+            }
+            
+            // Get current number
+            String curr = num.substring(index, i + 1);
+            if (curr.length() > 10) {
+                break;
+            }
+            
+            long currNum = Long.parseLong(curr);
+            if (currNum > Integer.MAX_VALUE) {
+                break;
+            }
+            
+            // Check Fibonacci property
+            if (path.size() >= 2 && currNum > path.get(path.size()-1) + path.get(path.size()-2)) {
+                break;
+            }
+            
+            if (path.size() <= 1 || currNum == path.get(path.size()-1) + path.get(path.size()-2)) {
+                path.add((int)currNum);
+                if (backtrack(num, i + 1, path)) {
+                    return true;
+                }
+                path.remove(path.size() - 1);
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    vector<int> splitIntoFibonacci(string num) {
+        vector<int> result;
+        backtrack(num, 0, result);
+        return result;
+    }
+    
+private:
+    bool backtrack(const string& num, int index, vector<int>& path) {
+        if (index == num.length()) {
+            return path.size() >= 3;
+        }
+        
+        for (int i = index; i < num.length(); i++) {
+            // Check for leading zeros
+            if (num[index] == '0' && i > index) {
+                break;
+            }
+            
+            // Get current number
+            string curr = num.substr(index, i - index + 1);
+            if (curr.length() > 10) {
+                break;
+            }
+            
+            long long currNum = stoll(curr);
+            if (currNum > INT_MAX) {
+                break;
+            }
+            
+            // Check Fibonacci property
+            if (path.size() >= 2 && currNum > (long long)path.back() + path[path.size()-2]) {
+                break;
+            }
+            
+            if (path.size() <= 1 || currNum == (long long)path.back() + path[path.size()-2]) {
+                path.push_back(currNum);
+                if (backtrack(num, i + 1, path)) {
+                    return true;
+                }
+                path.pop_back();
+            }
+        }
+        
+        return false;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} num
+ * @return {number[]}
+ */
+var splitIntoFibonacci = function(num) {
+    const result = [];
+    
+    const backtrack = (index) => {
+        if (index === num.length) {
+            return result.length >= 3;
+        }
+        
+        for (let i = index; i < num.length; i++) {
+            // Check for leading zeros
+            if (num[index] === '0' && i > index) {
+                break;
+            }
+            
+            // Get current number
+            const curr = num.substring(index, i + 1);
+            const currNum = parseInt(curr);
+            
+            if (currNum > 2**31 - 1) {
+                break;
+            }
+            
+            // Check Fibonacci property
+            if (result.length >= 2 && currNum > result[result.length-1] + result[result.length-2]) {
+                break;
+            }
+            
+            if (result.length <= 1 || currNum === result[result.length-1] + result[result.length-2]) {
+                result.push(currNum);
+                if (backtrack(i + 1)) {
+                    return true;
+                }
+                result.pop();
+            }
+        }
+        
+        return false;
+    };
+    
+    backtrack(0);
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<int> SplitIntoFibonacci(string num) {
+        var result = new List<int>();
+        Backtrack(num, 0, result);
+        return result;
+    }
+    
+    private bool Backtrack(string num, int index, List<int> path) {
+        if (index == num.Length) {
+            return path.Count >= 3;
+        }
+        
+        for (int i = index; i < num.Length; i++) {
+            // Check for leading zeros
+            if (num[index] == '0' && i > index) {
+                break;
+            }
+            
+            // Get current number
+            string curr = num.Substring(index, i - index + 1);
+            if (curr.Length > 10) {
+                break;
+            }
+            
+            long currNum;
+            if (!long.TryParse(curr, out currNum) || currNum > int.MaxValue) {
+                break;
+            }
+            
+            // Check Fibonacci property
+            if (path.Count >= 2 && currNum > path[path.Count-1] + path[path.Count-2]) {
+                break;
+            }
+            
+            if (path.Count <= 1 || currNum == path[path.Count-1] + path[path.Count-2]) {
+                path.Add((int)currNum);
+                if (Backtrack(num, i + 1, path)) {
+                    return true;
+                }
+                path.RemoveAt(path.Count - 1);
+            }
+        }
+        
+        return false;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses backtracking with careful integer overflow handling</li>
+                    <li>Handles leading zeros and integer constraints</li>
+                    <li>Time complexity: O(n³)</li>
+                    <li>Space complexity: O(n)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

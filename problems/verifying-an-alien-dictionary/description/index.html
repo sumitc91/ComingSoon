@@ -1,0 +1,331 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifying an Alien Dictionary - LeetCodee Solution</title>
+    <meta name="description" content="Learn how to solve the Verifying an Alien Dictionary problem on LeetCode.  Find Python, Java, C++, JavaScript, and C# solutions with explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, verifying alien dictionary, alien dictionary, algorithm, data structure, python, java, c++, javascript, c#, solution, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/verifying-an-alien-dictionary/">
+    <meta property="og:title" content="Verifying an Alien Dictionary - LeetCodee Solution">
+    <meta property="og:description" content="Learn how to solve the Verifying an Alien Dictionary problem on LeetCode.  Find Python, Java, C++, JavaScript, and C# solutions with explanations and time/space complexity analysis.">
+    <meta property="og:url" content="https://leetcodee.com/problems/verifying-an-alien-dictionary/">
+    <meta property="og:type" content="article">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Verifying an Alien Dictionary - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Learn how to solve the Verifying an Alien Dictionary problem on LeetCode.  Find Python, Java, C++, JavaScript, and C# solutions with explanations and time/space complexity analysis.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/verifying-an-alien-dictionary/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" // Replace with your logo URL
+        }
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">953. Verifying an Alien Dictionary</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    In an alien language, surprisingly, they also use English lowercase letters, but possibly in a different order. The order of the alphabet is some permutation of lowercase letters.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given a sequence of words written in the alien language, and the order of the alphabet, return true if and only if the given words are sorted lexicographically in this alien language.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: words = ["hello","leetcode"], order = "hlabcdefgijkmnopqrstuvwxyz"
+Output: true
+Explanation: As 'h' comes before 'l' in this language, then the sequence is sorted.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: words = ["word","world","row"], order = "worldabcefghijkmnpqstuvxyz"
+Output: false
+Explanation: As 'd' comes after 'l' in this language, then words[0] > words[1], hence the sequence is unsorted.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: words = ["apple","app"], order = "abcdefghijklmnopqrstuvwxyz"
+Output: false
+Explanation: The first three characters "app" match, and the second string is shorter (in size.) According to lexicographical rules "apple" > "app", because 'l' > '∅', where '∅' is defined as the blank character which is less than any other character.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= words.length <= 100</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= words[i].length <= 20</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">order.length == 26</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">All characters in words[i] and order are English lowercase letters.</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        # Create a mapping of alien alphabet to normal alphabet
+        alien_to_normal = {c: i for i, c in enumerate(order)}
+        
+        # Compare adjacent words
+        for i in range(len(words) - 1):
+            word1, word2 = words[i], words[i + 1]
+            
+            # Compare characters until one word ends
+            for j in range(min(len(word1), len(word2))):
+                if word1[j] != word2[j]:
+                    if alien_to_normal[word1[j]] > alien_to_normal[word2[j]]:
+                        return False
+                    break
+            else:
+                # If we get here, one word is prefix of another
+                if len(word1) > len(word2):
+                    return False
+        
+        return True</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(M)</h4>
+                    <p class="text-gray-700">Where M is the total number of characters in all words. We need to compare each character at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space for the alphabet mapping.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public boolean isAlienSorted(String[] words, String order) {
+        int[] alienToNormal = new int[26];
+        for (int i = 0; i < order.length(); i++) {
+            alienToNormal[order.charAt(i) - 'a'] = i;
+        }
+        
+        for (int i = 0; i < words.length - 1; i++) {
+            String word1 = words[i];
+            String word2 = words[i + 1];
+            
+            for (int j = 0; j < Math.min(word1.length(), word2.length()); j++) {
+                if (word1.charAt(j) != word2.charAt(j)) {
+                    if (alienToNormal[word1.charAt(j) - 'a'] > alienToNormal[word2.charAt(j) - 'a']) {
+                        return false;
+                    }
+                    break;
+                }
+            }
+            
+            // If we get here, one word is prefix of another
+            if (word1.length() > word2.length()) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(M)</h4>
+                    <p class="text-gray-700">Where M is the total number of characters in all words. We need to compare each character at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space for the alphabet mapping.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    bool isAlienSorted(vector<string>& words, string order) {
+        vector<int> alienToNormal(26);
+        for (int i = 0; i < order.length(); i++) {
+            alienToNormal[order[i] - 'a'] = i;
+        }
+        
+        for (int i = 0; i < words.size() - 1; i++) {
+            string& word1 = words[i];
+            string& word2 = words[i + 1];
+            
+            for (int j = 0; j < min(word1.length(), word2.length()); j++) {
+                if (word1[j] != word2[j]) {
+                    if (alienToNormal[word1[j] - 'a'] > alienToNormal[word2[j] - 'a']) {
+                        return false;
+                    }
+                    break;
+                }
+            }
+            
+            // If we get here, one word is prefix of another
+            if (word1.length() > word2.length()) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(M)</h4>
+                    <p class="text-gray-700">Where M is the total number of characters in all words. We need to compare each character at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space for the alphabet mapping.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} words
+ * @param {string} order
+ * @return {boolean}
+ */
+var isAlienSorted = function(words, order) {
+    const alienToNormal = new Array(26);
+    for (let i = 0; i < order.length; i++) {
+        alienToNormal[order.charCodeAt(i) - 97] = i;
+    }
+    
+    for (let i = 0; i < words.length - 1; i++) {
+        const word1 = words[i];
+        const word2 = words[i + 1];
+        
+        for (let j = 0; j < Math.min(word1.length, word2.length); j++) {
+            if (word1[j] !== word2[j]) {
+                if (alienToNormal[word1.charCodeAt(j) - 97] > alienToNormal[word2.charCodeAt(j) - 97]) {
+                    return false;
+                }
+                break;
+            }
+        }
+        
+        // If we get here, one word is prefix of another
+        if (word1.length > word2.length) {
+            return false;
+        }
+    }
+    
+    return true;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(M)</h4>
+                    <p class="text-gray-700">Where M is the total number of characters in all words. We need to compare each character at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space for the alphabet mapping.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public bool IsAlienSorted(string[] words, string order) {
+        int[] alienToNormal = new int[26];
+        for (int i = 0; i < order.Length; i++) {
+            alienToNormal[order[i] - 'a'] = i;
+        }
+        
+        for (int i = 0; i < words.Length - 1; i++) {
+            string word1 = words[i];
+            string word2 = words[i + 1];
+            
+            for (int j = 0; j < Math.Min(word1.Length, word2.Length); j++) {
+                if (word1[j] != word2[j]) {
+                    if (alienToNormal[word1[j] - 'a'] > alienToNormal[word2[j] - 'a']) {
+                        return false;
+                    }
+                    break;
+                }
+            }
+            
+            // If we get here, one word is prefix of another
+            if (word1.Length > word2.Length) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(M)</h4>
+                    <p class="text-gray-700">Where M is the total number of characters in all words. We need to compare each character at most once.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space for the alphabet mapping.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walking Robot Simulation - LeetCodee Solution</title>
+    <meta name="description" content="LeetCodee solution for Walking Robot Simulation problem.  Find the maximum Euclidean distance squared from the origin. Includes Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta name="keywords" content="leetcode, leetcode solution, walking robot simulation, algorithm, python, java, c++, javascript, c#, coding, programming, euclidean distance">
+    <meta property="og:title" content="Walking Robot Simulation - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/walking-robot-simulation/">
+    <meta property="og:description" content="LeetCodee solution for Walking Robot Simulation problem.  Find the maximum Euclidean distance squared from the origin. Includes Python, Java, C++, JavaScript, and C# solutions with explanations.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/walking-robot-simulation/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Walking Robot Simulation - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "LeetCodee solution for Walking Robot Simulation problem. Find the maximum Euclidean distance squared from the origin. Includes Python, Java, C++, JavaScript, and C# solutions with explanations.",
+      "articleBody": "A robot on an infinite XY-plane starts at point (0, 0) facing north. The robot can receive one of three possible types of commands: -2: turn left 90 degrees -1: turn right 90 degrees 1 ≤ x ≤ 9: move forward x units Some of the grid points are obstacles. The i<sup>th</sup> obstacle is at grid point obstacles[i] = (x<sub>i</sub>, y<sub>i</sub>). If the robot would try to move onto them, the robot stays on the previous grid point instead (but still continues following the rest of the route). Return the maximum Euclidean distance that the robot ever gets from the origin squared (i.e. if the distance is 5, return 25).  [Python Solution] [Java Solution] [C++ Solution] [JavaScript Solution] [C# Solution]",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/walking-robot-simulation/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">874. Walking Robot Simulation</h1>
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A robot on an infinite XY-plane starts at point (0, 0) facing north. The robot can receive one of three possible types of commands:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>-2: turn left 90 degrees</li>
+                    <li>-1: turn right 90 degrees</li>
+                    <li>1 ≤ x ≤ 9: move forward x units</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Some of the grid points are obstacles. The i<sup>th</sup> obstacle is at grid point obstacles[i] = (x<sub>i</sub>, y<sub>i</sub>).
+                </p>
+                <p class="text-gray-700">
+                    If the robot would try to move onto them, the robot stays on the previous grid point instead (but still continues following the rest of the route). Return the maximum Euclidean distance that the robot ever gets from the origin squared (i.e. if the distance is 5, return 25).
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: commands = [4,-1,3], obstacles = []
+Output: 25
+Explanation: The robot starts at (0, 0):
+1. Move north 4 units to (0, 4)
+2. Turn right
+3. Move east 3 units to (3, 4)
+The furthest point away from the origin is (3, 4), which is 3² + 4² = 25 units away.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: commands = [4,-1,4,-2,4], obstacles = [[2,4]]
+Output: 65
+Explanation: The robot starts at (0, 0):
+1. Move north 4 units to (0, 4)
+2. Turn right
+3. Move east 1 unit and get blocked by the obstacle at (2, 4), robot is at (1, 4)
+4. Turn left
+5. Move north 4 units to (1, 8)
+The furthest point away from the origin is (1, 8), which is 1² + 8² = 65 units away.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ commands.length ≤ 10⁴</li>
+                    <li>commands[i] is one of the values in the list [-2,-1,1,2,3,4,5,6,7,8,9]</li>
+                    <li>0 ≤ obstacles.length ≤ 10⁴</li>
+                    <li>-3 × 10⁴ ≤ x<sub>i</sub>, y<sub>i</sub> ≤ 3 × 10⁴</li>
+                    <li>The answer is guaranteed to be less than 2³¹</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def robotSim(self, commands: List[int], obstacles: List[List[int]]) -> int:
+        # Convert obstacles to set for O(1) lookup
+        obstacles = set(map(tuple, obstacles))
+        
+        # Directions: north, east, south, west
+        dx = [0, 1, 0, -1]
+        dy = [1, 0, -1, 0]
+        
+        # Current position and direction
+        x = y = di = 0
+        max_dist = 0
+        
+        for cmd in commands:
+            if cmd == -2:  # Turn left
+                di = (di - 1) % 4
+            elif cmd == -1:  # Turn right
+                di = (di + 1) % 4
+            else:  # Move forward
+                for _ in range(cmd):
+                    next_x = x + dx[di]
+                    next_y = y + dy[di]
+                    
+                    if (next_x, next_y) in obstacles:
+                        break
+                        
+                    x, y = next_x, next_y
+                    max_dist = max(max_dist, x*x + y*y)
+        
+        return max_dist</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses set for O(1) obstacle lookup</li>
+                    <li>Time complexity: O(N * K) where N is length of commands and K is max value in commands</li>
+                    <li>Space complexity: O(M) where M is number of obstacles</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int robotSim(int[] commands, int[][] obstacles) {
+        // Convert obstacles to set for O(1) lookup
+        Set<Long> obstacleSet = new HashSet<>();
+        for (int[] obstacle : obstacles) {
+            long ox = obstacle[0] + 30000;
+            long oy = obstacle[1] + 30000;
+            obstacleSet.add((ox << 16) + oy);
+        }
+        
+        // Directions: north, east, south, west
+        int[] dx = {0, 1, 0, -1};
+        int[] dy = {1, 0, -1, 0};
+        
+        // Current position and direction
+        int x = 0, y = 0, di = 0;
+        int maxDist = 0;
+        
+        for (int cmd : commands) {
+            if (cmd == -2) {  // Turn left
+                di = (di - 1 + 4) % 4;
+            } else if (cmd == -1) {  // Turn right
+                di = (di + 1) % 4;
+            } else {  // Move forward
+                for (int k = 0; k < cmd; k++) {
+                    int nextX = x + dx[di];
+                    int nextY = y + dy[di];
+                    
+                    long code = ((nextX + 30000L) << 16) + (nextY + 30000L);
+                    if (obstacleSet.contains(code)) {
+                        break;
+                    }
+                    
+                    x = nextX;
+                    y = nextY;
+                    maxDist = Math.max(maxDist, x*x + y*y);
+                }
+            }
+        }
+        
+        return maxDist;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+        // Convert obstacles to set for O(1) lookup
+        set<pair<int, int>> obstacleSet;
+        for (const auto& obstacle : obstacles) {
+            obstacleSet.insert({obstacle[0], obstacle[1]});
+        }
+        
+        // Directions: north, east, south, west
+        vector<int> dx = {0, 1, 0, -1};
+        vector<int> dy = {1, 0, -1, 0};
+        
+        // Current position and direction
+        int x = 0, y = 0, di = 0;
+        int maxDist = 0;
+        
+        for (int cmd : commands) {
+            if (cmd == -2) {  // Turn left
+                di = (di - 1 + 4) % 4;
+            } else if (cmd == -1) {  // Turn right
+                di = (di + 1) % 4;
+            } else {  // Move forward
+                for (int k = 0; k < cmd; k++) {
+                    int nextX = x + dx[di];
+                    int nextY = y + dy[di];
+                    
+                    if (obstacleSet.count({nextX, nextY})) {
+                        break;
+                    }
+                    
+                    x = nextX;
+                    y = nextY;
+                    maxDist = max(maxDist, x*x + y*y);
+                }
+            }
+        }
+        
+        return maxDist;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} commands
+ * @param {number[][]} obstacles
+ * @return {number}
+ */
+var robotSim = function(commands, obstacles) {
+    // Convert obstacles to set for O(1) lookup
+    const obstacleSet = new Set(obstacles.map(([x, y]) => `${x},${y}`));
+    
+    // Directions: north, east, south, west
+    const dx = [0, 1, 0, -1];
+    const dy = [1, 0, -1, 0];
+    
+    // Current position and direction
+    let x = 0, y = 0, di = 0;
+    let maxDist = 0;
+    
+    for (const cmd of commands) {
+        if (cmd === -2) {  // Turn left
+            di = (di - 1 + 4) % 4;
+        } else if (cmd === -1) {  // Turn right
+            di = (di + 1) % 4;
+        } else {  // Move forward
+            for (let k = 0; k < cmd; k++) {
+                const nextX = x + dx[di];
+                const nextY = y + dy[di];
+                
+                if (obstacleSet.has(`${nextX},${nextY}`)) {
+                    break;
+                }
+                
+                x = nextX;
+                y = nextY;
+                maxDist = Math.max(maxDist, x*x + y*y);
+            }
+        }
+    }
+    
+    return maxDist;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int RobotSim(int[] commands, int[][] obstacles) {
+        // Convert obstacles to set for O(1) lookup
+        var obstacleSet = new HashSet<string>();
+        foreach (var obstacle in obstacles) {
+            obstacleSet.Add($"{obstacle[0]},{obstacle[1]}");
+        }
+        
+        // Directions: north, east, south, west
+        int[] dx = {0, 1, 0, -1};
+        int[] dy = {1, 0, -1, 0};
+        
+        // Current position and direction
+        int x = 0, y = 0, di = 0;
+        int maxDist = 0;
+        
+        foreach (int cmd in commands) {
+            if (cmd == -2) {  // Turn left
+                di = (di - 1 + 4) % 4;
+            } else if (cmd == -1) {  // Turn right
+                di = (di + 1) % 4;
+            } else {  // Move forward
+                for (int k = 0; k < cmd; k++) {
+                    int nextX = x + dx[di];
+                    int nextY = y + dy[di];
+                    
+                    if (obstacleSet.Contains($"{nextX},{nextY}")) {
+                        break;
+                    }
+                    
+                    x = nextX;
+                    y = nextY;
+                    maxDist = Math.Max(maxDist, x*x + y*y);
+                }
+            }
+        }
+        
+        return maxDist;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses HashSet for O(1) obstacle lookup</li>
+                    <li>Time complexity: O(N * K)</li>
+                    <li>Space complexity: O(M)</li>
+                </ul>
+            </div>
+             <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

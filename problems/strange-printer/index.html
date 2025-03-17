@@ -1,0 +1,328 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strange Printer - LeetCodee Solution</title>
+    <meta name="description" content="Find the minimum number of turns needed to print a string using a strange printer with specific properties.  Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta name="keywords" content="leetcode, strange printer, dynamic programming, algorithm, python, java, cpp, javascript, csharp, coding solution, interview prep">
+    <meta property="og:title" content="Strange Printer - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/strange-printer/">
+    <meta property="og:description" content="Find the minimum number of turns needed to print a string using a strange printer with specific properties.  Includes Python, Java, C++, JavaScript, and C# solutions.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/strange-printer/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Strange Printer - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "description": "Find the minimum number of turns needed to print a string using a strange printer with specific properties.  Includes Python, Java, C++, JavaScript, and C# solutions.",
+      "articleSection": "Coding Solutions",
+      "keywords": "leetcode, strange printer, dynamic programming, algorithm, python, java, cpp, javascript, csharp, coding solution, interview prep"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">664. Strange Printer</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There is a strange printer with the following two special properties:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                    <li>The printer can only print a sequence of <strong>the same character</strong> each time.</li>
+                    <li>At each turn, the printer can print new characters starting from and ending at any place and will cover the original existing characters.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Given a string <code class="bg-gray-100 px-1 rounded">s</code>, return <em>the minimum number of turns the printer needed to print it</em>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "aaabbb"
+Output: 2
+Explanation: Print "aaa" first and then print "bbb".</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: s = "aba"
+Output: 2
+Explanation: Print "aaa" first and then print "b" from the second place of the string, which will cover the existing character 'a'.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ s.length ≤ 100</li>
+                    <li>s consists of lowercase English letters</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def strangePrinter(self, s: str) -> int:
+        n = len(s)
+        # dp[i][j] represents minimum turns needed to print s[i:j+1]
+        dp = [[0] * n for _ in range(n)]
+        
+        # Base case: single characters need 1 turn
+        for i in range(n):
+            dp[i][i] = 1
+        
+        # Fill dp table for substrings of increasing length
+        for length in range(2, n + 1):
+            for i in range(n - length + 1):
+                j = i + length - 1
+                
+                # Initial value: print first character then solve rest
+                dp[i][j] = dp[i][j-1] + 1
+                
+                # Try to find optimization by matching characters
+                for k in range(i, j):
+                    if s[k] == s[j]:
+                        dp[i][j] = min(dp[i][j], dp[i][k] + dp[k+1][j-1])
+        
+        return dp[0][n-1]</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Using Recursion with Memoization):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def strangePrinter(self, s: str) -> int:
+        @cache
+        def dp(i: int, j: int) -> int:
+            if i > j:
+                return 0
+            if i == j:
+                return 1
+            
+            # Initial value: print first character then solve rest
+            result = dp(i, j-1) + 1
+            
+            # Try to find optimization by matching characters
+            for k in range(i, j):
+                if s[k] == s[j]:
+                    result = min(result, dp(i, k) + dp(k+1, j-1))
+            
+            return result
+        
+        return dp(0, len(s)-1)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>First solution uses bottom-up dynamic programming</li>
+                    <li>Second solution uses top-down dynamic programming with memoization</li>
+                    <li>Both solutions have O(n³) time complexity and O(n²) space complexity</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int strangePrinter(String s) {
+        int n = s.length();
+        int[][] dp = new int[n][n];
+        
+        // Base case: single characters need 1 turn
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = 1;
+        }
+        
+        // Fill dp table for substrings of increasing length
+        for (int length = 2; length <= n; length++) {
+            for (int i = 0; i <= n - length; i++) {
+                int j = i + length - 1;
+                
+                // Initial value: print first character then solve rest
+                dp[i][j] = dp[i][j-1] + 1;
+                
+                // Try to find optimization by matching characters
+                for (int k = i; k < j; k++) {
+                    if (s.charAt(k) == s.charAt(j)) {
+                        dp[i][j] = Math.min(dp[i][j], 
+                            dp[i][k] + (k + 1 <= j - 1 ? dp[k+1][j-1] : 0));
+                    }
+                }
+            }
+        }
+        
+        return dp[0][n-1];
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int strangePrinter(string s) {
+        int n = s.length();
+        vector<vector<int>> dp(n, vector<int>(n));
+        
+        // Base case: single characters need 1 turn
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = 1;
+        }
+        
+        // Fill dp table for substrings of increasing length
+        for (int length = 2; length <= n; length++) {
+            for (int i = 0; i <= n - length; i++) {
+                int j = i + length - 1;
+                
+                // Initial value: print first character then solve rest
+                dp[i][j] = dp[i][j-1] + 1;
+                
+                // Try to find optimization by matching characters
+                for (int k = i; k < j; k++) {
+                    if (s[k] == s[j]) {
+                        dp[i][j] = min(dp[i][j], 
+                            dp[i][k] + (k + 1 <= j - 1 ? dp[k+1][j-1] : 0));
+                    }
+                }
+            }
+        }
+        
+        return dp[0][n-1];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {number}
+ */
+var strangePrinter = function(s) {
+    const n = s.length;
+    const dp = Array(n).fill().map(() => Array(n).fill(0));
+    
+    // Base case: single characters need 1 turn
+    for (let i = 0; i < n; i++) {
+        dp[i][i] = 1;
+    }
+    
+    // Fill dp table for substrings of increasing length
+    for (let length = 2; length <= n; length++) {
+        for (let i = 0; i <= n - length; i++) {
+            const j = i + length - 1;
+            
+            // Initial value: print first character then solve rest
+            dp[i][j] = dp[i][j-1] + 1;
+            
+            // Try to find optimization by matching characters
+            for (let k = i; k < j; k++) {
+                if (s[k] === s[j]) {
+                    dp[i][j] = Math.min(dp[i][j], 
+                        dp[i][k] + (k + 1 <= j - 1 ? dp[k+1][j-1] : 0));
+                }
+            }
+        }
+    }
+    
+    return dp[0][n-1];
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int StrangePrinter(string s) {
+        int n = s.Length;
+        int[,] dp = new int[n,n];
+        
+        // Base case: single characters need 1 turn
+        for (int i = 0; i < n; i++) {
+            dp[i,i] = 1;
+        }
+        
+        // Fill dp table for substrings of increasing length
+        for (int length = 2; length <= n; length++) {
+            for (int i = 0; i <= n - length; i++) {
+                int j = i + length - 1;
+                
+                // Initial value: print first character then solve rest
+                dp[i,j] = dp[i,j-1] + 1;
+                
+                // Try to find optimization by matching characters
+                for (int k = i; k < j; k++) {
+                    if (s[k] == s[j]) {
+                        dp[i,j] = Math.Min(dp[i,j], 
+                            dp[i,k] + (k + 1 <= j - 1 ? dp[k+1,j-1] : 0));
+                    }
+                }
+            }
+        }
+        
+        return dp[0,n-1];
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with O(n²) space</li>
+                    <li>Time complexity is O(n³) due to three nested loops</li>
+                    <li>Can be optimized for space but would make code more complex</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

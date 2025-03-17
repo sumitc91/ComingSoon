@@ -1,0 +1,413 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Palindromes - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of super palindromes in a given range.  Includes optimized solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, super palindrome, palindrome, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/super-palindromes/">
+    <meta property="og:title" content="Super Palindromes - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/super-palindromes/">
+    <meta property="og:description" content="Find the number of super palindromes in a given range.  Includes optimized solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:site_name" content="LeetCodee">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Super Palindromes - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the number of super palindromes in a given range.  Includes optimized solutions in Python, Java, C++, JavaScript, and C#.",
+      "articleSection": "LeetCode Solutions",
+      "keywords": "leetcode, super palindrome, palindrome, algorithm, solution, python, java, c++, javascript, c#, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">906. Super Palindromes</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Let's say a positive integer is a super-palindrome if it is a palindrome, and it is also the square of a palindrome.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given two positive integers <code class="bg-gray-100 px-1 rounded">left</code> and <code class="bg-gray-100 px-1 rounded">right</code> represented as strings, return the number of super-palindromes integers in the inclusive range <code class="bg-gray-100 px-1 rounded">[left, right]</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: left = "4", right = "1000"
+Output: 4
+Explanation: 4, 9, 121, and 484 are super-palindromes.
+Note that 676 is not a super-palindrome: 26 × 26 = 676, but 26 is not a palindrome.</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: left = "1", right = "2"
+Output: 1</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= left.length, right.length <= 18</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">left</code> and <code class="bg-gray-100 px-1 rounded">right</code> consist of only digits.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">left</code> and <code class="bg-gray-100 px-1 rounded">right</code> cannot have leading zeros.</li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 <= left <= right <= 10¹⁸ - 1</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def superpalindromesInRange(self, left: str, right: str) -> int:
+        left = int(left)
+        right = int(right)
+        count = 0
+        
+        def is_palindrome(n):
+            return str(n) == str(n)[::-1]
+        
+        # Generate palindromes up to sqrt(right)
+        max_num = int(right ** 0.5)
+        for i in range(1, 100000):
+            # Create palindrome by mirroring
+            s = str(i)
+            p1 = int(s + s[::-1])
+            p2 = int(s + s[:-1][::-1])
+            
+            # Check if square is in range and is palindrome
+            if p1 > max_num and p2 > maxNum:
+                break
+                
+            if p1 <= max_num:
+                square = p1 * p1
+                if square >= left and square <= right and is_palindrome(square):
+                    count += 1
+                    
+            if p2 <= max_num:
+                square = p2 * p2
+                if square >= left and square <= right and is_palindrome(square):
+                    count += 1
+        
+        return count</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(√R)</h4>
+                    <p class="text-gray-700">We generate palindromes up to √R where R is the right bound.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int superpalindromesInRange(String left, String right) {
+        long L = Long.parseLong(left);
+        long R = Long.parseLong(right);
+        int count = 0;
+        
+        // Generate palindromes up to sqrt(R)
+        long maxNum = (long)Math.sqrt(R);
+        for (long i = 1; i <= 100000; i++) {
+            // Create palindrome by mirroring
+            String s = String.valueOf(i);
+            long p1 = Long.parseLong(s + new StringBuilder(s).reverse().toString());
+            long p2 = Long.parseLong(s + new StringBuilder(s.substring(0, s.length() - 1)).reverse().toString());
+            
+            // Check if square is in range and is palindrome
+            if (p1 > maxNum && p2 > maxNum) {
+                break;
+            }
+            
+            if (p1 <= maxNum) {
+                long square = p1 * p1;
+                if (square >= L && square <= R && isPalindrome(square)) {
+                    count++;
+                }
+            }
+            
+            if (p2 <= maxNum) {
+                long square = p2 * p2;
+                if (square >= L && square <= R && isPalindrome(square)) {
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+    private boolean isPalindrome(long n) {
+        String s = String.valueOf(n);
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(√R)</h4>
+                    <p class="text-gray-700">We generate palindromes up to √R where R is the right bound.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int superpalindromesInRange(string left, string right) {
+        long L = stol(left);
+        long R = stol(right);
+        int count = 0;
+        
+        // Generate palindromes up to sqrt(R)
+        long maxNum = (long)sqrt(R);
+        for (long i = 1; i <= 100000; i++) {
+            // Create palindrome by mirroring
+            string s = to_string(i);
+            string rev = s;
+            reverse(rev.begin(), rev.end());
+            long p1 = stol(s + rev);
+            long p2 = stol(s + rev.substr(1));
+            
+            // Check if square is in range and is palindrome
+            if (p1 > maxNum && p2 > maxNum) {
+                break;
+            }
+            
+            if (p1 <= maxNum) {
+                long square = p1 * p1;
+                if (square >= L && square <= R && isPalindrome(square)) {
+                    count++;
+                }
+            }
+            
+            if (p2 <= maxNum) {
+                long square = p2 * p2;
+                if (square >= L && square <= R && isPalindrome(square)) {
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+private:
+    bool isPalindrome(long n) {
+        string s = to_string(n);
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (s[left] != s[right]) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(√R)</h4>
+                    <p class="text-gray-700">We generate palindromes up to √R where R is the right bound.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} left
+ * @param {string} right
+ * @return {number}
+ */
+var superpalindromesInRange = function(left, right) {
+    left = BigInt(left);
+    right = BigInt(right);
+    let count = 0;
+    
+    function isPalindrome(n) {
+        const s = n.toString();
+        let left = 0, right = s.length - 1;
+        while (left < right) {
+            if (s[left] !== s[right]) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+    
+    // Generate palindromes up to sqrt(right)
+    const maxNum = BigInt(Math.floor(Math.sqrt(Number(right))));
+    for (let i = 1n; i <= 100000n; i++) {
+        // Create palindrome by mirroring
+        const s = i.toString();
+        const p1 = BigInt(s + s.split('').reverse().join(''));
+        const p2 = BigInt(s + s.slice(0, -1).split('').reverse().join(''));
+        
+        // Check if square is in range and is palindrome
+        if (p1 > maxNum && p2 > maxNum) {
+            break;
+        }
+        
+        if (p1 <= maxNum) {
+            const square = p1 * p1;
+            if (square >= left && square <= right && isPalindrome(square)) {
+                count++;
+            }
+        }
+        
+        if (p2 <= maxNum) {
+            const square = p2 * p2;
+            if (square >= left && square <= right && isPalindrome(square)) {
+                count++;
+            }
+        }
+    }
+    
+    return count;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(√R)</h4>
+                    <p class="text-gray-700">We generate palindromes up to √R where R is the right bound.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int SuperpalindromesInRange(string left, string right) {
+        long L = long.Parse(left);
+        long R = long.Parse(right);
+        int count = 0;
+        
+        // Generate palindromes up to sqrt(R)
+        long maxNum = (long)Math.Sqrt(R);
+        for (long i = 1; i <= 100000; i++) {
+            // Create palindrome by mirroring
+            string s = i.ToString();
+            long p1 = long.Parse(s + new string(s.Reverse().ToArray()));
+            long p2 = long.Parse(s + new string(s.Substring(0, s.Length - 1).Reverse().ToArray()));
+            
+            // Check if square is in range and is palindrome
+            if (p1 > maxNum && p2 > maxNum) {
+                break;
+            }
+            
+            if (p1 <= maxNum) {
+                long square = p1 * p1;
+                if (square >= L && square <= R && IsPalindrome(square)) {
+                    count++;
+                }
+            }
+            
+            if (p2 <= maxNum) {
+                long square = p2 * p2;
+                if (square >= L && square <= R && IsPalindrome(square)) {
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+    private bool IsPalindrome(long n) {
+        string s = n.ToString();
+        int left = 0, right = s.Length - 1;
+        while (left < right) {
+            if (s[left] != s[right]) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(√R)</h4>
+                    <p class="text-gray-700">We generate palindromes up to √R where R is the right bound.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We only use a constant amount of extra space.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

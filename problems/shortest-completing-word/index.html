@@ -1,0 +1,364 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortest Completing Word - LeetCodee Solution</title>
+    <meta name="description" content="Find the shortest completing word in a given array of strings that contains all letters from a license plate, ignoring case and non-alphabetic characters. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, shortest completing word, algorithm, solution, python, java, c++, javascript, c#, coding, programming, interview, competitive programming">
+    <meta property="og:title" content="Shortest Completing Word - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/shortest-completing-word/">
+    <meta property="og:description" content="Find the shortest completing word in a given array of strings that contains all letters from a license plate, ignoring case and non-alphabetic characters. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/shortest-completing-word/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">748. Shortest Completing Word</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given a string licensePlate and an array of strings words, find the shortest completing word in words.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A completing word is a word that contains all the letters in licensePlate. Ignore numbers and spaces in licensePlate, and treat letters as case insensitive. If a letter appears more than once in licensePlate, then it must appear in the word the same number of times or more.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, if licensePlate = "aBc 12c", then it contains letters 'a', 'b' (ignoring case), and 'c' twice. Possible completing words are "abccdef", "caaacab", and "cbca".
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the shortest completing word in words. It is guaranteed an answer exists. If there are multiple shortest completing words, return the first one that occurs in words.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: licensePlate = "1s3 PSt", words = ["step","steps","stripe","stepple"]
+Output: "steps"
+Explanation: licensePlate contains letters 's', 'p', 's', and 't' (ignoring case).
+"step" contains 't' and 'p', but only contains 's' once, so it is not a completing word.
+"steps" contains 't', 'p', and both 's' characters.
+"stripe" is missing an 's'.
+"stepple" is missing an 's'.
+Since "steps" is the only word containing all the letters, that is the answer.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: licensePlate = "1s3 456", words = ["looks","pest","stew","show"]
+Output: "pest"
+Explanation: licensePlate only contains the letter 's'. All the words contain 's', but among these "pest", "stew", and "show" are shortest. The answer is "pest" because it is the word that appears earliest of the 3.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ licensePlate.length ≤ 7</li>
+                    <li>licensePlate contains digits, letters (uppercase or lowercase), or space ' '.</li>
+                    <li>1 ≤ words.length ≤ 1000</li>
+                    <li>1 ≤ words[i].length ≤ 15</li>
+                    <li>words[i] consists of lower case letters only.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def shortestCompletingWord(self, licensePlate: str, words: List[str]) -> str:
+        # Count letters in license plate
+        plate_count = {}
+        for c in licensePlate.lower():
+            if c.isalpha():
+                plate_count[c] = plate_count.get(c, 0) + 1
+                
+        # Find shortest completing word
+        shortest_word = None
+        shortest_length = float('inf')
+        
+        for word in words:
+            # Count letters in word
+            word_count = {}
+            for c in word:
+                word_count[c] = word_count.get(c, 0) + 1
+                
+            # Check if word contains all required letters
+            is_completing = True
+            for c, count in plate_count.items():
+                if c not in word_count or word_count[c] < count:
+                    is_completing = False
+                    break
+                    
+            if is_completing and len(word) < shortest_length:
+                shortest_word = word
+                shortest_length = len(word)
+                
+        return shortest_word</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Counts letters in license plate and each word</li>
+                    <li>Checks if word contains all required letters with correct frequency</li>
+                    <li>Time complexity: O(N * M) where N is number of words and M is max word length</li>
+                    <li>Space complexity: O(1) as we only store counts for 26 letters</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public String shortestCompletingWord(String licensePlate, String[] words) {
+        // Count letters in license plate
+        int[] plateCount = new int[26];
+        for (char c : licensePlate.toLowerCase().toCharArray()) {
+            if (Character.isLetter(c)) {
+                plateCount[c - 'a']++;
+            }
+        }
+        
+        // Find shortest completing word
+        String shortestWord = null;
+        int shortestLength = Integer.MAX_VALUE;
+        
+        for (String word : words) {
+            // Count letters in word
+            int[] wordCount = new int[26];
+            for (char c : word.toCharArray()) {
+                wordCount[c - 'a']++;
+            }
+            
+            // Check if word contains all required letters
+            boolean isCompleting = true;
+            for (int i = 0; i < 26; i++) {
+                if (wordCount[i] < plateCount[i]) {
+                    isCompleting = false;
+                    break;
+                }
+            }
+            
+            if (isCompleting && word.length() < shortestLength) {
+                shortestWord = word;
+                shortestLength = word.length();
+            }
+        }
+        
+        return shortestWord;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    string shortestCompletingWord(string licensePlate, vector<string>& words) {
+        // Count letters in license plate
+        vector<int> plateCount(26, 0);
+        for (char c : licensePlate) {
+            if (isalpha(c)) {
+                plateCount[tolower(c) - 'a']++;
+            }
+        }
+        
+        // Find shortest completing word
+        string shortestWord;
+        int shortestLength = INT_MAX;
+        
+        for (const string& word : words) {
+            // Count letters in word
+            vector<int> wordCount(26, 0);
+            for (char c : word) {
+                wordCount[c - 'a']++;
+            }
+            
+            // Check if word contains all required letters
+            bool isCompleting = true;
+            for (int i = 0; i < 26; i++) {
+                if (wordCount[i] < plateCount[i]) {
+                    isCompleting = false;
+                    break;
+                }
+            }
+            
+            if (isCompleting && word.length() < shortestLength) {
+                shortestWord = word;
+                shortestLength = word.length();
+            }
+        }
+        
+        return shortestWord;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>function shortestCompletingWord(licensePlate, words) {
+    // Count letters in license plate
+    const plateCount = new Array(26).fill(0);
+    for (const c of licensePlate.toLowerCase()) {
+        if (/[a-z]/.test(c)) {
+            plateCount[c.charCodeAt(0) - 'a'.charCodeAt(0)]++;
+        }
+    }
+    
+    // Find shortest completing word
+    let shortestWord = null;
+    let shortestLength = Infinity;
+    
+    for (const word of words) {
+        // Count letters in word
+        const wordCount = new Array(26).fill(0);
+        for (const c of word) {
+            wordCount[c.charCodeAt(0) - 'a'.charCodeAt(0)]++;
+        }
+        
+        // Check if word contains all required letters
+        let isCompleting = true;
+        for (let i = 0; i < 26; i++) {
+            if (wordCount[i] < plateCount[i]) {
+                isCompleting = false;
+                break;
+            }
+        }
+        
+        if (isCompleting && word.length < shortestLength) {
+            shortestWord = word;
+            shortestLength = word.length;
+        }
+    }
+    
+    return shortestWord;
+}</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public string ShortestCompletingWord(string licensePlate, string[] words) {
+        // Count letters in license plate
+        int[] plateCount = new int[26];
+        foreach (char c in licensePlate.ToLower()) {
+            if (char.IsLetter(c)) {
+                plateCount[c - 'a']++;
+            }
+        }
+        
+        // Find shortest completing word
+        string shortestWord = null;
+        int shortestLength = int.MaxValue;
+        
+        foreach (string word in words) {
+            // Count letters in word
+            int[] wordCount = new int[26];
+            foreach (char c in word) {
+                wordCount[c - 'a']++;
+            }
+            
+            // Check if word contains all required letters
+            bool isCompleting = true;
+            for (int i = 0; i < 26; i++) {
+                if (wordCount[i] < plateCount[i]) {
+                    isCompleting = false;
+                    break;
+                }
+            }
+            
+            if (isCompleting && word.Length < shortestLength) {
+                shortestWord = word;
+                shortestLength = word.Length;
+            }
+        }
+        
+        return shortestWord;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Counts letters in license plate and each word</li>
+                    <li>Checks if word contains all required letters with correct frequency</li>
+                    <li>Time complexity: O(N * M) where N is number of words and M is max word length</li>
+                    <li>Space complexity: O(1) as we only store counts for 26 letters</li>
+                </ul>
+            </div>
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              "headline": "748. Shortest Completing Word",
+              "author": {
+                "@type": "Person",
+                "name": "LeetCodee"
+              },
+              "datePublished": "2023-10-27",
+              "dateModified": "2023-10-27",
+              "publisher": {
+                "@type": "Organization",
+                "name": "LeetCodee",
+                "url": "https://leetcodee.com"
+              },
+              "description": "Find the shortest completing word in a given array of strings that contains all letters from a license plate, ignoring case and non-alphabetic characters. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://leetcodee.com/problems/shortest-completing-word/"
+              },
+              "keywords":"leetcode, shortest completing word, algorithm, solution, python, java, c++, javascript, c#, coding, programming, interview, competitive programming"
+            }
+            </script>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1068871795581451"
+         data-ad-slot="YOUR_AD_SLOT_HERE"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</body>
+</html>

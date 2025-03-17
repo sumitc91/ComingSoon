@@ -1,0 +1,284 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Dividing Numbers - LeetCodee Solution</title>
+    <meta name="description" content="Find all self-dividing numbers within a given range.  LeetCodee provides solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta name="keywords" content="leetcode, self-dividing numbers, algorithm, solution, python, java, c++, javascript, c#, coding, programming">
+    <meta property="og:title" content="Self-Dividing Numbers - LeetCodee Solution">
+    <meta property="og:description" content="Find all self-dividing numbers within a given range.  LeetCodee provides solutions in Python, Java, C++, JavaScript, and C#.">
+    <meta property="og:url" content="https://leetcodee.com/problems/self-dividing-numbers/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/self-dividing-numbers/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "728. Self-Dividing Numbers",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find all self-dividing numbers within a given range.  Solutions in Python, Java, C++, JavaScript, and C# are provided.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/self-dividing-numbers/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leetcodee.com/logo.png" //Replace with your logo URL
+        }
+      },
+      "keywords": "leetcode, self-dividing numbers, algorithm, solution, python, java, c++, javascript, c#, coding, programming"
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">728. Self-Dividing Numbers</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    A self-dividing number is a number that is divisible by every digit it contains.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    For example, 128 is a self-dividing number because 128 % 1 == 0, 128 % 2 == 0, and 128 % 8 == 0.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A self-dividing number is not allowed to contain the digit zero.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Given two integers left and right, return a list of all the self-dividing numbers in the range [left, right].
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: left = 1, right = 22
+Output: [1,2,3,4,5,6,7,8,9,11,12,15,22]</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: left = 47, right = 85
+Output: [48,55,66,77]</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>1 ≤ left ≤ right ≤ 10^4</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def selfDividingNumbers(self, left: int, right: int) -> List[int]:
+        def is_self_dividing(n: int) -> bool:
+            num = n
+            while num > 0:
+                digit = num % 10
+                if digit == 0 or n % digit != 0:
+                    return False
+                num //= 10
+            return True
+        
+        return [n for n in range(left, right + 1) if is_self_dividing(n)]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a helper function to check if a number is self-dividing</li>
+                    <li>Time complexity: O(n * log n) where n is the range size</li>
+                    <li>Space complexity: O(1) excluding output array</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public List<Integer> selfDividingNumbers(int left, int right) {
+        List<Integer> result = new ArrayList<>();
+        
+        for (int i = left; i <= right; i++) {
+            if (isSelfDividing(i)) {
+                result.add(i);
+            }
+        }
+        
+        return result;
+    }
+    
+    private boolean isSelfDividing(int num) {
+        int n = num;
+        while (n > 0) {
+            int digit = n % 10;
+            if (digit == 0 || num % digit != 0) {
+                return false;
+            }
+            n /= 10;
+        }
+        return true;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    bool isSelfDividing(int num) {
+        int n = num;
+        while (n > 0) {
+            int digit = n % 10;
+            if (digit == 0 || num % digit != 0) {
+                return false;
+            }
+            n /= 10;
+        }
+        return true;
+    }
+    
+public:
+    vector<int> selfDividingNumbers(int left, int right) {
+        vector<int> result;
+        
+        for (int i = left; i <= right; i++) {
+            if (isSelfDividing(i)) {
+                result.push_back(i);
+            }
+        }
+        
+        return result;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} left
+ * @param {number} right
+ * @return {number[]}
+ */
+var selfDividingNumbers = function(left, right) {
+    const result = [];
+    
+    function isSelfDividing(num) {
+        let n = num;
+        while (n > 0) {
+            const digit = n % 10;
+            if (digit === 0 || num % digit !== 0) {
+                return false;
+            }
+            n = Math.floor(n / 10);
+        }
+        return true;
+    }
+    
+    for (let i = left; i <= right; i++) {
+        if (isSelfDividing(i)) {
+            result.push(i);
+        }
+    }
+    
+    return result;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public IList<int> SelfDividingNumbers(int left, int right) {
+        var result = new List<int>();
+        
+        for (int i = left; i <= right; i++) {
+            if (IsSelfDividing(i)) {
+                result.Add(i);
+            }
+        }
+        
+        return result;
+    }
+    
+    private bool IsSelfDividing(int num) {
+        int n = num;
+        while (n > 0) {
+            int digit = n % 10;
+            if (digit == 0 || num % digit != 0) {
+                return false;
+            }
+            n /= 10;
+        }
+        return true;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses a helper function to check if a number is self-dividing</li>
+                    <li>Time complexity: O(n * log n) where n is the range size</li>
+                    <li>Space complexity: O(1) excluding output array</li>
+                </ul>
+            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="YOUR_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

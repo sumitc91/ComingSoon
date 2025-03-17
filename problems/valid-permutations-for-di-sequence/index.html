@@ -1,0 +1,347 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Permutations for DI Sequence - LeetCodee Solution</title>
+    <meta name="description" content="Find the number of valid permutations for a given DI sequence.  LeetCodee provides Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="leetcode, leetcode solution, valid permutations, di sequence, algorithm, dynamic programming, python, java, c++, javascript, c#, coding, interview">
+    <meta property="og:title" content="Valid Permutations for DI Sequence - LeetCodee Solution">
+    <meta property="og:description" content="Find the number of valid permutations for a given DI sequence.  LeetCodee provides Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta property="og:url" content="https://leetcodee.com/problems/valid-permutations-for-di-sequence/">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://leetcodee.com/problems/valid-permutations-for-di-sequence/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">903. Valid Permutations for DI Sequence</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    We are given <code class="bg-gray-100 px-1 rounded">s</code>, a length <code class="bg-gray-100 px-1 rounded">n</code> string of characters from the set <code class="bg-gray-100 px-1 rounded">{'D', 'I'}</code>. (These letters stand for "decreasing" and "increasing".)
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A valid permutation is a permutation <code class="bg-gray-100 px-1 rounded">p[0], p[1], ..., p[n]</code> of integers <code class="bg-gray-100 px-1 rounded">{0, 1, ..., n}</code>, such that for all <code class="bg-gray-100 px-1 rounded">i</code>:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>If <code class="bg-gray-100 px-1 rounded">s[i] == 'D'</code>, then <code class="bg-gray-100 px-1 rounded">p[i] > p[i+1]</code>, and</li>
+                    <li>If <code class="bg-gray-100 px-1 rounded">s[i] == 'I'</code>, then <code class="bg-gray-100 px-1 rounded">p[i] < p[i+1]</code>.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    Return the number of valid permutations. Since the answer may be large, return it modulo <code class="bg-gray-100 px-1 rounded">10⁹ + 7</code>.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "DID"
+Output: 5
+Explanation: 
+The 5 valid permutations of (0, 1, 2, 3) are:
+(1, 0, 3, 2)
+(2, 0, 3, 1)
+(2, 1, 3, 0)
+(3, 0, 2, 1)
+(3, 1, 2, 0)</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: s = "D"
+Output: 1</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">1 <= s.length <= 200</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">s</code> consists only of characters from the set <code class="bg-gray-100 px-1 rounded">{'D', 'I'}</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def numPermsDISequence(self, s: str) -> int:
+        n = len(s)
+        MOD = 10**9 + 7
+        
+        # dp[i][j] represents the number of valid permutations
+        # of length i+1 ending with j
+        dp = [[0] * (n + 2) for _ in range(n + 1)]
+        dp[0][0] = 1
+        
+        for i in range(n):
+            if s[i] == 'I':
+                # For increasing, we can append any number larger than the last one
+                for j in range(i + 1):
+                    for k in range(j + 1, i + 2):
+                        dp[i + 1][k] = (dp[i + 1][k] + dp[i][j]) % MOD
+            else:
+                # For decreasing, we can append any number smaller than the last one
+                for j in range(i + 1):
+                    for k in range(j):
+                        dp[i + 1][k] = (dp[i + 1][k] + dp[i][j]) % MOD
+        
+        return sum(dp[n]) % MOD</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n³)</h4>
+                    <p class="text-gray-700">We need to fill an n×n dp table, and for each cell, we may need to look at n previous values.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">To store the dp table.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int numPermsDISequence(String s) {
+        int n = s.length();
+        int MOD = (int)1e9 + 7;
+        
+        // dp[i][j] represents the number of valid permutations
+        // of length i+1 ending with j
+        int[][] dp = new int[n + 1][n + 2];
+        dp[0][0] = 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == 'I') {
+                // For increasing, we can append any number larger than the last one
+                for (int j = 0; j <= i; j++) {
+                    for (int k = j + 1; k <= i + 1; k++) {
+                        dp[i + 1][k] = (dp[i + 1][k] + dp[i][j]) % MOD;
+                    }
+                }
+            } else {
+                // For decreasing, we can append any number smaller than the last one
+                for (int j = 0; j <= i; j++) {
+                    for (int k = 0; k < j; k++) {
+                        dp[i + 1][k] = (dp[i + 1][k] + dp[i][j]) % MOD;
+                    }
+                }
+            }
+        }
+        
+        int result = 0;
+        for (int i = 0; i <= n + 1; i++) {
+            result = (result + dp[n][i]) % MOD;
+        }
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n³)</h4>
+                    <p class="text-gray-700">We need to fill an n×n dp table, and for each cell, we may need to look at n previous values.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">To store the dp table.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int numPermsDISequence(string s) {
+        int n = s.length();
+        const int MOD = 1e9 + 7;
+        
+        // dp[i][j] represents the number of valid permutations
+        // of length i+1 ending with j
+        vector<vector<int>> dp(n + 1, vector<int>(n + 2, 0));
+        dp[0][0] = 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'I') {
+                // For increasing, we can append any number larger than the last one
+                for (int j = 0; j <= i; j++) {
+                    for (int k = j + 1; k <= i + 1; k++) {
+                        dp[i + 1][k] = (dp[i + 1][k] + dp[i][j]) % MOD;
+                    }
+                }
+            } else {
+                // For decreasing, we can append any number smaller than the last one
+                for (int j = 0; j <= i; j++) {
+                    for (int k = 0; k < j; k++) {
+                        dp[i + 1][k] = (dp[i + 1][k] + dp[i][j]) % MOD;
+                    }
+                }
+            }
+        }
+        
+        int result = 0;
+        for (int i = 0; i <= n + 1; i++) {
+            result = (result + dp[n][i]) % MOD;
+        }
+        return result;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n³)</h4>
+                    <p class="text-gray-700">We need to fill an n×n dp table, and for each cell, we may need to look at n previous values.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">To store the dp table.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string} s
+ * @return {number}
+ */
+var numPermsDISequence = function(s) {
+    const n = s.length;
+    const MOD = 1e9 + 7;
+    
+    // dp[i][j] represents the number of valid permutations
+    // of length i+1 ending with j
+    const dp = Array(n + 1).fill().map(() => Array(n + 2).fill(0));
+    dp[0][0] = 1;
+    
+    for (let i = 0; i < n; i++) {
+        if (s[i] === 'I') {
+            // For increasing, we can append any number larger than the last one
+            for (let j = 0; j <= i; j++) {
+                for (let k = j + 1; k <= i + 1; k++) {
+                    dp[i + 1][k] = (dp[i + 1][k] + dp[i][j]) % MOD;
+                }
+            }
+        } else {
+            // For decreasing, we can append any number smaller than the last one
+            for (let j = 0; j <= i; j++) {
+                for (let k = 0; k < j; k++) {
+                    dp[i + 1][k] = (dp[i + 1][k] + dp[i][j]) % MOD;
+                }
+            }
+        }
+    }
+    
+    return dp[n].reduce((sum, val) => (sum + val) % MOD, 0);
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n³)</h4>
+                    <p class="text-gray-700">We need to fill an n×n dp table, and for each cell, we may need to look at n previous values.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">To store the dp table.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int NumPermsDISequence(string s) {
+        int n = s.Length;
+        const int MOD = 1000000007;
+        
+        // dp[i][j] represents the number of valid permutations
+        // of length i+1 ending with j
+        int[,] dp = new int[n + 1, n + 2];
+        dp[0, 0] = 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'I') {
+                // For increasing, we can append any number larger than the last one
+                for (int j = 0; j <= i; j++) {
+                    for (int k = j + 1; k <= i + 1; k++) {
+                        dp[i + 1, k] = (dp[i + 1, k] + dp[i, j]) % MOD;
+                    }
+                }
+            } else {
+                // For decreasing, we can append any number smaller than the last one
+                for (int j = 0; j <= i; j++) {
+                    for (int k = 0; k < j; k++) {
+                        dp[i + 1, k] = (dp[i + 1, k] + dp[i, j]) % MOD;
+                    }
+                }
+            }
+        }
+        
+        int result = 0;
+        for (int i = 0; i <= n + 1; i++) {
+            result = (result + dp[n, i]) % MOD;
+        }
+        return result;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(n³)</h4>
+                    <p class="text-gray-700">We need to fill an n×n dp table, and for each cell, we may need to look at n previous values.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(n²)</h4>
+                    <p class="text-gray-700">To store the dp table.</p>
+                </div>
+            </div>
+        </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Valid Permutations for DI Sequence - LeetCodee Solution",
+  "author": {
+    "@type": "Person",
+    "name": "LeetCodee"
+  },
+  "datePublished": "2023-10-27",
+  "dateModified": "2023-10-27",
+  "description": "Find the number of valid permutations for a given DI sequence. LeetCodee provides solutions in multiple programming languages.",
+  "articleBody": "This article explains how to solve the \"Valid Permutations for DI Sequence\" problem on LeetCode.  Solutions are provided in Python, Java, C++, JavaScript, and C# along with a detailed explanation and time/space complexity analysis for each.",
+  "keywords": "leetcode, leetcode solution, valid permutations, di sequence, algorithm, dynamic programming, python, java, c++, javascript, c#, coding, interview"
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Square - LeetCodee Solution</title>
+    <meta name="description" content="Find out how to solve the Valid Square problem on LeetCodee.  This comprehensive guide provides Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta name="keywords" content="LeetCode, Valid Square, algorithm, solution, Python, Java, C++, JavaScript, C#, coding, programming, data structures, problem solving, time complexity, space complexity">
+    <meta property="og:title" content="Valid Square - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/valid-square/">
+    <meta property="og:description" content="Find out how to solve the Valid Square problem on LeetCodee.  This comprehensive guide provides Python, Java, C++, JavaScript, and C# solutions with detailed explanations and time/space complexity analysis.">
+    <meta property="og:image" content="https://leetcodee.com/og-image.jpg">  <!-- Replace with actual image URL -->
+    <link rel="canonical" href="https://leetcodee.com/problems/valid-square/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "593. Valid Square",
+      "image": "https://leetcodee.com/og-image.jpg",  <!-- Replace with actual image URL -->
+      "datePublished": "2024-10-27",  <!-- Replace with actual publication date -->
+      "dateModified": "2024-10-27",  <!-- Replace with actual modification date -->
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LeetCodee",
+        "url": "https://leetcodee.com"
+      },
+      "description": "Given the coordinates of four points in 2D space p1, p2, p3, and p4, return true if the four points construct a square. The coordinate of a point pi is represented as [xi, yi]. The input is not guaranteed to be in any specific order.",
+      "articleBody": "Given the coordinates of four points in 2D space p1, p2, p3, and p4, return true if the four points construct a square. The coordinate of a point pi is represented as [xi, yi]. The input is not guaranteed to be in any specific order. A valid square has four equal sides with positive length and four equal angles (90-degree angles)."
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">593. Valid Square</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    Given the coordinates of four points in 2D space <code class="bg-gray-100 px-1 rounded">p1</code>, <code class="bg-gray-100 px-1 rounded">p2</code>, <code class="bg-gray-100 px-1 rounded">p3</code>, and <code class="bg-gray-100 px-1 rounded">p4</code>, return <code class="bg-gray-100 px-1 rounded">true</code> if the four points construct a square.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    The coordinate of a point <code class="bg-gray-100 px-1 rounded">pi</code> is represented as <code class="bg-gray-100 px-1 rounded">[xi, yi]</code>. The input is not guaranteed to be in any specific order.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    A valid square has four equal sides with positive length and four equal angles (90-degree angles).
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 1:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,1]
+Output: true</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 2:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,12]
+Output: false</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Example 3:</h2>
+                <pre class="bg-gray-100 p-4 rounded"><code>Input: p1 = [1,0], p2 = [-1,0], p3 = [0,1], p4 = [0,-1]
+Output: true</code></pre>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">p1.length == p2.length == p3.length == p4.length == 2</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">-10<sup>4</sup> <= x<sub>i</sub>, y<sub>i</sub> <= 10<sup>4</sup></code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">Solution</h2>
+            
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def validSquare(self, p1: List[int], p2: List[int], p3: List[int], p4: List[int]) -> bool:
+        def dist(p1: List[int], p2: List[int]) -> int:
+            return (p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1])
+        
+        points = [p1, p2, p3, p4]
+        distances = set()
+        
+        for i in range(4):
+            for j in range(i + 1, 4):
+                d = dist(points[i], points[j])
+                if d == 0:  # Points cannot be the same
+                    return False
+                distances.add(d)
+                
+        # A square has 4 equal sides and 2 equal diagonals
+        return len(distances) == 2</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we always process 4 points.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We store at most 6 distances.</p>
+                </div>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private int dist(int[] p1, int[] p2) {
+        return (p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
+    }
+    
+    public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
+        int[][] points = {p1, p2, p3, p4};
+        Set<Integer> distances = new HashSet<>();
+        
+        for (int i = 0; i < 4; i++) {
+            for (int j = i + 1; j < 4; j++) {
+                int d = dist(points[i], points[j]);
+                if (d == 0) {  // Points cannot be the same
+                    return false;
+                }
+                distances.add(d);
+            }
+        }
+        
+        // A square has 4 equal sides and 2 equal diagonals
+        return distances.size() == 2;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we always process 4 points.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We store at most 6 distances.</p>
+                </div>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+private:
+    int dist(vector<int>& p1, vector<int>& p2) {
+        return (p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
+    }
+    
+public:
+    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
+        vector<vector<int>> points = {p1, p2, p3, p4};
+        unordered_set<int> distances;
+        
+        for (int i = 0; i < 4; i++) {
+            for (int j = i + 1; j < 4; j++) {
+                int d = dist(points[i], points[j]);
+                if (d == 0) {  // Points cannot be the same
+                    return false;
+                }
+                distances.insert(d);
+            }
+        }
+        
+        // A square has 4 equal sides and 2 equal diagonals
+        return distances.size() == 2;
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we always process 4 points.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We store at most 6 distances.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} p1
+ * @param {number[]} p2
+ * @param {number[]} p3
+ * @param {number[]} p4
+ * @return {boolean}
+ */
+var validSquare = function(p1, p2, p3, p4) {
+    const dist = (p1, p2) => {
+        return (p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
+    };
+    
+    const points = [p1, p2, p3, p4];
+    const distances = new Set();
+    
+    for (let i = 0; i < 4; i++) {
+        for (let j = i + 1; j < 4; j++) {
+            const d = dist(points[i], points[j]);
+            if (d === 0) {  // Points cannot be the same
+                return false;
+            }
+            distances.add(d);
+        }
+    }
+    
+    // A square has 4 equal sides and 2 equal diagonals
+    return distances.size === 2;
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we always process 4 points.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We store at most 6 distances.</p>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private int Dist(int[] p1, int[] p2) {
+        return (p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
+    }
+    
+    public bool ValidSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
+        int[][] points = new int[][] { p1, p2, p3, p4 };
+        var distances = new HashSet<int>();
+        
+        for (int i = 0; i < 4; i++) {
+            for (int j = i + 1; j < 4; j++) {
+                int d = Dist(points[i], points[j]);
+                if (d == 0) {  // Points cannot be the same
+                    return false;
+                }
+                distances.Add(d);
+            }
+        }
+        
+        // A square has 4 equal sides and 2 equal diagonals
+        return distances.Count == 2;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Time Complexity: O(1)</h4>
+                    <p class="text-gray-700">Since we always process 4 points.</p>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Space Complexity: O(1)</h4>
+                    <p class="text-gray-700">We store at most 6 distances.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach Explanation -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Approach Explanation</h2>
+            
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    The solution uses distance-based validation:
+                </p>
+                
+                <ol class="list-decimal list-inside text-gray-700 ml-4">
+                    <li>Key Insights:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Square properties</li>
+                            <li>Distance calculation</li>
+                            <li>Set of distances</li>
+                            <li>Equal sides</li>
+                        </ul>
+                    </li>
+                    <li>Algorithm Steps:
+                        <ul class="list-disc list-inside ml-8">
+                            <li>Calculate distances</li>
+                            <li>Check duplicates</li>
+                            <li>Validate count</li>
+                            <li>Handle edge cases</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p class="text-gray-700 mt-4">
+                    Implementation Details:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Distance function</li>
+                        <li>Point comparison</li>
+                        <li>Set operations</li>
+                        <li>Validation logic</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Optimization Insights:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Early return</li>
+                        <li>No sorting needed</li>
+                        <li>Constant space</li>
+                        <li>Efficient checks</li>
+                    </ul>
+                </p>
+
+                <p class="text-gray-700 mt-4">
+                    Edge Cases:
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Same points</li>
+                        <li>Line formation</li>
+                        <li>Rectangle</li>
+                        <li>Rhombus</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2024 LeetCodee. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

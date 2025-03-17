@@ -1,0 +1,343 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soup Servings - LeetCodee Solution</title>
+    <meta name="description" content="Find the probability that soup A will be empty first, plus half the probability that A and B become empty at the same time.  Optimized solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, soup servings, dynamic programming, probability, algorithm, python, java, c++, javascript, c#, solution, coding, competitive programming">
+    <meta property="og:title" content="Soup Servings - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/soup-servings/">
+    <meta property="og:description" content="Find the probability that soup A will be empty first, plus half the probability that A and B become empty at the same time.  Optimized solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/soup-servings/">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">808. Soup Servings</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    There are two types of soup: type A and type B. Initially, we have n ml of each type of soup. There are four kinds of operations:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>Serve 100 ml of soup A and 0 ml of soup B</li>
+                    <li>Serve 75 ml of soup A and 25 ml of soup B</li>
+                    <li>Serve 50 ml of soup A and 50 ml of soup B</li>
+                    <li>Serve 25 ml of soup A and 75 ml of soup B</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    When we serve some soup, we give it to someone, and we no longer have it. Each turn, we will choose from the four operations with an equal probability 0.25. If the remaining volume of soup is not enough to complete the operation, we will serve as much as possible. We stop once we no longer have some quantity of both types of soup.
+                </p>
+                <p class="text-gray-700">
+                    Note that we do not have the operation where all 100 ml's of soup B are used first.
+                </p>
+                <p class="text-gray-700">
+                    Return the probability that soup A will be empty first, plus half the probability that A and B become empty at the same time. Answers within 10^-5 of the actual answer will be accepted.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 50
+Output: 0.62500
+Explanation: If we choose the first two operations, A will become empty first.
+For the third operation, A and B will become empty at the same time.
+For the fourth operation, B will become empty first.
+So the total probability of A becoming empty first plus half the probability that A and B become empty at the same time is 0.25 * (1 + 1 + 0.5 + 0) = 0.625.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: n = 100
+Output: 0.71875</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>0 ≤ n ≤ 10^9</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def soupServings(self, n: int) -> float:
+        if n >= 5000:  # For large n, probability approaches 1
+            return 1.0
+            
+        n = (n + 24) // 25  # Convert to portions of 25ml
+        
+        @cache
+        def dp(a: int, b: int) -> float:
+            if a <= 0 and b <= 0:
+                return 0.5
+            if a <= 0:
+                return 1.0
+            if b <= 0:
+                return 0.0
+                
+            return 0.25 * (dp(a-4, b) +      # Serve 100ml of A
+                          dp(a-3, b-1) +      # Serve 75ml of A, 25ml of B
+                          dp(a-2, b-2) +      # Serve 50ml of A and B
+                          dp(a-1, b-3))       # Serve 25ml of A, 75ml of B
+        
+        return dp(n, n)</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with memoization</li>
+                    <li>Converts input to portions of 25ml to simplify calculations</li>
+                    <li>For large n (≥ 5000), returns 1.0 as the probability approaches 1</li>
+                    <li>Time complexity: O(n²) for n < 5000, O(1) for n ≥ 5000</li>
+                    <li>Space complexity: O(n²)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private Double[][] memo;
+    
+    public double soupServings(int n) {
+        if (n >= 5000) {
+            return 1.0;
+        }
+        
+        n = (n + 24) / 25;  // Convert to portions of 25ml
+        memo = new Double[n + 1][n + 1];
+        
+        return dp(n, n);
+    }
+    
+    private double dp(int a, int b) {
+        if (a <= 0 && b <= 0) {
+            return 0.5;
+        }
+        if (a <= 0) {
+            return 1.0;
+        }
+        if (b <= 0) {
+            return 0.0;
+        }
+        
+        if (memo[a][b] != null) {
+            return memo[a][b];
+        }
+        
+        memo[a][b] = 0.25 * (dp(a-4, b) +    // Serve 100ml of A
+                             dp(a-3, b-1) +    // Serve 75ml of A, 25ml of B
+                             dp(a-2, b-2) +    // Serve 50ml of A and B
+                             dp(a-1, b-3));    // Serve 25ml of A, 75ml of B
+        
+        return memo[a][b];
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    double soupServings(int n) {
+        if (n >= 5000) {
+            return 1.0;
+        }
+        
+        n = (n + 24) / 25;  // Convert to portions of 25ml
+        memo = vector<vector<double>>(n + 1, vector<double>(n + 1, -1));
+        
+        return dp(n, n);
+    }
+    
+private:
+    vector<vector<double>> memo;
+    
+    double dp(int a, int b) {
+        if (a <= 0 && b <= 0) {
+            return 0.5;
+        }
+        if (a <= 0) {
+            return 1.0;
+        }
+        if (b <= 0) {
+            return 0.0;
+        }
+        
+        if (memo[a][b] != -1) {
+            return memo[a][b];
+        }
+        
+        memo[a][b] = 0.25 * (dp(a-4, b) +    // Serve 100ml of A
+                             dp(a-3, b-1) +    // Serve 75ml of A, 25ml of B
+                             dp(a-2, b-2) +    // Serve 50ml of A and B
+                             dp(a-1, b-3));    // Serve 25ml of A, 75ml of B
+        
+        return memo[a][b];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number} n
+ * @return {number}
+ */
+var soupServings = function(n) {
+    if (n >= 5000) {
+        return 1.0;
+    }
+    
+    n = Math.floor((n + 24) / 25);  // Convert to portions of 25ml
+    const memo = new Map();
+    
+    const dp = (a, b) => {
+        if (a <= 0 && b <= 0) {
+            return 0.5;
+        }
+        if (a <= 0) {
+            return 1.0;
+        }
+        if (b <= 0) {
+            return 0.0;
+        }
+        
+        const key = a * 10000 + b;
+        if (memo.has(key)) {
+            return memo.get(key);
+        }
+        
+        const result = 0.25 * (dp(a-4, b) +    // Serve 100ml of A
+                              dp(a-3, b-1) +    // Serve 75ml of A, 25ml of B
+                              dp(a-2, b-2) +    // Serve 50ml of A and B
+                              dp(a-1, b-3));    // Serve 25ml of A, 75ml of B
+        
+        memo.set(key, result);
+        return result;
+    };
+    
+    return dp(n, n);
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private double[,] memo;
+    
+    public double SoupServings(int n) {
+        if (n >= 5000) {
+            return 1.0;
+        }
+        
+        n = (n + 24) / 25;  // Convert to portions of 25ml
+        memo = new double[n + 1, n + 1];
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= n; j++) {
+                memo[i, j] = -1;
+            }
+        }
+        
+        return Dp(n, n);
+    }
+    
+    private double Dp(int a, int b) {
+        if (a <= 0 && b <= 0) {
+            return 0.5;
+        }
+        if (a <= 0) {
+            return 1.0;
+        }
+        if (b <= 0) {
+            return 0.0;
+        }
+        
+        if (memo[a, b] != -1) {
+            return memo[a, b];
+        }
+        
+        memo[a, b] = 0.25 * (Dp(a-4, b) +    // Serve 100ml of A
+                             Dp(a-3, b-1) +    // Serve 75ml of A, 25ml of B
+                             Dp(a-2, b-2) +    // Serve 50ml of A and B
+                             Dp(a-1, b-3));    // Serve 25ml of A, 75ml of B
+        
+        return memo[a, b];
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses dynamic programming with memoization</li>
+                    <li>Converts input to portions of 25ml for simpler calculations</li>
+                    <li>Optimizes for large inputs by returning 1.0 when n ≥ 5000</li>
+                    <li>Time complexity: O(n²) for n < 5000, O(1) for n ≥ 5000</li>
+                    <li>Space complexity: O(n²)</li>
+                </ul>
+            </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "808. Soup Servings",
+          "author": {
+            "@type": "Person",
+            "name": "LeetCodee"
+          },
+          "datePublished": "2023-10-27",
+          "description": "Find the probability that soup A will be empty first, plus half the probability that A and B become empty at the same time.  Optimized solution with Python, Java, C++, JavaScript, and C# code examples.",
+          "articleBody": "There are two types of soup: type A and type B. Initially, we have n ml of each type of soup. There are four kinds of operations: Serve 100 ml of soup A and 0 ml of soup B; Serve 75 ml of soup A and 25 ml of soup B; Serve 50 ml of soup A and 50 ml of soup B; Serve 25 ml of soup A and 75 ml of soup B. When we serve some soup, we give it to someone, and we no longer have it. Each turn, we will choose from the four operations with an equal probability 0.25. If the remaining volume of soup is not enough to complete the operation, we will serve as much as possible. We stop once we no longer have some quantity of both types of soup. Note that we do not have the operation where all 100 ml's of soup B are used first. Return the probability that soup A will be empty first, plus half the probability that A and B become empty at the same time. Answers within 10^-5 of the actual answer will be accepted.",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://leetcodee.com/problems/soup-servings/"
+          }
+        }
+        </script>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

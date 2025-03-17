@@ -1,0 +1,651 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Offers - LeetCodee Solution</title>
+    <meta name="description" content="Find the lowest price to buy items with special offers using dynamic programming. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="LeetCode, Shopping Offers, dynamic programming, Python, Java, C++, JavaScript, C#, algorithm, solution, coding, interview">
+    <meta property="og:title" content="Shopping Offers - LeetCodee Solution">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leetcodee.com/problems/shopping-offers/">
+    <meta property="og:description" content="Find the lowest price to buy items with special offers using dynamic programming. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:site_name" content="LeetCodee">
+    <link rel="canonical" href="https://leetcodee.com/problems/shopping-offers/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Shopping Offers - LeetCodee Solution",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",
+      "dateModified": "2023-10-27",
+      "description": "Find the lowest price to buy items with special offers using dynamic programming. LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "keywords": "LeetCode, Shopping Offers, dynamic programming, Python, Java, C++, JavaScript, C#, algorithm, solution, coding, interview",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/shopping-offers/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">638. Shopping Offers</h1>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1068871795581451"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    In LeetCode Store, there are <code class="bg-gray-100 px-1 rounded">n</code> items to sell. Each item has a price. However, there are some special offers, and a special offer consists of one or more different kinds of items with a sale price.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are given an integer array <code class="bg-gray-100 px-1 rounded">price</code> where <code class="bg-gray-100 px-1 rounded">price[i]</code> is the price of the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> item, and an integer array <code class="bg-gray-100 px-1 rounded">needs</code> where <code class="bg-gray-100 px-1 rounded">needs[i]</code> is the number of pieces of the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> item you want to buy.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    You are also given an array <code class="bg-gray-100 px-1 rounded">special</code> where <code class="bg-gray-100 px-1 rounded">special[i]</code> is of size <code class="bg-gray-100 px-1 rounded">n + 1</code> where <code class="bg-gray-100 px-1 rounded">special[i][j]</code> is the number of pieces of the <code class="bg-gray-100 px-1 rounded">j<sup>th</sup></code> item in the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> offer and <code class="bg-gray-100 px-1 rounded">special[i][n]</code> (i.e., the last integer in the array) is the price of the <code class="bg-gray-100 px-1 rounded">i<sup>th</sup></code> special offer.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Return the lowest price you have to pay for exactly certain items as given, where you could make optimal use of the special offers. You are not allowed to buy more items than you want, even if that would lower the overall price. You could use any of the special offers as many times as you want.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: price = [2,5], special = [[3,0,5],[1,2,10]], needs = [3,2]
+Output: 14
+Explanation: There are two kinds of items, A and B. Their prices are $2 and $5 respectively. 
+In special offer 1, you can pay $5 for 3A and 0B
+In special offer 2, you can pay $10 for 1A and 2B. 
+You need to buy 3A and 2B, so you may pay $10 for 1A and 2B (special offer #2), and $4 for 2A.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: price = [2,3,4], special = [[1,1,0,4],[2,2,1,9]], needs = [1,2,1]
+Output: 11
+Explanation: The price of A is $2, and $3 for B, and $4 for C. 
+You may pay $4 for 1A and 1B, and $9 for 2A ,2B and 1C. 
+You need to buy 1A ,2B and 1C, so you may pay $4 for 1A and 1B (special offer #1), and $3 for 1B, $4 for 1C. 
+You cannot add more items, though only $9 for 2A ,2B and 1C.</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li><code class="bg-gray-100 px-1 rounded">n == price.length == needs.length</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 ≤ n ≤ 6</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 ≤ price[i], needs[i] ≤ 10</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">1 ≤ special.length ≤ 100</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">special[i].length == n + 1</code></li>
+                    <li><code class="bg-gray-100 px-1 rounded">0 ≤ special[i][j] ≤ 50</code></li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
+        def can_use_offer(offer, remaining):
+            return all(o <= r for o, r in zip(offer[:-1], remaining))
+        
+        @cache
+        def dp(remaining):
+            # Base case: buy everything at original price
+            min_price = sum(p * r for p, r in zip(price, remaining))
+            
+            # Try each special offer
+            for offer in special:
+                if can_use_offer(offer, remaining):
+                    # Calculate remaining needs after using this offer
+                    new_remaining = tuple(r - o for r, o in zip(remaining, offer[:-1]))
+                    min_price = min(min_price, offer[-1] + dp(new_remaining))
+            
+            return min_price
+        
+        return dp(tuple(needs))</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Bottom-up DP):</h4>
+                    <pre class="language-python"><code>class Solution:
+    def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
+        def encode_needs(needs):
+            result = 0
+            for n in needs:
+                result = result * 11 + n  # Since needs[i] <= 10
+            return result
+        
+        def decode_needs(encoded):
+            result = []
+            for _ in range(len(needs)):
+                result.append(encoded % 11)
+                encoded //= 11
+            return result[::-1]
+        
+        def can_use_offer(offer, needs):
+            return all(o <= n for o, n in zip(offer[:-1], needs))
+        
+        # Initialize dp with base prices
+        dp = {}
+        target = encode_needs(needs)
+        
+        # Bottom-up DP
+        for encoded in range(target + 1):
+            current_needs = decode_needs(encoded)
+            # Base case: buy everything at original price
+            dp[encoded] = sum(p * n for p, n in zip(price, current_needs))
+            
+            # Try each special offer
+            for offer in special:
+                if can_use_offer(offer, current_needs):
+                    remaining = [n - o for n, o in zip(current_needs, offer[:-1])]
+                    dp[encoded] = min(dp[encoded], 
+                                    offer[-1] + dp[encode_needs(remaining)])
+        
+        return dp[target]</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Top-down solution uses @cache for memoization</li>
+                    <li>Bottom-up solution uses state encoding for efficient storage</li>
+                    <li>Time complexity: O(m * n * k) where m is max needs, n is number of items, k is number of special offers</li>
+                    <li>Space complexity: O(m^n) for storing states</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    private Map<String, Integer> memo = new HashMap<>();
+    private int[] price;
+    private List<List<Integer>> special;
+    
+    public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
+        this.price = price.stream().mapToInt(i -> i).toArray();
+        this.special = special;
+        return dp(needs.stream().mapToInt(i -> i).toArray());
+    }
+    
+    private int dp(int[] remaining) {
+        String key = Arrays.toString(remaining);
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
+        
+        // Base case: buy everything at original price
+        int minPrice = 0;
+        for (int i = 0; i < remaining.length; i++) {
+            minPrice += price[i] * remaining[i];
+        }
+        
+        // Try each special offer
+        for (List<Integer> offer : special) {
+            int[] newRemaining = remaining.clone();
+            boolean canUseOffer = true;
+            
+            // Check if we can use this offer
+            for (int i = 0; i < remaining.length; i++) {
+                if (offer.get(i) > remaining[i]) {
+                    canUseOffer = false;
+                    break;
+                }
+                newRemaining[i] -= offer.get(i);
+            }
+            
+            if (canUseOffer) {
+                minPrice = Math.min(minPrice, 
+                    offer.get(remaining.length) + dp(newRemaining));
+            }
+        }
+        
+        memo.put(key, minPrice);
+        return minPrice;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Iterative):</h4>
+                    <pre class="language-java"><code>class Solution {
+    public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
+        int n = price.size();
+        
+        // Filter out inefficient offers
+        List<List<Integer>> filteredSpecial = new ArrayList<>();
+        for (List<Integer> offer : special) {
+            int normalPrice = 0;
+            for (int i = 0; i < n; i++) {
+                normalPrice += offer.get(i) * price.get(i);
+            }
+            if (normalPrice > offer.get(n)) {
+                filteredSpecial.add(offer);
+            }
+        }
+        
+        return helper(price, filteredSpecial, needs, new HashMap<>());
+    }
+    
+    private int helper(List<Integer> price, List<List<Integer>> special, 
+                      List<Integer> needs, Map<List<Integer>, Integer> memo) {
+        if (memo.containsKey(needs)) {
+            return memo.get(needs);
+        }
+        
+        int j = 0, minPrice = dot(price, needs);
+        
+        for (List<Integer> offer : special) {
+            ArrayList<Integer> clone = new ArrayList<>(needs);
+            int i = 0;
+            
+            for (i = 0; i < needs.size(); i++) {
+                int remain = clone.get(i) - offer.get(i);
+                if (remain < 0) break;
+                clone.set(i, remain);
+            }
+            
+            if (i == needs.size()) {
+                minPrice = Math.min(minPrice, 
+                    offer.get(i) + helper(price, special, clone, memo));
+            }
+        }
+        
+        memo.put(needs, minPrice);
+        return minPrice;
+    }
+    
+    private int dot(List<Integer> a, List<Integer> b) {
+        int sum = 0;
+        for (int i = 0; i < a.size(); i++) {
+            sum += a.get(i) * b.get(i);
+        }
+        return sum;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+    unordered_map<string, int> memo;
+    vector<int> price;
+    vector<vector<int>> special;
+    
+    string encode(vector<int>& needs) {
+        string key;
+        for (int n : needs) {
+            key += to_string(n) + ",";
+        }
+        return key;
+    }
+    
+    bool canUseOffer(const vector<int>& offer, const vector<int>& needs) {
+        for (int i = 0; i < needs.size(); i++) {
+            if (offer[i] > needs[i]) return false;
+        }
+        return true;
+    }
+    
+    int dp(vector<int>& needs) {
+        string key = encode(needs);
+        if (memo.count(key)) return memo[key];
+        
+        // Base case: buy everything at original price
+        int minPrice = 0;
+        for (int i = 0; i < needs.size(); i++) {
+            minPrice += price[i] * needs[i];
+        }
+        
+        // Try each special offer
+        for (const auto& offer : special) {
+            if (canUseOffer(offer, needs)) {
+                vector<int> remaining = needs;
+                for (int i = 0; i < needs.size(); i++) {
+                    remaining[i] -= offer[i];
+                }
+                minPrice = min(minPrice, 
+                    offer.back() + dp(remaining));
+            }
+        }
+        
+        return memo[key] = minPrice;
+    }
+    
+public:
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
+        this->price = price;
+        this->special = special;
+        return dp(needs);
+    }
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Bit Manipulation):</h4>
+                    <pre class="language-cpp"><code>class Solution {
+public:
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
+        int n = price.size();
+        vector<int> maxNeeds(needs);
+        
+        // Filter out inefficient offers and offers exceeding needs
+        vector<vector<int>> filteredSpecial;
+        for (const auto& offer : special) {
+            bool valid = true;
+            int normalPrice = 0;
+            
+            for (int i = 0; i < n && valid; i++) {
+                if (offer[i] > maxNeeds[i]) valid = false;
+                normalPrice += offer[i] * price[i];
+            }
+            
+            if (valid && normalPrice > offer[n]) {
+                filteredSpecial.push_back(offer);
+            }
+        }
+        
+        // Create state space
+        int states = 1;
+        for (int i = 0; i < n; i++) {
+            states *= (maxNeeds[i] + 1);
+        }
+        
+        // DP array
+        vector<int> dp(states, INT_MAX);
+        dp[0] = 0;
+        
+        // Generate all possible states
+        for (int state = 0; state < states; state++) {
+            if (dp[state] == INT_MAX) continue;
+            
+            // Try each special offer
+            for (const auto& offer : filteredSpecial) {
+                int nextState = state;
+                bool valid = true;
+                
+                // Calculate next state
+                for (int i = 0, mul = 1; i < n && valid; i++) {
+                    int count = (state / mul) % (maxNeeds[i] + 1);
+                    count += offer[i];
+                    if (count > maxNeeds[i]) valid = false;
+                    nextState += offer[i] * mul;
+                    mul *= (maxNeeds[i] + 1);
+                }
+                
+                if (valid) {
+                    dp[nextState] = min(dp[nextState], dp[state] + offer[n]);
+                }
+            }
+            
+            // Try buying single items
+            for (int i = 0, mul = 1; i < n; i++) {
+                int count = (state / mul) % (maxNeeds[i] + 1);
+                if (count < maxNeeds[i]) {
+                    int nextState = state + mul;
+                    dp[nextState] = min(dp[nextState], dp[state] + price[i]);
+                }
+                mul *= (maxNeeds[i] + 1);
+            }
+        }
+        
+        // Calculate final state
+        int finalState = 0;
+        for (int i = 0, mul = 1; i < n; i++) {
+            finalState += maxNeeds[i] * mul;
+            mul *= (maxNeeds[i] + 1);
+        }
+        
+        return dp[finalState];
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {number[]} price
+ * @param {number[][]} special
+ * @param {number[]} needs
+ * @return {number}
+ */
+var shoppingOffers = function(price, special, needs) {
+    const memo = new Map();
+    
+    const encodeNeeds = (needs) => needs.join(',');
+    
+    const canUseOffer = (offer, needs) => {
+        return needs.every((n, i) => offer[i] <= n);
+    };
+    
+    const dp = (remaining) => {
+        const key = encodeNeeds(remaining);
+        if (memo.has(key)) return memo.get(key);
+        
+        // Base case: buy everything at original price
+        let minPrice = remaining.reduce((sum, need, i) => sum + need * price[i], 0);
+        
+        // Try each special offer
+        for (const offer of special) {
+            if (canUseOffer(offer, remaining)) {
+                const newRemaining = remaining.map((r, i) => r - offer[i]);
+                minPrice = Math.min(minPrice, 
+                    offer[offer.length - 1] + dp(newRemaining));
+            }
+        }
+        
+        memo.set(key, minPrice);
+        return minPrice;
+    };
+    
+    return dp(needs);
+};</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution (Iterative):</h4>
+                    <pre class="language-javascript"><code>/**
+ * @param {number[]} price
+ * @param {number[][]} special
+ * @param {number[]} needs
+ * @return {number}
+ */
+var shoppingOffers = function(price, special, needs) {
+    const n = price.length;
+    
+    // Filter out inefficient offers
+    const filteredSpecial = special.filter(offer => {
+        const normalPrice = offer.slice(0, n)
+            .reduce((sum, count, i) => sum + count * price[i], 0);
+        return normalPrice > offer[n];
+    });
+    
+    const helper = (currentNeeds, memo = new Map()) => {
+        const key = currentNeeds.join(',');
+        if (memo.has(key)) return memo.get(key);
+        
+        let minPrice = currentNeeds.reduce((sum, need, i) => sum + need * price[i], 0);
+        
+        for (const offer of filteredSpecial) {
+            const remaining = currentNeeds.map((need, i) => need - offer[i]);
+            
+            if (remaining.every(r => r >= 0)) {
+                minPrice = Math.min(minPrice, 
+                    offer[n] + helper(remaining, memo));
+            }
+        }
+        
+        memo.set(key, minPrice);
+        return minPrice;
+    };
+    
+    return helper(needs);
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    private Dictionary<string, int> memo;
+    private int[] price;
+    private IList<IList<int>> special;
+    
+    public int ShoppingOffers(IList<int> price, IList<IList<int>> special, IList<int> needs) {
+        this.memo = new Dictionary<string, int>();
+        this.price = price.ToArray();
+        this.special = special;
+        return Dp(needs.ToArray());
+    }
+    
+    private string EncodeNeeds(int[] needs) {
+        return string.Join(",", needs);
+    }
+    
+    private bool CanUseOffer(IList<int> offer, int[] needs) {
+        for (int i = 0; i < needs.Length; i++) {
+            if (offer[i] > needs[i]) return false;
+        }
+        return true;
+    }
+    
+    private int Dp(int[] remaining) {
+        string key = EncodeNeeds(remaining);
+        if (memo.ContainsKey(key)) return memo[key];
+        
+        // Base case: buy everything at original price
+        int minPrice = 0;
+        for (int i = 0; i < remaining.Length; i++) {
+            minPrice += price[i] * remaining[i];
+        }
+        
+        // Try each special offer
+        foreach (var offer in special) {
+            if (CanUseOffer(offer, remaining)) {
+                var newRemaining = (int[])remaining.Clone();
+                for (int i = 0; i < remaining.Length; i++) {
+                    newRemaining[i] -= offer[i];
+                }
+                minPrice = Math.Min(minPrice, 
+                    offer[offer.Count - 1] + Dp(newRemaining));
+            }
+        }
+        
+        memo[key] = minPrice;
+        return minPrice;
+    }
+}</code></pre>
+                
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-2">Alternative Solution using ValueTuple:</h4>
+                    <pre class="language-csharp"><code>public class Solution {
+    private Dictionary<(int, int, int, int, int, int), int> memo;
+    
+    public int ShoppingOffers(IList<int> price, IList<IList<int>> special, IList<int> needs) {
+        memo = new Dictionary<(int, int, int, int, int, int), int>();
+        
+        // Filter out inefficient offers
+        var filteredSpecial = special.Where(offer => {
+            int normalPrice = 0;
+            for (int i = 0; i < price.Count; i++) {
+                normalPrice += offer[i] * price[i];
+            }
+            return normalPrice > offer[price.Count];
+        }).ToList();
+        
+        return Helper(price, filteredSpecial, needs.ToArray());
+    }
+    
+    private int Helper(IList<int> price, IList<IList<int>> special, int[] needs) {
+        var key = needs.Length switch {
+            1 => (needs[0], 0, 0, 0, 0, 0),
+            2 => (needs[0], needs[1], 0, 0, 0, 0),
+            3 => (needs[0], needs[1], needs[2], 0, 0, 0),
+            4 => (needs[0], needs[1], needs[2], needs[3], 0, 0),
+            5 => (needs[0], needs[1], needs[2], needs[3], needs[4], 0),
+            _ => (needs[0], needs[1], needs[2], needs[3], needs[4], needs[5])
+        };
+        
+        if (memo.ContainsKey(key)) return memo[key];
+        
+        int minPrice = 0;
+        for (int i = 0; i < needs.Length; i++) {
+            minPrice += needs[i] * price[i];
+        }
+        
+        foreach (var offer in special) {
+            var remaining = (int[])needs.Clone();
+            bool canUse = true;
+            
+            for (int i = 0; i < needs.Length && canUse; i++) {
+                remaining[i] -= offer[i];
+                if (remaining[i] < 0) canUse = false;
+            }
+            
+            if (canUse) {
+                minPrice = Math.Min(minPrice, 
+                    offer[needs.Length] + Helper(price, special, remaining));
+            }
+        }
+        
+        memo[key] = minPrice;
+        return minPrice;
+    }
+}</code></pre>
+                    
+                    <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>First solution uses string-based memoization for simplicity</li>
+                        <li>Second solution uses ValueTuple for more efficient state storage</li>
+                        <li>Both solutions filter out inefficient special offers</li>
+                        <li>Time complexity is reduced by memoization and offer filtering</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortest Path to Get All Keys - LeetCodee Solution</title>
+    <meta name="description" content="Find the shortest path to collect all keys in a grid.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta name="keywords" content="leetcode, shortest path, all keys, grid, algorithm, solution, python, java, cpp, javascript, csharp, coding, programming">
+    <link rel="canonical" href="https://leetcodee.com/problems/shortest-path-to-get-all-keys/">
+    <meta property="og:title" content="Shortest Path to Get All Keys - LeetCodee Solution">
+    <meta property="og:url" content="https://leetcodee.com/problems/shortest-path-to-get-all-keys/">
+    <meta property="og:description" content="Find the shortest path to collect all keys in a grid.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://leetcodee.com/your-image.jpg">  <!-- Replace with actual image URL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7SQYSXXMM');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Shortest Path to Get All Keys",
+      "author": {
+        "@type": "Person",
+        "name": "LeetCodee"
+      },
+      "datePublished": "2023-10-27",  <!-- Replace with actual date -->
+      "dateModified": "2023-10-27", <!-- Replace with actual date -->
+      "description": "Find the shortest path to collect all keys in a grid.  LeetCodee solution with Python, Java, C++, JavaScript, and C# code examples.",
+      "keywords": "leetcode, shortest path, all keys, grid, algorithm, solution, python, java, cpp, javascript, csharp, coding, programming",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://leetcodee.com/problems/shortest-path-to-get-all-keys/"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <a href="/" class="text-xl font-bold">LeetCodee</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-4">864. Shortest Path to Get All Keys</h1>
+
+            <div class="solution-nav mb-6">
+                Jump to Solution:
+                <a href="#python" class="ml-2 text-blue-600 hover:text-blue-800">Python</a>
+                <a href="#java" class="ml-2 text-blue-600 hover:text-blue-800">Java</a>
+                <a href="#cpp" class="ml-2 text-blue-600 hover:text-blue-800">C++</a>
+                <a href="#javascript" class="ml-2 text-blue-600 hover:text-blue-800">JavaScript</a>
+                <a href="#csharp" class="ml-2 text-blue-600 hover:text-blue-800">C#</a>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Problem Description</h2>
+                <p class="text-gray-700 mb-4">
+                    You are given an m x n grid grid where:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mb-4">
+                    <li>'.' is an empty cell.</li>
+                    <li>'#' is a wall.</li>
+                    <li>'@' is the starting point.</li>
+                    <li>Lowercase letters represent keys.</li>
+                    <li>Uppercase letters represent locks.</li>
+                </ul>
+                <p class="text-gray-700 mb-4">
+                    You start at the starting point and one move consists of walking one space in one of the four cardinal directions. You cannot walk outside the grid, or walk into a wall.
+                </p>
+                <p class="text-gray-700">
+                    If you walk over a key, you can pick it up and you cannot walk over a lock unless you have its corresponding key.
+                    Return the lowest number of moves to acquire all keys. If it is impossible, return -1.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Examples:</h2>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 1:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = ["@.a.#","###.#","b.A.B"]
+Output: 8
+Explanation: Note that the goal is to obtain all the keys not to open all the locks.</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 2:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = ["@..aA","..B#.","....b"]
+Output: 6</pre>
+                </div>
+                <div class="mb-4">
+                    <p class="font-semibold">Example 3:</p>
+                    <pre class="bg-gray-100 p-4 rounded">
+Input: grid = ["@Aa"]
+Output: -1</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Constraints:</h2>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>m == grid.length</li>
+                    <li>n == grid[i].length</li>
+                    <li>1 ≤ m, n ≤ 30</li>
+                    <li>grid[i][j] is either an empty cell, a wall, the starting point, a key, or a lock.</li>
+                    <li>The number of keys is in the range [1, 6].</li>
+                    <li>Each key has a different lowercase letter and its corresponding lock has the same letter in uppercase.</li>
+                    <li>The starting point '@' appears exactly once in the grid.</li>
+                </ul>
+            </div>
+
+            <!-- Python Solution -->
+            <div id="python" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Python Solution</h3>
+                <pre class="language-python"><code>class Solution:
+    def shortestPathAllKeys(self, grid: List[str]) -> int:
+        m, n = len(grid), len(grid[0])
+        # Find starting position and count keys
+        start_x = start_y = key_count = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '@':
+                    start_x, start_y = i, j
+                elif grid[i][j].islower():
+                    key_count += 1
+        
+        # State: (x, y, keys)
+        # keys is a bitmask where the i-th bit represents whether we have the i-th key
+        queue = deque([(start_x, start_y, 0, 0)])  # (x, y, keys, steps)
+        seen = {(start_x, start_y, 0)}
+        
+        while queue:
+            x, y, keys, steps = queue.popleft()
+            
+            # Try all four directions
+            for nx, ny in [(x+1,y), (x-1,y), (x,y+1), (x,y-1)]:
+                if 0 <= nx < m and 0 <= ny < n and grid[nx][ny] != '#':
+                    cell = grid[nx][ny]
+                    
+                    # If it's a lock and we don't have the key, skip
+                    if cell.isupper() and not (keys & (1 << (ord(cell.lower()) - ord('a')))):
+                        continue
+                    
+                    new_keys = keys
+                    # If it's a key, add it to our keyring
+                    if cell.islower():
+                        new_keys |= 1 << (ord(cell) - ord('a'))
+                        if bin(new_keys).count('1') == key_count:
+                            return steps + 1
+                    
+                    if (nx, ny, new_keys) not in seen:
+                        seen.add((nx, ny, new_keys))
+                        queue.append((nx, ny, new_keys, steps + 1))
+        
+        return -1</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses BFS with state encoding (position + keys collected)</li>
+                    <li>Time complexity: O(m*n*2^k) where k is number of keys</li>
+                    <li>Space complexity: O(m*n*2^k)</li>
+                </ul>
+            </div>
+
+            <!-- Java Solution -->
+            <div id="java" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">Java Solution</h3>
+                <pre class="language-java"><code>class Solution {
+    public int shortestPathAllKeys(String[] grid) {
+        int m = grid.length, n = grid[0].length();
+        int startX = 0, startY = 0, keyCount = 0;
+        
+        // Find starting position and count keys
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                char cell = grid[i].charAt(j);
+                if (cell == '@') {
+                    startX = i;
+                    startY = j;
+                } else if (Character.isLowerCase(cell)) {
+                    keyCount++;
+                }
+            }
+        }
+        
+        // State: (x, y, keys)
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{startX, startY, 0, 0}); // (x, y, keys, steps)
+        Set<String> seen = new HashSet<>();
+        seen.add(startX + "," + startY + ",0");
+        
+        int[][] dirs = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+        
+        while (!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            int x = curr[0], y = curr[1], keys = curr[2], steps = curr[3];
+            
+            for (int[] dir : dirs) {
+                int nx = x + dir[0], ny = y + dir[1];
+                
+                if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx].charAt(ny) != '#') {
+                    char cell = grid[nx].charAt(ny);
+                    
+                    // If it's a lock and we don't have the key, skip
+                    if (Character.isUpperCase(cell) && 
+                        (keys & (1 << (Character.toLowerCase(cell) - 'a'))) == 0) {
+                        continue;
+                    }
+                    
+                    int newKeys = keys;
+                    // If it's a key, add it to our keyring
+                    if (Character.isLowerCase(cell)) {
+                        newKeys |= 1 << (cell - 'a');
+                        if (Integer.bitCount(newKeys) == keyCount) {
+                            return steps + 1;
+                        }
+                    }
+                    
+                    String state = nx + "," + ny + "," + newKeys;
+                    if (!seen.contains(state)) {
+                        seen.add(state);
+                        queue.offer(new int[]{nx, ny, newKeys, steps + 1});
+                    }
+                }
+            }
+        }
+        
+        return -1;
+    }
+}</code></pre>
+            </div>
+
+            <!-- C++ Solution -->
+            <div id="cpp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C++ Solution</h3>
+                <pre class="language-cpp"><code>class Solution {
+public:
+    int shortestPathAllKeys(vector<string>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        int startX = 0, startY = 0, keyCount = 0;
+        
+        // Find starting position and count keys
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '@') {
+                    startX = i;
+                    startY = j;
+                } else if (islower(grid[i][j])) {
+                    keyCount++;
+                }
+            }
+        }
+        
+        // State: (x, y, keys)
+        queue<vector<int>> q;
+        q.push({startX, startY, 0, 0}); // (x, y, keys, steps)
+        set<string> seen;
+        seen.insert(to_string(startX) + "," + to_string(startY) + ",0");
+        
+        vector<pair<int, int>> dirs = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+        
+        while (!q.empty()) {
+            auto curr = q.front();
+            q.pop();
+            int x = curr[0], y = curr[1], keys = curr[2], steps = curr[3];
+            
+            for (auto& [dx, dy] : dirs) {
+                int nx = x + dx, ny = y + dy;
+                
+                if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] != '#') {
+                    char cell = grid[nx][ny];
+                    
+                    // If it's a lock and we don't have the key, skip
+                    if (isupper(cell) && !(keys & (1 << (tolower(cell) - 'a')))) {
+                        continue;
+                    }
+                    
+                    int newKeys = keys;
+                    // If it's a key, add it to our keyring
+                    if (islower(cell)) {
+                        newKeys |= 1 << (cell - 'a');
+                        if (__builtin_popcount(newKeys) == keyCount) {
+                            return steps + 1;
+                        }
+                    }
+                    
+                    string state = to_string(nx) + "," + to_string(ny) + "," + 
+                                 to_string(newKeys);
+                    if (seen.find(state) == seen.end()) {
+                        seen.insert(state);
+                        q.push({nx, ny, newKeys, steps + 1});
+                    }
+                }
+            }
+        }
+        
+        return -1;
+    }
+};</code></pre>
+            </div>
+
+            <!-- JavaScript Solution -->
+            <div id="javascript" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">JavaScript Solution</h3>
+                <pre class="language-javascript"><code>/**
+ * @param {string[]} grid
+ * @return {number}
+ */
+var shortestPathAllKeys = function(grid) {
+    const m = grid.length, n = grid[0].length;
+    let startX = 0, startY = 0, keyCount = 0;
+    
+    // Find starting position and count keys
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j] === '@') {
+                startX = i;
+                startY = j;
+            } else if (/[a-z]/.test(grid[i][j])) {
+                keyCount++;
+            }
+        }
+    }
+    
+    // State: (x, y, keys)
+    const queue = [[startX, startY, 0, 0]]; // (x, y, keys, steps)
+    const seen = new Set([`${startX},${startY},0`]);
+    const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
+    
+    while (queue.length) {
+        const [x, y, keys, steps] = queue.shift();
+        
+        for (const [dx, dy] of dirs) {
+            const nx = x + dx, ny = y + dy;
+            
+            if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] !== '#') {
+                const cell = grid[nx][ny];
+                
+                // If it's a lock and we don't have the key, skip
+                if (/[A-Z]/.test(cell) && 
+                    !(keys & (1 << (cell.toLowerCase().charCodeAt(0) - 97)))) {
+                    continue;
+                }
+                
+                let newKeys = keys;
+                // If it's a key, add it to our keyring
+                if (/[a-z]/.test(cell)) {
+                    newKeys |= 1 << (cell.charCodeAt(0) - 97);
+                    if (newKeys.toString(2).split('1').length - 1 === keyCount) {
+                        return steps + 1;
+                    }
+                }
+                
+                const state = `${nx},${ny},${newKeys}`;
+                if (!seen.has(state)) {
+                    seen.add(state);
+                    queue.push([nx, ny, newKeys, steps + 1]);
+                }
+            }
+        }
+    }
+    
+    return -1;
+};</code></pre>
+            </div>
+
+            <!-- C# Solution -->
+            <div id="csharp" class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">C# Solution</h3>
+                <pre class="language-csharp"><code>public class Solution {
+    public int ShortestPathAllKeys(string[] grid) {
+        int m = grid.Length, n = grid[0].Length;
+        int startX = 0, startY = 0, keyCount = 0;
+        
+        // Find starting position and count keys
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '@') {
+                    startX = i;
+                    startY = j;
+                } else if (char.IsLower(grid[i][j])) {
+                    keyCount++;
+                }
+            }
+        }
+        
+        // State: (x, y, keys)
+        var queue = new Queue<(int x, int y, int keys, int steps)>();
+        queue.Enqueue((startX, startY, 0, 0));
+        var seen = new HashSet<string>();
+        seen.Add($"{startX},{startY},0");
+        
+        var dirs = new (int dx, int dy)[] { (1,0), (-1,0), (0,1), (0,-1) };
+        
+        while (queue.Count > 0) {
+            var (x, y, keys, steps) = queue.Dequeue();
+            
+            foreach (var (dx, dy) in dirs) {
+                int nx = x + dx, ny = y + dy;
+                
+                if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] != '#') {
+                    char cell = grid[nx][ny];
+                    
+                    // If it's a lock and we don't have the key, skip
+                    if (char.IsUpper(cell) && 
+                        (keys & (1 << (char.ToLower(cell) - 'a'))) == 0) {
+                        continue;
+                    }
+                    
+                    int newKeys = keys;
+                    // If it's a key, add it to our keyring
+                    if (char.IsLower(cell)) {
+                        newKeys |= 1 << (cell - 'a');
+                        if (System.Numerics.BitOperations.PopCount((uint)newKeys) == keyCount) {
+                            return steps + 1;
+                        }
+                    }
+                    
+                    string state = $"{nx},{ny},{newKeys}";
+                    if (!seen.Contains(state)) {
+                        seen.Add(state);
+                        queue.Enqueue((nx, ny, newKeys, steps + 1));
+                    }
+                }
+            }
+        }
+        
+        return -1;
+    }
+}</code></pre>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-4">Implementation Notes:</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Uses BFS with state encoding for position and collected keys</li>
+                    <li>Uses bit manipulation for efficient key tracking</li>
+                    <li>Time complexity: O(m*n*2^k) where k is number of keys</li>
+                    <li>Space complexity: O(m*n*2^k)</li>
+                </ul>
+            </div>
+        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1068871795581451"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-csharp.min.js"></script>
+    <script src="https://unpkg.com/deque@0.7.11/dist/deque.js"></script>
+</body>
+</html>
