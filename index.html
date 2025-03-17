@@ -1,21 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LeetCodee.com - Coming Soon</title>
-  <meta name="description" content="LeetCodee.com - Your ultimate destination for LeetCode solutions in all supported languages. Launching soon!">
-  <meta name="keywords" content="LeetCode, solutions, coding, algorithms, data structures, programming, competitive programming, interview preparation">
-  <link rel="canonical" href="https://www.leetcodee.com">
-
-  <!-- Open Graph Tags -->
-  <meta property="og:title" content="LeetCodee.com - Coming Soon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeetCodee - All Problems</title>
+  <meta name="description" content="Explore all LeetCodee problems with beautiful cards, search, tag and difficulty filters.">
+  <meta name="keywords" content="LeetCode, programming problems, coding challenges, solutions, algorithms, data structures">
+  <link rel="canonical" href="https://leetcodee.com/">
+  <meta property="og:title" content="LeetCodee - All Problems">
+  <meta property="og:description" content="Explore LeetCodee problems categorized with beautiful cards, search and filters.">
+  <meta property="og:url" content="https://leetcodee.com/">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.leetcodee.com">
-  <meta property="og:description" content="LeetCodee.com - Your ultimate destination for LeetCode solutions in all supported languages. Launching soon!">
-  <meta property="og:image" content="https://www.leetcodee.com/logo.png">  <!-- Replace with actual logo URL -->
-
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7SQYSXXMM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -23,151 +19,1146 @@
     gtag('js', new Date());
     gtag('config', 'G-F7SQYSXXMM');
   </script>
-
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451"
-     crossorigin="anonymous"></script>
-
-
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1068871795581451" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f172a;
-      color: #f1f5f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 600px;
-    }
-
-    h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      color: #cbd5e1;
-    }
-
-    .countdown {
-      font-size: 2rem;
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: space-around;
-      gap: 15px;
-    }
-
-    .countdown div {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    .countdown span {
-      display: block;
-      font-size: 1rem;
-      margin-top: 8px;
-      color: #94a3b8;
-    }
-
-    .email-box {
-      margin-top: 30px;
-    }
-
-    .email-box input[type="email"] {
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      margin-right: 10px;
-      width: 60%;
-    }
-
-    .email-box button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background-color: #38bdf8;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .email-box button:hover {
-      background-color: #0ea5e9;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      color: #64748b;
-    }
+    .dark-mode { background-color: #111827; color: #f3f4f6; }
+    .tag, .difficulty-btn { margin: 0.25rem; cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 0.375rem; background-color: #e5e7eb; display: inline-block; }
+    .filter-selected { background-color: #2563eb; color: white !important; }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h1>🚀 LeetCodee.com</h1>
-    <p>Your ultimate hub for LeetCode solutions in all supported languages</p>
-
-    <div class="countdown">
-      <div><span id="days">00</span>Days</div>
-      <div><span id="hours">00</span>Hours</div>
-      <div><span id="minutes">00</span>Minutes</div>
-      <div><span id="seconds">00</span>Seconds</div>
+<body class="bg-gray-100 text-gray-900" id="body">
+  <div class="max-w-7xl mx-auto p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-4xl font-bold">LeetCodee - All Problems</h1>
+      <button id="darkToggle" class="px-4 py-2 rounded bg-gray-800 text-white hover:bg-gray-700">Toggle Dark Mode</button>
     </div>
+    <div class="mb-4 flex flex-wrap gap-4 items-center">
+      <input id="searchBox" type="text" placeholder="Search problems..." class="w-full md:w-1/2 p-3 rounded border border-gray-300 shadow-sm">
+    </div>
+    <div class="mb-4 flex flex-wrap gap-2">
+      <span class="font-semibold mr-2">Filter by Difficulty:</span>
+<span class="difficulty-btn" data-difficulty="easy">Easy</span>
+<span class="difficulty-btn" data-difficulty="hard">Hard</span>
+<span class="difficulty-btn" data-difficulty="medium">Medium</span>
+<div class="mt-4 flex flex-wrap gap-2"><span class="font-semibold mr-2">Filter by Tags:</span>
+<span class="tag" data-tag="Array">Array</span>
+<span class="tag" data-tag="Backtracking">Backtracking</span>
+<span class="tag" data-tag="Biconnected Component">Biconnected Component</span>
+<span class="tag" data-tag="Binary Indexed Tree">Binary Indexed Tree</span>
+<span class="tag" data-tag="Binary Search">Binary Search</span>
+<span class="tag" data-tag="Binary Search Tree">Binary Search Tree</span>
+<span class="tag" data-tag="Binary Tree">Binary Tree</span>
+<span class="tag" data-tag="Bit Manipulation">Bit Manipulation</span>
+<span class="tag" data-tag="Bitmask">Bitmask</span>
+<span class="tag" data-tag="Brainteaser">Brainteaser</span>
+<span class="tag" data-tag="Breadth-First Search">Breadth-First Search</span>
+<span class="tag" data-tag="Bucket Sort">Bucket Sort</span>
+<span class="tag" data-tag="Combinatorics">Combinatorics</span>
+<span class="tag" data-tag="Concurrency">Concurrency</span>
+<span class="tag" data-tag="Counting">Counting</span>
+<span class="tag" data-tag="Counting Sort">Counting Sort</span>
+<span class="tag" data-tag="Data Stream">Data Stream</span>
+<span class="tag" data-tag="Database">Database</span>
+<span class="tag" data-tag="Depth-First Search">Depth-First Search</span>
+<span class="tag" data-tag="Design">Design</span>
+<span class="tag" data-tag="Divide and Conquer">Divide and Conquer</span>
+<span class="tag" data-tag="Doubly-Linked List">Doubly-Linked List</span>
+<span class="tag" data-tag="Dynamic Programming">Dynamic Programming</span>
+<span class="tag" data-tag="Enumeration">Enumeration</span>
+<span class="tag" data-tag="Eulerian Circuit">Eulerian Circuit</span>
+<span class="tag" data-tag="Game Theory">Game Theory</span>
+<span class="tag" data-tag="Geometry">Geometry</span>
+<span class="tag" data-tag="Graph">Graph</span>
+<span class="tag" data-tag="Greedy">Greedy</span>
+<span class="tag" data-tag="Hash Function">Hash Function</span>
+<span class="tag" data-tag="Hash Table">Hash Table</span>
+<span class="tag" data-tag="Heap (Priority Queue)">Heap (Priority Queue)</span>
+<span class="tag" data-tag="Interactive">Interactive</span>
+<span class="tag" data-tag="Iterator">Iterator</span>
+<span class="tag" data-tag="Line Sweep">Line Sweep</span>
+<span class="tag" data-tag="Linked List">Linked List</span>
+<span class="tag" data-tag="Math">Math</span>
+<span class="tag" data-tag="Matrix">Matrix</span>
+<span class="tag" data-tag="Memoization">Memoization</span>
+<span class="tag" data-tag="Merge Sort">Merge Sort</span>
+<span class="tag" data-tag="Minimum Spanning Tree">Minimum Spanning Tree</span>
+<span class="tag" data-tag="Monotonic Queue">Monotonic Queue</span>
+<span class="tag" data-tag="Monotonic Stack">Monotonic Stack</span>
+<span class="tag" data-tag="Number Theory">Number Theory</span>
+<span class="tag" data-tag="Ordered Set">Ordered Set</span>
+<span class="tag" data-tag="Prefix Sum">Prefix Sum</span>
+<span class="tag" data-tag="Probability and Statistics">Probability and Statistics</span>
+<span class="tag" data-tag="Queue">Queue</span>
+<span class="tag" data-tag="Quickselect">Quickselect</span>
+<span class="tag" data-tag="Radix Sort">Radix Sort</span>
+<span class="tag" data-tag="Randomized">Randomized</span>
+<span class="tag" data-tag="Recursion">Recursion</span>
+<span class="tag" data-tag="Rejection Sampling">Rejection Sampling</span>
+<span class="tag" data-tag="Reservoir Sampling">Reservoir Sampling</span>
+<span class="tag" data-tag="Rolling Hash">Rolling Hash</span>
+<span class="tag" data-tag="Segment Tree">Segment Tree</span>
+<span class="tag" data-tag="Shell">Shell</span>
+<span class="tag" data-tag="Shortest Path">Shortest Path</span>
+<span class="tag" data-tag="Simulation">Simulation</span>
+<span class="tag" data-tag="Sliding Window">Sliding Window</span>
+<span class="tag" data-tag="Sorting">Sorting</span>
+<span class="tag" data-tag="Stack">Stack</span>
+<span class="tag" data-tag="String">String</span>
+<span class="tag" data-tag="String Matching">String Matching</span>
+<span class="tag" data-tag="Strongly Connected Component">Strongly Connected Component</span>
+<span class="tag" data-tag="Suffix Array">Suffix Array</span>
+<span class="tag" data-tag="Topological Sort">Topological Sort</span>
+<span class="tag" data-tag="Tree">Tree</span>
+<span class="tag" data-tag="Trie">Trie</span>
+<span class="tag" data-tag="Two Pointers">Two Pointers</span>
+<span class="tag" data-tag="Union Find">Union Find</span>
 
-    <footer>
-      &copy; 2025 LeetCodee.com. All rights reserved.
-    </footer>
+    </div>
+    <div id="cardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"></div>
+    <div class="mt-8 text-center">
+      <button id="prevBtn" class="px-4 py-2 bg-gray-700 text-white rounded mx-2">Previous</button>
+      <span id="pageInfo" class="font-semibold"></span>
+      <button id="nextBtn" class="px-4 py-2 bg-gray-700 text-white rounded mx-2">Next</button>
+    </div>
   </div>
 
-  <script>
-    // Set launch date
-    const launchDate = new Date("2025-05-01T00:00:00").getTime();
+<script>
+window.onload = function () {
+  let allCards = [];
+  let filteredCards = [];
+  let currentPage = 1;
+  const cardsPerPage = 12;
 
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = launchDate - now;
+  const questions = [];
+questions.push({id: "1", title: "Two Sum", difficulty: "easy", tags: ["Array", "Hash Table"], slug: "two-sum" });
+questions.push({id: "2", title: "Add Two Numbers", difficulty: "medium", tags: ["Linked List", "Math", "Recursion"], slug: "add-two-numbers" });
+questions.push({id: "3", title: "Longest Substring Without Repeating Characters", difficulty: "medium", tags: ["Hash Table", "String", "Sliding Window"], slug: "longest-substring-without-repeating-characters" });
+questions.push({id: "4", title: "Median of Two Sorted Arrays", difficulty: "hard", tags: ["Array", "Binary Search", "Divide and Conquer"], slug: "median-of-two-sorted-arrays" });
+questions.push({id: "5", title: "Longest Palindromic Substring", difficulty: "medium", tags: ["Two Pointers", "String", "Dynamic Programming"], slug: "longest-palindromic-substring" });
+questions.push({id: "6", title: "Zigzag Conversion", difficulty: "medium", tags: ["String"], slug: "zigzag-conversion" });
+questions.push({id: "7", title: "Reverse Integer", difficulty: "medium", tags: ["Math"], slug: "reverse-integer" });
+questions.push({id: "8", title: "String to Integer (atoi)", difficulty: "medium", tags: ["String"], slug: "string-to-integer-atoi" });
+questions.push({id: "9", title: "Palindrome Number", difficulty: "easy", tags: ["Math"], slug: "palindrome-number" });
+questions.push({id: "10", title: "Regular Expression Matching", difficulty: "hard", tags: ["String", "Dynamic Programming", "Recursion"], slug: "regular-expression-matching" });
+questions.push({id: "11", title: "Container With Most Water", difficulty: "medium", tags: ["Array", "Two Pointers", "Greedy"], slug: "container-with-most-water" });
+questions.push({id: "12", title: "Integer to Roman", difficulty: "medium", tags: ["Hash Table", "Math", "String"], slug: "integer-to-roman" });
+questions.push({id: "13", title: "Roman to Integer", difficulty: "easy", tags: ["Hash Table", "Math", "String"], slug: "roman-to-integer" });
+questions.push({id: "14", title: "Longest Common Prefix", difficulty: "easy", tags: ["String", "Trie"], slug: "longest-common-prefix" });
+questions.push({id: "15", title: "3Sum", difficulty: "medium", tags: ["Array", "Two Pointers", "Sorting"], slug: "3sum" });
+questions.push({id: "16", title: "3Sum Closest", difficulty: "medium", tags: ["Array", "Two Pointers", "Sorting"], slug: "3sum-closest" });
+questions.push({id: "17", title: "Letter Combinations of a Phone Number", difficulty: "medium", tags: ["Hash Table", "String", "Backtracking"], slug: "letter-combinations-of-a-phone-number" });
+questions.push({id: "18", title: "4Sum", difficulty: "medium", tags: ["Array", "Two Pointers", "Sorting"], slug: "4sum" });
+questions.push({id: "19", title: "Remove Nth Node From End of List", difficulty: "medium", tags: ["Linked List", "Two Pointers"], slug: "remove-nth-node-from-end-of-list" });
+questions.push({id: "20", title: "Valid Parentheses", difficulty: "easy", tags: ["String", "Stack"], slug: "valid-parentheses" });
+questions.push({id: "21", title: "Merge Two Sorted Lists", difficulty: "easy", tags: ["Linked List", "Recursion"], slug: "merge-two-sorted-lists" });
+questions.push({id: "22", title: "Generate Parentheses", difficulty: "medium", tags: ["String", "Dynamic Programming", "Backtracking"], slug: "generate-parentheses" });
+questions.push({id: "23", title: "Merge k Sorted Lists", difficulty: "hard", tags: ["Linked List", "Divide and Conquer", "Heap (Priority Queue)", "Merge Sort"], slug: "merge-k-sorted-lists" });
+questions.push({id: "24", title: "Swap Nodes in Pairs", difficulty: "medium", tags: ["Linked List", "Recursion"], slug: "swap-nodes-in-pairs" });
+questions.push({id: "25", title: "Reverse Nodes in k-Group", difficulty: "hard", tags: ["Linked List", "Recursion"], slug: "reverse-nodes-in-k-group" });
+questions.push({id: "26", title: "Remove Duplicates from Sorted Array", difficulty: "easy", tags: ["Array", "Two Pointers"], slug: "remove-duplicates-from-sorted-array" });
+questions.push({id: "27", title: "Remove Element", difficulty: "easy", tags: ["Array", "Two Pointers"], slug: "remove-element" });
+questions.push({id: "28", title: "Find the Index of the First Occurrence in a String", difficulty: "easy", tags: ["Two Pointers", "String", "String Matching"], slug: "find-the-index-of-the-first-occurrence-in-a-string" });
+questions.push({id: "29", title: "Divide Two Integers", difficulty: "medium", tags: ["Math", "Bit Manipulation"], slug: "divide-two-integers" });
+questions.push({id: "30", title: "Substring with Concatenation of All Words", difficulty: "hard", tags: ["Hash Table", "String", "Sliding Window"], slug: "substring-with-concatenation-of-all-words" });
+questions.push({id: "31", title: "Next Permutation", difficulty: "medium", tags: ["Array", "Two Pointers"], slug: "next-permutation" });
+questions.push({id: "32", title: "Longest Valid Parentheses", difficulty: "hard", tags: ["String", "Dynamic Programming", "Stack"], slug: "longest-valid-parentheses" });
+questions.push({id: "33", title: "Search in Rotated Sorted Array", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "search-in-rotated-sorted-array" });
+questions.push({id: "34", title: "Find First and Last Position of Element in Sorted Array", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "find-first-and-last-position-of-element-in-sorted-array" });
+questions.push({id: "35", title: "Search Insert Position", difficulty: "easy", tags: ["Array", "Binary Search"], slug: "search-insert-position" });
+questions.push({id: "36", title: "Valid Sudoku", difficulty: "medium", tags: ["Array", "Hash Table", "Matrix"], slug: "valid-sudoku" });
+questions.push({id: "37", title: "Sudoku Solver", difficulty: "hard", tags: ["Array", "Hash Table", "Backtracking", "Matrix"], slug: "sudoku-solver" });
+questions.push({id: "38", title: "Count and Say", difficulty: "medium", tags: ["String"], slug: "count-and-say" });
+questions.push({id: "39", title: "Combination Sum", difficulty: "medium", tags: ["Array", "Backtracking"], slug: "combination-sum" });
+questions.push({id: "40", title: "Combination Sum II", difficulty: "medium", tags: ["Array", "Backtracking"], slug: "combination-sum-ii" });
+questions.push({id: "41", title: "First Missing Positive", difficulty: "hard", tags: ["Array", "Hash Table"], slug: "first-missing-positive" });
+questions.push({id: "42", title: "Trapping Rain Water", difficulty: "hard", tags: ["Array", "Two Pointers", "Dynamic Programming", "Stack", "Monotonic Stack"], slug: "trapping-rain-water" });
+questions.push({id: "43", title: "Multiply Strings", difficulty: "medium", tags: ["Math", "String", "Simulation"], slug: "multiply-strings" });
+questions.push({id: "44", title: "Wildcard Matching", difficulty: "hard", tags: ["String", "Dynamic Programming", "Greedy", "Recursion"], slug: "wildcard-matching" });
+questions.push({id: "45", title: "Jump Game II", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Greedy"], slug: "jump-game-ii" });
+questions.push({id: "46", title: "Permutations", difficulty: "medium", tags: ["Array", "Backtracking"], slug: "permutations" });
+questions.push({id: "47", title: "Permutations II", difficulty: "medium", tags: ["Array", "Backtracking", "Sorting"], slug: "permutations-ii" });
+questions.push({id: "48", title: "Rotate Image", difficulty: "medium", tags: ["Array", "Math", "Matrix"], slug: "rotate-image" });
+questions.push({id: "49", title: "Group Anagrams", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Sorting"], slug: "group-anagrams" });
+questions.push({id: "50", title: "Pow(x, n)", difficulty: "medium", tags: ["Math", "Recursion"], slug: "powx-n" });
+questions.push({id: "51", title: "N-Queens", difficulty: "hard", tags: ["Array", "Backtracking"], slug: "n-queens" });
+questions.push({id: "52", title: "N-Queens II", difficulty: "hard", tags: ["Backtracking"], slug: "n-queens-ii" });
+questions.push({id: "53", title: "Maximum Subarray", difficulty: "medium", tags: ["Array", "Divide and Conquer", "Dynamic Programming"], slug: "maximum-subarray" });
+questions.push({id: "54", title: "Spiral Matrix", difficulty: "medium", tags: ["Array", "Matrix", "Simulation"], slug: "spiral-matrix" });
+questions.push({id: "55", title: "Jump Game", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Greedy"], slug: "jump-game" });
+questions.push({id: "56", title: "Merge Intervals", difficulty: "medium", tags: ["Array", "Sorting"], slug: "merge-intervals" });
+questions.push({id: "57", title: "Insert Interval", difficulty: "medium", tags: ["Array"], slug: "insert-interval" });
+questions.push({id: "58", title: "Length of Last Word", difficulty: "easy", tags: ["String"], slug: "length-of-last-word" });
+questions.push({id: "59", title: "Spiral Matrix II", difficulty: "medium", tags: ["Array", "Matrix", "Simulation"], slug: "spiral-matrix-ii" });
+questions.push({id: "60", title: "Permutation Sequence", difficulty: "hard", tags: ["Math", "Recursion"], slug: "permutation-sequence" });
+questions.push({id: "61", title: "Rotate List", difficulty: "medium", tags: ["Linked List", "Two Pointers"], slug: "rotate-list" });
+questions.push({id: "62", title: "Unique Paths", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Combinatorics"], slug: "unique-paths" });
+questions.push({id: "63", title: "Unique Paths II", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "unique-paths-ii" });
+questions.push({id: "64", title: "Minimum Path Sum", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "minimum-path-sum" });
+questions.push({id: "65", title: "Valid Number", difficulty: "hard", tags: ["String"], slug: "valid-number" });
+questions.push({id: "66", title: "Plus One", difficulty: "easy", tags: ["Array", "Math"], slug: "plus-one" });
+questions.push({id: "67", title: "Add Binary", difficulty: "easy", tags: ["Math", "String", "Bit Manipulation", "Simulation"], slug: "add-binary" });
+questions.push({id: "68", title: "Text Justification", difficulty: "hard", tags: ["Array", "String", "Simulation"], slug: "text-justification" });
+questions.push({id: "69", title: "Sqrt(x)", difficulty: "easy", tags: ["Math", "Binary Search"], slug: "sqrtx" });
+questions.push({id: "70", title: "Climbing Stairs", difficulty: "easy", tags: ["Math", "Dynamic Programming", "Memoization"], slug: "climbing-stairs" });
+questions.push({id: "71", title: "Simplify Path", difficulty: "medium", tags: ["String", "Stack"], slug: "simplify-path" });
+questions.push({id: "72", title: "Edit Distance", difficulty: "medium", tags: ["String", "Dynamic Programming"], slug: "edit-distance" });
+questions.push({id: "73", title: "Set Matrix Zeroes", difficulty: "medium", tags: ["Array", "Hash Table", "Matrix"], slug: "set-matrix-zeroes" });
+questions.push({id: "74", title: "Search a 2D Matrix", difficulty: "medium", tags: ["Array", "Binary Search", "Matrix"], slug: "search-a-2d-matrix" });
+questions.push({id: "75", title: "Sort Colors", difficulty: "medium", tags: ["Array", "Two Pointers", "Sorting"], slug: "sort-colors" });
+questions.push({id: "76", title: "Minimum Window Substring", difficulty: "hard", tags: ["Hash Table", "String", "Sliding Window"], slug: "minimum-window-substring" });
+questions.push({id: "77", title: "Combinations", difficulty: "medium", tags: ["Backtracking"], slug: "combinations" });
+questions.push({id: "78", title: "Subsets", difficulty: "medium", tags: ["Array", "Backtracking", "Bit Manipulation"], slug: "subsets" });
+questions.push({id: "79", title: "Word Search", difficulty: "medium", tags: ["Array", "String", "Backtracking", "Depth-First Search", "Matrix"], slug: "word-search" });
+questions.push({id: "80", title: "Remove Duplicates from Sorted Array II", difficulty: "medium", tags: ["Array", "Two Pointers"], slug: "remove-duplicates-from-sorted-array-ii" });
+questions.push({id: "81", title: "Search in Rotated Sorted Array II", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "search-in-rotated-sorted-array-ii" });
+questions.push({id: "82", title: "Remove Duplicates from Sorted List II", difficulty: "medium", tags: ["Linked List", "Two Pointers"], slug: "remove-duplicates-from-sorted-list-ii" });
+questions.push({id: "83", title: "Remove Duplicates from Sorted List", difficulty: "easy", tags: ["Linked List"], slug: "remove-duplicates-from-sorted-list" });
+questions.push({id: "84", title: "Largest Rectangle in Histogram", difficulty: "hard", tags: ["Array", "Stack", "Monotonic Stack"], slug: "largest-rectangle-in-histogram" });
+questions.push({id: "85", title: "Maximal Rectangle", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Stack", "Matrix", "Monotonic Stack"], slug: "maximal-rectangle" });
+questions.push({id: "86", title: "Partition List", difficulty: "medium", tags: ["Linked List", "Two Pointers"], slug: "partition-list" });
+questions.push({id: "87", title: "Scramble String", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "scramble-string" });
+questions.push({id: "88", title: "Merge Sorted Array", difficulty: "easy", tags: ["Array", "Two Pointers", "Sorting"], slug: "merge-sorted-array" });
+questions.push({id: "89", title: "Gray Code", difficulty: "medium", tags: ["Math", "Backtracking", "Bit Manipulation"], slug: "gray-code" });
+questions.push({id: "90", title: "Subsets II", difficulty: "medium", tags: ["Array", "Backtracking", "Bit Manipulation"], slug: "subsets-ii" });
+questions.push({id: "91", title: "Decode Ways", difficulty: "medium", tags: ["String", "Dynamic Programming"], slug: "decode-ways" });
+questions.push({id: "92", title: "Reverse Linked List II", difficulty: "medium", tags: ["Linked List"], slug: "reverse-linked-list-ii" });
+questions.push({id: "93", title: "Restore IP Addresses", difficulty: "medium", tags: ["String", "Backtracking"], slug: "restore-ip-addresses" });
+questions.push({id: "94", title: "Binary Tree Inorder Traversal", difficulty: "easy", tags: ["Stack", "Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-inorder-traversal" });
+questions.push({id: "95", title: "Unique Binary Search Trees II", difficulty: "medium", tags: ["Dynamic Programming", "Backtracking", "Tree", "Binary Search Tree", "Binary Tree"], slug: "unique-binary-search-trees-ii" });
+questions.push({id: "96", title: "Unique Binary Search Trees", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Tree", "Binary Search Tree", "Binary Tree"], slug: "unique-binary-search-trees" });
+questions.push({id: "97", title: "Interleaving String", difficulty: "medium", tags: ["String", "Dynamic Programming"], slug: "interleaving-string" });
+questions.push({id: "98", title: "Validate Binary Search Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "validate-binary-search-tree" });
+questions.push({id: "99", title: "Recover Binary Search Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "recover-binary-search-tree" });
+questions.push({id: "100", title: "Same Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "same-tree" });
+questions.push({id: "101", title: "Symmetric Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "symmetric-tree" });
+questions.push({id: "102", title: "Binary Tree Level Order Traversal", difficulty: "medium", tags: ["Tree", "Breadth-First Search", "Binary Tree"], slug: "binary-tree-level-order-traversal" });
+questions.push({id: "103", title: "Binary Tree Zigzag Level Order Traversal", difficulty: "medium", tags: ["Tree", "Breadth-First Search", "Binary Tree"], slug: "binary-tree-zigzag-level-order-traversal" });
+questions.push({id: "104", title: "Maximum Depth of Binary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "maximum-depth-of-binary-tree" });
+questions.push({id: "105", title: "Construct Binary Tree from Preorder and Inorder Traversal", difficulty: "medium", tags: ["Array", "Hash Table", "Divide and Conquer", "Tree", "Binary Tree"], slug: "construct-binary-tree-from-preorder-and-inorder-traversal" });
+questions.push({id: "106", title: "Construct Binary Tree from Inorder and Postorder Traversal", difficulty: "medium", tags: ["Array", "Hash Table", "Divide and Conquer", "Tree", "Binary Tree"], slug: "construct-binary-tree-from-inorder-and-postorder-traversal" });
+questions.push({id: "107", title: "Binary Tree Level Order Traversal II", difficulty: "medium", tags: ["Tree", "Breadth-First Search", "Binary Tree"], slug: "binary-tree-level-order-traversal-ii" });
+questions.push({id: "108", title: "Convert Sorted Array to Binary Search Tree", difficulty: "easy", tags: ["Array", "Divide and Conquer", "Tree", "Binary Search Tree", "Binary Tree"], slug: "convert-sorted-array-to-binary-search-tree" });
+questions.push({id: "109", title: "Convert Sorted List to Binary Search Tree", difficulty: "medium", tags: ["Linked List", "Divide and Conquer", "Tree", "Binary Search Tree", "Binary Tree"], slug: "convert-sorted-list-to-binary-search-tree" });
+questions.push({id: "110", title: "Balanced Binary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "balanced-binary-tree" });
+questions.push({id: "111", title: "Minimum Depth of Binary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "minimum-depth-of-binary-tree" });
+questions.push({id: "112", title: "Path Sum", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "path-sum" });
+questions.push({id: "113", title: "Path Sum II", difficulty: "medium", tags: ["Backtracking", "Tree", "Depth-First Search", "Binary Tree"], slug: "path-sum-ii" });
+questions.push({id: "114", title: "Flatten Binary Tree to Linked List", difficulty: "medium", tags: ["Linked List", "Stack", "Tree", "Depth-First Search", "Binary Tree"], slug: "flatten-binary-tree-to-linked-list" });
+questions.push({id: "115", title: "Distinct Subsequences", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "distinct-subsequences" });
+questions.push({id: "116", title: "Populating Next Right Pointers in Each Node", difficulty: "medium", tags: ["Linked List", "Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "populating-next-right-pointers-in-each-node" });
+questions.push({id: "117", title: "Populating Next Right Pointers in Each Node II", difficulty: "medium", tags: ["Linked List", "Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "populating-next-right-pointers-in-each-node-ii" });
+questions.push({id: "118", title: "Pascal's Triangle", difficulty: "easy", tags: ["Array", "Dynamic Programming"], slug: "pascals-triangle" });
+questions.push({id: "119", title: "Pascal's Triangle II", difficulty: "easy", tags: ["Array", "Dynamic Programming"], slug: "pascals-triangle-ii" });
+questions.push({id: "120", title: "Triangle", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "triangle" });
+questions.push({id: "121", title: "Best Time to Buy and Sell Stock", difficulty: "easy", tags: ["Array", "Dynamic Programming"], slug: "best-time-to-buy-and-sell-stock" });
+questions.push({id: "122", title: "Best Time to Buy and Sell Stock II", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Greedy"], slug: "best-time-to-buy-and-sell-stock-ii" });
+questions.push({id: "123", title: "Best Time to Buy and Sell Stock III", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "best-time-to-buy-and-sell-stock-iii" });
+questions.push({id: "124", title: "Binary Tree Maximum Path Sum", difficulty: "hard", tags: ["Dynamic Programming", "Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-maximum-path-sum" });
+questions.push({id: "125", title: "Valid Palindrome", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "valid-palindrome" });
+questions.push({id: "126", title: "Word Ladder II", difficulty: "hard", tags: ["Hash Table", "String", "Backtracking", "Breadth-First Search"], slug: "word-ladder-ii" });
+questions.push({id: "127", title: "Word Ladder", difficulty: "hard", tags: ["Hash Table", "String", "Breadth-First Search"], slug: "word-ladder" });
+questions.push({id: "128", title: "Longest Consecutive Sequence", difficulty: "medium", tags: ["Array", "Hash Table", "Union Find"], slug: "longest-consecutive-sequence" });
+questions.push({id: "129", title: "Sum Root to Leaf Numbers", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "sum-root-to-leaf-numbers" });
+questions.push({id: "130", title: "Surrounded Regions", difficulty: "medium", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Union Find", "Matrix"], slug: "surrounded-regions" });
+questions.push({id: "131", title: "Palindrome Partitioning", difficulty: "medium", tags: ["String", "Dynamic Programming", "Backtracking"], slug: "palindrome-partitioning" });
+questions.push({id: "132", title: "Palindrome Partitioning II", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "palindrome-partitioning-ii" });
+questions.push({id: "133", title: "Clone Graph", difficulty: "medium", tags: ["Hash Table", "Depth-First Search", "Breadth-First Search", "Graph"], slug: "clone-graph" });
+questions.push({id: "134", title: "Gas Station", difficulty: "medium", tags: ["Array", "Greedy"], slug: "gas-station" });
+questions.push({id: "135", title: "Candy", difficulty: "hard", tags: ["Array", "Greedy"], slug: "candy" });
+questions.push({id: "136", title: "Single Number", difficulty: "easy", tags: ["Array", "Bit Manipulation"], slug: "single-number" });
+questions.push({id: "137", title: "Single Number II", difficulty: "medium", tags: ["Array", "Bit Manipulation"], slug: "single-number-ii" });
+questions.push({id: "138", title: "Copy List with Random Pointer", difficulty: "medium", tags: ["Hash Table", "Linked List"], slug: "copy-list-with-random-pointer" });
+questions.push({id: "139", title: "Word Break", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Dynamic Programming", "Trie", "Memoization"], slug: "word-break" });
+questions.push({id: "140", title: "Word Break II", difficulty: "hard", tags: ["Array", "Hash Table", "String", "Dynamic Programming", "Backtracking", "Trie", "Memoization"], slug: "word-break-ii" });
+questions.push({id: "141", title: "Linked List Cycle", difficulty: "easy", tags: ["Hash Table", "Linked List", "Two Pointers"], slug: "linked-list-cycle" });
+questions.push({id: "142", title: "Linked List Cycle II", difficulty: "medium", tags: ["Hash Table", "Linked List", "Two Pointers"], slug: "linked-list-cycle-ii" });
+questions.push({id: "143", title: "Reorder List", difficulty: "medium", tags: ["Linked List", "Two Pointers", "Stack", "Recursion"], slug: "reorder-list" });
+questions.push({id: "144", title: "Binary Tree Preorder Traversal", difficulty: "easy", tags: ["Stack", "Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-preorder-traversal" });
+questions.push({id: "145", title: "Binary Tree Postorder Traversal", difficulty: "easy", tags: ["Stack", "Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-postorder-traversal" });
+questions.push({id: "146", title: "LRU Cache", difficulty: "medium", tags: ["Hash Table", "Linked List", "Design", "Doubly-Linked List"], slug: "lru-cache" });
+questions.push({id: "147", title: "Insertion Sort List", difficulty: "medium", tags: ["Linked List", "Sorting"], slug: "insertion-sort-list" });
+questions.push({id: "148", title: "Sort List", difficulty: "medium", tags: ["Linked List", "Two Pointers", "Divide and Conquer", "Sorting", "Merge Sort"], slug: "sort-list" });
+questions.push({id: "149", title: "Max Points on a Line", difficulty: "hard", tags: ["Array", "Hash Table", "Math", "Geometry"], slug: "max-points-on-a-line" });
+questions.push({id: "150", title: "Evaluate Reverse Polish Notation", difficulty: "medium", tags: ["Array", "Math", "Stack"], slug: "evaluate-reverse-polish-notation" });
+questions.push({id: "151", title: "Reverse Words in a String", difficulty: "medium", tags: ["Two Pointers", "String"], slug: "reverse-words-in-a-string" });
+questions.push({id: "152", title: "Maximum Product Subarray", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "maximum-product-subarray" });
+questions.push({id: "153", title: "Find Minimum in Rotated Sorted Array", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "find-minimum-in-rotated-sorted-array" });
+questions.push({id: "154", title: "Find Minimum in Rotated Sorted Array II", difficulty: "hard", tags: ["Array", "Binary Search"], slug: "find-minimum-in-rotated-sorted-array-ii" });
+questions.push({id: "155", title: "Min Stack", difficulty: "medium", tags: ["Stack", "Design"], slug: "min-stack" });
+questions.push({id: "156", title: "Binary Tree Upside Down", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-upside-down" });
+questions.push({id: "157", title: "Read N Characters Given Read4", difficulty: "easy", tags: ["Array", "Simulation", "Interactive"], slug: "read-n-characters-given-read4" });
+questions.push({id: "158", title: "Read N Characters Given read4 II - Call Multiple Times", difficulty: "hard", tags: ["Array", "Simulation", "Interactive"], slug: "read-n-characters-given-read4-ii-call-multiple-times" });
+questions.push({id: "159", title: "Longest Substring with At Most Two Distinct Characters", difficulty: "medium", tags: ["Hash Table", "String", "Sliding Window"], slug: "longest-substring-with-at-most-two-distinct-characters" });
+questions.push({id: "160", title: "Intersection of Two Linked Lists", difficulty: "easy", tags: ["Hash Table", "Linked List", "Two Pointers"], slug: "intersection-of-two-linked-lists" });
+questions.push({id: "161", title: "One Edit Distance", difficulty: "medium", tags: ["Two Pointers", "String"], slug: "one-edit-distance" });
+questions.push({id: "162", title: "Find Peak Element", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "find-peak-element" });
+questions.push({id: "163", title: "Missing Ranges", difficulty: "easy", tags: ["Array"], slug: "missing-ranges" });
+questions.push({id: "164", title: "Maximum Gap", difficulty: "medium", tags: ["Array", "Sorting", "Bucket Sort", "Radix Sort"], slug: "maximum-gap" });
+questions.push({id: "165", title: "Compare Version Numbers", difficulty: "medium", tags: ["Two Pointers", "String"], slug: "compare-version-numbers" });
+questions.push({id: "166", title: "Fraction to Recurring Decimal", difficulty: "medium", tags: ["Hash Table", "Math", "String"], slug: "fraction-to-recurring-decimal" });
+questions.push({id: "167", title: "Two Sum II - Input Array Is Sorted", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search"], slug: "two-sum-ii-input-array-is-sorted" });
+questions.push({id: "168", title: "Excel Sheet Column Title", difficulty: "easy", tags: ["Math", "String"], slug: "excel-sheet-column-title" });
+questions.push({id: "169", title: "Majority Element", difficulty: "easy", tags: ["Array", "Hash Table", "Divide and Conquer", "Sorting", "Counting"], slug: "majority-element" });
+questions.push({id: "170", title: "Two Sum III - Data structure design", difficulty: "easy", tags: ["Array", "Hash Table", "Two Pointers", "Design", "Data Stream"], slug: "two-sum-iii-data-structure-design" });
+questions.push({id: "171", title: "Excel Sheet Column Number", difficulty: "easy", tags: ["Math", "String"], slug: "excel-sheet-column-number" });
+questions.push({id: "172", title: "Factorial Trailing Zeroes", difficulty: "medium", tags: ["Math"], slug: "factorial-trailing-zeroes" });
+questions.push({id: "173", title: "Binary Search Tree Iterator", difficulty: "medium", tags: ["Stack", "Tree", "Design", "Binary Search Tree", "Binary Tree", "Iterator"], slug: "binary-search-tree-iterator" });
+questions.push({id: "174", title: "Dungeon Game", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "dungeon-game" });
+questions.push({id: "175", title: "Combine Two Tables", difficulty: "easy", tags: ["Database"], slug: "combine-two-tables" });
+questions.push({id: "176", title: "Second Highest Salary", difficulty: "medium", tags: ["Database"], slug: "second-highest-salary" });
+questions.push({id: "177", title: "Nth Highest Salary", difficulty: "medium", tags: ["Database"], slug: "nth-highest-salary" });
+questions.push({id: "178", title: "Rank Scores", difficulty: "medium", tags: ["Database"], slug: "rank-scores" });
+questions.push({id: "179", title: "Largest Number", difficulty: "medium", tags: ["Array", "String", "Greedy", "Sorting"], slug: "largest-number" });
+questions.push({id: "180", title: "Consecutive Numbers", difficulty: "medium", tags: ["Database"], slug: "consecutive-numbers" });
+questions.push({id: "181", title: "Employees Earning More Than Their Managers", difficulty: "easy", tags: ["Database"], slug: "employees-earning-more-than-their-managers" });
+questions.push({id: "182", title: "Duplicate Emails", difficulty: "easy", tags: ["Database"], slug: "duplicate-emails" });
+questions.push({id: "183", title: "Customers Who Never Order", difficulty: "easy", tags: ["Database"], slug: "customers-who-never-order" });
+questions.push({id: "184", title: "Department Highest Salary", difficulty: "medium", tags: ["Database"], slug: "department-highest-salary" });
+questions.push({id: "185", title: "Department Top Three Salaries", difficulty: "hard", tags: ["Database"], slug: "department-top-three-salaries" });
+questions.push({id: "186", title: "Reverse Words in a String II", difficulty: "medium", tags: ["Two Pointers", "String"], slug: "reverse-words-in-a-string-ii" });
+questions.push({id: "187", title: "Repeated DNA Sequences", difficulty: "medium", tags: ["Hash Table", "String", "Bit Manipulation", "Sliding Window", "Rolling Hash", "Hash Function"], slug: "repeated-dna-sequences" });
+questions.push({id: "188", title: "Best Time to Buy and Sell Stock IV", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "best-time-to-buy-and-sell-stock-iv" });
+questions.push({id: "189", title: "Rotate Array", difficulty: "medium", tags: ["Array", "Math", "Two Pointers"], slug: "rotate-array" });
+questions.push({id: "190", title: "Reverse Bits", difficulty: "easy", tags: ["Divide and Conquer", "Bit Manipulation"], slug: "reverse-bits" });
+questions.push({id: "191", title: "Number of 1 Bits", difficulty: "easy", tags: ["Divide and Conquer", "Bit Manipulation"], slug: "number-of-1-bits" });
+questions.push({id: "192", title: "Word Frequency", difficulty: "medium", tags: ["Shell"], slug: "word-frequency" });
+questions.push({id: "193", title: "Valid Phone Numbers", difficulty: "easy", tags: ["Shell"], slug: "valid-phone-numbers" });
+questions.push({id: "194", title: "Transpose File", difficulty: "medium", tags: ["Shell"], slug: "transpose-file" });
+questions.push({id: "195", title: "Tenth Line", difficulty: "easy", tags: ["Shell"], slug: "tenth-line" });
+questions.push({id: "196", title: "Delete Duplicate Emails", difficulty: "easy", tags: ["Database"], slug: "delete-duplicate-emails" });
+questions.push({id: "197", title: "Rising Temperature", difficulty: "easy", tags: ["Database"], slug: "rising-temperature" });
+questions.push({id: "198", title: "House Robber", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "house-robber" });
+questions.push({id: "199", title: "Binary Tree Right Side View", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "binary-tree-right-side-view" });
+questions.push({id: "200", title: "Number of Islands", difficulty: "medium", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Union Find", "Matrix"], slug: "number-of-islands" });
+questions.push({id: "201", title: "Bitwise AND of Numbers Range", difficulty: "medium", tags: ["Bit Manipulation"], slug: "bitwise-and-of-numbers-range" });
+questions.push({id: "202", title: "Happy Number", difficulty: "easy", tags: ["Hash Table", "Math", "Two Pointers"], slug: "happy-number" });
+questions.push({id: "203", title: "Remove Linked List Elements", difficulty: "easy", tags: ["Linked List", "Recursion"], slug: "remove-linked-list-elements" });
+questions.push({id: "204", title: "Count Primes", difficulty: "medium", tags: ["Array", "Math", "Enumeration", "Number Theory"], slug: "count-primes" });
+questions.push({id: "205", title: "Isomorphic Strings", difficulty: "easy", tags: ["Hash Table", "String"], slug: "isomorphic-strings" });
+questions.push({id: "206", title: "Reverse Linked List", difficulty: "easy", tags: ["Linked List", "Recursion"], slug: "reverse-linked-list" });
+questions.push({id: "207", title: "Course Schedule", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Graph", "Topological Sort"], slug: "course-schedule" });
+questions.push({id: "208", title: "Implement Trie (Prefix Tree)", difficulty: "medium", tags: ["Hash Table", "String", "Design", "Trie"], slug: "implement-trie-prefix-tree" });
+questions.push({id: "209", title: "Minimum Size Subarray Sum", difficulty: "medium", tags: ["Array", "Binary Search", "Sliding Window", "Prefix Sum"], slug: "minimum-size-subarray-sum" });
+questions.push({id: "210", title: "Course Schedule II", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Graph", "Topological Sort"], slug: "course-schedule-ii" });
+questions.push({id: "211", title: "Design Add and Search Words Data Structure", difficulty: "medium", tags: ["String", "Depth-First Search", "Design", "Trie"], slug: "design-add-and-search-words-data-structure" });
+questions.push({id: "212", title: "Word Search II", difficulty: "hard", tags: ["Array", "String", "Backtracking", "Trie", "Matrix"], slug: "word-search-ii" });
+questions.push({id: "213", title: "House Robber II", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "house-robber-ii" });
+questions.push({id: "214", title: "Shortest Palindrome", difficulty: "hard", tags: ["String", "Rolling Hash", "String Matching", "Hash Function"], slug: "shortest-palindrome" });
+questions.push({id: "215", title: "Kth Largest Element in an Array", difficulty: "medium", tags: ["Array", "Divide and Conquer", "Sorting", "Heap (Priority Queue)", "Quickselect"], slug: "kth-largest-element-in-an-array" });
+questions.push({id: "216", title: "Combination Sum III", difficulty: "medium", tags: ["Array", "Backtracking"], slug: "combination-sum-iii" });
+questions.push({id: "217", title: "Contains Duplicate", difficulty: "easy", tags: ["Array", "Hash Table", "Sorting"], slug: "contains-duplicate" });
+questions.push({id: "218", title: "The Skyline Problem", difficulty: "hard", tags: ["Array", "Divide and Conquer", "Binary Indexed Tree", "Segment Tree", "Line Sweep", "Heap (Priority Queue)", "Ordered Set"], slug: "the-skyline-problem" });
+questions.push({id: "219", title: "Contains Duplicate II", difficulty: "easy", tags: ["Array", "Hash Table", "Sliding Window"], slug: "contains-duplicate-ii" });
+questions.push({id: "220", title: "Contains Duplicate III", difficulty: "hard", tags: ["Array", "Sliding Window", "Sorting", "Bucket Sort", "Ordered Set"], slug: "contains-duplicate-iii" });
+questions.push({id: "221", title: "Maximal Square", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "maximal-square" });
+questions.push({id: "222", title: "Count Complete Tree Nodes", difficulty: "easy", tags: ["Binary Search", "Bit Manipulation", "Tree", "Binary Tree"], slug: "count-complete-tree-nodes" });
+questions.push({id: "223", title: "Rectangle Area", difficulty: "medium", tags: ["Math", "Geometry"], slug: "rectangle-area" });
+questions.push({id: "224", title: "Basic Calculator", difficulty: "hard", tags: ["Math", "String", "Stack", "Recursion"], slug: "basic-calculator" });
+questions.push({id: "225", title: "Implement Stack using Queues", difficulty: "easy", tags: ["Stack", "Design", "Queue"], slug: "implement-stack-using-queues" });
+questions.push({id: "226", title: "Invert Binary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "invert-binary-tree" });
+questions.push({id: "227", title: "Basic Calculator II", difficulty: "medium", tags: ["Math", "String", "Stack"], slug: "basic-calculator-ii" });
+questions.push({id: "228", title: "Summary Ranges", difficulty: "easy", tags: ["Array"], slug: "summary-ranges" });
+questions.push({id: "229", title: "Majority Element II", difficulty: "medium", tags: ["Array", "Hash Table", "Sorting", "Counting"], slug: "majority-element-ii" });
+questions.push({id: "230", title: "Kth Smallest Element in a BST", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "kth-smallest-element-in-a-bst" });
+questions.push({id: "231", title: "Power of Two", difficulty: "easy", tags: ["Math", "Bit Manipulation", "Recursion"], slug: "power-of-two" });
+questions.push({id: "232", title: "Implement Queue using Stacks", difficulty: "easy", tags: ["Stack", "Design", "Queue"], slug: "implement-queue-using-stacks" });
+questions.push({id: "233", title: "Number of Digit One", difficulty: "hard", tags: ["Math", "Dynamic Programming", "Recursion"], slug: "number-of-digit-one" });
+questions.push({id: "234", title: "Palindrome Linked List", difficulty: "easy", tags: ["Linked List", "Two Pointers", "Stack", "Recursion"], slug: "palindrome-linked-list" });
+questions.push({id: "235", title: "Lowest Common Ancestor of a Binary Search Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "lowest-common-ancestor-of-a-binary-search-tree" });
+questions.push({id: "236", title: "Lowest Common Ancestor of a Binary Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "lowest-common-ancestor-of-a-binary-tree" });
+questions.push({id: "237", title: "Delete Node in a Linked List", difficulty: "medium", tags: ["Linked List"], slug: "delete-node-in-a-linked-list" });
+questions.push({id: "238", title: "Product of Array Except Self", difficulty: "medium", tags: ["Array", "Prefix Sum"], slug: "product-of-array-except-self" });
+questions.push({id: "239", title: "Sliding Window Maximum", difficulty: "hard", tags: ["Array", "Queue", "Sliding Window", "Heap (Priority Queue)", "Monotonic Queue"], slug: "sliding-window-maximum" });
+questions.push({id: "240", title: "Search a 2D Matrix II", difficulty: "medium", tags: ["Array", "Binary Search", "Divide and Conquer", "Matrix"], slug: "search-a-2d-matrix-ii" });
+questions.push({id: "241", title: "Different Ways to Add Parentheses", difficulty: "medium", tags: ["Math", "String", "Dynamic Programming", "Recursion", "Memoization"], slug: "different-ways-to-add-parentheses" });
+questions.push({id: "242", title: "Valid Anagram", difficulty: "easy", tags: ["Hash Table", "String", "Sorting"], slug: "valid-anagram" });
+questions.push({id: "243", title: "Shortest Word Distance", difficulty: "easy", tags: ["Array", "String"], slug: "shortest-word-distance" });
+questions.push({id: "244", title: "Shortest Word Distance II", difficulty: "medium", tags: ["Array", "Hash Table", "Two Pointers", "String", "Design"], slug: "shortest-word-distance-ii" });
+questions.push({id: "245", title: "Shortest Word Distance III", difficulty: "medium", tags: ["Array", "String"], slug: "shortest-word-distance-iii" });
+questions.push({id: "246", title: "Strobogrammatic Number", difficulty: "easy", tags: ["Hash Table", "Two Pointers", "String"], slug: "strobogrammatic-number" });
+questions.push({id: "247", title: "Strobogrammatic Number II", difficulty: "medium", tags: ["Array", "String", "Recursion"], slug: "strobogrammatic-number-ii" });
+questions.push({id: "248", title: "Strobogrammatic Number III", difficulty: "hard", tags: ["Array", "String", "Recursion"], slug: "strobogrammatic-number-iii" });
+questions.push({id: "249", title: "Group Shifted Strings", difficulty: "medium", tags: ["Array", "Hash Table", "String"], slug: "group-shifted-strings" });
+questions.push({id: "250", title: "Count Univalue Subtrees", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "count-univalue-subtrees" });
+questions.push({id: "251", title: "Flatten 2D Vector", difficulty: "medium", tags: ["Array", "Two Pointers", "Design", "Iterator"], slug: "flatten-2d-vector" });
+questions.push({id: "252", title: "Meeting Rooms", difficulty: "easy", tags: ["Array", "Sorting"], slug: "meeting-rooms" });
+questions.push({id: "253", title: "Meeting Rooms II", difficulty: "medium", tags: ["Array", "Two Pointers", "Greedy", "Sorting", "Heap (Priority Queue)", "Prefix Sum"], slug: "meeting-rooms-ii" });
+questions.push({id: "254", title: "Factor Combinations", difficulty: "medium", tags: ["Backtracking"], slug: "factor-combinations" });
+questions.push({id: "255", title: "Verify Preorder Sequence in Binary Search Tree", difficulty: "medium", tags: ["Array", "Stack", "Tree", "Binary Search Tree", "Recursion", "Monotonic Stack", "Binary Tree"], slug: "verify-preorder-sequence-in-binary-search-tree" });
+questions.push({id: "256", title: "Paint House", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "paint-house" });
+questions.push({id: "257", title: "Binary Tree Paths", difficulty: "easy", tags: ["String", "Backtracking", "Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-paths" });
+questions.push({id: "258", title: "Add Digits", difficulty: "easy", tags: ["Math", "Simulation", "Number Theory"], slug: "add-digits" });
+questions.push({id: "259", title: "3Sum Smaller", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search", "Sorting"], slug: "3sum-smaller" });
+questions.push({id: "260", title: "Single Number III", difficulty: "medium", tags: ["Array", "Bit Manipulation"], slug: "single-number-iii" });
+questions.push({id: "261", title: "Graph Valid Tree", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "graph-valid-tree" });
+questions.push({id: "262", title: "Trips and Users", difficulty: "hard", tags: ["Database"], slug: "trips-and-users" });
+questions.push({id: "263", title: "Ugly Number", difficulty: "easy", tags: ["Math"], slug: "ugly-number" });
+questions.push({id: "264", title: "Ugly Number II", difficulty: "medium", tags: ["Hash Table", "Math", "Dynamic Programming", "Heap (Priority Queue)"], slug: "ugly-number-ii" });
+questions.push({id: "265", title: "Paint House II", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "paint-house-ii" });
+questions.push({id: "266", title: "Palindrome Permutation", difficulty: "easy", tags: ["Hash Table", "String", "Bit Manipulation"], slug: "palindrome-permutation" });
+questions.push({id: "267", title: "Palindrome Permutation II", difficulty: "medium", tags: ["Hash Table", "String", "Backtracking"], slug: "palindrome-permutation-ii" });
+questions.push({id: "268", title: "Missing Number", difficulty: "easy", tags: ["Array", "Hash Table", "Math", "Binary Search", "Bit Manipulation", "Sorting"], slug: "missing-number" });
+questions.push({id: "269", title: "Alien Dictionary", difficulty: "hard", tags: ["Array", "String", "Depth-First Search", "Breadth-First Search", "Graph", "Topological Sort"], slug: "alien-dictionary" });
+questions.push({id: "270", title: "Closest Binary Search Tree Value", difficulty: "easy", tags: ["Binary Search", "Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "closest-binary-search-tree-value" });
+questions.push({id: "271", title: "Encode and Decode Strings", difficulty: "medium", tags: ["Array", "String", "Design"], slug: "encode-and-decode-strings" });
+questions.push({id: "272", title: "Closest Binary Search Tree Value II", difficulty: "hard", tags: ["Two Pointers", "Stack", "Tree", "Depth-First Search", "Binary Search Tree", "Heap (Priority Queue)", "Binary Tree"], slug: "closest-binary-search-tree-value-ii" });
+questions.push({id: "273", title: "Integer to English Words", difficulty: "hard", tags: ["Math", "String", "Recursion"], slug: "integer-to-english-words" });
+questions.push({id: "274", title: "H-Index", difficulty: "medium", tags: ["Array", "Sorting", "Counting Sort"], slug: "h-index" });
+questions.push({id: "275", title: "H-Index II", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "h-index-ii" });
+questions.push({id: "276", title: "Paint Fence", difficulty: "medium", tags: ["Dynamic Programming"], slug: "paint-fence" });
+questions.push({id: "277", title: "Find the Celebrity", difficulty: "medium", tags: ["Two Pointers", "Graph", "Interactive"], slug: "find-the-celebrity" });
+questions.push({id: "278", title: "First Bad Version", difficulty: "easy", tags: ["Binary Search", "Interactive"], slug: "first-bad-version" });
+questions.push({id: "279", title: "Perfect Squares", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Breadth-First Search"], slug: "perfect-squares" });
+questions.push({id: "280", title: "Wiggle Sort", difficulty: "medium", tags: ["Array", "Greedy", "Sorting"], slug: "wiggle-sort" });
+questions.push({id: "281", title: "Zigzag Iterator", difficulty: "medium", tags: ["Array", "Design", "Queue", "Iterator"], slug: "zigzag-iterator" });
+questions.push({id: "282", title: "Expression Add Operators", difficulty: "hard", tags: ["Math", "String", "Backtracking"], slug: "expression-add-operators" });
+questions.push({id: "283", title: "Move Zeroes", difficulty: "easy", tags: ["Array", "Two Pointers"], slug: "move-zeroes" });
+questions.push({id: "284", title: "Peeking Iterator", difficulty: "medium", tags: ["Array", "Design", "Iterator"], slug: "peeking-iterator" });
+questions.push({id: "285", title: "Inorder Successor in BST", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "inorder-successor-in-bst" });
+questions.push({id: "286", title: "Walls and Gates", difficulty: "medium", tags: ["Array", "Breadth-First Search", "Matrix"], slug: "walls-and-gates" });
+questions.push({id: "287", title: "Find the Duplicate Number", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search", "Bit Manipulation"], slug: "find-the-duplicate-number" });
+questions.push({id: "288", title: "Unique Word Abbreviation", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Design"], slug: "unique-word-abbreviation" });
+questions.push({id: "289", title: "Game of Life", difficulty: "medium", tags: ["Array", "Matrix", "Simulation"], slug: "game-of-life" });
+questions.push({id: "290", title: "Word Pattern", difficulty: "easy", tags: ["Hash Table", "String"], slug: "word-pattern" });
+questions.push({id: "291", title: "Word Pattern II", difficulty: "medium", tags: ["Hash Table", "String", "Backtracking"], slug: "word-pattern-ii" });
+questions.push({id: "292", title: "Nim Game", difficulty: "easy", tags: ["Math", "Brainteaser", "Game Theory"], slug: "nim-game" });
+questions.push({id: "293", title: "Flip Game", difficulty: "easy", tags: ["String"], slug: "flip-game" });
+questions.push({id: "294", title: "Flip Game II", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Backtracking", "Memoization", "Game Theory"], slug: "flip-game-ii" });
+questions.push({id: "295", title: "Find Median from Data Stream", difficulty: "hard", tags: ["Two Pointers", "Design", "Sorting", "Heap (Priority Queue)", "Data Stream"], slug: "find-median-from-data-stream" });
+questions.push({id: "296", title: "Best Meeting Point", difficulty: "hard", tags: ["Array", "Math", "Sorting", "Matrix"], slug: "best-meeting-point" });
+questions.push({id: "297", title: "Serialize and Deserialize Binary Tree", difficulty: "hard", tags: ["String", "Tree", "Depth-First Search", "Breadth-First Search", "Design", "Binary Tree"], slug: "serialize-and-deserialize-binary-tree" });
+questions.push({id: "298", title: "Binary Tree Longest Consecutive Sequence", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-longest-consecutive-sequence" });
+questions.push({id: "299", title: "Bulls and Cows", difficulty: "medium", tags: ["Hash Table", "String", "Counting"], slug: "bulls-and-cows" });
+questions.push({id: "300", title: "Longest Increasing Subsequence", difficulty: "medium", tags: ["Array", "Binary Search", "Dynamic Programming"], slug: "longest-increasing-subsequence" });
+questions.push({id: "301", title: "Remove Invalid Parentheses", difficulty: "hard", tags: ["String", "Backtracking", "Breadth-First Search"], slug: "remove-invalid-parentheses" });
+questions.push({id: "302", title: "Smallest Rectangle Enclosing Black Pixels", difficulty: "hard", tags: ["Array", "Binary Search", "Depth-First Search", "Breadth-First Search", "Matrix"], slug: "smallest-rectangle-enclosing-black-pixels" });
+questions.push({id: "303", title: "Range Sum Query - Immutable", difficulty: "easy", tags: ["Array", "Design", "Prefix Sum"], slug: "range-sum-query-immutable" });
+questions.push({id: "304", title: "Range Sum Query 2D - Immutable", difficulty: "medium", tags: ["Array", "Design", "Matrix", "Prefix Sum"], slug: "range-sum-query-2d-immutable" });
+questions.push({id: "305", title: "Number of Islands II", difficulty: "hard", tags: ["Array", "Hash Table", "Union Find"], slug: "number-of-islands-ii" });
+questions.push({id: "306", title: "Additive Number", difficulty: "medium", tags: ["String", "Backtracking"], slug: "additive-number" });
+questions.push({id: "307", title: "Range Sum Query - Mutable", difficulty: "medium", tags: ["Array", "Design", "Binary Indexed Tree", "Segment Tree"], slug: "range-sum-query-mutable" });
+questions.push({id: "308", title: "Range Sum Query 2D - Mutable", difficulty: "medium", tags: ["Array", "Design", "Binary Indexed Tree", "Segment Tree", "Matrix"], slug: "range-sum-query-2d-mutable" });
+questions.push({id: "309", title: "Best Time to Buy and Sell Stock with Cooldown", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "best-time-to-buy-and-sell-stock-with-cooldown" });
+questions.push({id: "310", title: "Minimum Height Trees", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Graph", "Topological Sort"], slug: "minimum-height-trees" });
+questions.push({id: "311", title: "Sparse Matrix Multiplication", difficulty: "medium", tags: ["Array", "Hash Table", "Matrix"], slug: "sparse-matrix-multiplication" });
+questions.push({id: "312", title: "Burst Balloons", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "burst-balloons" });
+questions.push({id: "313", title: "Super Ugly Number", difficulty: "medium", tags: ["Array", "Math", "Dynamic Programming"], slug: "super-ugly-number" });
+questions.push({id: "314", title: "Binary Tree Vertical Order Traversal", difficulty: "medium", tags: ["Hash Table", "Tree", "Depth-First Search", "Breadth-First Search", "Sorting", "Binary Tree"], slug: "binary-tree-vertical-order-traversal" });
+questions.push({id: "315", title: "Count of Smaller Numbers After Self", difficulty: "hard", tags: ["Array", "Binary Search", "Divide and Conquer", "Binary Indexed Tree", "Segment Tree", "Merge Sort", "Ordered Set"], slug: "count-of-smaller-numbers-after-self" });
+questions.push({id: "316", title: "Remove Duplicate Letters", difficulty: "medium", tags: ["String", "Stack", "Greedy", "Monotonic Stack"], slug: "remove-duplicate-letters" });
+questions.push({id: "317", title: "Shortest Distance from All Buildings", difficulty: "hard", tags: ["Array", "Breadth-First Search", "Matrix"], slug: "shortest-distance-from-all-buildings" });
+questions.push({id: "318", title: "Maximum Product of Word Lengths", difficulty: "medium", tags: ["Array", "String", "Bit Manipulation"], slug: "maximum-product-of-word-lengths" });
+questions.push({id: "319", title: "Bulb Switcher", difficulty: "medium", tags: ["Math", "Brainteaser"], slug: "bulb-switcher" });
+questions.push({id: "320", title: "Generalized Abbreviation", difficulty: "medium", tags: ["String", "Backtracking", "Bit Manipulation"], slug: "generalized-abbreviation" });
+questions.push({id: "321", title: "Create Maximum Number", difficulty: "hard", tags: ["Array", "Two Pointers", "Stack", "Greedy", "Monotonic Stack"], slug: "create-maximum-number" });
+questions.push({id: "322", title: "Coin Change", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Breadth-First Search"], slug: "coin-change" });
+questions.push({id: "323", title: "Number of Connected Components in an Undirected Graph", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "number-of-connected-components-in-an-undirected-graph" });
+questions.push({id: "324", title: "Wiggle Sort II", difficulty: "medium", tags: ["Array", "Divide and Conquer", "Greedy", "Sorting", "Quickselect"], slug: "wiggle-sort-ii" });
+questions.push({id: "325", title: "Maximum Size Subarray Sum Equals k", difficulty: "medium", tags: ["Array", "Hash Table", "Prefix Sum"], slug: "maximum-size-subarray-sum-equals-k" });
+questions.push({id: "326", title: "Power of Three", difficulty: "easy", tags: ["Math", "Recursion"], slug: "power-of-three" });
+questions.push({id: "327", title: "Count of Range Sum", difficulty: "hard", tags: ["Array", "Binary Search", "Divide and Conquer", "Binary Indexed Tree", "Segment Tree", "Merge Sort", "Ordered Set"], slug: "count-of-range-sum" });
+questions.push({id: "328", title: "Odd Even Linked List", difficulty: "medium", tags: ["Linked List"], slug: "odd-even-linked-list" });
+questions.push({id: "329", title: "Longest Increasing Path in a Matrix", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Depth-First Search", "Breadth-First Search", "Graph", "Topological Sort", "Memoization", "Matrix"], slug: "longest-increasing-path-in-a-matrix" });
+questions.push({id: "330", title: "Patching Array", difficulty: "hard", tags: ["Array", "Greedy"], slug: "patching-array" });
+questions.push({id: "331", title: "Verify Preorder Serialization of a Binary Tree", difficulty: "medium", tags: ["String", "Stack", "Tree", "Binary Tree"], slug: "verify-preorder-serialization-of-a-binary-tree" });
+questions.push({id: "332", title: "Reconstruct Itinerary", difficulty: "hard", tags: ["Depth-First Search", "Graph", "Eulerian Circuit"], slug: "reconstruct-itinerary" });
+questions.push({id: "333", title: "Largest BST Subtree", difficulty: "medium", tags: ["Dynamic Programming", "Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "largest-bst-subtree" });
+questions.push({id: "334", title: "Increasing Triplet Subsequence", difficulty: "medium", tags: ["Array", "Greedy"], slug: "increasing-triplet-subsequence" });
+questions.push({id: "335", title: "Self Crossing", difficulty: "hard", tags: ["Array", "Math", "Geometry"], slug: "self-crossing" });
+questions.push({id: "336", title: "Palindrome Pairs", difficulty: "hard", tags: ["Array", "Hash Table", "String", "Trie"], slug: "palindrome-pairs" });
+questions.push({id: "337", title: "House Robber III", difficulty: "medium", tags: ["Dynamic Programming", "Tree", "Depth-First Search", "Binary Tree"], slug: "house-robber-iii" });
+questions.push({id: "338", title: "Counting Bits", difficulty: "easy", tags: ["Dynamic Programming", "Bit Manipulation"], slug: "counting-bits" });
+questions.push({id: "339", title: "Nested List Weight Sum", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search"], slug: "nested-list-weight-sum" });
+questions.push({id: "340", title: "Longest Substring with At Most K Distinct Characters", difficulty: "medium", tags: ["Hash Table", "String", "Sliding Window"], slug: "longest-substring-with-at-most-k-distinct-characters" });
+questions.push({id: "341", title: "Flatten Nested List Iterator", difficulty: "medium", tags: ["Stack", "Tree", "Depth-First Search", "Design", "Queue", "Iterator"], slug: "flatten-nested-list-iterator" });
+questions.push({id: "342", title: "Power of Four", difficulty: "easy", tags: ["Math", "Bit Manipulation", "Recursion"], slug: "power-of-four" });
+questions.push({id: "343", title: "Integer Break", difficulty: "medium", tags: ["Math", "Dynamic Programming"], slug: "integer-break" });
+questions.push({id: "344", title: "Reverse String", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "reverse-string" });
+questions.push({id: "345", title: "Reverse Vowels of a String", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "reverse-vowels-of-a-string" });
+questions.push({id: "346", title: "Moving Average from Data Stream", difficulty: "easy", tags: ["Array", "Design", "Queue", "Data Stream"], slug: "moving-average-from-data-stream" });
+questions.push({id: "347", title: "Top K Frequent Elements", difficulty: "medium", tags: ["Array", "Hash Table", "Divide and Conquer", "Sorting", "Heap (Priority Queue)", "Bucket Sort", "Counting", "Quickselect"], slug: "top-k-frequent-elements" });
+questions.push({id: "348", title: "Design Tic-Tac-Toe", difficulty: "medium", tags: ["Array", "Hash Table", "Design", "Matrix", "Simulation"], slug: "design-tic-tac-toe" });
+questions.push({id: "349", title: "Intersection of Two Arrays", difficulty: "easy", tags: ["Array", "Hash Table", "Two Pointers", "Binary Search", "Sorting"], slug: "intersection-of-two-arrays" });
+questions.push({id: "350", title: "Intersection of Two Arrays II", difficulty: "easy", tags: ["Array", "Hash Table", "Two Pointers", "Binary Search", "Sorting"], slug: "intersection-of-two-arrays-ii" });
+questions.push({id: "351", title: "Android Unlock Patterns", difficulty: "medium", tags: ["Dynamic Programming", "Backtracking", "Bit Manipulation", "Bitmask"], slug: "android-unlock-patterns" });
+questions.push({id: "352", title: "Data Stream as Disjoint Intervals", difficulty: "hard", tags: ["Binary Search", "Design", "Ordered Set"], slug: "data-stream-as-disjoint-intervals" });
+questions.push({id: "353", title: "Design Snake Game", difficulty: "medium", tags: ["Array", "Hash Table", "Design", "Queue", "Simulation"], slug: "design-snake-game" });
+questions.push({id: "354", title: "Russian Doll Envelopes", difficulty: "hard", tags: ["Array", "Binary Search", "Dynamic Programming", "Sorting"], slug: "russian-doll-envelopes" });
+questions.push({id: "355", title: "Design Twitter", difficulty: "medium", tags: ["Hash Table", "Linked List", "Design", "Heap (Priority Queue)"], slug: "design-twitter" });
+questions.push({id: "356", title: "Line Reflection", difficulty: "medium", tags: ["Array", "Hash Table", "Math"], slug: "line-reflection" });
+questions.push({id: "357", title: "Count Numbers with Unique Digits", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Backtracking"], slug: "count-numbers-with-unique-digits" });
+questions.push({id: "358", title: "Rearrange String k Distance Apart", difficulty: "hard", tags: ["Hash Table", "String", "Greedy", "Sorting", "Heap (Priority Queue)", "Counting"], slug: "rearrange-string-k-distance-apart" });
+questions.push({id: "359", title: "Logger Rate Limiter", difficulty: "easy", tags: ["Hash Table", "Design", "Data Stream"], slug: "logger-rate-limiter" });
+questions.push({id: "360", title: "Sort Transformed Array", difficulty: "medium", tags: ["Array", "Math", "Two Pointers", "Sorting"], slug: "sort-transformed-array" });
+questions.push({id: "361", title: "Bomb Enemy", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "bomb-enemy" });
+questions.push({id: "362", title: "Design Hit Counter", difficulty: "medium", tags: ["Array", "Binary Search", "Design", "Queue", "Data Stream"], slug: "design-hit-counter" });
+questions.push({id: "363", title: "Max Sum of Rectangle No Larger Than K", difficulty: "hard", tags: ["Array", "Binary Search", "Matrix", "Prefix Sum", "Ordered Set"], slug: "max-sum-of-rectangle-no-larger-than-k" });
+questions.push({id: "364", title: "Nested List Weight Sum II", difficulty: "medium", tags: ["Stack", "Depth-First Search", "Breadth-First Search"], slug: "nested-list-weight-sum-ii" });
+questions.push({id: "365", title: "Water and Jug Problem", difficulty: "medium", tags: ["Math", "Depth-First Search", "Breadth-First Search"], slug: "water-and-jug-problem" });
+questions.push({id: "366", title: "Find Leaves of Binary Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "find-leaves-of-binary-tree" });
+questions.push({id: "367", title: "Valid Perfect Square", difficulty: "easy", tags: ["Math", "Binary Search"], slug: "valid-perfect-square" });
+questions.push({id: "368", title: "Largest Divisible Subset", difficulty: "medium", tags: ["Array", "Math", "Dynamic Programming", "Sorting"], slug: "largest-divisible-subset" });
+questions.push({id: "369", title: "Plus One Linked List", difficulty: "medium", tags: ["Linked List", "Math"], slug: "plus-one-linked-list" });
+questions.push({id: "370", title: "Range Addition", difficulty: "medium", tags: ["Array", "Prefix Sum"], slug: "range-addition" });
+questions.push({id: "371", title: "Sum of Two Integers", difficulty: "medium", tags: ["Math", "Bit Manipulation"], slug: "sum-of-two-integers" });
+questions.push({id: "372", title: "Super Pow", difficulty: "medium", tags: ["Math", "Divide and Conquer"], slug: "super-pow" });
+questions.push({id: "373", title: "Find K Pairs with Smallest Sums", difficulty: "medium", tags: ["Array", "Heap (Priority Queue)"], slug: "find-k-pairs-with-smallest-sums" });
+questions.push({id: "374", title: "Guess Number Higher or Lower", difficulty: "easy", tags: ["Binary Search", "Interactive"], slug: "guess-number-higher-or-lower" });
+questions.push({id: "375", title: "Guess Number Higher or Lower II", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Game Theory"], slug: "guess-number-higher-or-lower-ii" });
+questions.push({id: "376", title: "Wiggle Subsequence", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Greedy"], slug: "wiggle-subsequence" });
+questions.push({id: "377", title: "Combination Sum IV", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "combination-sum-iv" });
+questions.push({id: "378", title: "Kth Smallest Element in a Sorted Matrix", difficulty: "medium", tags: ["Array", "Binary Search", "Sorting", "Heap (Priority Queue)", "Matrix"], slug: "kth-smallest-element-in-a-sorted-matrix" });
+questions.push({id: "379", title: "Design Phone Directory", difficulty: "medium", tags: ["Array", "Hash Table", "Linked List", "Design", "Queue"], slug: "design-phone-directory" });
+questions.push({id: "380", title: "Insert Delete GetRandom O(1)", difficulty: "medium", tags: ["Array", "Hash Table", "Math", "Design", "Randomized"], slug: "insert-delete-getrandom-o1" });
+questions.push({id: "381", title: "Insert Delete GetRandom O(1) - Duplicates allowed", difficulty: "hard", tags: ["Array", "Hash Table", "Math", "Design", "Randomized"], slug: "insert-delete-getrandom-o1-duplicates-allowed" });
+questions.push({id: "382", title: "Linked List Random Node", difficulty: "medium", tags: ["Linked List", "Math", "Reservoir Sampling", "Randomized"], slug: "linked-list-random-node" });
+questions.push({id: "383", title: "Ransom Note", difficulty: "easy", tags: ["Hash Table", "String", "Counting"], slug: "ransom-note" });
+questions.push({id: "384", title: "Shuffle an Array", difficulty: "medium", tags: ["Array", "Math", "Design", "Randomized"], slug: "shuffle-an-array" });
+questions.push({id: "385", title: "Mini Parser", difficulty: "medium", tags: ["String", "Stack", "Depth-First Search"], slug: "mini-parser" });
+questions.push({id: "386", title: "Lexicographical Numbers", difficulty: "medium", tags: ["Depth-First Search", "Trie"], slug: "lexicographical-numbers" });
+questions.push({id: "387", title: "First Unique Character in a String", difficulty: "easy", tags: ["Hash Table", "String", "Queue", "Counting"], slug: "first-unique-character-in-a-string" });
+questions.push({id: "388", title: "Longest Absolute File Path", difficulty: "medium", tags: ["String", "Stack", "Depth-First Search"], slug: "longest-absolute-file-path" });
+questions.push({id: "389", title: "Find the Difference", difficulty: "easy", tags: ["Hash Table", "String", "Bit Manipulation", "Sorting"], slug: "find-the-difference" });
+questions.push({id: "390", title: "Elimination Game", difficulty: "medium", tags: ["Math", "Recursion"], slug: "elimination-game" });
+questions.push({id: "391", title: "Perfect Rectangle", difficulty: "hard", tags: ["Array", "Line Sweep"], slug: "perfect-rectangle" });
+questions.push({id: "392", title: "Is Subsequence", difficulty: "easy", tags: ["Two Pointers", "String", "Dynamic Programming"], slug: "is-subsequence" });
+questions.push({id: "393", title: "UTF-8 Validation", difficulty: "medium", tags: ["Array", "Bit Manipulation"], slug: "utf-8-validation" });
+questions.push({id: "394", title: "Decode String", difficulty: "medium", tags: ["String", "Stack", "Recursion"], slug: "decode-string" });
+questions.push({id: "395", title: "Longest Substring with At Least K Repeating Characters", difficulty: "medium", tags: ["Hash Table", "String", "Divide and Conquer", "Sliding Window"], slug: "longest-substring-with-at-least-k-repeating-characters" });
+questions.push({id: "396", title: "Rotate Function", difficulty: "medium", tags: ["Array", "Math", "Dynamic Programming"], slug: "rotate-function" });
+questions.push({id: "397", title: "Integer Replacement", difficulty: "medium", tags: ["Dynamic Programming", "Greedy", "Bit Manipulation", "Memoization"], slug: "integer-replacement" });
+questions.push({id: "398", title: "Random Pick Index", difficulty: "medium", tags: ["Hash Table", "Math", "Reservoir Sampling", "Randomized"], slug: "random-pick-index" });
+questions.push({id: "399", title: "Evaluate Division", difficulty: "medium", tags: ["Array", "String", "Depth-First Search", "Breadth-First Search", "Union Find", "Graph", "Shortest Path"], slug: "evaluate-division" });
+questions.push({id: "400", title: "Nth Digit", difficulty: "medium", tags: ["Math", "Binary Search"], slug: "nth-digit" });
+questions.push({id: "401", title: "Binary Watch", difficulty: "easy", tags: ["Backtracking", "Bit Manipulation"], slug: "binary-watch" });
+questions.push({id: "402", title: "Remove K Digits", difficulty: "medium", tags: ["String", "Stack", "Greedy", "Monotonic Stack"], slug: "remove-k-digits" });
+questions.push({id: "403", title: "Frog Jump", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "frog-jump" });
+questions.push({id: "404", title: "Sum of Left Leaves", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "sum-of-left-leaves" });
+questions.push({id: "405", title: "Convert a Number to Hexadecimal", difficulty: "easy", tags: ["Math", "Bit Manipulation"], slug: "convert-a-number-to-hexadecimal" });
+questions.push({id: "406", title: "Queue Reconstruction by Height", difficulty: "medium", tags: ["Array", "Binary Indexed Tree", "Segment Tree", "Sorting"], slug: "queue-reconstruction-by-height" });
+questions.push({id: "407", title: "Trapping Rain Water II", difficulty: "hard", tags: ["Array", "Breadth-First Search", "Heap (Priority Queue)", "Matrix"], slug: "trapping-rain-water-ii" });
+questions.push({id: "408", title: "Valid Word Abbreviation", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "valid-word-abbreviation" });
+questions.push({id: "409", title: "Longest Palindrome", difficulty: "easy", tags: ["Hash Table", "String", "Greedy"], slug: "longest-palindrome" });
+questions.push({id: "410", title: "Split Array Largest Sum", difficulty: "hard", tags: ["Array", "Binary Search", "Dynamic Programming", "Greedy", "Prefix Sum"], slug: "split-array-largest-sum" });
+questions.push({id: "411", title: "Minimum Unique Word Abbreviation", difficulty: "hard", tags: ["Array", "String", "Backtracking", "Bit Manipulation"], slug: "minimum-unique-word-abbreviation" });
+questions.push({id: "412", title: "Fizz Buzz", difficulty: "easy", tags: ["Math", "String", "Simulation"], slug: "fizz-buzz" });
+questions.push({id: "413", title: "Arithmetic Slices", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Sliding Window"], slug: "arithmetic-slices" });
+questions.push({id: "414", title: "Third Maximum Number", difficulty: "easy", tags: ["Array", "Sorting"], slug: "third-maximum-number" });
+questions.push({id: "415", title: "Add Strings", difficulty: "easy", tags: ["Math", "String", "Simulation"], slug: "add-strings" });
+questions.push({id: "416", title: "Partition Equal Subset Sum", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "partition-equal-subset-sum" });
+questions.push({id: "417", title: "Pacific Atlantic Water Flow", difficulty: "medium", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"], slug: "pacific-atlantic-water-flow" });
+questions.push({id: "418", title: "Sentence Screen Fitting", difficulty: "medium", tags: ["Array", "String", "Dynamic Programming"], slug: "sentence-screen-fitting" });
+questions.push({id: "419", title: "Battleships in a Board", difficulty: "medium", tags: ["Array", "Depth-First Search", "Matrix"], slug: "battleships-in-a-board" });
+questions.push({id: "420", title: "Strong Password Checker", difficulty: "hard", tags: ["String", "Greedy", "Heap (Priority Queue)"], slug: "strong-password-checker" });
+questions.push({id: "421", title: "Maximum XOR of Two Numbers in an Array", difficulty: "medium", tags: ["Array", "Hash Table", "Bit Manipulation", "Trie"], slug: "maximum-xor-of-two-numbers-in-an-array" });
+questions.push({id: "422", title: "Valid Word Square", difficulty: "easy", tags: ["Array", "Matrix"], slug: "valid-word-square" });
+questions.push({id: "423", title: "Reconstruct Original Digits from English", difficulty: "medium", tags: ["Hash Table", "Math", "String"], slug: "reconstruct-original-digits-from-english" });
+questions.push({id: "424", title: "Longest Repeating Character Replacement", difficulty: "medium", tags: ["Hash Table", "String", "Sliding Window"], slug: "longest-repeating-character-replacement" });
+questions.push({id: "425", title: "Word Squares", difficulty: "hard", tags: ["Array", "String", "Backtracking", "Trie"], slug: "word-squares" });
+questions.push({id: "426", title: "Convert Binary Search Tree to Sorted Doubly Linked List", difficulty: "medium", tags: ["Linked List", "Stack", "Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree", "Doubly-Linked List"], slug: "convert-binary-search-tree-to-sorted-doubly-linked-list" });
+questions.push({id: "427", title: "Construct Quad Tree", difficulty: "medium", tags: ["Array", "Divide and Conquer", "Tree", "Matrix"], slug: "construct-quad-tree" });
+questions.push({id: "428", title: "Serialize and Deserialize N-ary Tree", difficulty: "hard", tags: ["String", "Tree", "Depth-First Search", "Breadth-First Search"], slug: "serialize-and-deserialize-n-ary-tree" });
+questions.push({id: "429", title: "N-ary Tree Level Order Traversal", difficulty: "medium", tags: ["Tree", "Breadth-First Search"], slug: "n-ary-tree-level-order-traversal" });
+questions.push({id: "430", title: "Flatten a Multilevel Doubly Linked List", difficulty: "medium", tags: ["Linked List", "Depth-First Search", "Doubly-Linked List"], slug: "flatten-a-multilevel-doubly-linked-list" });
+questions.push({id: "431", title: "Encode N-ary Tree to Binary Tree", difficulty: "hard", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Design", "Binary Tree"], slug: "encode-n-ary-tree-to-binary-tree" });
+questions.push({id: "432", title: "All O`one Data Structure", difficulty: "hard", tags: ["Hash Table", "Linked List", "Design", "Doubly-Linked List"], slug: "all-oone-data-structure" });
+questions.push({id: "433", title: "Minimum Genetic Mutation", difficulty: "medium", tags: ["Hash Table", "String", "Breadth-First Search"], slug: "minimum-genetic-mutation" });
+questions.push({id: "434", title: "Number of Segments in a String", difficulty: "easy", tags: ["String"], slug: "number-of-segments-in-a-string" });
+questions.push({id: "435", title: "Non-overlapping Intervals", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Greedy", "Sorting"], slug: "non-overlapping-intervals" });
+questions.push({id: "436", title: "Find Right Interval", difficulty: "medium", tags: ["Array", "Binary Search", "Sorting"], slug: "find-right-interval" });
+questions.push({id: "437", title: "Path Sum III", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "path-sum-iii" });
+questions.push({id: "438", title: "Find All Anagrams in a String", difficulty: "medium", tags: ["Hash Table", "String", "Sliding Window"], slug: "find-all-anagrams-in-a-string" });
+questions.push({id: "439", title: "Ternary Expression Parser", difficulty: "medium", tags: ["String", "Stack", "Recursion"], slug: "ternary-expression-parser" });
+questions.push({id: "440", title: "K-th Smallest in Lexicographical Order", difficulty: "hard", tags: ["Trie"], slug: "k-th-smallest-in-lexicographical-order" });
+questions.push({id: "441", title: "Arranging Coins", difficulty: "easy", tags: ["Math", "Binary Search"], slug: "arranging-coins" });
+questions.push({id: "442", title: "Find All Duplicates in an Array", difficulty: "medium", tags: ["Array", "Hash Table"], slug: "find-all-duplicates-in-an-array" });
+questions.push({id: "443", title: "String Compression", difficulty: "medium", tags: ["Two Pointers", "String"], slug: "string-compression" });
+questions.push({id: "444", title: "Sequence Reconstruction", difficulty: "medium", tags: ["Array", "Graph", "Topological Sort"], slug: "sequence-reconstruction" });
+questions.push({id: "445", title: "Add Two Numbers II", difficulty: "medium", tags: ["Linked List", "Math", "Stack"], slug: "add-two-numbers-ii" });
+questions.push({id: "446", title: "Arithmetic Slices II - Subsequence", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "arithmetic-slices-ii-subsequence" });
+questions.push({id: "447", title: "Number of Boomerangs", difficulty: "medium", tags: ["Array", "Hash Table", "Math"], slug: "number-of-boomerangs" });
+questions.push({id: "448", title: "Find All Numbers Disappeared in an Array", difficulty: "easy", tags: ["Array", "Hash Table"], slug: "find-all-numbers-disappeared-in-an-array" });
+questions.push({id: "449", title: "Serialize and Deserialize BST", difficulty: "medium", tags: ["String", "Tree", "Depth-First Search", "Breadth-First Search", "Design", "Binary Search Tree", "Binary Tree"], slug: "serialize-and-deserialize-bst" });
+questions.push({id: "450", title: "Delete Node in a BST", difficulty: "medium", tags: ["Tree", "Binary Search Tree", "Binary Tree"], slug: "delete-node-in-a-bst" });
+questions.push({id: "451", title: "Sort Characters By Frequency", difficulty: "medium", tags: ["Hash Table", "String", "Sorting", "Heap (Priority Queue)", "Bucket Sort", "Counting"], slug: "sort-characters-by-frequency" });
+questions.push({id: "452", title: "Minimum Number of Arrows to Burst Balloons", difficulty: "medium", tags: ["Array", "Greedy", "Sorting"], slug: "minimum-number-of-arrows-to-burst-balloons" });
+questions.push({id: "453", title: "Minimum Moves to Equal Array Elements", difficulty: "medium", tags: ["Array", "Math"], slug: "minimum-moves-to-equal-array-elements" });
+questions.push({id: "454", title: "4Sum II", difficulty: "medium", tags: ["Array", "Hash Table"], slug: "4sum-ii" });
+questions.push({id: "455", title: "Assign Cookies", difficulty: "easy", tags: ["Array", "Two Pointers", "Greedy", "Sorting"], slug: "assign-cookies" });
+questions.push({id: "456", title: "132 Pattern", difficulty: "medium", tags: ["Array", "Binary Search", "Stack", "Monotonic Stack", "Ordered Set"], slug: "132-pattern" });
+questions.push({id: "457", title: "Circular Array Loop", difficulty: "medium", tags: ["Array", "Hash Table", "Two Pointers"], slug: "circular-array-loop" });
+questions.push({id: "458", title: "Poor Pigs", difficulty: "hard", tags: ["Math", "Dynamic Programming", "Combinatorics"], slug: "poor-pigs" });
+questions.push({id: "459", title: "Repeated Substring Pattern", difficulty: "easy", tags: ["String", "String Matching"], slug: "repeated-substring-pattern" });
+questions.push({id: "460", title: "LFU Cache", difficulty: "hard", tags: ["Hash Table", "Linked List", "Design", "Doubly-Linked List"], slug: "lfu-cache" });
+questions.push({id: "461", title: "Hamming Distance", difficulty: "easy", tags: ["Bit Manipulation"], slug: "hamming-distance" });
+questions.push({id: "462", title: "Minimum Moves to Equal Array Elements II", difficulty: "medium", tags: ["Array", "Math", "Sorting"], slug: "minimum-moves-to-equal-array-elements-ii" });
+questions.push({id: "463", title: "Island Perimeter", difficulty: "easy", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"], slug: "island-perimeter" });
+questions.push({id: "464", title: "Can I Win", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Bit Manipulation", "Memoization", "Game Theory", "Bitmask"], slug: "can-i-win" });
+questions.push({id: "465", title: "Optimal Account Balancing", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Backtracking", "Bit Manipulation", "Bitmask"], slug: "optimal-account-balancing" });
+questions.push({id: "466", title: "Count The Repetitions", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "count-the-repetitions" });
+questions.push({id: "467", title: "Unique Substrings in Wraparound String", difficulty: "medium", tags: ["String", "Dynamic Programming"], slug: "unique-substrings-in-wraparound-string" });
+questions.push({id: "468", title: "Validate IP Address", difficulty: "medium", tags: ["String"], slug: "validate-ip-address" });
+questions.push({id: "469", title: "Convex Polygon", difficulty: "medium", tags: ["Array", "Math", "Geometry"], slug: "convex-polygon" });
+questions.push({id: "470", title: "Implement Rand10() Using Rand7()", difficulty: "medium", tags: ["Math", "Rejection Sampling", "Randomized", "Probability and Statistics"], slug: "implement-rand10-using-rand7" });
+questions.push({id: "471", title: "Encode String with Shortest Length", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "encode-string-with-shortest-length" });
+questions.push({id: "472", title: "Concatenated Words", difficulty: "hard", tags: ["Array", "String", "Dynamic Programming", "Depth-First Search", "Trie"], slug: "concatenated-words" });
+questions.push({id: "473", title: "Matchsticks to Square", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Backtracking", "Bit Manipulation", "Bitmask"], slug: "matchsticks-to-square" });
+questions.push({id: "474", title: "Ones and Zeroes", difficulty: "medium", tags: ["Array", "String", "Dynamic Programming"], slug: "ones-and-zeroes" });
+questions.push({id: "475", title: "Heaters", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search", "Sorting"], slug: "heaters" });
+questions.push({id: "476", title: "Number Complement", difficulty: "easy", tags: ["Bit Manipulation"], slug: "number-complement" });
+questions.push({id: "477", title: "Total Hamming Distance", difficulty: "medium", tags: ["Array", "Math", "Bit Manipulation"], slug: "total-hamming-distance" });
+questions.push({id: "478", title: "Generate Random Point in a Circle", difficulty: "medium", tags: ["Math", "Geometry", "Rejection Sampling", "Randomized"], slug: "generate-random-point-in-a-circle" });
+questions.push({id: "479", title: "Largest Palindrome Product", difficulty: "hard", tags: ["Math", "Enumeration"], slug: "largest-palindrome-product" });
+questions.push({id: "480", title: "Sliding Window Median", difficulty: "hard", tags: ["Array", "Hash Table", "Sliding Window", "Heap (Priority Queue)"], slug: "sliding-window-median" });
+questions.push({id: "481", title: "Magical String", difficulty: "medium", tags: ["Two Pointers", "String"], slug: "magical-string" });
+questions.push({id: "482", title: "License Key Formatting", difficulty: "easy", tags: ["String"], slug: "license-key-formatting" });
+questions.push({id: "483", title: "Smallest Good Base", difficulty: "hard", tags: ["Math", "Binary Search"], slug: "smallest-good-base" });
+questions.push({id: "484", title: "Find Permutation", difficulty: "medium", tags: ["Array", "String", "Stack", "Greedy"], slug: "find-permutation" });
+questions.push({id: "485", title: "Max Consecutive Ones", difficulty: "easy", tags: ["Array"], slug: "max-consecutive-ones" });
+questions.push({id: "486", title: "Predict the Winner", difficulty: "medium", tags: ["Array", "Math", "Dynamic Programming", "Recursion", "Game Theory"], slug: "predict-the-winner" });
+questions.push({id: "487", title: "Max Consecutive Ones II", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Sliding Window"], slug: "max-consecutive-ones-ii" });
+questions.push({id: "488", title: "Zuma Game", difficulty: "hard", tags: ["String", "Dynamic Programming", "Stack", "Breadth-First Search", "Memoization"], slug: "zuma-game" });
+questions.push({id: "489", title: "Robot Room Cleaner", difficulty: "hard", tags: ["Backtracking", "Interactive"], slug: "robot-room-cleaner" });
+questions.push({id: "490", title: "The Maze", difficulty: "medium", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"], slug: "the-maze" });
+questions.push({id: "491", title: "Non-decreasing Subsequences", difficulty: "medium", tags: ["Array", "Hash Table", "Backtracking", "Bit Manipulation"], slug: "non-decreasing-subsequences" });
+questions.push({id: "492", title: "Construct the Rectangle", difficulty: "easy", tags: ["Math"], slug: "construct-the-rectangle" });
+questions.push({id: "493", title: "Reverse Pairs", difficulty: "hard", tags: ["Array", "Binary Search", "Divide and Conquer", "Binary Indexed Tree", "Segment Tree", "Merge Sort", "Ordered Set"], slug: "reverse-pairs" });
+questions.push({id: "494", title: "Target Sum", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Backtracking"], slug: "target-sum" });
+questions.push({id: "495", title: "Teemo Attacking", difficulty: "easy", tags: ["Array", "Simulation"], slug: "teemo-attacking" });
+questions.push({id: "496", title: "Next Greater Element I", difficulty: "easy", tags: ["Array", "Hash Table", "Stack", "Monotonic Stack"], slug: "next-greater-element-i" });
+questions.push({id: "497", title: "Random Point in Non-overlapping Rectangles", difficulty: "medium", tags: ["Array", "Math", "Binary Search", "Reservoir Sampling", "Prefix Sum", "Ordered Set", "Randomized"], slug: "random-point-in-non-overlapping-rectangles" });
+questions.push({id: "498", title: "Diagonal Traverse", difficulty: "medium", tags: ["Array", "Matrix", "Simulation"], slug: "diagonal-traverse" });
+questions.push({id: "499", title: "The Maze III", difficulty: "hard", tags: ["Array", "String", "Depth-First Search", "Breadth-First Search", "Graph", "Heap (Priority Queue)", "Matrix", "Shortest Path"], slug: "the-maze-iii" });
+questions.push({id: "500", title: "Keyboard Row", difficulty: "easy", tags: ["Array", "Hash Table", "String"], slug: "keyboard-row" });
+questions.push({id: "501", title: "Find Mode in Binary Search Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "find-mode-in-binary-search-tree" });
+questions.push({id: "502", title: "IPO", difficulty: "hard", tags: ["Array", "Greedy", "Sorting", "Heap (Priority Queue)"], slug: "ipo" });
+questions.push({id: "503", title: "Next Greater Element II", difficulty: "medium", tags: ["Array", "Stack", "Monotonic Stack"], slug: "next-greater-element-ii" });
+questions.push({id: "504", title: "Base 7", difficulty: "easy", tags: ["Math"], slug: "base-7" });
+questions.push({id: "505", title: "The Maze II", difficulty: "medium", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Graph", "Heap (Priority Queue)", "Matrix", "Shortest Path"], slug: "the-maze-ii" });
+questions.push({id: "506", title: "Relative Ranks", difficulty: "easy", tags: ["Array", "Sorting", "Heap (Priority Queue)"], slug: "relative-ranks" });
+questions.push({id: "507", title: "Perfect Number", difficulty: "easy", tags: ["Math"], slug: "perfect-number" });
+questions.push({id: "508", title: "Most Frequent Subtree Sum", difficulty: "medium", tags: ["Hash Table", "Tree", "Depth-First Search", "Binary Tree"], slug: "most-frequent-subtree-sum" });
+questions.push({id: "509", title: "Fibonacci Number", difficulty: "easy", tags: ["Math", "Dynamic Programming", "Recursion", "Memoization"], slug: "fibonacci-number" });
+questions.push({id: "510", title: "Inorder Successor in BST II", difficulty: "medium", tags: ["Tree", "Binary Search Tree", "Binary Tree"], slug: "inorder-successor-in-bst-ii" });
+questions.push({id: "511", title: "Game Play Analysis I", difficulty: "easy", tags: ["Database"], slug: "game-play-analysis-i" });
+questions.push({id: "512", title: "Game Play Analysis II", difficulty: "easy", tags: ["Database"], slug: "game-play-analysis-ii" });
+questions.push({id: "513", title: "Find Bottom Left Tree Value", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "find-bottom-left-tree-value" });
+questions.push({id: "514", title: "Freedom Trail", difficulty: "hard", tags: ["String", "Dynamic Programming", "Depth-First Search", "Breadth-First Search"], slug: "freedom-trail" });
+questions.push({id: "515", title: "Find Largest Value in Each Tree Row", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "find-largest-value-in-each-tree-row" });
+questions.push({id: "516", title: "Longest Palindromic Subsequence", difficulty: "medium", tags: ["String", "Dynamic Programming"], slug: "longest-palindromic-subsequence" });
+questions.push({id: "517", title: "Super Washing Machines", difficulty: "hard", tags: ["Array", "Greedy"], slug: "super-washing-machines" });
+questions.push({id: "518", title: "Coin Change II", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "coin-change-ii" });
+questions.push({id: "519", title: "Random Flip Matrix", difficulty: "medium", tags: ["Hash Table", "Math", "Reservoir Sampling", "Randomized"], slug: "random-flip-matrix" });
+questions.push({id: "520", title: "Detect Capital", difficulty: "easy", tags: ["String"], slug: "detect-capital" });
+questions.push({id: "521", title: "Longest Uncommon Subsequence I", difficulty: "easy", tags: ["String"], slug: "longest-uncommon-subsequence-i" });
+questions.push({id: "522", title: "Longest Uncommon Subsequence II", difficulty: "medium", tags: ["Array", "Hash Table", "Two Pointers", "String", "Sorting"], slug: "longest-uncommon-subsequence-ii" });
+questions.push({id: "523", title: "Continuous Subarray Sum", difficulty: "medium", tags: ["Array", "Hash Table", "Math", "Prefix Sum"], slug: "continuous-subarray-sum" });
+questions.push({id: "524", title: "Longest Word in Dictionary through Deleting", difficulty: "medium", tags: ["Array", "Two Pointers", "String", "Sorting"], slug: "longest-word-in-dictionary-through-deleting" });
+questions.push({id: "525", title: "Contiguous Array", difficulty: "medium", tags: ["Array", "Hash Table", "Prefix Sum"], slug: "contiguous-array" });
+questions.push({id: "526", title: "Beautiful Arrangement", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Backtracking", "Bit Manipulation", "Bitmask"], slug: "beautiful-arrangement" });
+questions.push({id: "527", title: "Word Abbreviation", difficulty: "hard", tags: ["Array", "String", "Greedy", "Trie", "Sorting"], slug: "word-abbreviation" });
+questions.push({id: "528", title: "Random Pick with Weight", difficulty: "medium", tags: ["Array", "Math", "Binary Search", "Prefix Sum", "Randomized"], slug: "random-pick-with-weight" });
+questions.push({id: "529", title: "Minesweeper", difficulty: "medium", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"], slug: "minesweeper" });
+questions.push({id: "530", title: "Minimum Absolute Difference in BST", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Search Tree", "Binary Tree"], slug: "minimum-absolute-difference-in-bst" });
+questions.push({id: "531", title: "Lonely Pixel I", difficulty: "medium", tags: ["Array", "Hash Table", "Matrix"], slug: "lonely-pixel-i" });
+questions.push({id: "532", title: "K-diff Pairs in an Array", difficulty: "medium", tags: ["Array", "Hash Table", "Two Pointers", "Binary Search", "Sorting"], slug: "k-diff-pairs-in-an-array" });
+questions.push({id: "533", title: "Lonely Pixel II", difficulty: "medium", tags: ["Array", "Hash Table", "Matrix"], slug: "lonely-pixel-ii" });
+questions.push({id: "534", title: "Game Play Analysis III", difficulty: "medium", tags: ["Database"], slug: "game-play-analysis-iii" });
+questions.push({id: "535", title: "Encode and Decode TinyURL", difficulty: "medium", tags: ["Hash Table", "String", "Design", "Hash Function"], slug: "encode-and-decode-tinyurl" });
+questions.push({id: "536", title: "Construct Binary Tree from String", difficulty: "medium", tags: ["String", "Stack", "Tree", "Depth-First Search", "Binary Tree"], slug: "construct-binary-tree-from-string" });
+questions.push({id: "537", title: "Complex Number Multiplication", difficulty: "medium", tags: ["Math", "String", "Simulation"], slug: "complex-number-multiplication" });
+questions.push({id: "538", title: "Convert BST to Greater Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "convert-bst-to-greater-tree" });
+questions.push({id: "539", title: "Minimum Time Difference", difficulty: "medium", tags: ["Array", "Math", "String", "Sorting"], slug: "minimum-time-difference" });
+questions.push({id: "540", title: "Single Element in a Sorted Array", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "single-element-in-a-sorted-array" });
+questions.push({id: "541", title: "Reverse String II", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "reverse-string-ii" });
+questions.push({id: "542", title: "01 Matrix", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Breadth-First Search", "Matrix"], slug: "01-matrix" });
+questions.push({id: "543", title: "Diameter of Binary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "diameter-of-binary-tree" });
+questions.push({id: "544", title: "Output Contest Matches", difficulty: "medium", tags: ["String", "Recursion", "Simulation"], slug: "output-contest-matches" });
+questions.push({id: "545", title: "Boundary of Binary Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "boundary-of-binary-tree" });
+questions.push({id: "546", title: "Remove Boxes", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Memoization"], slug: "remove-boxes" });
+questions.push({id: "547", title: "Number of Provinces", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "number-of-provinces" });
+questions.push({id: "548", title: "Split Array with Equal Sum", difficulty: "hard", tags: ["Array", "Hash Table", "Prefix Sum"], slug: "split-array-with-equal-sum" });
+questions.push({id: "549", title: "Binary Tree Longest Consecutive Sequence II", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-longest-consecutive-sequence-ii" });
+questions.push({id: "550", title: "Game Play Analysis IV", difficulty: "medium", tags: ["Database"], slug: "game-play-analysis-iv" });
+questions.push({id: "551", title: "Student Attendance Record I", difficulty: "easy", tags: ["String"], slug: "student-attendance-record-i" });
+questions.push({id: "552", title: "Student Attendance Record II", difficulty: "hard", tags: ["Dynamic Programming"], slug: "student-attendance-record-ii" });
+questions.push({id: "553", title: "Optimal Division", difficulty: "medium", tags: ["Array", "Math", "Dynamic Programming"], slug: "optimal-division" });
+questions.push({id: "554", title: "Brick Wall", difficulty: "medium", tags: ["Array", "Hash Table"], slug: "brick-wall" });
+questions.push({id: "555", title: "Split Concatenated Strings", difficulty: "medium", tags: ["Array", "String", "Greedy"], slug: "split-concatenated-strings" });
+questions.push({id: "556", title: "Next Greater Element III", difficulty: "medium", tags: ["Math", "Two Pointers", "String"], slug: "next-greater-element-iii" });
+questions.push({id: "557", title: "Reverse Words in a String III", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "reverse-words-in-a-string-iii" });
+questions.push({id: "558", title: "Logical OR of Two Binary Grids Represented as Quad-Trees", difficulty: "medium", tags: ["Divide and Conquer", "Tree"], slug: "logical-or-of-two-binary-grids-represented-as-quad-trees" });
+questions.push({id: "559", title: "Maximum Depth of N-ary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search"], slug: "maximum-depth-of-n-ary-tree" });
+questions.push({id: "560", title: "Subarray Sum Equals K", difficulty: "medium", tags: ["Array", "Hash Table", "Prefix Sum"], slug: "subarray-sum-equals-k" });
+questions.push({id: "561", title: "Array Partition", difficulty: "easy", tags: ["Array", "Greedy", "Sorting", "Counting Sort"], slug: "array-partition" });
+questions.push({id: "562", title: "Longest Line of Consecutive One in Matrix", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "longest-line-of-consecutive-one-in-matrix" });
+questions.push({id: "563", title: "Binary Tree Tilt", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-tilt" });
+questions.push({id: "564", title: "Find the Closest Palindrome", difficulty: "hard", tags: ["Math", "String"], slug: "find-the-closest-palindrome" });
+questions.push({id: "565", title: "Array Nesting", difficulty: "medium", tags: ["Array", "Depth-First Search"], slug: "array-nesting" });
+questions.push({id: "566", title: "Reshape the Matrix", difficulty: "easy", tags: ["Array", "Matrix", "Simulation"], slug: "reshape-the-matrix" });
+questions.push({id: "567", title: "Permutation in String", difficulty: "medium", tags: ["Hash Table", "Two Pointers", "String", "Sliding Window"], slug: "permutation-in-string" });
+questions.push({id: "568", title: "Maximum Vacation Days", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "maximum-vacation-days" });
+questions.push({id: "569", title: "Median Employee Salary", difficulty: "hard", tags: ["Database"], slug: "median-employee-salary" });
+questions.push({id: "570", title: "Managers with at Least 5 Direct Reports", difficulty: "medium", tags: ["Database"], slug: "managers-with-at-least-5-direct-reports" });
+questions.push({id: "571", title: "Find Median Given Frequency of Numbers", difficulty: "hard", tags: ["Database"], slug: "find-median-given-frequency-of-numbers" });
+questions.push({id: "572", title: "Subtree of Another Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "String Matching", "Binary Tree", "Hash Function"], slug: "subtree-of-another-tree" });
+questions.push({id: "573", title: "Squirrel Simulation", difficulty: "medium", tags: ["Array", "Math"], slug: "squirrel-simulation" });
+questions.push({id: "574", title: "Winning Candidate", difficulty: "medium", tags: ["Database"], slug: "winning-candidate" });
+questions.push({id: "575", title: "Distribute Candies", difficulty: "easy", tags: ["Array", "Hash Table"], slug: "distribute-candies" });
+questions.push({id: "576", title: "Out of Boundary Paths", difficulty: "medium", tags: ["Dynamic Programming"], slug: "out-of-boundary-paths" });
+questions.push({id: "577", title: "Employee Bonus", difficulty: "easy", tags: ["Database"], slug: "employee-bonus" });
+questions.push({id: "578", title: "Get Highest Answer Rate Question", difficulty: "medium", tags: ["Database"], slug: "get-highest-answer-rate-question" });
+questions.push({id: "579", title: "Find Cumulative Salary of an Employee", difficulty: "hard", tags: ["Database"], slug: "find-cumulative-salary-of-an-employee" });
+questions.push({id: "580", title: "Count Student Number in Departments", difficulty: "medium", tags: ["Database"], slug: "count-student-number-in-departments" });
+questions.push({id: "581", title: "Shortest Unsorted Continuous Subarray", difficulty: "medium", tags: ["Array", "Two Pointers", "Stack", "Greedy", "Sorting", "Monotonic Stack"], slug: "shortest-unsorted-continuous-subarray" });
+questions.push({id: "582", title: "Kill Process", difficulty: "medium", tags: ["Array", "Hash Table", "Tree", "Depth-First Search", "Breadth-First Search"], slug: "kill-process" });
+questions.push({id: "583", title: "Delete Operation for Two Strings", difficulty: "medium", tags: ["String", "Dynamic Programming"], slug: "delete-operation-for-two-strings" });
+questions.push({id: "584", title: "Find Customer Referee", difficulty: "easy", tags: ["Database"], slug: "find-customer-referee" });
+questions.push({id: "585", title: "Investments in 2016", difficulty: "medium", tags: ["Database"], slug: "investments-in-2016" });
+questions.push({id: "586", title: "Customer Placing the Largest Number of Orders", difficulty: "easy", tags: ["Database"], slug: "customer-placing-the-largest-number-of-orders" });
+questions.push({id: "587", title: "Erect the Fence", difficulty: "hard", tags: ["Array", "Math", "Geometry"], slug: "erect-the-fence" });
+questions.push({id: "588", title: "Design In-Memory File System", difficulty: "hard", tags: ["Hash Table", "String", "Design", "Trie", "Sorting"], slug: "design-in-memory-file-system" });
+questions.push({id: "589", title: "N-ary Tree Preorder Traversal", difficulty: "easy", tags: ["Stack", "Tree", "Depth-First Search"], slug: "n-ary-tree-preorder-traversal" });
+questions.push({id: "590", title: "N-ary Tree Postorder Traversal", difficulty: "easy", tags: ["Stack", "Tree", "Depth-First Search"], slug: "n-ary-tree-postorder-traversal" });
+questions.push({id: "591", title: "Tag Validator", difficulty: "hard", tags: ["String", "Stack"], slug: "tag-validator" });
+questions.push({id: "592", title: "Fraction Addition and Subtraction", difficulty: "medium", tags: ["Math", "String", "Simulation"], slug: "fraction-addition-and-subtraction" });
+questions.push({id: "593", title: "Valid Square", difficulty: "medium", tags: ["Math", "Geometry"], slug: "valid-square" });
+questions.push({id: "594", title: "Longest Harmonious Subsequence", difficulty: "easy", tags: ["Array", "Hash Table", "Sliding Window", "Sorting", "Counting"], slug: "longest-harmonious-subsequence" });
+questions.push({id: "595", title: "Big Countries", difficulty: "easy", tags: ["Database"], slug: "big-countries" });
+questions.push({id: "596", title: "Classes More Than 5 Students", difficulty: "easy", tags: ["Database"], slug: "classes-more-than-5-students" });
+questions.push({id: "597", title: "Friend Requests I: Overall Acceptance Rate", difficulty: "easy", tags: ["Database"], slug: "friend-requests-i-overall-acceptance-rate" });
+questions.push({id: "598", title: "Range Addition II", difficulty: "easy", tags: ["Array", "Math"], slug: "range-addition-ii" });
+questions.push({id: "599", title: "Minimum Index Sum of Two Lists", difficulty: "easy", tags: ["Array", "Hash Table", "String"], slug: "minimum-index-sum-of-two-lists" });
+questions.push({id: "600", title: "Non-negative Integers without Consecutive Ones", difficulty: "hard", tags: ["Dynamic Programming"], slug: "non-negative-integers-without-consecutive-ones" });
+questions.push({id: "601", title: "Human Traffic of Stadium", difficulty: "hard", tags: ["Database"], slug: "human-traffic-of-stadium" });
+questions.push({id: "602", title: "Friend Requests II: Who Has the Most Friends", difficulty: "medium", tags: ["Database"], slug: "friend-requests-ii-who-has-the-most-friends" });
+questions.push({id: "603", title: "Consecutive Available Seats", difficulty: "easy", tags: ["Database"], slug: "consecutive-available-seats" });
+questions.push({id: "604", title: "Design Compressed String Iterator", difficulty: "easy", tags: ["Array", "String", "Design", "Iterator"], slug: "design-compressed-string-iterator" });
+questions.push({id: "605", title: "Can Place Flowers", difficulty: "easy", tags: ["Array", "Greedy"], slug: "can-place-flowers" });
+questions.push({id: "606", title: "Construct String from Binary Tree", difficulty: "medium", tags: ["String", "Tree", "Depth-First Search", "Binary Tree"], slug: "construct-string-from-binary-tree" });
+questions.push({id: "607", title: "Sales Person", difficulty: "easy", tags: ["Database"], slug: "sales-person" });
+questions.push({id: "608", title: "Tree Node", difficulty: "medium", tags: ["Database"], slug: "tree-node" });
+questions.push({id: "609", title: "Find Duplicate File in System", difficulty: "medium", tags: ["Array", "Hash Table", "String"], slug: "find-duplicate-file-in-system" });
+questions.push({id: "610", title: "Triangle Judgement", difficulty: "easy", tags: ["Database"], slug: "triangle-judgement" });
+questions.push({id: "611", title: "Valid Triangle Number", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search", "Greedy", "Sorting"], slug: "valid-triangle-number" });
+questions.push({id: "612", title: "Shortest Distance in a Plane", difficulty: "medium", tags: ["Database"], slug: "shortest-distance-in-a-plane" });
+questions.push({id: "613", title: "Shortest Distance in a Line", difficulty: "easy", tags: ["Database"], slug: "shortest-distance-in-a-line" });
+questions.push({id: "614", title: "Second Degree Follower", difficulty: "medium", tags: ["Database"], slug: "second-degree-follower" });
+questions.push({id: "615", title: "Average Salary: Departments VS Company", difficulty: "hard", tags: ["Database"], slug: "average-salary-departments-vs-company" });
+questions.push({id: "616", title: "Add Bold Tag in String", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Trie", "String Matching"], slug: "add-bold-tag-in-string" });
+questions.push({id: "617", title: "Merge Two Binary Trees", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "merge-two-binary-trees" });
+questions.push({id: "618", title: "Students Report By Geography", difficulty: "hard", tags: ["Database"], slug: "students-report-by-geography" });
+questions.push({id: "619", title: "Biggest Single Number", difficulty: "easy", tags: ["Database"], slug: "biggest-single-number" });
+questions.push({id: "620", title: "Not Boring Movies", difficulty: "easy", tags: ["Database"], slug: "not-boring-movies" });
+questions.push({id: "621", title: "Task Scheduler", difficulty: "medium", tags: ["Array", "Hash Table", "Greedy", "Sorting", "Heap (Priority Queue)", "Counting"], slug: "task-scheduler" });
+questions.push({id: "622", title: "Design Circular Queue", difficulty: "medium", tags: ["Array", "Linked List", "Design", "Queue"], slug: "design-circular-queue" });
+questions.push({id: "623", title: "Add One Row to Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "add-one-row-to-tree" });
+questions.push({id: "624", title: "Maximum Distance in Arrays", difficulty: "medium", tags: ["Array", "Greedy"], slug: "maximum-distance-in-arrays" });
+questions.push({id: "625", title: "Minimum Factorization", difficulty: "medium", tags: ["Math", "Greedy"], slug: "minimum-factorization" });
+questions.push({id: "626", title: "Exchange Seats", difficulty: "medium", tags: ["Database"], slug: "exchange-seats" });
+questions.push({id: "627", title: "Swap Salary", difficulty: "easy", tags: ["Database"], slug: "swap-salary" });
+questions.push({id: "628", title: "Maximum Product of Three Numbers", difficulty: "easy", tags: ["Array", "Math", "Sorting"], slug: "maximum-product-of-three-numbers" });
+questions.push({id: "629", title: "K Inverse Pairs Array", difficulty: "hard", tags: ["Dynamic Programming"], slug: "k-inverse-pairs-array" });
+questions.push({id: "630", title: "Course Schedule III", difficulty: "hard", tags: ["Array", "Greedy", "Sorting", "Heap (Priority Queue)"], slug: "course-schedule-iii" });
+questions.push({id: "631", title: "Design Excel Sum Formula", difficulty: "hard", tags: ["Array", "Graph", "Design", "Topological Sort", "Matrix"], slug: "design-excel-sum-formula" });
+questions.push({id: "632", title: "Smallest Range Covering Elements from K Lists", difficulty: "hard", tags: ["Array", "Hash Table", "Greedy", "Sliding Window", "Sorting", "Heap (Priority Queue)"], slug: "smallest-range-covering-elements-from-k-lists" });
+questions.push({id: "633", title: "Sum of Square Numbers", difficulty: "medium", tags: ["Math", "Two Pointers", "Binary Search"], slug: "sum-of-square-numbers" });
+questions.push({id: "634", title: "Find the Derangement of An Array", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Combinatorics"], slug: "find-the-derangement-of-an-array" });
+questions.push({id: "635", title: "Design Log Storage System", difficulty: "medium", tags: ["Hash Table", "String", "Design", "Ordered Set"], slug: "design-log-storage-system" });
+questions.push({id: "636", title: "Exclusive Time of Functions", difficulty: "medium", tags: ["Array", "Stack"], slug: "exclusive-time-of-functions" });
+questions.push({id: "637", title: "Average of Levels in Binary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "average-of-levels-in-binary-tree" });
+questions.push({id: "638", title: "Shopping Offers", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Backtracking", "Bit Manipulation", "Memoization", "Bitmask"], slug: "shopping-offers" });
+questions.push({id: "639", title: "Decode Ways II", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "decode-ways-ii" });
+questions.push({id: "640", title: "Solve the Equation", difficulty: "medium", tags: ["Math", "String", "Simulation"], slug: "solve-the-equation" });
+questions.push({id: "641", title: "Design Circular Deque", difficulty: "medium", tags: ["Array", "Linked List", "Design", "Queue"], slug: "design-circular-deque" });
+questions.push({id: "642", title: "Design Search Autocomplete System", difficulty: "hard", tags: ["String", "Depth-First Search", "Design", "Trie", "Sorting", "Heap (Priority Queue)", "Data Stream"], slug: "design-search-autocomplete-system" });
+questions.push({id: "643", title: "Maximum Average Subarray I", difficulty: "easy", tags: ["Array", "Sliding Window"], slug: "maximum-average-subarray-i" });
+questions.push({id: "644", title: "Maximum Average Subarray II", difficulty: "hard", tags: ["Array", "Binary Search", "Prefix Sum"], slug: "maximum-average-subarray-ii" });
+questions.push({id: "645", title: "Set Mismatch", difficulty: "easy", tags: ["Array", "Hash Table", "Bit Manipulation", "Sorting"], slug: "set-mismatch" });
+questions.push({id: "646", title: "Maximum Length of Pair Chain", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Greedy", "Sorting"], slug: "maximum-length-of-pair-chain" });
+questions.push({id: "647", title: "Palindromic Substrings", difficulty: "medium", tags: ["Two Pointers", "String", "Dynamic Programming"], slug: "palindromic-substrings" });
+questions.push({id: "648", title: "Replace Words", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Trie"], slug: "replace-words" });
+questions.push({id: "649", title: "Dota2 Senate", difficulty: "medium", tags: ["String", "Greedy", "Queue"], slug: "dota2-senate" });
+questions.push({id: "650", title: "2 Keys Keyboard", difficulty: "medium", tags: ["Math", "Dynamic Programming"], slug: "2-keys-keyboard" });
+questions.push({id: "651", title: "4 Keys Keyboard", difficulty: "medium", tags: ["Math", "Dynamic Programming"], slug: "4-keys-keyboard" });
+questions.push({id: "652", title: "Find Duplicate Subtrees", difficulty: "medium", tags: ["Hash Table", "Tree", "Depth-First Search", "Binary Tree"], slug: "find-duplicate-subtrees" });
+questions.push({id: "653", title: "Two Sum IV - Input is a BST", difficulty: "easy", tags: ["Hash Table", "Two Pointers", "Tree", "Depth-First Search", "Breadth-First Search", "Binary Search Tree", "Binary Tree"], slug: "two-sum-iv-input-is-a-bst" });
+questions.push({id: "654", title: "Maximum Binary Tree", difficulty: "medium", tags: ["Array", "Divide and Conquer", "Stack", "Tree", "Monotonic Stack", "Binary Tree"], slug: "maximum-binary-tree" });
+questions.push({id: "655", title: "Print Binary Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "print-binary-tree" });
+questions.push({id: "656", title: "Coin Path", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "coin-path" });
+questions.push({id: "657", title: "Robot Return to Origin", difficulty: "easy", tags: ["String", "Simulation"], slug: "robot-return-to-origin" });
+questions.push({id: "658", title: "Find K Closest Elements", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search", "Sliding Window", "Sorting", "Heap (Priority Queue)"], slug: "find-k-closest-elements" });
+questions.push({id: "659", title: "Split Array into Consecutive Subsequences", difficulty: "medium", tags: ["Array", "Hash Table", "Greedy", "Heap (Priority Queue)"], slug: "split-array-into-consecutive-subsequences" });
+questions.push({id: "660", title: "Remove 9", difficulty: "hard", tags: ["Math"], slug: "remove-9" });
+questions.push({id: "661", title: "Image Smoother", difficulty: "easy", tags: ["Array", "Matrix"], slug: "image-smoother" });
+questions.push({id: "662", title: "Maximum Width of Binary Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "maximum-width-of-binary-tree" });
+questions.push({id: "663", title: "Equal Tree Partition", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "equal-tree-partition" });
+questions.push({id: "664", title: "Strange Printer", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "strange-printer" });
+questions.push({id: "665", title: "Non-decreasing Array", difficulty: "medium", tags: ["Array"], slug: "non-decreasing-array" });
+questions.push({id: "666", title: "Path Sum IV", difficulty: "medium", tags: ["Array", "Hash Table", "Tree", "Depth-First Search", "Binary Tree"], slug: "path-sum-iv" });
+questions.push({id: "667", title: "Beautiful Arrangement II", difficulty: "medium", tags: ["Array", "Math"], slug: "beautiful-arrangement-ii" });
+questions.push({id: "668", title: "Kth Smallest Number in Multiplication Table", difficulty: "hard", tags: ["Math", "Binary Search"], slug: "kth-smallest-number-in-multiplication-table" });
+questions.push({id: "669", title: "Trim a Binary Search Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "trim-a-binary-search-tree" });
+questions.push({id: "670", title: "Maximum Swap", difficulty: "medium", tags: ["Math", "Greedy"], slug: "maximum-swap" });
+questions.push({id: "671", title: "Second Minimum Node In a Binary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "second-minimum-node-in-a-binary-tree" });
+questions.push({id: "672", title: "Bulb Switcher II", difficulty: "medium", tags: ["Math", "Bit Manipulation", "Depth-First Search", "Breadth-First Search"], slug: "bulb-switcher-ii" });
+questions.push({id: "673", title: "Number of Longest Increasing Subsequence", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Binary Indexed Tree", "Segment Tree"], slug: "number-of-longest-increasing-subsequence" });
+questions.push({id: "674", title: "Longest Continuous Increasing Subsequence", difficulty: "easy", tags: ["Array"], slug: "longest-continuous-increasing-subsequence" });
+questions.push({id: "675", title: "Cut Off Trees for Golf Event", difficulty: "hard", tags: ["Array", "Breadth-First Search", "Heap (Priority Queue)", "Matrix"], slug: "cut-off-trees-for-golf-event" });
+questions.push({id: "676", title: "Implement Magic Dictionary", difficulty: "medium", tags: ["Hash Table", "String", "Depth-First Search", "Design", "Trie"], slug: "implement-magic-dictionary" });
+questions.push({id: "677", title: "Map Sum Pairs", difficulty: "medium", tags: ["Hash Table", "String", "Design", "Trie"], slug: "map-sum-pairs" });
+questions.push({id: "678", title: "Valid Parenthesis String", difficulty: "medium", tags: ["String", "Dynamic Programming", "Stack", "Greedy"], slug: "valid-parenthesis-string" });
+questions.push({id: "679", title: "24 Game", difficulty: "hard", tags: ["Array", "Math", "Backtracking"], slug: "24-game" });
+questions.push({id: "680", title: "Valid Palindrome II", difficulty: "easy", tags: ["Two Pointers", "String", "Greedy"], slug: "valid-palindrome-ii" });
+questions.push({id: "681", title: "Next Closest Time", difficulty: "medium", tags: ["Hash Table", "String", "Backtracking", "Enumeration"], slug: "next-closest-time" });
+questions.push({id: "682", title: "Baseball Game", difficulty: "easy", tags: ["Array", "Stack", "Simulation"], slug: "baseball-game" });
+questions.push({id: "683", title: "K Empty Slots", difficulty: "hard", tags: ["Array", "Binary Indexed Tree", "Segment Tree", "Queue", "Sliding Window", "Heap (Priority Queue)", "Ordered Set", "Monotonic Queue"], slug: "k-empty-slots" });
+questions.push({id: "684", title: "Redundant Connection", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "redundant-connection" });
+questions.push({id: "685", title: "Redundant Connection II", difficulty: "hard", tags: ["Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "redundant-connection-ii" });
+questions.push({id: "686", title: "Repeated String Match", difficulty: "medium", tags: ["String", "String Matching"], slug: "repeated-string-match" });
+questions.push({id: "687", title: "Longest Univalue Path", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "longest-univalue-path" });
+questions.push({id: "688", title: "Knight Probability in Chessboard", difficulty: "medium", tags: ["Dynamic Programming"], slug: "knight-probability-in-chessboard" });
+questions.push({id: "689", title: "Maximum Sum of 3 Non-Overlapping Subarrays", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "maximum-sum-of-3-non-overlapping-subarrays" });
+questions.push({id: "690", title: "Employee Importance", difficulty: "medium", tags: ["Array", "Hash Table", "Tree", "Depth-First Search", "Breadth-First Search"], slug: "employee-importance" });
+questions.push({id: "691", title: "Stickers to Spell Word", difficulty: "hard", tags: ["Array", "Hash Table", "String", "Dynamic Programming", "Backtracking", "Bit Manipulation", "Memoization", "Bitmask"], slug: "stickers-to-spell-word" });
+questions.push({id: "692", title: "Top K Frequent Words", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Trie", "Sorting", "Heap (Priority Queue)", "Bucket Sort", "Counting"], slug: "top-k-frequent-words" });
+questions.push({id: "693", title: "Binary Number with Alternating Bits", difficulty: "easy", tags: ["Bit Manipulation"], slug: "binary-number-with-alternating-bits" });
+questions.push({id: "694", title: "Number of Distinct Islands", difficulty: "medium", tags: ["Hash Table", "Depth-First Search", "Breadth-First Search", "Union Find", "Hash Function"], slug: "number-of-distinct-islands" });
+questions.push({id: "695", title: "Max Area of Island", difficulty: "medium", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Union Find", "Matrix"], slug: "max-area-of-island" });
+questions.push({id: "696", title: "Count Binary Substrings", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "count-binary-substrings" });
+questions.push({id: "697", title: "Degree of an Array", difficulty: "easy", tags: ["Array", "Hash Table"], slug: "degree-of-an-array" });
+questions.push({id: "698", title: "Partition to K Equal Sum Subsets", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Backtracking", "Bit Manipulation", "Memoization", "Bitmask"], slug: "partition-to-k-equal-sum-subsets" });
+questions.push({id: "699", title: "Falling Squares", difficulty: "hard", tags: ["Array", "Segment Tree", "Ordered Set"], slug: "falling-squares" });
+questions.push({id: "700", title: "Search in a Binary Search Tree", difficulty: "easy", tags: ["Tree", "Binary Search Tree", "Binary Tree"], slug: "search-in-a-binary-search-tree" });
+questions.push({id: "701", title: "Insert into a Binary Search Tree", difficulty: "medium", tags: ["Tree", "Binary Search Tree", "Binary Tree"], slug: "insert-into-a-binary-search-tree" });
+questions.push({id: "702", title: "Search in a Sorted Array of Unknown Size", difficulty: "medium", tags: ["Array", "Binary Search", "Interactive"], slug: "search-in-a-sorted-array-of-unknown-size" });
+questions.push({id: "703", title: "Kth Largest Element in a Stream", difficulty: "easy", tags: ["Tree", "Design", "Binary Search Tree", "Heap (Priority Queue)", "Binary Tree", "Data Stream"], slug: "kth-largest-element-in-a-stream" });
+questions.push({id: "704", title: "Binary Search", difficulty: "easy", tags: ["Array", "Binary Search"], slug: "binary-search" });
+questions.push({id: "705", title: "Design HashSet", difficulty: "easy", tags: ["Array", "Hash Table", "Linked List", "Design", "Hash Function"], slug: "design-hashset" });
+questions.push({id: "706", title: "Design HashMap", difficulty: "easy", tags: ["Array", "Hash Table", "Linked List", "Design", "Hash Function"], slug: "design-hashmap" });
+questions.push({id: "707", title: "Design Linked List", difficulty: "medium", tags: ["Linked List", "Design"], slug: "design-linked-list" });
+questions.push({id: "708", title: "Insert into a Sorted Circular Linked List", difficulty: "medium", tags: ["Linked List"], slug: "insert-into-a-sorted-circular-linked-list" });
+questions.push({id: "709", title: "To Lower Case", difficulty: "easy", tags: ["String"], slug: "to-lower-case" });
+questions.push({id: "710", title: "Random Pick with Blacklist", difficulty: "hard", tags: ["Array", "Hash Table", "Math", "Binary Search", "Sorting", "Randomized"], slug: "random-pick-with-blacklist" });
+questions.push({id: "711", title: "Number of Distinct Islands II", difficulty: "hard", tags: ["Hash Table", "Depth-First Search", "Breadth-First Search", "Union Find", "Hash Function"], slug: "number-of-distinct-islands-ii" });
+questions.push({id: "712", title: "Minimum ASCII Delete Sum for Two Strings", difficulty: "medium", tags: ["String", "Dynamic Programming"], slug: "minimum-ascii-delete-sum-for-two-strings" });
+questions.push({id: "713", title: "Subarray Product Less Than K", difficulty: "medium", tags: ["Array", "Binary Search", "Sliding Window", "Prefix Sum"], slug: "subarray-product-less-than-k" });
+questions.push({id: "714", title: "Best Time to Buy and Sell Stock with Transaction Fee", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Greedy"], slug: "best-time-to-buy-and-sell-stock-with-transaction-fee" });
+questions.push({id: "715", title: "Range Module", difficulty: "hard", tags: ["Design", "Segment Tree", "Ordered Set"], slug: "range-module" });
+questions.push({id: "716", title: "Max Stack", difficulty: "hard", tags: ["Linked List", "Stack", "Design", "Doubly-Linked List", "Ordered Set"], slug: "max-stack" });
+questions.push({id: "717", title: "1-bit and 2-bit Characters", difficulty: "easy", tags: ["Array"], slug: "1-bit-and-2-bit-characters" });
+questions.push({id: "718", title: "Maximum Length of Repeated Subarray", difficulty: "medium", tags: ["Array", "Binary Search", "Dynamic Programming", "Sliding Window", "Rolling Hash", "Hash Function"], slug: "maximum-length-of-repeated-subarray" });
+questions.push({id: "719", title: "Find K-th Smallest Pair Distance", difficulty: "hard", tags: ["Array", "Two Pointers", "Binary Search", "Sorting"], slug: "find-k-th-smallest-pair-distance" });
+questions.push({id: "720", title: "Longest Word in Dictionary", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Trie", "Sorting"], slug: "longest-word-in-dictionary" });
+questions.push({id: "721", title: "Accounts Merge", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Depth-First Search", "Breadth-First Search", "Union Find", "Sorting"], slug: "accounts-merge" });
+questions.push({id: "722", title: "Remove Comments", difficulty: "medium", tags: ["Array", "String"], slug: "remove-comments" });
+questions.push({id: "723", title: "Candy Crush", difficulty: "medium", tags: ["Array", "Two Pointers", "Matrix", "Simulation"], slug: "candy-crush" });
+questions.push({id: "724", title: "Find Pivot Index", difficulty: "easy", tags: ["Array", "Prefix Sum"], slug: "find-pivot-index" });
+questions.push({id: "725", title: "Split Linked List in Parts", difficulty: "medium", tags: ["Linked List"], slug: "split-linked-list-in-parts" });
+questions.push({id: "726", title: "Number of Atoms", difficulty: "hard", tags: ["Hash Table", "String", "Stack", "Sorting"], slug: "number-of-atoms" });
+questions.push({id: "727", title: "Minimum Window Subsequence", difficulty: "hard", tags: ["String", "Dynamic Programming", "Sliding Window"], slug: "minimum-window-subsequence" });
+questions.push({id: "728", title: "Self Dividing Numbers", difficulty: "easy", tags: ["Math"], slug: "self-dividing-numbers" });
+questions.push({id: "729", title: "My Calendar I", difficulty: "medium", tags: ["Array", "Binary Search", "Design", "Segment Tree", "Ordered Set"], slug: "my-calendar-i" });
+questions.push({id: "730", title: "Count Different Palindromic Subsequences", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "count-different-palindromic-subsequences" });
+questions.push({id: "731", title: "My Calendar II", difficulty: "medium", tags: ["Array", "Binary Search", "Design", "Segment Tree", "Prefix Sum", "Ordered Set"], slug: "my-calendar-ii" });
+questions.push({id: "732", title: "My Calendar III", difficulty: "hard", tags: ["Binary Search", "Design", "Segment Tree", "Prefix Sum", "Ordered Set"], slug: "my-calendar-iii" });
+questions.push({id: "733", title: "Flood Fill", difficulty: "easy", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"], slug: "flood-fill" });
+questions.push({id: "734", title: "Sentence Similarity", difficulty: "easy", tags: ["Array", "Hash Table", "String"], slug: "sentence-similarity" });
+questions.push({id: "735", title: "Asteroid Collision", difficulty: "medium", tags: ["Array", "Stack", "Simulation"], slug: "asteroid-collision" });
+questions.push({id: "736", title: "Parse Lisp Expression", difficulty: "hard", tags: ["Hash Table", "String", "Stack", "Recursion"], slug: "parse-lisp-expression" });
+questions.push({id: "737", title: "Sentence Similarity II", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Depth-First Search", "Breadth-First Search", "Union Find"], slug: "sentence-similarity-ii" });
+questions.push({id: "738", title: "Monotone Increasing Digits", difficulty: "medium", tags: ["Math", "Greedy"], slug: "monotone-increasing-digits" });
+questions.push({id: "739", title: "Daily Temperatures", difficulty: "medium", tags: ["Array", "Stack", "Monotonic Stack"], slug: "daily-temperatures" });
+questions.push({id: "740", title: "Delete and Earn", difficulty: "medium", tags: ["Array", "Hash Table", "Dynamic Programming"], slug: "delete-and-earn" });
+questions.push({id: "741", title: "Cherry Pickup", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "cherry-pickup" });
+questions.push({id: "742", title: "Closest Leaf in a Binary Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "closest-leaf-in-a-binary-tree" });
+questions.push({id: "743", title: "Network Delay Time", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Graph", "Heap (Priority Queue)", "Shortest Path"], slug: "network-delay-time" });
+questions.push({id: "744", title: "Find Smallest Letter Greater Than Target", difficulty: "easy", tags: ["Array", "Binary Search"], slug: "find-smallest-letter-greater-than-target" });
+questions.push({id: "745", title: "Prefix and Suffix Search", difficulty: "hard", tags: ["Array", "Hash Table", "String", "Design", "Trie"], slug: "prefix-and-suffix-search" });
+questions.push({id: "746", title: "Min Cost Climbing Stairs", difficulty: "easy", tags: ["Array", "Dynamic Programming"], slug: "min-cost-climbing-stairs" });
+questions.push({id: "747", title: "Largest Number At Least Twice of Others", difficulty: "easy", tags: ["Array", "Sorting"], slug: "largest-number-at-least-twice-of-others" });
+questions.push({id: "748", title: "Shortest Completing Word", difficulty: "easy", tags: ["Array", "Hash Table", "String"], slug: "shortest-completing-word" });
+questions.push({id: "749", title: "Contain Virus", difficulty: "hard", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix", "Simulation"], slug: "contain-virus" });
+questions.push({id: "750", title: "Number Of Corner Rectangles", difficulty: "medium", tags: ["Array", "Math", "Dynamic Programming", "Matrix"], slug: "number-of-corner-rectangles" });
+questions.push({id: "751", title: "IP to CIDR", difficulty: "medium", tags: ["String", "Bit Manipulation"], slug: "ip-to-cidr" });
+questions.push({id: "752", title: "Open the Lock", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Breadth-First Search"], slug: "open-the-lock" });
+questions.push({id: "753", title: "Cracking the Safe", difficulty: "hard", tags: ["Depth-First Search", "Graph", "Eulerian Circuit"], slug: "cracking-the-safe" });
+questions.push({id: "754", title: "Reach a Number", difficulty: "medium", tags: ["Math", "Binary Search"], slug: "reach-a-number" });
+questions.push({id: "755", title: "Pour Water", difficulty: "medium", tags: ["Array", "Simulation"], slug: "pour-water" });
+questions.push({id: "756", title: "Pyramid Transition Matrix", difficulty: "medium", tags: ["Bit Manipulation", "Depth-First Search", "Breadth-First Search"], slug: "pyramid-transition-matrix" });
+questions.push({id: "757", title: "Set Intersection Size At Least Two", difficulty: "hard", tags: ["Array", "Greedy", "Sorting"], slug: "set-intersection-size-at-least-two" });
+questions.push({id: "758", title: "Bold Words in String", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Trie", "String Matching"], slug: "bold-words-in-string" });
+questions.push({id: "759", title: "Employee Free Time", difficulty: "hard", tags: ["Array", "Sorting", "Heap (Priority Queue)"], slug: "employee-free-time" });
+questions.push({id: "760", title: "Find Anagram Mappings", difficulty: "easy", tags: ["Array", "Hash Table"], slug: "find-anagram-mappings" });
+questions.push({id: "761", title: "Special Binary String", difficulty: "hard", tags: ["String", "Recursion"], slug: "special-binary-string" });
+questions.push({id: "762", title: "Prime Number of Set Bits in Binary Representation", difficulty: "easy", tags: ["Math", "Bit Manipulation"], slug: "prime-number-of-set-bits-in-binary-representation" });
+questions.push({id: "763", title: "Partition Labels", difficulty: "medium", tags: ["Hash Table", "Two Pointers", "String", "Greedy"], slug: "partition-labels" });
+questions.push({id: "764", title: "Largest Plus Sign", difficulty: "medium", tags: ["Array", "Dynamic Programming"], slug: "largest-plus-sign" });
+questions.push({id: "765", title: "Couples Holding Hands", difficulty: "hard", tags: ["Greedy", "Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "couples-holding-hands" });
+questions.push({id: "766", title: "Toeplitz Matrix", difficulty: "easy", tags: ["Array", "Matrix"], slug: "toeplitz-matrix" });
+questions.push({id: "767", title: "Reorganize String", difficulty: "medium", tags: ["Hash Table", "String", "Greedy", "Sorting", "Heap (Priority Queue)", "Counting"], slug: "reorganize-string" });
+questions.push({id: "768", title: "Max Chunks To Make Sorted II", difficulty: "hard", tags: ["Array", "Stack", "Greedy", "Sorting", "Monotonic Stack"], slug: "max-chunks-to-make-sorted-ii" });
+questions.push({id: "769", title: "Max Chunks To Make Sorted", difficulty: "medium", tags: ["Array", "Stack", "Greedy", "Sorting", "Monotonic Stack"], slug: "max-chunks-to-make-sorted" });
+questions.push({id: "770", title: "Basic Calculator IV", difficulty: "hard", tags: ["Hash Table", "Math", "String", "Stack", "Recursion"], slug: "basic-calculator-iv" });
+questions.push({id: "771", title: "Jewels and Stones", difficulty: "easy", tags: ["Hash Table", "String"], slug: "jewels-and-stones" });
+questions.push({id: "772", title: "Basic Calculator III", difficulty: "hard", tags: ["Math", "String", "Stack", "Recursion"], slug: "basic-calculator-iii" });
+questions.push({id: "773", title: "Sliding Puzzle", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Backtracking", "Breadth-First Search", "Memoization", "Matrix"], slug: "sliding-puzzle" });
+questions.push({id: "774", title: "Minimize Max Distance to Gas Station", difficulty: "hard", tags: ["Array", "Binary Search"], slug: "minimize-max-distance-to-gas-station" });
+questions.push({id: "775", title: "Global and Local Inversions", difficulty: "medium", tags: ["Array", "Math"], slug: "global-and-local-inversions" });
+questions.push({id: "776", title: "Split BST", difficulty: "medium", tags: ["Tree", "Binary Search Tree", "Recursion", "Binary Tree"], slug: "split-bst" });
+questions.push({id: "777", title: "Swap Adjacent in LR String", difficulty: "medium", tags: ["Two Pointers", "String"], slug: "swap-adjacent-in-lr-string" });
+questions.push({id: "778", title: "Swim in Rising Water", difficulty: "hard", tags: ["Array", "Binary Search", "Depth-First Search", "Breadth-First Search", "Union Find", "Heap (Priority Queue)", "Matrix"], slug: "swim-in-rising-water" });
+questions.push({id: "779", title: "K-th Symbol in Grammar", difficulty: "medium", tags: ["Math", "Bit Manipulation", "Recursion"], slug: "k-th-symbol-in-grammar" });
+questions.push({id: "780", title: "Reaching Points", difficulty: "hard", tags: ["Math"], slug: "reaching-points" });
+questions.push({id: "781", title: "Rabbits in Forest", difficulty: "medium", tags: ["Array", "Hash Table", "Math", "Greedy"], slug: "rabbits-in-forest" });
+questions.push({id: "782", title: "Transform to Chessboard", difficulty: "hard", tags: ["Array", "Math", "Bit Manipulation", "Matrix"], slug: "transform-to-chessboard" });
+questions.push({id: "783", title: "Minimum Distance Between BST Nodes", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Search Tree", "Binary Tree"], slug: "minimum-distance-between-bst-nodes" });
+questions.push({id: "784", title: "Letter Case Permutation", difficulty: "medium", tags: ["String", "Backtracking", "Bit Manipulation"], slug: "letter-case-permutation" });
+questions.push({id: "785", title: "Is Graph Bipartite?", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "is-graph-bipartite" });
+questions.push({id: "786", title: "K-th Smallest Prime Fraction", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search", "Sorting", "Heap (Priority Queue)"], slug: "k-th-smallest-prime-fraction" });
+questions.push({id: "787", title: "Cheapest Flights Within K Stops", difficulty: "medium", tags: ["Dynamic Programming", "Depth-First Search", "Breadth-First Search", "Graph", "Heap (Priority Queue)", "Shortest Path"], slug: "cheapest-flights-within-k-stops" });
+questions.push({id: "788", title: "Rotated Digits", difficulty: "medium", tags: ["Math", "Dynamic Programming"], slug: "rotated-digits" });
+questions.push({id: "789", title: "Escape The Ghosts", difficulty: "medium", tags: ["Array", "Math"], slug: "escape-the-ghosts" });
+questions.push({id: "790", title: "Domino and Tromino Tiling", difficulty: "medium", tags: ["Dynamic Programming"], slug: "domino-and-tromino-tiling" });
+questions.push({id: "791", title: "Custom Sort String", difficulty: "medium", tags: ["Hash Table", "String", "Sorting"], slug: "custom-sort-string" });
+questions.push({id: "792", title: "Number of Matching Subsequences", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Binary Search", "Dynamic Programming", "Trie", "Sorting"], slug: "number-of-matching-subsequences" });
+questions.push({id: "793", title: "Preimage Size of Factorial Zeroes Function", difficulty: "hard", tags: ["Math", "Binary Search"], slug: "preimage-size-of-factorial-zeroes-function" });
+questions.push({id: "794", title: "Valid Tic-Tac-Toe State", difficulty: "medium", tags: ["Array", "Matrix"], slug: "valid-tic-tac-toe-state" });
+questions.push({id: "795", title: "Number of Subarrays with Bounded Maximum", difficulty: "medium", tags: ["Array", "Two Pointers"], slug: "number-of-subarrays-with-bounded-maximum" });
+questions.push({id: "796", title: "Rotate String", difficulty: "easy", tags: ["String", "String Matching"], slug: "rotate-string" });
+questions.push({id: "797", title: "All Paths From Source to Target", difficulty: "medium", tags: ["Backtracking", "Depth-First Search", "Breadth-First Search", "Graph"], slug: "all-paths-from-source-to-target" });
+questions.push({id: "798", title: "Smallest Rotation with Highest Score", difficulty: "hard", tags: ["Array", "Prefix Sum"], slug: "smallest-rotation-with-highest-score" });
+questions.push({id: "799", title: "Champagne Tower", difficulty: "medium", tags: ["Dynamic Programming"], slug: "champagne-tower" });
+questions.push({id: "800", title: "Similar RGB Color", difficulty: "easy", tags: ["Math", "String", "Enumeration"], slug: "similar-rgb-color" });
+questions.push({id: "801", title: "Minimum Swaps To Make Sequences Increasing", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "minimum-swaps-to-make-sequences-increasing" });
+questions.push({id: "802", title: "Find Eventual Safe States", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Graph", "Topological Sort"], slug: "find-eventual-safe-states" });
+questions.push({id: "803", title: "Bricks Falling When Hit", difficulty: "hard", tags: ["Array", "Union Find", "Matrix"], slug: "bricks-falling-when-hit" });
+questions.push({id: "804", title: "Unique Morse Code Words", difficulty: "easy", tags: ["Array", "Hash Table", "String"], slug: "unique-morse-code-words" });
+questions.push({id: "805", title: "Split Array With Same Average", difficulty: "hard", tags: ["Array", "Math", "Dynamic Programming", "Bit Manipulation", "Bitmask"], slug: "split-array-with-same-average" });
+questions.push({id: "806", title: "Number of Lines To Write String", difficulty: "easy", tags: ["Array", "String"], slug: "number-of-lines-to-write-string" });
+questions.push({id: "807", title: "Max Increase to Keep City Skyline", difficulty: "medium", tags: ["Array", "Greedy", "Matrix"], slug: "max-increase-to-keep-city-skyline" });
+questions.push({id: "808", title: "Soup Servings", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Probability and Statistics"], slug: "soup-servings" });
+questions.push({id: "809", title: "Expressive Words", difficulty: "medium", tags: ["Array", "Two Pointers", "String"], slug: "expressive-words" });
+questions.push({id: "810", title: "Chalkboard XOR Game", difficulty: "hard", tags: ["Array", "Math", "Bit Manipulation", "Brainteaser", "Game Theory"], slug: "chalkboard-xor-game" });
+questions.push({id: "811", title: "Subdomain Visit Count", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Counting"], slug: "subdomain-visit-count" });
+questions.push({id: "812", title: "Largest Triangle Area", difficulty: "easy", tags: ["Array", "Math", "Geometry"], slug: "largest-triangle-area" });
+questions.push({id: "813", title: "Largest Sum of Averages", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Prefix Sum"], slug: "largest-sum-of-averages" });
+questions.push({id: "814", title: "Binary Tree Pruning", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-pruning" });
+questions.push({id: "815", title: "Bus Routes", difficulty: "hard", tags: ["Array", "Hash Table", "Breadth-First Search"], slug: "bus-routes" });
+questions.push({id: "816", title: "Ambiguous Coordinates", difficulty: "medium", tags: ["String", "Backtracking", "Enumeration"], slug: "ambiguous-coordinates" });
+questions.push({id: "817", title: "Linked List Components", difficulty: "medium", tags: ["Array", "Hash Table", "Linked List"], slug: "linked-list-components" });
+questions.push({id: "818", title: "Race Car", difficulty: "hard", tags: ["Dynamic Programming"], slug: "race-car" });
+questions.push({id: "819", title: "Most Common Word", difficulty: "easy", tags: ["Array", "Hash Table", "String", "Counting"], slug: "most-common-word" });
+questions.push({id: "820", title: "Short Encoding of Words", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Trie"], slug: "short-encoding-of-words" });
+questions.push({id: "821", title: "Shortest Distance to a Character", difficulty: "easy", tags: ["Array", "Two Pointers", "String"], slug: "shortest-distance-to-a-character" });
+questions.push({id: "822", title: "Card Flipping Game", difficulty: "medium", tags: ["Array", "Hash Table"], slug: "card-flipping-game" });
+questions.push({id: "823", title: "Binary Trees With Factors", difficulty: "medium", tags: ["Array", "Hash Table", "Dynamic Programming", "Sorting"], slug: "binary-trees-with-factors" });
+questions.push({id: "824", title: "Goat Latin", difficulty: "easy", tags: ["String"], slug: "goat-latin" });
+questions.push({id: "825", title: "Friends Of Appropriate Ages", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search", "Sorting"], slug: "friends-of-appropriate-ages" });
+questions.push({id: "826", title: "Most Profit Assigning Work", difficulty: "medium", tags: ["Array", "Two Pointers", "Binary Search", "Greedy", "Sorting"], slug: "most-profit-assigning-work" });
+questions.push({id: "827", title: "Making A Large Island", difficulty: "hard", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Union Find", "Matrix"], slug: "making-a-large-island" });
+questions.push({id: "828", title: "Count Unique Characters of All Substrings of a Given String", difficulty: "hard", tags: ["Hash Table", "String", "Dynamic Programming"], slug: "count-unique-characters-of-all-substrings-of-a-given-string" });
+questions.push({id: "829", title: "Consecutive Numbers Sum", difficulty: "hard", tags: ["Math", "Enumeration"], slug: "consecutive-numbers-sum" });
+questions.push({id: "830", title: "Positions of Large Groups", difficulty: "easy", tags: ["String"], slug: "positions-of-large-groups" });
+questions.push({id: "831", title: "Masking Personal Information", difficulty: "medium", tags: ["String"], slug: "masking-personal-information" });
+questions.push({id: "832", title: "Flipping an Image", difficulty: "easy", tags: ["Array", "Two Pointers", "Bit Manipulation", "Matrix", "Simulation"], slug: "flipping-an-image" });
+questions.push({id: "833", title: "Find And Replace in String", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Sorting"], slug: "find-and-replace-in-string" });
+questions.push({id: "834", title: "Sum of Distances in Tree", difficulty: "hard", tags: ["Dynamic Programming", "Tree", "Depth-First Search", "Graph"], slug: "sum-of-distances-in-tree" });
+questions.push({id: "835", title: "Image Overlap", difficulty: "medium", tags: ["Array", "Matrix"], slug: "image-overlap" });
+questions.push({id: "836", title: "Rectangle Overlap", difficulty: "easy", tags: ["Math", "Geometry"], slug: "rectangle-overlap" });
+questions.push({id: "837", title: "New 21 Game", difficulty: "medium", tags: ["Math", "Dynamic Programming", "Sliding Window", "Probability and Statistics"], slug: "new-21-game" });
+questions.push({id: "838", title: "Push Dominoes", difficulty: "medium", tags: ["Two Pointers", "String", "Dynamic Programming"], slug: "push-dominoes" });
+questions.push({id: "839", title: "Similar String Groups", difficulty: "hard", tags: ["Array", "Hash Table", "String", "Depth-First Search", "Breadth-First Search", "Union Find"], slug: "similar-string-groups" });
+questions.push({id: "840", title: "Magic Squares In Grid", difficulty: "medium", tags: ["Array", "Hash Table", "Math", "Matrix"], slug: "magic-squares-in-grid" });
+questions.push({id: "841", title: "Keys and Rooms", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Graph"], slug: "keys-and-rooms" });
+questions.push({id: "842", title: "Split Array into Fibonacci Sequence", difficulty: "medium", tags: ["String", "Backtracking"], slug: "split-array-into-fibonacci-sequence" });
+questions.push({id: "843", title: "Guess the Word", difficulty: "hard", tags: ["Array", "Math", "String", "Interactive", "Game Theory"], slug: "guess-the-word" });
+questions.push({id: "844", title: "Backspace String Compare", difficulty: "easy", tags: ["Two Pointers", "String", "Stack", "Simulation"], slug: "backspace-string-compare" });
+questions.push({id: "845", title: "Longest Mountain in Array", difficulty: "medium", tags: ["Array", "Two Pointers", "Dynamic Programming", "Enumeration"], slug: "longest-mountain-in-array" });
+questions.push({id: "846", title: "Hand of Straights", difficulty: "medium", tags: ["Array", "Hash Table", "Greedy", "Sorting"], slug: "hand-of-straights" });
+questions.push({id: "847", title: "Shortest Path Visiting All Nodes", difficulty: "hard", tags: ["Dynamic Programming", "Bit Manipulation", "Breadth-First Search", "Graph", "Bitmask"], slug: "shortest-path-visiting-all-nodes" });
+questions.push({id: "848", title: "Shifting Letters", difficulty: "medium", tags: ["Array", "String", "Prefix Sum"], slug: "shifting-letters" });
+questions.push({id: "849", title: "Maximize Distance to Closest Person", difficulty: "medium", tags: ["Array"], slug: "maximize-distance-to-closest-person" });
+questions.push({id: "850", title: "Rectangle Area II", difficulty: "hard", tags: ["Array", "Segment Tree", "Line Sweep", "Ordered Set"], slug: "rectangle-area-ii" });
+questions.push({id: "851", title: "Loud and Rich", difficulty: "medium", tags: ["Array", "Depth-First Search", "Graph", "Topological Sort"], slug: "loud-and-rich" });
+questions.push({id: "852", title: "Peak Index in a Mountain Array", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "peak-index-in-a-mountain-array" });
+questions.push({id: "853", title: "Car Fleet", difficulty: "medium", tags: ["Array", "Stack", "Sorting", "Monotonic Stack"], slug: "car-fleet" });
+questions.push({id: "854", title: "K-Similar Strings", difficulty: "hard", tags: ["String", "Breadth-First Search"], slug: "k-similar-strings" });
+questions.push({id: "855", title: "Exam Room", difficulty: "medium", tags: ["Design", "Heap (Priority Queue)", "Ordered Set"], slug: "exam-room" });
+questions.push({id: "856", title: "Score of Parentheses", difficulty: "medium", tags: ["String", "Stack"], slug: "score-of-parentheses" });
+questions.push({id: "857", title: "Minimum Cost to Hire K Workers", difficulty: "hard", tags: ["Array", "Greedy", "Sorting", "Heap (Priority Queue)"], slug: "minimum-cost-to-hire-k-workers" });
+questions.push({id: "858", title: "Mirror Reflection", difficulty: "medium", tags: ["Math", "Geometry", "Number Theory"], slug: "mirror-reflection" });
+questions.push({id: "859", title: "Buddy Strings", difficulty: "easy", tags: ["Hash Table", "String"], slug: "buddy-strings" });
+questions.push({id: "860", title: "Lemonade Change", difficulty: "easy", tags: ["Array", "Greedy"], slug: "lemonade-change" });
+questions.push({id: "861", title: "Score After Flipping Matrix", difficulty: "medium", tags: ["Array", "Greedy", "Bit Manipulation", "Matrix"], slug: "score-after-flipping-matrix" });
+questions.push({id: "862", title: "Shortest Subarray with Sum at Least K", difficulty: "hard", tags: ["Array", "Binary Search", "Queue", "Sliding Window", "Heap (Priority Queue)", "Prefix Sum", "Monotonic Queue"], slug: "shortest-subarray-with-sum-at-least-k" });
+questions.push({id: "863", title: "All Nodes Distance K in Binary Tree", difficulty: "medium", tags: ["Hash Table", "Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "all-nodes-distance-k-in-binary-tree" });
+questions.push({id: "864", title: "Shortest Path to Get All Keys", difficulty: "hard", tags: ["Array", "Bit Manipulation", "Breadth-First Search", "Matrix"], slug: "shortest-path-to-get-all-keys" });
+questions.push({id: "865", title: "Smallest Subtree with all the Deepest Nodes", difficulty: "medium", tags: ["Hash Table", "Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "smallest-subtree-with-all-the-deepest-nodes" });
+questions.push({id: "866", title: "Prime Palindrome", difficulty: "medium", tags: ["Math", "Number Theory"], slug: "prime-palindrome" });
+questions.push({id: "867", title: "Transpose Matrix", difficulty: "easy", tags: ["Array", "Matrix", "Simulation"], slug: "transpose-matrix" });
+questions.push({id: "868", title: "Binary Gap", difficulty: "easy", tags: ["Bit Manipulation"], slug: "binary-gap" });
+questions.push({id: "869", title: "Reordered Power of 2", difficulty: "medium", tags: ["Hash Table", "Math", "Sorting", "Counting", "Enumeration"], slug: "reordered-power-of-2" });
+questions.push({id: "870", title: "Advantage Shuffle", difficulty: "medium", tags: ["Array", "Two Pointers", "Greedy", "Sorting"], slug: "advantage-shuffle" });
+questions.push({id: "871", title: "Minimum Number of Refueling Stops", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Greedy", "Heap (Priority Queue)"], slug: "minimum-number-of-refueling-stops" });
+questions.push({id: "872", title: "Leaf-Similar Trees", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "leaf-similar-trees" });
+questions.push({id: "873", title: "Length of Longest Fibonacci Subsequence", difficulty: "medium", tags: ["Array", "Hash Table", "Dynamic Programming"], slug: "length-of-longest-fibonacci-subsequence" });
+questions.push({id: "874", title: "Walking Robot Simulation", difficulty: "medium", tags: ["Array", "Hash Table", "Simulation"], slug: "walking-robot-simulation" });
+questions.push({id: "875", title: "Koko Eating Bananas", difficulty: "medium", tags: ["Array", "Binary Search"], slug: "koko-eating-bananas" });
+questions.push({id: "876", title: "Middle of the Linked List", difficulty: "easy", tags: ["Linked List", "Two Pointers"], slug: "middle-of-the-linked-list" });
+questions.push({id: "877", title: "Stone Game", difficulty: "medium", tags: ["Array", "Math", "Dynamic Programming", "Game Theory"], slug: "stone-game" });
+questions.push({id: "878", title: "Nth Magical Number", difficulty: "hard", tags: ["Math", "Binary Search"], slug: "nth-magical-number" });
+questions.push({id: "879", title: "Profitable Schemes", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "profitable-schemes" });
+questions.push({id: "880", title: "Decoded String at Index", difficulty: "medium", tags: ["String", "Stack"], slug: "decoded-string-at-index" });
+questions.push({id: "881", title: "Boats to Save People", difficulty: "medium", tags: ["Array", "Two Pointers", "Greedy", "Sorting"], slug: "boats-to-save-people" });
+questions.push({id: "882", title: "Reachable Nodes In Subdivided Graph", difficulty: "hard", tags: ["Graph", "Heap (Priority Queue)", "Shortest Path"], slug: "reachable-nodes-in-subdivided-graph" });
+questions.push({id: "883", title: "Projection Area of 3D Shapes", difficulty: "easy", tags: ["Array", "Math", "Geometry", "Matrix"], slug: "projection-area-of-3d-shapes" });
+questions.push({id: "884", title: "Uncommon Words from Two Sentences", difficulty: "easy", tags: ["Hash Table", "String", "Counting"], slug: "uncommon-words-from-two-sentences" });
+questions.push({id: "885", title: "Spiral Matrix III", difficulty: "medium", tags: ["Array", "Matrix", "Simulation"], slug: "spiral-matrix-iii" });
+questions.push({id: "886", title: "Possible Bipartition", difficulty: "medium", tags: ["Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "possible-bipartition" });
+questions.push({id: "887", title: "Super Egg Drop", difficulty: "hard", tags: ["Math", "Binary Search", "Dynamic Programming"], slug: "super-egg-drop" });
+questions.push({id: "888", title: "Fair Candy Swap", difficulty: "easy", tags: ["Array", "Hash Table", "Binary Search", "Sorting"], slug: "fair-candy-swap" });
+questions.push({id: "889", title: "Construct Binary Tree from Preorder and Postorder Traversal", difficulty: "medium", tags: ["Array", "Hash Table", "Divide and Conquer", "Tree", "Binary Tree"], slug: "construct-binary-tree-from-preorder-and-postorder-traversal" });
+questions.push({id: "890", title: "Find and Replace Pattern", difficulty: "medium", tags: ["Array", "Hash Table", "String"], slug: "find-and-replace-pattern" });
+questions.push({id: "891", title: "Sum of Subsequence Widths", difficulty: "hard", tags: ["Array", "Math", "Sorting"], slug: "sum-of-subsequence-widths" });
+questions.push({id: "892", title: "Surface Area of 3D Shapes", difficulty: "easy", tags: ["Array", "Math", "Geometry", "Matrix"], slug: "surface-area-of-3d-shapes" });
+questions.push({id: "893", title: "Groups of Special-Equivalent Strings", difficulty: "medium", tags: ["Array", "Hash Table", "String", "Sorting"], slug: "groups-of-special-equivalent-strings" });
+questions.push({id: "894", title: "All Possible Full Binary Trees", difficulty: "medium", tags: ["Dynamic Programming", "Tree", "Recursion", "Memoization", "Binary Tree"], slug: "all-possible-full-binary-trees" });
+questions.push({id: "895", title: "Maximum Frequency Stack", difficulty: "hard", tags: ["Hash Table", "Stack", "Design", "Ordered Set"], slug: "maximum-frequency-stack" });
+questions.push({id: "896", title: "Monotonic Array", difficulty: "easy", tags: ["Array"], slug: "monotonic-array" });
+questions.push({id: "897", title: "Increasing Order Search Tree", difficulty: "easy", tags: ["Stack", "Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "increasing-order-search-tree" });
+questions.push({id: "898", title: "Bitwise ORs of Subarrays", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Bit Manipulation"], slug: "bitwise-ors-of-subarrays" });
+questions.push({id: "899", title: "Orderly Queue", difficulty: "hard", tags: ["Math", "String", "Sorting"], slug: "orderly-queue" });
+questions.push({id: "900", title: "RLE Iterator", difficulty: "medium", tags: ["Array", "Design", "Counting", "Iterator"], slug: "rle-iterator" });
+questions.push({id: "901", title: "Online Stock Span", difficulty: "medium", tags: ["Stack", "Design", "Monotonic Stack", "Data Stream"], slug: "online-stock-span" });
+questions.push({id: "902", title: "Numbers At Most N Given Digit Set", difficulty: "hard", tags: ["Array", "Math", "String", "Binary Search", "Dynamic Programming"], slug: "numbers-at-most-n-given-digit-set" });
+questions.push({id: "903", title: "Valid Permutations for DI Sequence", difficulty: "hard", tags: ["String", "Dynamic Programming", "Prefix Sum"], slug: "valid-permutations-for-di-sequence" });
+questions.push({id: "904", title: "Fruit Into Baskets", difficulty: "medium", tags: ["Array", "Hash Table", "Sliding Window"], slug: "fruit-into-baskets" });
+questions.push({id: "905", title: "Sort Array By Parity", difficulty: "easy", tags: ["Array", "Two Pointers", "Sorting"], slug: "sort-array-by-parity" });
+questions.push({id: "906", title: "Super Palindromes", difficulty: "hard", tags: ["Math", "String", "Enumeration"], slug: "super-palindromes" });
+questions.push({id: "907", title: "Sum of Subarray Minimums", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Stack", "Monotonic Stack"], slug: "sum-of-subarray-minimums" });
+questions.push({id: "908", title: "Smallest Range I", difficulty: "easy", tags: ["Array", "Math"], slug: "smallest-range-i" });
+questions.push({id: "909", title: "Snakes and Ladders", difficulty: "medium", tags: ["Array", "Breadth-First Search", "Matrix"], slug: "snakes-and-ladders" });
+questions.push({id: "910", title: "Smallest Range II", difficulty: "medium", tags: ["Array", "Math", "Greedy", "Sorting"], slug: "smallest-range-ii" });
+questions.push({id: "911", title: "Online Election", difficulty: "medium", tags: ["Array", "Hash Table", "Binary Search", "Design"], slug: "online-election" });
+questions.push({id: "912", title: "Sort an Array", difficulty: "medium", tags: ["Array", "Divide and Conquer", "Sorting", "Heap (Priority Queue)", "Merge Sort", "Bucket Sort", "Radix Sort", "Counting Sort"], slug: "sort-an-array" });
+questions.push({id: "913", title: "Cat and Mouse", difficulty: "hard", tags: ["Math", "Dynamic Programming", "Graph", "Topological Sort", "Memoization", "Game Theory"], slug: "cat-and-mouse" });
+questions.push({id: "914", title: "X of a Kind in a Deck of Cards", difficulty: "easy", tags: ["Array", "Hash Table", "Math", "Counting", "Number Theory"], slug: "x-of-a-kind-in-a-deck-of-cards" });
+questions.push({id: "915", title: "Partition Array into Disjoint Intervals", difficulty: "medium", tags: ["Array"], slug: "partition-array-into-disjoint-intervals" });
+questions.push({id: "916", title: "Word Subsets", difficulty: "medium", tags: ["Array", "Hash Table", "String"], slug: "word-subsets" });
+questions.push({id: "917", title: "Reverse Only Letters", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "reverse-only-letters" });
+questions.push({id: "918", title: "Maximum Sum Circular Subarray", difficulty: "medium", tags: ["Array", "Divide and Conquer", "Dynamic Programming", "Queue", "Monotonic Queue"], slug: "maximum-sum-circular-subarray" });
+questions.push({id: "919", title: "Complete Binary Tree Inserter", difficulty: "medium", tags: ["Tree", "Breadth-First Search", "Design", "Binary Tree"], slug: "complete-binary-tree-inserter" });
+questions.push({id: "920", title: "Number of Music Playlists", difficulty: "hard", tags: ["Math", "Dynamic Programming", "Combinatorics"], slug: "number-of-music-playlists" });
+questions.push({id: "921", title: "Minimum Add to Make Parentheses Valid", difficulty: "medium", tags: ["String", "Stack", "Greedy"], slug: "minimum-add-to-make-parentheses-valid" });
+questions.push({id: "922", title: "Sort Array By Parity II", difficulty: "easy", tags: ["Array", "Two Pointers", "Sorting"], slug: "sort-array-by-parity-ii" });
+questions.push({id: "923", title: "3Sum With Multiplicity", difficulty: "medium", tags: ["Array", "Hash Table", "Two Pointers", "Sorting", "Counting"], slug: "3sum-with-multiplicity" });
+questions.push({id: "924", title: "Minimize Malware Spread", difficulty: "hard", tags: ["Array", "Hash Table", "Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "minimize-malware-spread" });
+questions.push({id: "925", title: "Long Pressed Name", difficulty: "easy", tags: ["Two Pointers", "String"], slug: "long-pressed-name" });
+questions.push({id: "926", title: "Flip String to Monotone Increasing", difficulty: "medium", tags: ["String", "Dynamic Programming"], slug: "flip-string-to-monotone-increasing" });
+questions.push({id: "927", title: "Three Equal Parts", difficulty: "hard", tags: ["Array", "Math"], slug: "three-equal-parts" });
+questions.push({id: "928", title: "Minimize Malware Spread II", difficulty: "hard", tags: ["Array", "Hash Table", "Depth-First Search", "Breadth-First Search", "Union Find", "Graph"], slug: "minimize-malware-spread-ii" });
+questions.push({id: "929", title: "Unique Email Addresses", difficulty: "easy", tags: ["Array", "Hash Table", "String"], slug: "unique-email-addresses" });
+questions.push({id: "930", title: "Binary Subarrays With Sum", difficulty: "medium", tags: ["Array", "Hash Table", "Sliding Window", "Prefix Sum"], slug: "binary-subarrays-with-sum" });
+questions.push({id: "931", title: "Minimum Falling Path Sum", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Matrix"], slug: "minimum-falling-path-sum" });
+questions.push({id: "932", title: "Beautiful Array", difficulty: "medium", tags: ["Array", "Math", "Divide and Conquer"], slug: "beautiful-array" });
+questions.push({id: "933", title: "Number of Recent Calls", difficulty: "easy", tags: ["Design", "Queue", "Data Stream"], slug: "number-of-recent-calls" });
+questions.push({id: "934", title: "Shortest Bridge", difficulty: "medium", tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"], slug: "shortest-bridge" });
+questions.push({id: "935", title: "Knight Dialer", difficulty: "medium", tags: ["Dynamic Programming"], slug: "knight-dialer" });
+questions.push({id: "936", title: "Stamping The Sequence", difficulty: "hard", tags: ["String", "Stack", "Greedy", "Queue"], slug: "stamping-the-sequence" });
+questions.push({id: "937", title: "Reorder Data in Log Files", difficulty: "medium", tags: ["Array", "String", "Sorting"], slug: "reorder-data-in-log-files" });
+questions.push({id: "938", title: "Range Sum of BST", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Binary Search Tree", "Binary Tree"], slug: "range-sum-of-bst" });
+questions.push({id: "939", title: "Minimum Area Rectangle", difficulty: "medium", tags: ["Array", "Hash Table", "Math", "Geometry", "Sorting"], slug: "minimum-area-rectangle" });
+questions.push({id: "940", title: "Distinct Subsequences II", difficulty: "hard", tags: ["String", "Dynamic Programming"], slug: "distinct-subsequences-ii" });
+questions.push({id: "941", title: "Valid Mountain Array", difficulty: "easy", tags: ["Array"], slug: "valid-mountain-array" });
+questions.push({id: "942", title: "DI String Match", difficulty: "easy", tags: ["Array", "Two Pointers", "String", "Greedy"], slug: "di-string-match" });
+questions.push({id: "943", title: "Find the Shortest Superstring", difficulty: "hard", tags: ["Array", "String", "Dynamic Programming", "Bit Manipulation", "Bitmask"], slug: "find-the-shortest-superstring" });
+questions.push({id: "944", title: "Delete Columns to Make Sorted", difficulty: "easy", tags: ["Array", "String"], slug: "delete-columns-to-make-sorted" });
+questions.push({id: "945", title: "Minimum Increment to Make Array Unique", difficulty: "medium", tags: ["Array", "Greedy", "Sorting", "Counting"], slug: "minimum-increment-to-make-array-unique" });
+questions.push({id: "946", title: "Validate Stack Sequences", difficulty: "medium", tags: ["Array", "Stack", "Simulation"], slug: "validate-stack-sequences" });
+questions.push({id: "947", title: "Most Stones Removed with Same Row or Column", difficulty: "medium", tags: ["Hash Table", "Depth-First Search", "Union Find", "Graph"], slug: "most-stones-removed-with-same-row-or-column" });
+questions.push({id: "948", title: "Bag of Tokens", difficulty: "medium", tags: ["Array", "Two Pointers", "Greedy", "Sorting"], slug: "bag-of-tokens" });
+questions.push({id: "949", title: "Largest Time for Given Digits", difficulty: "medium", tags: ["Array", "String", "Enumeration"], slug: "largest-time-for-given-digits" });
+questions.push({id: "950", title: "Reveal Cards In Increasing Order", difficulty: "medium", tags: ["Array", "Queue", "Sorting", "Simulation"], slug: "reveal-cards-in-increasing-order" });
+questions.push({id: "951", title: "Flip Equivalent Binary Trees", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "flip-equivalent-binary-trees" });
+questions.push({id: "952", title: "Largest Component Size by Common Factor", difficulty: "hard", tags: ["Array", "Hash Table", "Math", "Union Find", "Number Theory"], slug: "largest-component-size-by-common-factor" });
+questions.push({id: "953", title: "Verifying an Alien Dictionary", difficulty: "easy", tags: ["Array", "Hash Table", "String"], slug: "verifying-an-alien-dictionary" });
+questions.push({id: "954", title: "Array of Doubled Pairs", difficulty: "medium", tags: ["Array", "Hash Table", "Greedy", "Sorting"], slug: "array-of-doubled-pairs" });
+questions.push({id: "955", title: "Delete Columns to Make Sorted II", difficulty: "medium", tags: ["Array", "String", "Greedy"], slug: "delete-columns-to-make-sorted-ii" });
+questions.push({id: "956", title: "Tallest Billboard", difficulty: "hard", tags: ["Array", "Dynamic Programming"], slug: "tallest-billboard" });
+questions.push({id: "957", title: "Prison Cells After N Days", difficulty: "medium", tags: ["Array", "Hash Table", "Math", "Bit Manipulation"], slug: "prison-cells-after-n-days" });
+questions.push({id: "958", title: "Check Completeness of a Binary Tree", difficulty: "medium", tags: ["Tree", "Breadth-First Search", "Binary Tree"], slug: "check-completeness-of-a-binary-tree" });
+questions.push({id: "959", title: "Regions Cut By Slashes", difficulty: "medium", tags: ["Array", "Hash Table", "Depth-First Search", "Breadth-First Search", "Union Find", "Matrix"], slug: "regions-cut-by-slashes" });
+questions.push({id: "960", title: "Delete Columns to Make Sorted III", difficulty: "hard", tags: ["Array", "String", "Dynamic Programming"], slug: "delete-columns-to-make-sorted-iii" });
+questions.push({id: "961", title: "N-Repeated Element in Size 2N Array", difficulty: "easy", tags: ["Array", "Hash Table"], slug: "n-repeated-element-in-size-2n-array" });
+questions.push({id: "962", title: "Maximum Width Ramp", difficulty: "medium", tags: ["Array", "Two Pointers", "Stack", "Monotonic Stack"], slug: "maximum-width-ramp" });
+questions.push({id: "963", title: "Minimum Area Rectangle II", difficulty: "medium", tags: ["Array", "Math", "Geometry"], slug: "minimum-area-rectangle-ii" });
+questions.push({id: "964", title: "Least Operators to Express Number", difficulty: "hard", tags: ["Math", "Dynamic Programming", "Memoization"], slug: "least-operators-to-express-number" });
+questions.push({id: "965", title: "Univalued Binary Tree", difficulty: "easy", tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"], slug: "univalued-binary-tree" });
+questions.push({id: "966", title: "Vowel Spellchecker", difficulty: "medium", tags: ["Array", "Hash Table", "String"], slug: "vowel-spellchecker" });
+questions.push({id: "967", title: "Numbers With Same Consecutive Differences", difficulty: "medium", tags: ["Backtracking", "Breadth-First Search"], slug: "numbers-with-same-consecutive-differences" });
+questions.push({id: "968", title: "Binary Tree Cameras", difficulty: "hard", tags: ["Dynamic Programming", "Tree", "Depth-First Search", "Binary Tree"], slug: "binary-tree-cameras" });
+questions.push({id: "969", title: "Pancake Sorting", difficulty: "medium", tags: ["Array", "Two Pointers", "Greedy", "Sorting"], slug: "pancake-sorting" });
+questions.push({id: "970", title: "Powerful Integers", difficulty: "medium", tags: ["Hash Table", "Math", "Enumeration"], slug: "powerful-integers" });
+questions.push({id: "971", title: "Flip Binary Tree To Match Preorder Traversal", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "flip-binary-tree-to-match-preorder-traversal" });
+questions.push({id: "972", title: "Equal Rational Numbers", difficulty: "hard", tags: ["Math", "String"], slug: "equal-rational-numbers" });
+questions.push({id: "973", title: "K Closest Points to Origin", difficulty: "medium", tags: ["Array", "Math", "Divide and Conquer", "Geometry", "Sorting", "Heap (Priority Queue)", "Quickselect"], slug: "k-closest-points-to-origin" });
+questions.push({id: "974", title: "Subarray Sums Divisible by K", difficulty: "medium", tags: ["Array", "Hash Table", "Prefix Sum"], slug: "subarray-sums-divisible-by-k" });
+questions.push({id: "975", title: "Odd Even Jump", difficulty: "hard", tags: ["Array", "Dynamic Programming", "Stack", "Monotonic Stack", "Ordered Set"], slug: "odd-even-jump" });
+questions.push({id: "976", title: "Largest Perimeter Triangle", difficulty: "easy", tags: ["Array", "Math", "Greedy", "Sorting"], slug: "largest-perimeter-triangle" });
+questions.push({id: "977", title: "Squares of a Sorted Array", difficulty: "easy", tags: ["Array", "Two Pointers", "Sorting"], slug: "squares-of-a-sorted-array" });
+questions.push({id: "978", title: "Longest Turbulent Subarray", difficulty: "medium", tags: ["Array", "Dynamic Programming", "Sliding Window"], slug: "longest-turbulent-subarray" });
+questions.push({id: "979", title: "Distribute Coins in Binary Tree", difficulty: "medium", tags: ["Tree", "Depth-First Search", "Binary Tree"], slug: "distribute-coins-in-binary-tree" });
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("days").innerText = days.toString().padStart(2, '0');
-      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-      document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
-
-      if (distance < 0) {
-        clearInterval(timer);
-        document.querySelector(".countdown").innerHTML = "🎉 We're Live Now!";
-      }
-    }, 1000);
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "LeetCodee.com - Coming Soon",
-    "description": "Your ultimate destination for LeetCode solutions in all supported languages. Launching soon!",
-    "image": "https://www.leetcodee.com/logo.png",  <!-- Replace with actual logo URL -->
-    "datePublished": "2023-10-27",  <!-- Update with the actual publication date -->
-    "dateModified": "2023-10-27",  <!-- Update with the actual modification date -->
-    "author": {
-      "@type": "Organization",
-      "name": "LeetCodee.com"
-    }
+  function renderCards() {
+    const container = document.getElementById("cardsContainer");
+    container.innerHTML = "";
+    const start = (currentPage - 1) * cardsPerPage;
+    const end = start + cardsPerPage;
+    const showCards = filteredCards.slice(start, end);
+    showCards.forEach(q => {
+      const card = document.createElement("div");
+      card.className = "bg-white rounded-xl p-5 shadow-md border border-gray-200 transition-transform hover:scale-105";
+      card.innerHTML = `
+        <h2 class='text-xl font-semibold mb-2'>${q.id}. ${q.title}</h2>
+        <p class='text-sm mb-1'><strong>Difficulty:</strong> <span class='capitalize'>${q.difficulty}</span></p>
+        <p class='text-sm mb-2'><strong>Tags:</strong> ${q.tags.join(', ')}</p>
+        <a href='https://leetcodee.com/problems/${q.slug}/' class='inline-block mt-3 text-blue-600 underline'>View Solution</a>
+      `;
+      container.appendChild(card);
+    });
+    document.getElementById("pageInfo").textContent = `Page ${currentPage} of ${Math.ceil(filteredCards.length/cardsPerPage)}`;
   }
-  </script>
+
+  function filterAll() {
+    const query = document.getElementById("searchBox").value.toLowerCase();
+    const activeTags = Array.from(document.querySelectorAll('.tag.filter-selected')).map(t => t.dataset.tag);
+    const activeDiffs = Array.from(document.querySelectorAll('.difficulty-btn.filter-selected')).map(t => t.dataset.difficulty);
+    filteredCards = allCards.filter(q =>
+      q.title.toLowerCase().includes(query) &&
+      (activeTags.length === 0 || activeTags.some(tag => q.tags.includes(tag))) &&
+      (activeDiffs.length === 0 || activeDiffs.includes(q.difficulty))
+    );
+    currentPage = 1;
+    renderCards();
+  }
+
+  function nextPage() { if (currentPage < Math.ceil(filteredCards.length / cardsPerPage)) { currentPage++; renderCards(); } }
+  function prevPage() { if (currentPage > 1) { currentPage--; renderCards(); } }
+  function toggleDarkMode() { document.getElementById("body").classList.toggle("dark-mode"); }
+
+  document.getElementById("searchBox").addEventListener("keyup", filterAll);
+  document.querySelectorAll(".tag").forEach(el => el.addEventListener("click", function() { this.classList.toggle("filter-selected"); filterAll(); }));
+  document.querySelectorAll(".difficulty-btn").forEach(el => el.addEventListener("click", function() { this.classList.toggle("filter-selected"); filterAll(); }));
+  document.getElementById("nextBtn").addEventListener("click", nextPage);
+  document.getElementById("prevBtn").addEventListener("click", prevPage);
+  document.getElementById("darkToggle").addEventListener("click", toggleDarkMode);
+
+  allCards = questions;
+  filteredCards = [...allCards];
+  renderCards();
+};
+</script>
 </body>
 </html>
